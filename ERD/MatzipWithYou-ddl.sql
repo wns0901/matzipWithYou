@@ -30,13 +30,14 @@ CREATE TABLE friend
 
 CREATE TABLE matzip
 (
-  id      INT        NOT NULL AUTO_INCREMENT COMMENT '맛집 일련번호',
-  kind_id INT        NOT NULL COMMENT '음식 종류 일련번호',
-  address TEXT       NOT NULL COMMENT '주소',
-  lat     DOUBLE     NOT NULL COMMENT '위도',
-  lng     DOUBLE     NOT NULL COMMENT '경도',
-  img_url TEXT       NOT NULL COMMENT '가게 이미지 url',
-  gu      VARCHAR(5) NOT NULL COMMENT '지역구',
+  id            INT        NOT NULL AUTO_INCREMENT COMMENT '맛집 일련번호',
+  kind_id       INT        NOT NULL COMMENT '음식 종류 일련번호',
+  address       TEXT       NOT NULL COMMENT '주소',
+  lat           DOUBLE     NOT NULL COMMENT '위도',
+  lng           DOUBLE     NOT NULL COMMENT '경도',
+  img_url       TEXT       NOT NULL COMMENT '가게 이미지 url',
+  gu            VARCHAR(5) NOT NULL COMMENT '지역구',
+  kakao_map_url TEXT       NOT NULL COMMENT '카카오맵 상세페이지 url',
   PRIMARY KEY (id)
 ) COMMENT '맛집';
 
@@ -63,6 +64,9 @@ CREATE TABLE member
 
 ALTER TABLE member
   ADD CONSTRAINT UQ_username UNIQUE (username);
+
+ALTER TABLE member
+  ADD CONSTRAINT UQ_nickname UNIQUE (nickname);
 
 CREATE TABLE member_authorities
 (
@@ -115,7 +119,7 @@ CREATE TABLE user_matzip_tag_status
   matzip_tag_id INT NOT NULL COMMENT '맛집태그 일련번호',
   member_id     INT NOT NULL COMMENT '회원 일련번호',
   PRIMARY KEY (matzip_tag_id, member_id)
-) COMMENT '맛집 태그와 회원 관계?';
+) COMMENT '맛집 태그와 회원 관계';
 
 CREATE TABLE wish_list
 (
