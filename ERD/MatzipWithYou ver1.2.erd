@@ -4,8 +4,8 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -981,
-    "scrollLeft": 0,
+    "scrollTop": -932,
+    "scrollLeft": -765,
     "zoomLevel": 1,
     "show": 511,
     "database": 4,
@@ -1000,7 +1000,7 @@
         "tableId": "SALnzj0JFxsg_DW2Y1GOu",
         "name": "sourcename",
         "comment": "원본 이름",
-        "dataType": "",
+        "dataType": "TEXT",
         "default": "",
         "options": 8,
         "ui": {
@@ -1011,7 +1011,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1732596266140,
+          "updateAt": 1732769408732,
           "createAt": 1732455759710
         }
       },
@@ -1020,7 +1020,7 @@
         "tableId": "SALnzj0JFxsg_DW2Y1GOu",
         "name": "filename",
         "comment": "저장 이름",
-        "dataType": "",
+        "dataType": "TEXT",
         "default": "",
         "options": 8,
         "ui": {
@@ -1031,7 +1031,7 @@
           "widthDefault": 60
         },
         "meta": {
-          "updateAt": 1732596268662,
+          "updateAt": 1732769415595,
           "createAt": 1732455771754
         }
       },
@@ -2685,7 +2685,8 @@
       {
         "comment": 1732455771753,
         "name": 1732455831712,
-        "options(notNull)": 1732596266139
+        "options(notNull)": 1732596266139,
+        "dataType": 1732769408731
       }
     ],
     "xAv7XtGmU9dbgEJT-L9z5": [
@@ -2695,7 +2696,8 @@
       {
         "comment": 1732455777387,
         "name": 1732455837933,
-        "options(notNull)": 1732596268660
+        "options(notNull)": 1732596268660,
+        "dataType": 1732769415595
       }
     ],
     "vtqmpcWwPEZis-cHRjCTQ": [

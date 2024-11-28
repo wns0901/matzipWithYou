@@ -100,10 +100,10 @@ CREATE TABLE my_review
 
 CREATE TABLE profile_img
 (
-  id         INT NOT NULL AUTO_INCREMENT COMMENT '프로필 사진 일련번호',
-  member_id  INT NOT NULL COMMENT '회원 일련번호',
-  sourcename     NOT NULL COMMENT '원본 이름',
-  filename       NOT NULL COMMENT '저장 이름',
+  id         INT  NOT NULL AUTO_INCREMENT COMMENT '프로필 사진 일련번호',
+  member_id  INT  NOT NULL COMMENT '회원 일련번호',
+  sourcename TEXT NOT NULL COMMENT '원본 이름',
+  filename   TEXT NOT NULL COMMENT '저장 이름',
   PRIMARY KEY (id)
 ) COMMENT '프로필 이미지';
 
