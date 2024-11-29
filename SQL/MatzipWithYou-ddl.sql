@@ -49,6 +49,7 @@ CREATE TABLE friend
 CREATE TABLE matzip
 (
   id            INT        NOT NULL AUTO_INCREMENT COMMENT '맛집 일련번호',
+  name          VARCHAR(50) NOT NULL COMMENT '맛집 이름',
   kind_id       INT        NOT NULL COMMENT '음식 종류 일련번호',
   address       TEXT       NOT NULL COMMENT '주소',
   lat           DOUBLE     NOT NULL COMMENT '위도',
