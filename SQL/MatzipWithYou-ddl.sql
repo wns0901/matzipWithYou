@@ -1,3 +1,20 @@
+SET SESSION FOREIGN_KEY_CHECKS = 0;
+
+/* Drop Tables */
+DROP TABLE IF EXISTS authority;
+DROP TABLE IF EXISTS food_kind;
+DROP TABLE IF EXISTS friend;
+DROP TABLE IF EXISTS matzip;
+DROP TABLE IF EXISTS matzip_tag;
+DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS member_authorities;
+DROP TABLE IF EXISTS my_matzip;
+DROP TABLE IF EXISTS my_review;
+DROP TABLE IF EXISTS profile_img;
+DROP TABLE IF EXISTS tag;
+DROP TABLE IF EXISTS user_matzip_tag_status;
+DROP TABLE IF EXISTS wish_list;
+DROP TABLE IF EXISTS review_tag;
 
 CREATE TABLE authority
 (
@@ -12,7 +29,7 @@ ALTER TABLE authority
 CREATE TABLE food_kind
 (
     id       INT         NOT NULL AUTO_INCREMENT COMMENT '음식 종류 일련번호',
-    kindname VARCHAR(30) NOT NULL AUTO_INCREMENT COMMENT '종류',
+    kindname VARCHAR(30) NOT NULL COMMENT '종류',
     regdate  DATETIME    NULL     DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (id)
 ) COMMENT '음식 종류';
