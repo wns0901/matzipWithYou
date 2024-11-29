@@ -65,6 +65,7 @@ CREATE TABLE matzip_tag
 (
     tag_id       INT NOT NULL COMMENT '태그 일련번호',
     my_matzip_id INT NOT NULL COMMENT '나의 맛집 일련번호',
+    regdate  DATETIME    NULL     DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (tag_id, my_matzip_id)
 ) COMMENT '나의 맛집태그';
 
@@ -129,6 +130,7 @@ CREATE TABLE review_tag
 (
     tag_id       INT NOT NULL COMMENT '태그 일련번호',
     my_review_id INT NOT NULL COMMENT '나의 리뷰 일련번호',
+    regdate  DATETIME    NULL     DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (tag_id, my_review_id)
 ) COMMENT '나의 리뷰 태크';
 
