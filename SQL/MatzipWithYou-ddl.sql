@@ -28,7 +28,7 @@ ALTER TABLE authority
 CREATE TABLE food_kind
 (
   id       INT         NOT NULL AUTO_INCREMENT COMMENT '음식 종류 일련번호',
-  kindname VARCHAR(30) NOT NULL AUTO_INCREMENT COMMENT '종류',
+  kindname VARCHAR(30) NOT NULL COMMENT '종류',
   regdate  DATETIME    NULL     DEFAULT now() COMMENT '등록일',
   PRIMARY KEY (id)
 ) COMMENT '음식 종류';
