@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Tag {
-    public Long id;
-    public String tagName;
-    public LocalDateTime regdate;
+    private Long id;
+    private String tagName;
+    private LocalDateTime regdate;
 }

@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class Matzip {
-    public Long id;
-    public String name;
-    public Long kindId;
-    public String address;
-    public Double lat;
-    public Double lng;
-    public String imgUrl;
-    public String gu;
-    public String kakaoMapUrl;
-    public LocalDateTime regdate;
+    private Long id;
+    private String name;
+    private Long kindId;
+    private String address;
+    private Double lat;
+    private Double lng;
+    private String imgUrl;
+    private String gu;
+    private String kakaoMapUrl;
+    private LocalDateTime regdate;
 }
