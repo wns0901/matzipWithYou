@@ -23,3 +23,8 @@ public class Matzip {
     private String kakaoMapUrl;
     private LocalDateTime regdate;
 }
+
+class MatzipDTO {
+    Matzip matzip;
+    String imgPath;
+}
