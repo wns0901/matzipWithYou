@@ -19,8 +19,10 @@ class MatzipRepositoryTest {
     @Test
     void test1() {
         MatzipRepository matzipRepository = sqlSession.getMapper(MatzipRepository.class);
-//        List<Matzip> list = matzipRepository.findAll();
-//        System.out.println(list);
-        System.out.println(matzipRepository.deleteById(1L));
+        List<Matzip> list = matzipRepository.findAll();
+        System.out.println(list);
+
+        Matzip matzip = matzipRepository.findById(1L);
+        System.out.println(matzip);
     }
 }
