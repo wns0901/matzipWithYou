@@ -1,4 +1,4 @@
-package com.lec.spring.member.repository;
+package com.lec.spring.matzip.repository;
 
 import com.lec.spring.matzip.domain.FoodKind;
 import com.lec.spring.matzip.domain.Review;
