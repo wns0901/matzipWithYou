@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.member.repository.ProfileImgRepository">
+
+    <sql id="SELECT_BASE">
+        SELECT id         "id"
+             , member_id  "memberId"
+             , sourcename "sourcename"
+             , filename   "filename"
+        FROM profile_img
+        WHERE 1 = 1
+    </sql>
+
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.member.domain.ProfileImg"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO profile_img(member_id, sourcename, filename)
+        VALUES(#{memberId}, #{sourcename}, #{filename})
+    </insert>
+
+    <update id="update" flushCache="true" parameterType="com.lec.spring.member.domain.ProfileImg">
+        UPDATE profile_img
+        SET sourcename = #{sourcename}
+          , filename = #{filename}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM profile_img WHERE id = #{id}
+    </delete>
+
+    <!-- 프로필 이미지 상세 -->
+    <select id="findById" resultType="com.lec.spring.member.domain.ProfileImg">
+        <include refid="SELECT_BASE"/>
+        AND id = #{id}
+    </select>
+
+    <select id="findByMemberId" resultType="com.lec.spring.member.domain.ProfileImg">
+        <include refid="SELECT_BASE"/>
+        AND member_id = #{memberId}
+    </select>
+
+</mapper>
