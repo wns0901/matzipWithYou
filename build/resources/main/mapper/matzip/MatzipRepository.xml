@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.matzip.repository.MatzipRepository">
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.matzip.domain.Matzip" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO matzip (kind_id, address, lat, lng, img_url, gu, kakao_map_url, name)
+        VALUES (#{kindId}, #{address}, #{lat}, #{lng}, #{imgUrl}, #{gu}, #{kakaoMapUrl}, #{name})
+    </insert>
+
+    <sql id="SELECT_BASE">
+        SELECT
+            id,
+            kind_id AS 'kindId',
+            address,
+            lat,
+            lng,
+            img_url AS 'imgUrl',
+            gu,
+            kakao_map_url AS 'kakaoMapUrl',
+            name,
+            regdate
+        FROM matzip
+        WHERE 1=1
+    </sql>
+
+    <select id="findAll" resultType="com.lec.spring.matzip.domain.Matzip">
+        <include refid="SELECT_BASE" />
+        ORDER BY regdate DESC
+    </select>
+
+    <select id="findById" resultType="com.lec.spring.matzip.domain.Matzip">
+        <include refid="SELECT_BASE" />
+        AND id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE FROM matzip WHERE id = #{id}
+    </delete>
+</mapper>
