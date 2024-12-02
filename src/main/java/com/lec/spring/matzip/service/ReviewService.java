@@ -12,9 +12,9 @@ public interface ReviewService {
 
     List<Review> getAllReviews();
 
-    void addReview(Review review, List<Tag> tags, FoodKind foodKind);
+    int addReview(Review review, List<Tag> tags, FoodKind foodKind);
 
-    void unlockHiddenMatizipAndNotify(Review review, Member member);
+    boolean isHiddenMatzip(Review review, Member member);
 
     int deleteReview(Long id);
 }
