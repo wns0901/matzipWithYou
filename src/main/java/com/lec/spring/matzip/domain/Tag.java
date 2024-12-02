@@ -8,18 +8,11 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class Matzip {
+public class Tag {
     private Long id;
-    private String name;
-    private Long kindId;
-    private String address;
-    private Double lat;
-    private Double lng;
-    private String imgUrl;
-    private String gu;
-    private String kakaoMapUrl;
+    private String tagName;
     private LocalDateTime regdate;
 }
