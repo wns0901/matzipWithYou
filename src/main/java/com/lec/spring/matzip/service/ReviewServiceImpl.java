@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.FoodKind;
+import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.domain.Review;
 import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.repository.ReviewRepository;
@@ -32,8 +33,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public boolean isHiddenMatzip(Review review, Member member) {
-        return reviewRepository.checkHiddenMatzip(review, member);
+    public boolean isHiddenMatzip(MyMatzip myMatzip, Friend friend) {
+        return reviewRepository.checkHiddenMatzip(myMatzip, friend);
     }
 
     @Override
