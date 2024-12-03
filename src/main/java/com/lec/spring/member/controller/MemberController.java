@@ -39,15 +39,14 @@ public class MemberController {
             , Model model
             , RedirectAttributes redirectAttributes
     ) {
-        // 검증동작 처리
         if(bindingResult.hasErrors()){
             redirectAttributes.addFlashAttribute("username", member.getUsername());
             redirectAttributes.addFlashAttribute("name", member.getName());
             redirectAttributes.addFlashAttribute("email", member.getEmail());
+            redirectAttributes.addFlashAttribute("nickname", member.getNickname());
 
             List<FieldError> errorList = bindingResult.getFieldErrors();
             for(FieldError error : errorList){
-                // 가장 처음에 발견된 에러만 담아 보낸다
                 redirectAttributes.addFlashAttribute("error", error.getCode());
                 break;
             }
@@ -55,13 +54,10 @@ public class MemberController {
             return "redirect:/member/register";
         }
 
-        // 에러가 없었으면 회원등록 진행
-        String page = "member/registerOk";
-
         int cnt = memberService.register(member);
         model.addAttribute("result", cnt);
 
-        return page;
+        return "member/registerOk";
     }
 
 

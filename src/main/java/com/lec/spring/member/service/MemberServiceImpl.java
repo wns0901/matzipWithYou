@@ -35,6 +35,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public boolean isExistNickname(String nickname) {
+        Member member = memberRepository.findByNickname(nickname);
+        return (member != null);
+    }
+
+    @Override
     public Member findByUsername(String username) {
         return memberRepository.findByUsername(username.toUpperCase());
     }
