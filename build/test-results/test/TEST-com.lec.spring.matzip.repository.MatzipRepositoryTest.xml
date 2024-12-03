@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.lec.spring.matzip.repository.MatzipRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-02T06:19:17" hostname="jangjun-yeongs-MacBook-Air.local" time="0.551">
+<testsuite name="com.lec.spring.matzip.repository.MatzipRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-03T00:36:13" hostname="jangjun-yeongs-MacBook-Air.local" time="0.532">
   <properties/>
-  <testcase name="test1()" classname="com.lec.spring.matzip.repository.MatzipRepositoryTest" time="0.551"/>
-  <system-out><![CDATA[15:19:16.877 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lec.spring.matzip.repository.MatzipRepositoryTest]: MatzipRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-15:19:16.925 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lec.spring.MatzipWithYouApplication for test class com.lec.spring.matzip.repository.MatzipRepositoryTest
+  <testcase name="test1()" classname="com.lec.spring.matzip.repository.MatzipRepositoryTest" time="0.532"/>
+  <system-out><![CDATA[09:36:11.980 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lec.spring.matzip.repository.MatzipRepositoryTest]: MatzipRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:36:12.031 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lec.spring.MatzipWithYouApplication for test class com.lec.spring.matzip.repository.MatzipRepositoryTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,16 +14,22 @@
 
  :: Spring Boot ::                (v3.3.6)
 
-2024-12-02T15:19:17.120+09:00  INFO 77460 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.MatzipRepositoryTest  : Starting MatzipRepositoryTest using Java 17.0.12 with PID 77460 (started by jjy in /Users/jjy/Documents/gugbi/FullStack2409/matzipWithYou)
-2024-12-02T15:19:17.121+09:00  INFO 77460 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.MatzipRepositoryTest  : The following 1 profile is active: "dev"
-2024-12-02T15:19:17.406+09:00  WARN 77460 --- [MatzipWithYou] [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.lec.spring]' package. Please check your configuration.
-2024-12-02T15:19:17.563+09:00  INFO 77460 --- [MatzipWithYou] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2024-12-02T15:19:17.815+09:00  INFO 77460 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.MatzipRepositoryTest  : Started MatzipRepositoryTest in 0.82 seconds (process running for 1.316)
-2024-12-02T15:19:18.248+09:00  INFO 77460 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-02T15:19:18.336+09:00  INFO 77460 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@115ef673
-2024-12-02T15:19:18.338+09:00  INFO 77460 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-[Matzip(id=1, name=치킨공식, kindId=2, address=서울 강남구 역삼로17길 64 역삼동A4스페이스 1층, lat=37.49882190149589, lng=127.03662632505247, imgUrl=//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2F0C4DB8929DDF4EAFA24A56B9EB3BAB97, gu=강남구, kakaoMapUrl=https://place.map.kakao.com/753087736, regdate=2024-12-02T15:18:20), Matzip(id=2, name=오늘런치뷔페, kindId=2, address=서울 강남구 봉은사로30길 75 2층, lat=37.50274785411347, lng=127.03720502093141, imgUrl=//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2F36E80700682E4557A4F7BF32051C03B6, gu=강남구, kakaoMapUrl=https://place.map.kakao.com/727693380, regdate=2024-12-02T15:18:20), Matzip(id=3, name=누나네, kindId=6, address=서울 강남구 삼성로100길 23-15, lat=37.51101353730648, lng=127.05679629393407, imgUrl=//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FCBE63A0A25FB4C7F9DD8D9C3240725E3, gu=강남구, kakaoMapUrl=https://place.map.kakao.com/1560343065, regdate=2024-12-02T15:18:20), Matzip(id=4, name=아부라소바, kindId=4, address=서울 강남구 학동로43길 8 B동 1층 아부라소바, lat=37.51659394797542, lng=127.03750316407037, imgUrl=//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Fmystore%2F42F69920ACCA40168D5B071B9C68049B, gu=강남구, kakaoMapUrl=https://place.map.kakao.com/620324880, regdate=2024-12-02T15:18:20), Matzip(id=5, name=무탄 압구정 본점, kindId=3, address=서울 강남구 논현로176길 22 1층, lat=37.52729767419066, lng=127.03030491751514, imgUrl=//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Fmystore%2FE705A4F2806045B68BE0E2734D3D3F94, gu=강남구, kakaoMapUrl=https://place.map.kakao.com/1696571508, regdate=2024-12-02T15:18:20), Matzip(id=6, name=쇼토 압구정본점, kindId=7, address=서울 강남구 압구정로18길 14-6 1층, lat=37.52384822235571, lng=127.02430786508214, imgUrl=//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F4D8398A52D7446B78C0CAB2326DAC7D6, gu=강남구, kakaoMapUrl=https://place.map.kakao.com/1745920539, regdate=2024-12-02T15:18:20)]
-Matzip(id=1, name=치킨공식, kindId=2, address=서울 강남구 역삼로17길 64 역삼동A4스페이스 1층, lat=37.49882190149589, lng=127.03662632505247, imgUrl=//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2F0C4DB8929DDF4EAFA24A56B9EB3BAB97, gu=강남구, kakaoMapUrl=https://place.map.kakao.com/753087736, regdate=2024-12-02T15:18:20)
+2024-12-03T09:36:12.330+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.MatzipRepositoryTest  : Starting MatzipRepositoryTest using Java 17.0.12 with PID 22231 (started by jjy in /Users/jjy/Documents/gugbi/FullStack2409/matzipWithYou)
+2024-12-03T09:36:12.331+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.MatzipRepositoryTest  : The following 1 profile is active: "dev"
+2024-12-03T09:36:12.615+09:00  WARN 22231 --- [MatzipWithYou] [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.lec.spring]' package. Please check your configuration.
+2024-12-03T09:36:12.798+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2024-12-03T09:36:12.806+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-03T09:36:12.806+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-03T09:36:12.837+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-03T09:36:12.838+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 497 ms
+2024-12-03T09:36:13.019+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-12-03T09:36:13.166+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 51168 (http) with context path '/'
+2024-12-03T09:36:13.172+09:00  INFO 22231 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.MatzipRepositoryTest  : Started MatzipRepositoryTest in 0.976 seconds (process running for 1.579)
+2024-12-03T09:36:13.670+09:00  INFO 22231 --- [MatzipWithYou] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-12-03T09:36:13.670+09:00  INFO 22231 --- [MatzipWithYou] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-12-03T09:36:13.671+09:00  INFO 22231 --- [MatzipWithYou] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-12-03T09:36:13.685+09:00  WARN 22231 --- [MatzipWithYou] [o-auto-1-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required request parameter 'kakaoPlaceDTO' for method parameter type KakaoPlaceDTO is not present]
+{"timestamp":"2024-12-03T00:36:13.691+00:00","status":400,"error":"Bad Request","path":"/matzip/test"}
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
