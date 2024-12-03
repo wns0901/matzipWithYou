@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Review {
-    private int id;
+    private Long id;
     private String content;
     private LocalDateTime regdate;
-    private int star_rating;
-    private boolean is_deleted;
+    private int starRating;
+    private boolean isDeleted;
 
     private Matzip matzip;
     private Member member;

@@ -36,7 +36,7 @@ class ReviewRepositoryTest {
 
         Review review = new Review();
         review.setContent("좋은 맛집입니다");
-        review.setStar_rating(5);
+        review.setStarRating(5);
 
         Member member = new Member();
         member.setId(1L);
@@ -51,11 +51,11 @@ class ReviewRepositoryTest {
         tags.add(tag1);
 
         Tag tag2 = new Tag();
-        tag2.setId(1L);
+        tag2.setId(2L);
         tags.add(tag2);
 
         Tag tag3 = new Tag();
-        tag3.setId(1L);
+        tag3.setId(3L);
         tags.add(tag3);
 
         int result = reviewRepository.save(review, tags, foodKind);

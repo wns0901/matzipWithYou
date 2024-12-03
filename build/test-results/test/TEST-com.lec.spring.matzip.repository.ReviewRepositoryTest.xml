@@ -1,16 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.lec.spring.matzip.repository.ReviewRepositoryTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-12-03T02:09:31" hostname="hwang-yeeun-ui-MacBookAir.local" time="0.365">
+<testsuite name="com.lec.spring.matzip.repository.ReviewRepositoryTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-12-03T03:33:43" hostname="hwang-yeeun-ui-MacBookAir.local" time="0.51">
   <properties/>
-  <testcase name="testSaveReview()" classname="com.lec.spring.matzip.repository.ReviewRepositoryTest" time="0.365">
-    <failure message="java.lang.ClassCastException: class org.attoparser.dom.Text cannot be cast to class org.w3c.dom.Text (org.attoparser.dom.Text is in unnamed module of loader 'app'; org.w3c.dom.Text is in module java.xml of loader 'bootstrap')" type="java.lang.ClassCastException">java.lang.ClassCastException: class org.attoparser.dom.Text cannot be cast to class org.w3c.dom.Text (org.attoparser.dom.Text is in unnamed module of loader 'app'; org.w3c.dom.Text is in module java.xml of loader 'bootstrap')
-	at com.lec.spring.matzip.repository.ReviewRepositoryTest.testSaveReview(ReviewRepositoryTest.java:39)
+  <testcase name="testSaveReview()" classname="com.lec.spring.matzip.repository.ReviewRepositoryTest" time="0.51">
+    <failure message="org.springframework.jdbc.BadSqlGrammarException: &#10;### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSERT INTO review_tag&#10;                (tag_id, my_review_id)&#10;            VALUES' at line 7&#10;### The error may exist in file [/Users/le_sol.sol/Documents/matzipWithYou/build/resources/main/mapper/matzip/ReviewRepository.xml]&#10;### The error may involve com.lec.spring.matzip.repository.ReviewRepository.save-Inline&#10;### The error occurred while setting parameters&#10;### SQL: INSERT INTO my_review             (matzip_id, member_id, content, regdate, star_rating)         VALUES             (?, ?, ?, ?, ?)                         INSERT INTO review_tag                 (tag_id, my_review_id)             VALUES                 (?, ?)          ;              INSERT INTO review_tag                 (tag_id, my_review_id)             VALUES                 (?, ?)          ;              INSERT INTO review_tag                 (tag_id, my_review_id)             VALUES                 (?, ?)                    INSERT INTO food_kind             (id, kindname)         VALUES             (?, ?)&#10;### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSERT INTO review_tag&#10;                (tag_id, my_review_id)&#10;            VALUES' at line 7&#10;; bad SQL grammar []" type="org.springframework.jdbc.BadSqlGrammarException">org.springframework.jdbc.BadSqlGrammarException: 
+### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSERT INTO review_tag
+                (tag_id, my_review_id)
+            VALUES' at line 7
+### The error may exist in file [/Users/le_sol.sol/Documents/matzipWithYou/build/resources/main/mapper/matzip/ReviewRepository.xml]
+### The error may involve com.lec.spring.matzip.repository.ReviewRepository.save-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO my_review             (matzip_id, member_id, content, regdate, star_rating)         VALUES             (?, ?, ?, ?, ?)                         INSERT INTO review_tag                 (tag_id, my_review_id)             VALUES                 (?, ?)          ;              INSERT INTO review_tag                 (tag_id, my_review_id)             VALUES                 (?, ?)          ;              INSERT INTO review_tag                 (tag_id, my_review_id)             VALUES                 (?, ?)                    INSERT INTO food_kind             (id, kindname)         VALUES             (?, ?)
+### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSERT INTO review_tag
+                (tag_id, my_review_id)
+            VALUES' at line 7
+; bad SQL grammar []
+	at app//org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:246)
+	at app//org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:107)
+	at app//org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:92)
+	at app//org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:439)
+	at app/jdk.proxy3/jdk.proxy3.$Proxy72.insert(Unknown Source)
+	at app//org.mybatis.spring.SqlSessionTemplate.insert(SqlSessionTemplate.java:272)
+	at app//org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:62)
+	at app//org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:141)
+	at app//org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86)
+	at app/jdk.proxy3/jdk.proxy3.$Proxy138.save(Unknown Source)
+	at app//com.lec.spring.matzip.repository.ReviewRepositoryTest.testSaveReview(ReviewRepositoryTest.java:61)
+	at java.base@17.0.12/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base@17.0.12/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base@17.0.12/java.util.ArrayList.forEach(ArrayList.java:1511)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'INSERT INTO review_tag
+                (tag_id, my_review_id)
+            VALUES' at line 7
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.update(PreparedStatementHandler.java:48)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.update(RoutingStatementHandler.java:75)
+	at org.apache.ibatis.executor.SimpleExecutor.doUpdate(SimpleExecutor.java:50)
+	at org.apache.ibatis.executor.BaseExecutor.update(BaseExecutor.java:117)
+	at org.apache.ibatis.executor.CachingExecutor.update(CachingExecutor.java:76)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.update(DefaultSqlSession.java:197)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.insert(DefaultSqlSession.java:184)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:425)
+	... 10 more
 </failure>
   </testcase>
-  <system-out><![CDATA[11:09:30.599 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lec.spring.matzip.repository.ReviewRepositoryTest]: ReviewRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-11:09:30.642 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lec.spring.MatzipWithYouApplication for test class com.lec.spring.matzip.repository.ReviewRepositoryTest
+  <system-out><![CDATA[12:33:42.883 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lec.spring.matzip.repository.ReviewRepositoryTest]: ReviewRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+12:33:42.931 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lec.spring.MatzipWithYouApplication for test class com.lec.spring.matzip.repository.ReviewRepositoryTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -21,11 +64,15 @@
 
  :: Spring Boot ::                (v3.3.6)
 
-2024-12-03T11:09:30.795+09:00  INFO 80701 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.ReviewRepositoryTest  : Starting ReviewRepositoryTest using Java 17.0.12 with PID 80701 (started by le_fox.sol in /Users/le_sol.sol/Documents/matzipWithYou)
-2024-12-03T11:09:30.796+09:00  INFO 80701 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.ReviewRepositoryTest  : The following 1 profile is active: "dev"
-2024-12-03T11:09:31.045+09:00  WARN 80701 --- [MatzipWithYou] [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.lec.spring]' package. Please check your configuration.
-2024-12-03T11:09:31.269+09:00  INFO 80701 --- [MatzipWithYou] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
-2024-12-03T11:09:31.388+09:00  INFO 80701 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.ReviewRepositoryTest  : Started ReviewRepositoryTest in 0.695 seconds (process running for 1.109)
+2024-12-03T12:33:43.099+09:00  INFO 82655 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.ReviewRepositoryTest  : Starting ReviewRepositoryTest using Java 17.0.12 with PID 82655 (started by le_fox.sol in /Users/le_sol.sol/Documents/matzipWithYou)
+2024-12-03T12:33:43.100+09:00  INFO 82655 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.ReviewRepositoryTest  : The following 1 profile is active: "dev"
+2024-12-03T12:33:43.376+09:00  WARN 82655 --- [MatzipWithYou] [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.lec.spring]' package. Please check your configuration.
+2024-12-03T12:33:43.610+09:00  INFO 82655 --- [MatzipWithYou] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-12-03T12:33:43.735+09:00  INFO 82655 --- [MatzipWithYou] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-12-03T12:33:43.798+09:00  INFO 82655 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.ReviewRepositoryTest  : Started ReviewRepositoryTest in 0.807 seconds (process running for 1.247)
+2024-12-03T12:33:44.181+09:00  INFO 82655 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-03T12:33:44.246+09:00  INFO 82655 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@163fbbc9
+2024-12-03T12:33:44.247+09:00  INFO 82655 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

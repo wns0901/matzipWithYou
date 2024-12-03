@@ -17,6 +17,4 @@ public interface ReviewRepository {
     int rewardHidden(Review review, Member member);
 
     int deleteById(Long id);
-
-    int findById(Long id);
 }

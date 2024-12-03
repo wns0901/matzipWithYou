@@ -8,24 +8,24 @@
     <select id="findAll" resultType="com.lec.spring.matzip.domain.Review">
         SELECT * FROM my_review
     </select>
-    
-    <insert id="save" flushCache="true" parameterType="map" useGeneratedKeys="true" keyProperty="review.id" keyColumn="review.id">
+
+    <insert id="save" flushCache="true" parameterType="map" useGeneratedKeys="true" keyProperty="review.id">
         INSERT INTO my_review
             (matzip_id, member_id, content, regdate, star_rating)
         VALUES
-            (#{review.matzip.id}, #{review.member.id}, #{review.content}, #{reivew.regdate} #{reivew.starRating})
+            (#{review.matzip.id}, #{review.member.id}, #{review.content}, #{review.regdate}, #{review.starRating})
 
         <foreach collection="tags" item="tag" separator=";">
             INSERT INTO review_tag
                 (tag_id, my_review_id)
             VALUES
-                (#{tag.id}, LAST_INSERT_ID())
+                (#{tag.id}, #{review.id})
         </foreach>
 
         INSERT INTO food_kind
             (id, kindname)
         VALUES
-            (#{foodKind.id}, #{foodKind.kindname})
+            (#{foodKind.id}, #{foodKind.kindName})
     </insert>
 
     <select id="checkHiddenMatzip" resultType="boolean">
