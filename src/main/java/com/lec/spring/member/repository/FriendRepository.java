@@ -6,11 +6,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FriendRepository extends JpaRepository<Friend, FriendDTO> {
+public interface FriendRepository{
 
     List<Friend> findByReceiverIdAndIsAccept(Long receiverId, Boolean isAccept);
 
     List<Friend> findBySenderIdOrReceiverIdAndIsAccept(Long senderId, Long receiverId, Boolean isAccept);
-
+    int save(Friend friend);
+    Friend findByMembers(Long senderId, Long receiverId);
 
 }

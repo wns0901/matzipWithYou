@@ -18,4 +18,6 @@ public class Friend {
     private int intimacy = 0;
     private boolean isAccept = false;
     private LocalDateTime regdate;
+
+
 }

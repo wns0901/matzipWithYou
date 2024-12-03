@@ -1,36 +1,20 @@
 package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.Friend;
-import com.lec.spring.member.repository.FriendRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class FriendService {
+public interface FriendService {
 
-    private final FriendRepository friendRepository;
+    // 친구 요청 보내기
+    void sendFriendRequest(Long senderId, Long receiverId);
 
-    public FriendService(FriendRepository friendRepository) {
-        this.friendRepository = friendRepository;
-    }
+    // 친구 요청 수락/거절
+    void respondToRequest(Long senderId, Long receiverId, boolean accept);
 
-    public void sendFriendRequest(Long senderId, Long receiverId) {
-        Friend friend = new Friend();
-        friend.setSenderId(senderId);
-        friend.setReceiverId(receiverId);
-        friendRepository.save(friend);
-    }
+    // 친구 목록 가져오기
+    List<Friend> getFriends(Long userId);
 
-    public List<Friend> getPendingRequests(Long receiverId) {
-        return friendRepository.findByReceiverIdAndIsAccept(receiverId, false);
-    }
-
-    public void respondToRequest(Long senderId, Long receiverId, boolean accept) {
-        friendRepository.updateAcceptStatus(senderId, receiverId, accept);
-    }
-
-    public List<Friend> getFriends(Long userId) {
-        return friendRepository.findBySenderIdOrReceiverIdAndIsAccept(userId, userId, true);
-    }
+    // 친구 요청 대기중
+    List<Friend> getPendingRequests(Long receiverId);
 }
