@@ -12,12 +12,18 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements MemberService {
 
+    private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
+
     private final MemberRepository memberRepository;
+    //private final FriendRepository friendRepository;
+
+
     //private PasswordEncoder passwordEncoder;
 
     //public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder) {
     public MemberServiceImpl(SqlSession sqlSession) {
-        memberRepository = sqlSession.getMapper(MemberRepository.class);
+        this.memberRepository = sqlSession.getMapper(MemberRepository.class);
+        //this.friendRepository = sqlSession.getMapper(FriendRepository.class);
         //this.passwordEncoder = passwordEncoder;
     }
 
@@ -27,6 +33,33 @@ public class MemberServiceImpl implements MemberService {
         //member.setPassword(passwordEncoder.encode(member.getPassword()));
         return memberRepository.save(member);
     }
+
+//    @Override
+//    public int registerWithReferral(Member member) {
+//        int result = register(member);
+//
+//        // Referrer Handler
+//        if (member.getReferrerNickname() != null && !member.getReferrerNickname().isEmpty()) {
+//            Member referrer = memberRepository.findByNickname(member.getReferrerNickname());
+//
+//            if (referrer != null) {
+//                // 두 사람 모두 포인트 추가
+//                memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
+//                memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
+//
+//                // 서로 친구
+//                Friend friendship = new Friend();
+//                friendship.setSenderId(member.getId());
+//                friendship.setReceiverId(referrer.getId());
+//                friendship.setIntimacy(10);
+//                friendship.setIsAccept(true);   // accept: true
+//                friendRepository.save(friendship);
+//            }
+//        }
+//
+//        return result;
+//    }
+
 
     @Override
     public boolean isExist(String username) {
