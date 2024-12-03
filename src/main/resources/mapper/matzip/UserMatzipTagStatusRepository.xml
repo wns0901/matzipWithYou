@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.matzip.repository.UserMatzipTagStatusRepository">
+    <sql id="SELECT_BASE">
+        SELECT
+         member_id as 'mamberId',
+        my_matzip_id as 'myMatzipId',
+        tag_id as 'tagId'
+        FROM user_matzip_tag_status
+    </sql>
+
+<!-- 조회-->
+    <select id="isExistTag"  resultType="com.lec.spring.matzip.domain.UserMatzipTagStatus">
+        <include refid="SELECT_BASE" />
+        WHERE member_id = #{memberId}
+        AND my_matzip_id = #{myMatzipId}
+    </select>
+
+<!-- 저장-->
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.matzip.domain.UserMatzipTagStatus" >
+        INSERT INTO user_matzip_tag_status (member_id, my_matzip_id, tag_id)
+        VALUES (#{memberId}, #{matzipId}, #{tagId})
+--             VALUES (#{memberId.memberId}, #{matzipTag.matzipId}, #{tagId.tagId})
+    </insert>
+
+
+
+</mapper>
