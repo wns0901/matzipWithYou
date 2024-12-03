@@ -6,9 +6,4 @@ public interface MatzipService {
     int saveMatzip(Matzip matzip, String kind);
 
     String getImgUrlFromKakao(String kakaoPageUrl);
-
-    int deleteMatzip(Long id);
-
-    int findById(Long id);
-
 }

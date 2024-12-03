@@ -1,6 +1,8 @@
 package com.lec.spring.matzip.service;
 
+import com.lec.spring.matzip.domain.FoodKind;
 import com.lec.spring.matzip.domain.Matzip;
+import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MatzipRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.openqa.selenium.By;
@@ -16,20 +18,24 @@ import java.time.Duration;
 @Service
 public class MatzipServiceImpl implements MatzipService {
     private final MatzipRepository matzipRepository;
+    private final FoodKindRepository foodKindRepository;
 
     public MatzipServiceImpl(SqlSession sqlSession) {
         this.matzipRepository = sqlSession.getMapper(MatzipRepository.class);
+        this.foodKindRepository = sqlSession.getMapper(FoodKindRepository.class);
     }
 
 
     @Override
     public int saveMatzip(Matzip matzip, String kind) {
-        String kakaoPageUrl = matzip.getKakaoMapUrl();
-        String kakaoImgUrl = getImgUrlFromKakao(kakaoPageUrl);
+        String kakaoImgUrl = getImgUrlFromKakao(matzip.getKakaoMapUrl());
+
+        FoodKind foodKind = foodKindRepository.findByKindName(kind);
+
         matzip.setImgUrl(kakaoImgUrl);
-        matzipRepository.save(matzip);
-        System.out.println(matzip);
-        return 0;
+        matzip.setKindId(foodKind.getId());
+
+        return matzipRepository.save(matzip);
     }
 
     @Override
@@ -43,15 +49,5 @@ public class MatzipServiceImpl implements MatzipService {
         String url = str.substring(str.indexOf("url(\"") + 5, str.indexOf("\")"));
 
         return url;
-    }
-
-    @Override
-    public int deleteMatzip(Long id) {
-        return 0;
-    }
-
-    @Override
-    public int findById(Long id) {
-        return 0;
     }
 }
