@@ -14,7 +14,7 @@ public interface ReviewRepository {
 
     boolean checkHiddenMatzip(Review review, Member member);
 
-    int reward(Review review, Member member);
+    int rewardHidden(Review review, Member member);
 
     int deleteById(Long id);
 
