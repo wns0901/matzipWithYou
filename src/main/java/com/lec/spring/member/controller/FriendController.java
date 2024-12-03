@@ -31,6 +31,7 @@ public class FriendController {
         return ResponseEntity.ok(pendingRequests);
     }
 
+    // 요청 수락/거절
     @PostMapping("/response")
     public ResponseEntity<Void> respondToRequest(
             @RequestParam Long senderId,
