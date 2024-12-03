@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @Builder
 public class Review {
     private int id;
-    private Text content;
+    private String content;
     private LocalDateTime regdate;
     private int star_rating;
-    private boolean is_deleted = false;
+    private boolean is_deleted;
 
     private Matzip matzip;
     private Member member;
