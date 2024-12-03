@@ -48,6 +48,7 @@ public class FriendController {
     }
 }
 
+
 // 친구요청 보내는 html 의 script 에 들어갈 JS
 // // Query Parameter 방식
 //async function sendFriendRequest(senderId, receiverId) {
