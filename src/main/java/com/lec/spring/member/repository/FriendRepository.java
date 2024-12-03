@@ -1,6 +1,7 @@
 package com.lec.spring.member.repository;
 
 import com.lec.spring.member.domain.Friend;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

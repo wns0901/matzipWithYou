@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +17,5 @@ public class Friend {
     private int intimacy = 0;
     private boolean isAccept = false;
     private LocalDateTime regdate;
-
 
 }
