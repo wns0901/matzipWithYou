@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.matzip.repository.MyMatzipRepository">
+    <sql id = "SELECT_BASE">
+    SELECT
+        a.id "a_id",
+        a.member_id "a_member_id",
+        a.matzip_id "a_matzip_id",
+        a.regdate "a_regdate",
+        a.visibility "a_visibility",
+        a.content "a_content",
+        a.star_rating "a_star_rating",
+        b.name "b_name",
+        b.img_url "b_img_url",
+        k.kindname "k_kindname",
+        t.tagname "t_tagname"
+    from
+         my_matzip a
+    JOIN matzip b ON a.matzip_id = b.id
+    JOIN member c ON a.member_id = c.id
+    JOIN food_kind k ON a.id = k.id
+    JOIN tag t ON a.id = t.id
+    WHERE
+        1 = 1
+    </sql>
+
+    <resultMap id="mapMyMatzip" type="com.lec.spring.matzip.domain.MyMatzip">
+        <result column="a_id"  property="id" />
+        <result column="a_member_id" property="memberId"/>
+        <result column="a_matzip_id" property="matzipId"/>
+        <result column="a_regdate" property="regdate"/>
+        <result column="a_visibility" property="visibility"/>
+        <result column="a_content" property="content"/>
+        <result column="a_starRating" property="starRating"/>
+    </resultMap>
+
+    <resultMap id="mapMatzipDTO" type="com.lec.spring.matzip.domain.MyMatzipDTO">
+        <result column="b_img_url" property="imgUrl"/>
+        <result column="b_name" property="name"/>
+        <result column="k_kindname" property="kindName"/>
+        <result column="t_tagname" property="tagName"/>
+        <collection property="MyMatzip" resultMap="mapMyMatzip"/>
+    </resultMap>
+
+
+    <!--1. 기본 select문에 이미지, 가게이름 맛집 테이블에서 가져오기
+    검색하는 BASE SQL문 잘 만들고  나머지 메소드문은 orderby로 정렬시키면 된다. -->
+    <select id = "findAll" resultMap="mapMatzipDTO">
+        <include refid="SELECT_BASE"/>
+        ORDER BY a.regdate DESC
+    </select>
+
+    <select id="findAllOrderByNameAsc" resultType="com.lec.spring.matzip.domain.MyMatzip">
+        <include refid="SELECT_BASE"/>
+     ORDER BY b.name ASC
+    </select>
+
+    <select id="findAllOrderByFoodKindAsc" resultType="com.lec.spring.matzip.domain.MyMatzip">
+        <include refid="SELECT_BASE"/>
+    ORDER BY b.kind_id ASC
+    </select>
+
+    <select id="findAllOrderByTagAsc" resultType="com.lec.spring.matzip.domain.MyMatzip">
+        <include refid="SELECT_BASE"/>
+     JOIN tag t ON a.id = t.id;
+     ORDER BY t.tagname ASC
+    </select>
+
+    <update id="updateMatzip" flushCache="true" parameterType="com.lec.spring.matzip.domain.MyMatzip">
+        UPDATE my_matzip
+        SET visibility = #{visibility}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deletemyMatzip" flushCache="true" parameterType="com.lec.spring.matzip.domain.MyMatzip">
+        DELETE FROM my_matzip WHERE id = #{id}
+    </delete>
+
+</mapper>

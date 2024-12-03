@@ -8,11 +8,19 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class FoodKind {
+public class MyMatzip {
     private Long id;
-    private String kindName;
+    private Long matzipId;
+    private Long memberId;
     private LocalDateTime regdate;
+    private String visibility;
+    private String content;
+    private Integer starRating;
 }
+
+
+
+

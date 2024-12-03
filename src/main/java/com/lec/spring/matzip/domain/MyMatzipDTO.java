@@ -1,18 +1,21 @@
 package com.lec.spring.matzip.domain;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class FoodKind {
-    private Long id;
+public class MyMatzipDTO {
+    private MyMatzip             myMatzip;
+    private String imgUrl;
+    private String name;
     private String kindName;
-    private LocalDateTime regdate;
+    private List<String> tagName;
 }
