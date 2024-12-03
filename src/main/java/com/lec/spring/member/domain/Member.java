@@ -13,6 +13,7 @@ public class Member {
     private Long id;
     private String username;
     private String password;
+    private String re_password;
     private String email;
     private Integer point;
     private String nickname;
