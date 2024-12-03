@@ -5,6 +5,10 @@
 
 <mapper namespace="com.lec.spring.matzip.repository.ReviewRepository">
 
+    <select id="findAll" resultType="com.lec.spring.matzip.domain.Review">
+        SELECT * FROM my_review
+    </select>
+    
     <insert id="save" flushCache="true" parameterType="map" useGeneratedKeys="true" keyProperty="review.id" keyColumn="review.id">
         INSERT INTO my_review
             (matzip_id, member_id, content, regdate, star_rating)
