@@ -14,14 +14,18 @@
             (matzip_id, member_id, content, regdate, star_rating)
         VALUES
             (#{review.matzip.id}, #{review.member.id}, #{review.content}, #{review.regdate}, #{review.starRating})
+    </insert>
 
+    <insert id="saveTags" parameterType="map">
         <foreach collection="tags" item="tag" separator=";">
             INSERT INTO review_tag
-                (tag_id, my_review_id)
+            (tag_id, my_review_id)
             VALUES
-                (#{tag.id}, #{review.id})
+            (#{tag.id}, #{review.id})
         </foreach>
+    </insert>
 
+    <insert id="saveFoodKind" parameterType="map">
         INSERT INTO food_kind
             (id, kindname)
         VALUES
