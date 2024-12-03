@@ -12,9 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class Friend {
-
-    private Long senderId;
-    private Long receiverId;
+    private FriendId id;
+//    private Long senderId;
+//    private Long receiverId;
     private int intimacy = 0;
     private boolean isAccept = false;
     private LocalDateTime regdate;
