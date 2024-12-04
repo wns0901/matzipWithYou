@@ -16,13 +16,14 @@
         b.name "b_name",
         b.img_url "b_img_url",
         k.kindname "k_kindname",
-        t.tagname "t_tagname"
+        g.tagname "g_tagname"
     from
          my_matzip a
     JOIN matzip b ON a.matzip_id = b.id
     JOIN member c ON a.member_id = c.id
     JOIN food_kind k ON a.id = k.id
-    JOIN tag t ON a.id = t.id
+    JOIN matzip_tag t ON a.id = t.my_matzip_id
+    JOIN tag g ON g.id = t.tag_id
     WHERE
         1 = 1
     </sql>
@@ -41,7 +42,7 @@
         <result column="b_img_url" property="imgUrl"/>
         <result column="b_name" property="name"/>
         <result column="k_kindname" property="kindName"/>
-        <result column="t_tagname" property="tagName"/>
+        <result column="g_tagname" property="tagName"/>
         <collection property="MyMatzip" resultMap="mapMyMatzip"/>
     </resultMap>
 
@@ -60,13 +61,17 @@
 
     <select id="findAllOrderByFoodKindAsc" resultType="com.lec.spring.matzip.domain.MyMatzip">
         <include refid="SELECT_BASE"/>
-    ORDER BY b.kind_id ASC
+    AND k.kindname = #{k.kindname}
     </select>
 
     <select id="findAllOrderByTagAsc" resultType="com.lec.spring.matzip.domain.MyMatzip">
         <include refid="SELECT_BASE"/>
-     JOIN tag t ON a.id = t.id;
-     ORDER BY t.tagname ASC
+     AND
+     g.tagname IN
+        <foreach collection="array" item="e" separator="," open="(" close=")">
+            #{e}
+        </foreach>
+     ORDER BY g.tagname DESC
     </select>
 
     <update id="updateMatzip" flushCache="true" parameterType="com.lec.spring.matzip.domain.MyMatzip">
@@ -75,8 +80,7 @@
         WHERE id = #{id}
     </update>
 
-    <delete id="deletemyMatzip" flushCache="true" parameterType="com.lec.spring.matzip.domain.MyMatzip">
+    <delete id="deletemyMatzip" flushCache="true" parameterType="com.lec.spring.matzip.domain.MyMatzipDTO">
         DELETE FROM my_matzip WHERE id = #{id}
     </delete>
-
 </mapper>

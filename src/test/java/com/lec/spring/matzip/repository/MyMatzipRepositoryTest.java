@@ -27,6 +27,10 @@ class  MyMatzipRepositoryTest {
 
     @Test
     void findAllOrderByNameAsc() {
+        MyMatzipRepository myMatzipRepository = sqlSession.getMapper(MyMatzipRepository.class);
+      List<MyMatzip> list = myMatzipRepository.findAllOrderByNameAsc();
+
+      list.forEach(System.out::println);
     }
 
     @Test

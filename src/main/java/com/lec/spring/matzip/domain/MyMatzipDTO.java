@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class MyMatzipDTO {
-    private MyMatzip             myMatzip;
+    private MyMatzip myMatzip;
     private String imgUrl;
     private String name;
     private String kindName;
