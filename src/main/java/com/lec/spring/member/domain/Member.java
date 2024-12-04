@@ -13,8 +13,11 @@ public class Member {
     private Long id;
     private String username;
     private String password;
+    private String re_password;
     private String email;
     private Integer point;
     private String nickname;
     private String name;
+
+    private String referrerNickname; // 추천인 닉네임
 }
