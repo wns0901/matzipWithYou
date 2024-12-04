@@ -12,23 +12,25 @@
 <hr>
 
 <!-- 데이터가 없을 경우 -->
-<div th:if="${result == null or #lists.isEmpty(result)}">
+<div th:if="${tags == null or #lists.isEmpty(tags)}">
     <p>저장된 데이터가 없습니다.</p>
 </div>
 
 <!-- 데이터가 있을 경우 -->
-<div th:if="${result != null and !#lists.isEmpty(result)}">
+<div th:if="${tags != null and !#lists.isEmpty(tags)}">
     <table border="1">
         <thead>
         <tr>
             <th>회원 ID</th>
             <th>태그 ID</th>
+            <th>태그 이름</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${result}">
+        <tr th:each="item : ${tags}">
             <td th:text="${item.memberId}"></td> <!-- 회원 ID -->
             <td th:text="${item.tagId}"></td> <!-- 태그 ID -->
+            <td th:text="${item.tagName != null ? item.tagName : '태그 없음'}"></td> <!-- 태그 이름, null 처리 -->
         </tr>
         </tbody>
     </table>

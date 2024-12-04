@@ -1,5 +1,6 @@
 package com.lec.spring.matzip.controller;
 
+import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
 import com.lec.spring.matzip.service.UserMatzipTagStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,10 @@ public class UserMatzipTagStatusController {
 
     /*@RequestParam 없애니까 memberId 안되던거 해결됨*/
     @GetMapping("/singleList")
-    public String singleListTags(Long memberId,  Long myMatzipId, Model model) {
-        UserMatzipTagStatus source = userMatzipTagStatusService.findTagByIdAndMember(memberId, myMatzipId);
-        model.addAttribute("source", source );
+    public String singleListTags(Long memberId, Long myMatzipId, Model model) {
+        UserMatzipTagStatus source = userMatzipTagStatusService.findTagByMemberIdAndMatzipId(memberId, myMatzipId);
+        System.out.println("###############source = " + source);
+        model.addAttribute("tags", source );
         return "matzip/singleTagList"; // tagList.html로 이동
     }
 
@@ -45,17 +47,18 @@ public class UserMatzipTagStatusController {
     // 회원의 태그리스트 조회
     @GetMapping("/list")
     public String listTags(Long memberId, Model model) {
-        List<UserMatzipTagStatus> tags = userMatzipTagStatusService.findTagsByMemberAndMatzip(memberId);
+        List<UserMatzipTagStatus> tags = userMatzipTagStatusService.findTagsAndMatzipIdByMember(memberId);
+        System.out.println("###############tags = " + tags );
         model.addAttribute("tags", tags);
-
         return "matzip/tagList"; // tagList.html로 이동
     }
 
     //가게에 태그리스트 조회
     @GetMapping("/matzipList")
-    public String getMembersAndTags( Long myMatzipId, Model model) {
+    public String getMembersAndTags( Long myMatzipId,  Model model) {
         List<UserMatzipTagStatus> result = userMatzipTagStatusService.findMemberAndTagByMatzipId(myMatzipId);
-        model.addAttribute("result", result);
+        System.out.println("###############result = " + result);
+        model.addAttribute("tags", result);
         return "matzip/matzipTagList";
     }
 

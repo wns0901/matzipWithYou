@@ -1,5 +1,6 @@
 package com.lec.spring.matzip.repository;
 
+import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -18,10 +19,10 @@ public interface UserMatzipTagStatusRepository {
             Long memberId,
             Long myMatzipId  );
     //단일 태그 조회
-    UserMatzipTagStatus isExistTag(Long memberId, Long myMatzipId);
+    UserMatzipTagStatus findTagByMemberIdAndMatzipId(Long memberId, Long myMatzipId);
 
     // 유저 태그 조회
-    List<UserMatzipTagStatus> findTagsByMemberAndMatzip( Long memberId);
+    List<UserMatzipTagStatus> findTagsAndMatzipIdByMember(Long memberId);
 
     //가게태그 조회
     List<UserMatzipTagStatus> findMemberAndTagByMatzipId(Long myMatzipId);
