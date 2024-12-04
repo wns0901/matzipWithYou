@@ -6,7 +6,7 @@
 <mapper namespace="com.lec.spring.matzip.repository.UserMatzipTagStatusRepository">
     <sql id="SELECT_BASE">
         SELECT
-         member_id as 'mamberId',
+         member_id as 'memberId',
         my_matzip_id as 'myMatzipId',
         tag_id as 'tagId'
         FROM user_matzip_tag_status
@@ -19,11 +19,22 @@
         AND my_matzip_id = #{myMatzipId}
     </select>
 
-<!-- 저장-->
-    <insert id="save" flushCache="true" parameterType="com.lec.spring.matzip.domain.UserMatzipTagStatus" >
+    <!-- (회원별)태그 목록 조회 -->
+    <select id="findTagsByMemberAndMatzip" resultType="com.lec.spring.matzip.domain.UserMatzipTagStatus">
+        <include refid="SELECT_BASE" />
+        WHERE member_id = #{memberId}
+    </select>
+    <!-- (가게{matzip}별)태그 목록 조회 -->
+    <select id="findMemberAndTagByMatzipId" resultType="com.lec.spring.matzip.domain.UserMatzipTagStatus">
+        <include refid="SELECT_BASE" />
+        WHERE my_matzip_id = #{myMatzipId}
+    </select>
+
+
+    <!-- 저장-->
+    <insert id="tagSave" flushCache="true" parameterType="com.lec.spring.matzip.domain.UserMatzipTagStatus" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
         INSERT INTO user_matzip_tag_status (member_id, my_matzip_id, tag_id)
-        VALUES (#{memberId}, #{matzipId}, #{tagId})
---             VALUES (#{memberId.memberId}, #{matzipTag.matzipId}, #{tagId.tagId})
+        VALUES (#{memberId}, #{myMatzipId}, #{tagId})
     </insert>
 
 

@@ -1,18 +1,15 @@
 package com.lec.spring.matzip.controller;
 
-
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
 import com.lec.spring.matzip.service.UserMatzipTagStatusService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/matzip")
 public class UserMatzipTagStatusController {
 
@@ -23,30 +20,43 @@ public class UserMatzipTagStatusController {
         this.userMatzipTagStatusService = userMatzipTagStatusService;
     }
 
-    //저장
-    @CrossOrigin
+    @GetMapping("/new")
+    public String showTagForm() {
+        return "matzip/tagForm"; // tagForm.html로 이동
+    }
+
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody @RequestParam UserMatzipTagStatus userMatzipTagStatus) {
-        // 요청 처리 로직
-        System.out.println(userMatzipTagStatus);
-        return ResponseEntity.ok("저장 성공");
-    }
-
-    //조회
-    @CrossOrigin
-    @GetMapping("/find/{memberId}/{myMatzipId}")
-    public ResponseEntity<List<UserMatzipTagStatus>> findTagByIdAndMember(
-            @PathVariable @RequestParam Long memberId,
-            @PathVariable @RequestParam Long myMatzipId) {
-        Optional<List<UserMatzipTagStatus>> tagStatus = userMatzipTagStatusService.findTagByIdAndMember(memberId, myMatzipId);
-        return tagStatus.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-        /*todo
-        *  tagStatus가 값을 가지고 있을 경우 그  값을 ResposeEntitiy.ok() 메서드에 전달하여 http200OK응답을 생성함.
-        *  orElseGet()... => 만약 tagStatus가 비어있다면 즉 값이 없으면 orElse..가 호출된다.
-        *   이 경우 ResposnEntitiy.notFound().build() 가 실행되어 404 not found 가 호출한다.*/
+    @ResponseBody
+    public String saveTag(UserMatzipTagStatus userMatzipTagStatus) {
+        userMatzipTagStatusService.tagSave(userMatzipTagStatus);
+        return "ok"; // 태그 저장 후 리스트로 리다이렉트
     }
 
 
+    /*@RequestParam 없애니까 memberId 안되던거 해결됨*/
+    @GetMapping("/singleList")
+    public String singleListTags(Long memberId,  Long myMatzipId, Model model) {
+        UserMatzipTagStatus source = userMatzipTagStatusService.findTagByIdAndMember(memberId, myMatzipId);
+        model.addAttribute("source", source );
+        return "matzip/singleTagList"; // tagList.html로 이동
+    }
 
-}// end useMatzipTagStatusController
+
+    // 회원의 태그리스트 조회
+    @GetMapping("/list")
+    public String listTags(Long memberId, Model model) {
+        List<UserMatzipTagStatus> tags = userMatzipTagStatusService.findTagsByMemberAndMatzip(memberId);
+        model.addAttribute("tags", tags);
+
+        return "matzip/tagList"; // tagList.html로 이동
+    }
+
+    //가게에 태그리스트 조회
+    @GetMapping("/matzipList")
+    public String getMembersAndTags( Long myMatzipId, Model model) {
+        List<UserMatzipTagStatus> result = userMatzipTagStatusService.findMemberAndTagByMatzipId(myMatzipId);
+        model.addAttribute("result", result);
+        return "matzip/matzipTagList";
+    }
+
+}

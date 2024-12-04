@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>가게별 태그 정보</title>
+</head>
+<body>
+<h1>가게별 태그 정보</h1>
+
+<li> 가게의 태그들을 보여주는 페이지 입니다</li>
+<li> localhost:8080/matzip/matzipList?myMatzipId=5 </li>
+<hr>
+
+<!-- 데이터가 없을 경우 -->
+<div th:if="${result == null or #lists.isEmpty(result)}">
+    <p>저장된 데이터가 없습니다.</p>
+</div>
+
+<!-- 데이터가 있을 경우 -->
+<div th:if="${result != null and !#lists.isEmpty(result)}">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>회원 ID</th>
+            <th>태그 ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${result}">
+            <td th:text="${item.memberId}"></td> <!-- 회원 ID -->
+            <td th:text="${item.tagId}"></td> <!-- 태그 ID -->
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br>
+<hr>
+
+<button><a href="/matzip/new">새 데이터 추가</a></button>
+</body>
+</html>
