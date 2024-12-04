@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.lec.spring.matzip.repository.TagRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-04T00:40:54" hostname="jangjun-yeongs-MacBook-Air.local" time="0.543">
+  <properties/>
+  <testcase name="test()" classname="com.lec.spring.matzip.repository.TagRepositoryTest" time="0.543"/>
+  <system-out><![CDATA[09:40:53.657 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lec.spring.matzip.repository.TagRepositoryTest]: TagRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:40:53.707 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lec.spring.MatzipWithYouApplication for test class com.lec.spring.matzip.repository.TagRepositoryTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.6)
+
+2024-12-04T09:40:53.905+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.TagRepositoryTest     : Starting TagRepositoryTest using Java 17.0.12 with PID 27234 (started by jjy in /Users/jjy/Documents/gugbi/FullStack2409/matzipWithYou)
+2024-12-04T09:40:53.906+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.TagRepositoryTest     : The following 1 profile is active: "dev"
+2024-12-04T09:40:54.229+09:00  WARN 27234 --- [MatzipWithYou] [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.lec.spring]' package. Please check your configuration.
+2024-12-04T09:40:54.411+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2024-12-04T09:40:54.417+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-12-04T09:40:54.418+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.33]
+2024-12-04T09:40:54.447+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-12-04T09:40:54.448+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 533 ms
+2024-12-04T09:40:54.633+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-12-04T09:40:54.664+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-12-04T09:40:54.749+09:00  WARN 27234 --- [MatzipWithYou] [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore any request. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2024-12-04T09:40:54.850+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 62394 (http) with context path '/'
+2024-12-04T09:40:54.856+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.TagRepositoryTest     : Started TagRepositoryTest in 1.079 seconds (process running for 1.57)
+2024-12-04T09:40:55.287+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-04T09:40:55.371+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@59b3f162
+2024-12-04T09:40:55.372+09:00  INFO 27234 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+[Tag(id=1, tagName=혼밥, regdate=2024-12-02T17:10:03), Tag(id=2, tagName=느낌 좋은, regdate=2024-12-02T17:10:03)]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

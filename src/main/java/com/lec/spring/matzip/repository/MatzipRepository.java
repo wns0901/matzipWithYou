@@ -9,6 +9,8 @@ public interface MatzipRepository {
 
     List<Matzip> findAll();
 
+    Matzip findByName(String name);
+
     Matzip findById(Long id);
 
     int deleteById(Long id);
