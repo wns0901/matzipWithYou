@@ -14,4 +14,6 @@ public class ProfileImg {
     private Long memberId;  // 회원 일련번호
     private String sourcename;  // 원본 이름
     private String filename;    // 저장 이름
+
+    private boolean isImage;    // 이미지 파일 여부
 }
