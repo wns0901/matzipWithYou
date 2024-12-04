@@ -32,3 +32,4 @@ bin/
 application-dev.yml
 
 .gradle/
+build/
