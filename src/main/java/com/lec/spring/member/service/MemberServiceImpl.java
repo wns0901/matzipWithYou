@@ -1,8 +1,8 @@
 package com.lec.spring.member.service;
 
-import com.lec.spring.member.domain.Friend;
+// import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.Member;
-import com.lec.spring.member.repository.FriendRepository;
+//import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class MemberServiceImpl implements MemberService {
     private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
 
     private final MemberRepository memberRepository;
-    private final FriendRepository friendRepository;
+    //rivate final FriendRepository friendRepository;
 
 
     //private PasswordEncoder passwordEncoder;
@@ -25,7 +25,7 @@ public class MemberServiceImpl implements MemberService {
     //public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder) {
     public MemberServiceImpl(SqlSession sqlSession) {
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
-        this.friendRepository = sqlSession.getMapper(FriendRepository.class);
+        //this.friendRepository = sqlSession.getMapper(FriendRepository.class);
         //this.passwordEncoder = passwordEncoder;
     }
 
@@ -50,12 +50,12 @@ public class MemberServiceImpl implements MemberService {
                 memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
 
                 // 서로 친구
-                Friend friendship = new Friend();
-                friendship.setSenderId(member.getId());
-                friendship.setReceiverId(referrer.getId());
-                friendship.setIntimacy(10);
-                friendship.setAccept(true);
-                friendRepository.save(friendship);
+//                Friend friendship = new Friend();
+//                friendship.setSenderId(member.getId());
+//                friendship.setReceiverId(referrer.getId());
+//                friendship.setIntimacy(10);
+//                friendship.setAccept(true);
+//                friendRepository.save(friendship);
             }
         }
 
