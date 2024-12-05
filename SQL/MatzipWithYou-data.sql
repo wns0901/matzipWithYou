@@ -70,16 +70,12 @@ INSERT INTO authority (name)
 VALUES ('ROLE_MEMBER'),
        ('ROLE_ADMIN');
 
--- member 테이블
 INSERT INTO member (username, password, email, point, nickname, name)
-VALUES ('member1', '$2a$10$hK5DULwBYfLk2RSHpW.d1erp8HdRvZ9Vw5Qfd.hf9tl0wJzKoVd2i', 'member1@email.com', 100, 'foodie1',
-        '이동희'),
-       ('member2', '$2a$10$2GBx4GxGlq8WZ8f9cl9hEOyQh1RzFXm.QDT4oJ.aF3rgy4rJaFiqC', 'member2@email.com', 150, 'matzip2',
-        '이유나'),
-       ('admin1', '$2a$10$BOoHrUqzn6T8JOvHxfKQZuCJIvR0VZgGHKQyxZHHT2zaZVIDwqrYy', 'admin@email.com', 500, 'admin_kim',
-        '장준영'),
-       ('member3', '$2a$10$qaQOXb3.BlK1CvYHy1DAZeVWz3qxqm9H2NzKkQ4kVXz7glkHSDjt2', 'member3@email.com', 80, 'gourmet3',
-        '현지윤');
+VALUES
+    ('member1', '$2a$10$dPa0g1Oo8yiPKkkUDXeD8.aMhH67OFoZk0mmG5alGOYnx0GsXJmPW', 'member1@email.com', 100, 'foodie1', '이동희'),
+    ('member2', '$2a$10$MRPEDXXZzGD2ZAfPR9eK7ug2/JfxKvb3ICfdYMakSV/dA1mUGT7dC', 'member2@email.com', 150, 'matzip2', '이유나'),
+    ('admin1', '$2a$10$7lp6mpRwLIQbKKIXUMDR/.Uhs2.4Z6ksG7mtgzYaVL1gv4TlMyH2q', 'admin@email.com', 500, 'admin_kim', '장준영'),
+    ('member3', '$2a$10$QI4rqzZSR7aUc9N6YjIxk.B4KKhJcHnVR8qzQoXtVvNm0cXHvJ3K2', 'member3@email.com', 80, 'gourmet3', '현지윤');
 
 -- member_authorities 테이블 더미 데이터
 INSERT INTO member_authorities (authorities_id, member_id)
