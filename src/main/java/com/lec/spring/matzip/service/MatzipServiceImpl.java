@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -49,5 +50,11 @@ public class MatzipServiceImpl implements MatzipService {
         String url = str.substring(str.indexOf("url(\"") + 5, str.indexOf("\")"));
 
         return url;
+    }
+
+    @Override
+    public Matzip getMatzipById(Long id, Model model) {
+
+        return matzipRepository.findById(id);
     }
 }
