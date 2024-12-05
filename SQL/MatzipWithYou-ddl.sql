@@ -58,7 +58,8 @@ CREATE TABLE matzip
     gu            VARCHAR(5)  NOT NULL COMMENT '지역구',
     kakao_map_url TEXT        NOT NULL COMMENT '카카오맵 상세페이지 url',
     name          VARCHAR(50) NOT NULL COMMENT '가게 이름',
-    PRIMARY KEY (id)
+    regdate       DATETIME    NULL DEFAULT now() COMMENT '등록일',
+        PRIMARY KEY (id)
 ) COMMENT '맛집';
 
 CREATE TABLE matzip_tag
