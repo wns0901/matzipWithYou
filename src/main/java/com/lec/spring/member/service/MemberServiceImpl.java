@@ -1,8 +1,10 @@
 package com.lec.spring.member.service;
 
 // import com.lec.spring.member.domain.Friend;
+import com.lec.spring.member.domain.Authority;
 import com.lec.spring.member.domain.Member;
 //import com.lec.spring.member.repository.FriendRepository;
+import com.lec.spring.member.repository.AuthorityRepository;
 import com.lec.spring.member.repository.MemberRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +19,31 @@ public class MemberServiceImpl implements MemberService {
     private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
 
     private final MemberRepository memberRepository;
-    //rivate final FriendRepository friendRepository;
+    private final AuthorityRepository authorityRepository;
 
+    //private final FriendRepository friendRepository;
 
-    //private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-    //public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder) {
-    public MemberServiceImpl(SqlSession sqlSession) {
+    public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder) {
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
+        this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
         //this.friendRepository = sqlSession.getMapper(FriendRepository.class);
-        //this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public int register(Member member) {
         member.setUsername(member.getUsername().toUpperCase());
-        //member.setPassword(passwordEncoder.encode(member.getPassword()));
-        return memberRepository.save(member);
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+        int result = memberRepository.save(member);
+
+        Authority memberAuthority = authorityRepository.findByName("ROLE_MEMBER");
+        if (memberAuthority != null) {
+            authorityRepository.addAuthority(member.getId(), memberAuthority.getId());
+        }
+
+        return result;
     }
 
     @Override
