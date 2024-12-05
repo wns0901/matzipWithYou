@@ -47,8 +47,8 @@
     <select id="listHiddenMatzipTagIds" resultType="com.lec.spring.matzip.domain.UserMatzipTagStatus">
         SELECT my_matzip_id AS myMatzipId
         FROM user_matzip_tag_status
-        WHERE my_matzip_id IN (
-            SELECT matzip_id as myMatzipId FROM my_matzip WHERE visibility = 'HIDDEN'
+         WHERE my_matzip_id IN (
+             SELECT matzip_id as myMatzipId FROM my_matzip WHERE visibility = 'HIDDEN'
         )
     </select>
 

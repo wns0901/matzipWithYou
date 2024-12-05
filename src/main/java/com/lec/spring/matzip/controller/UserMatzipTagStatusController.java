@@ -64,7 +64,7 @@ public class UserMatzipTagStatusController {
 
     //히든 태그 조회
     @GetMapping("/hiddenTags")
-    public List<Long> getHiddenMatzipTagIds(@RequestParam Long myMatzipId) {
+    public List<Long> getHiddenMatzipTagIds(Long myMatzipId) {
         System.out.println("HIDDEN 맛집 ID 요청: " + myMatzipId);
         List<Long> hiddenTags = userMatzipTagStatusService.listHiddenMatzipTagIds(myMatzipId);
         System.out.println("응답할 히든 태그 ID: " + hiddenTags);

@@ -1,10 +1,6 @@
 package com.lec.spring.matzip.repository;
 
-import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +24,7 @@ public interface UserMatzipTagStatusRepository {
     List<UserMatzipTagStatus> findMemberAndTagByMatzipId(Long myMatzipId);
 
     //히든태그 조회
-    List<Long> listHiddenMatzipTagIds(Long myMatzipId);
+    List<UserMatzipTagStatus> listHiddenMatzipTagIds(Long myMatzipId);
 
 } // end HintPurchaseRepository
 
