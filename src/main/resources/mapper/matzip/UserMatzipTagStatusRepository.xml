@@ -23,20 +23,6 @@
         where 1 =1
     </sql>
 
-<!--   <sql id="SELECT_JOIN_2">-->
-<!--        SELECT-->
-<!--            user.member_id AS 'memberId',-->
-<!--            user.my_matzip_id AS 'myMatzipId',-->
-<!--             user.tag_id AS 'tagId',-->
-<!--            user.tagname AS 'tagName'-->
-
-<!--        FROM user_matzip_tag_status user-->
-<!--        JOIN tag t-->
-<!--        ON user.tag_id = t.id-->
-<!--        where user.tag_id = #{tagId}-->
-<!--    </sql>-->
-
-
 
     <!-- 조회-->
     <select id="findTagByMemberIdAndMatzipId"  resultType="com.lec.spring.matzip.domain.UserMatzipTagStatus">
@@ -55,6 +41,15 @@
     <select id="findMemberAndTagByMatzipId" resultType="com.lec.spring.matzip.domain.UserMatzipTagStatus">
         <include refid="SELECT_JOIN" />
       and user.my_matzip_id = #{myMatzipId}
+    </select>
+
+    <!--히든맛집 list 불러오기-->
+    <select id="listHiddenMatzipTagIds" resultType="com.lec.spring.matzip.domain.UserMatzipTagStatus">
+        SELECT my_matzip_id AS myMatzipId
+        FROM user_matzip_tag_status
+        WHERE my_matzip_id IN (
+            SELECT matzip_id as myMatzipId FROM my_matzip WHERE visibility = 'HIDDEN'
+        )
     </select>
 
 

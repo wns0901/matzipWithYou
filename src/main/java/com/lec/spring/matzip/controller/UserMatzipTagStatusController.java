@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/matzip")
 public class UserMatzipTagStatusController {
 
@@ -60,6 +60,15 @@ public class UserMatzipTagStatusController {
         System.out.println("###############result = " + result);
         model.addAttribute("tags", result);
         return "matzip/matzipTagList";
+    }
+
+    //히든 태그 조회
+    @GetMapping("/hiddenTags")
+    public List<Long> getHiddenMatzipTagIds(@RequestParam Long myMatzipId) {
+        System.out.println("HIDDEN 맛집 ID 요청: " + myMatzipId);
+        List<Long> hiddenTags = userMatzipTagStatusService.listHiddenMatzipTagIds(myMatzipId);
+        System.out.println("응답할 히든 태그 ID: " + hiddenTags);
+        return hiddenTags;
     }
 
 }

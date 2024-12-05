@@ -20,7 +20,10 @@ public interface UserMatzipTagStatusService {
    // 가게별 다중 태그 조회
    List<UserMatzipTagStatus> findMemberAndTagByMatzipId(Long myMatzipId);
 
-   //List<UserMatzipTagStatus> findTagsByMemberAndMatzip(Long memberId, String tagName, Long tagId);
+   //히든태그 조회
+   List<Long> listHiddenMatzipTagIds(Long myMatzipId);
 
-   //List<UserMatzipTagStatus> findMemberAndTagByMatzipId(Long myMatzipId, String tagName, Long tagId);
+
+
+
 }

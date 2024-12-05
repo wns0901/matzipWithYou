@@ -27,6 +27,9 @@ public interface UserMatzipTagStatusRepository {
     //가게태그 조회
     List<UserMatzipTagStatus> findMemberAndTagByMatzipId(Long myMatzipId);
 
+    //히든태그 조회
+    List<Long> listHiddenMatzipTagIds(Long myMatzipId);
+
 } // end HintPurchaseRepository
 
 
