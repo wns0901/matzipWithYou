@@ -70,7 +70,7 @@ public class MemberController {
 
     @RequestMapping("/rejectAuth")
     public String rejectAuth() {
-        return "/rejectAuth";
+        return "common/rejectAuth";
     }
 
     MemberValidator memberValidator;
