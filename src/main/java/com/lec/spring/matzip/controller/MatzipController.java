@@ -5,6 +5,7 @@ import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.service.MatzipService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,13 @@ public class MatzipController {
     public KakaoPlaceDTO saveMatZip(@RequestBody KakaoPlaceDTO data) {
         matzipService.saveMatzip((Matzip) data.getKakao(), data.getKind());
         return data;
+    }
+
+    @GetMapping("/homework/{id}")
+    public String getHomework(@PathVariable Long id, Model model) {
+        Matzip matzip = matzipService.getMatzipById(id, model);
+        model.addAttribute("matzip", matzip);
+        return "matzip/detail";
     }
 
 }
