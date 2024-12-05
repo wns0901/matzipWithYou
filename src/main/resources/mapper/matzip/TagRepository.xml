@@ -28,4 +28,17 @@
     <delete id="deleteById">
         DELETE FROM tag WHERE id = #{id}
     </delete>
+
+    <select id="findNonMatchingTags" parameterType="map" resultType="com.lec.spring.matzip.domain.Tag">
+        SELECT mt.tag_id AS id,
+               t.tagname AS tagname,
+               t.regdate
+        FROM matzip_tag mt
+        JOIN tag t ON mt.tag_id = t.id
+        WHERE my_matzip_id = #{myMatzipId}
+        AND tag_id NOT IN
+        <foreach collection="tagIds" item="e" open="(" close=")" separator=",">
+            #{e}
+        </foreach>
+    </select>
 </mapper>

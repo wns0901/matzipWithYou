@@ -20,7 +20,7 @@ class TagRepositoryTest {
     @Test
     void test() {
         TagRepository tagRepository = sqlSession.getMapper(TagRepository.class);
-        List<Tag> tags = tagRepository.findByIds(List.of(1,2));
+        List<Tag> tags = tagRepository.findNonMatchingTags(List.of(7L, 9L), 5L);
 
         System.out.println(tags);
     }
