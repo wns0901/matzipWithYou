@@ -2,6 +2,7 @@ package com.lec.spring.matzip.controller;
 
 import com.lec.spring.matzip.domain.FoodKind;
 import com.lec.spring.matzip.domain.Review;
+import com.lec.spring.matzip.domain.ReviewDTO;
 import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.service.ReviewService;
 import jakarta.validation.Valid;
@@ -38,28 +39,28 @@ public class ReviewController {
     public void write() {}
 
     @PostMapping("/write")
-    public String writeOk(@Valid Review review
-            , @RequestParam List<Tag> tag
-            , @RequestParam FoodKind foodKind
+    public String writeOk(@Valid ReviewDTO reviewDTO
+            , @RequestParam List<Long> tagIds
             , BindingResult bindingResult
             , Model model
             , RedirectAttributes redirectAttributes
     ) {
         if(bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("tags", Tag.getTag());
+            redirectAttributes.addFlashAttribute("tags", Tag.builder());
 
             List<FieldError> errorList = bindingResult.getFieldErrors();
             for (FieldError error : errorList) {
                 redirectAttributes.addFlashAttribute("error_" + error.getField(), error.getDefaultMessage());
             }
 
-            if (tag.size() < 3 || tag.size() > 5) {
+            if (tagIds.size() < 3 || tagIds.size() > 5) {
                 redirectAttributes.addFlashAttribute("error_tag", "태그는 최소 3개, 최대 5개까지 선택 가능합니다.");
             }
 
             return "redirect:/review/write";
         }
-        model.addAttribute("review", reviewService.addReview(review, tag, foodKind));
+        model.addAttribute("review", reviewService.addReview(reviewDTO, model));
+        model.addAttribute("tags", reviewService.addReviewTag(tagIds, reviewDTO.getId()));
         return "review/writeOk";
     }
 

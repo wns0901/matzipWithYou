@@ -1,10 +1,8 @@
 package com.lec.spring.matzip.service;
 
-import com.lec.spring.matzip.domain.FoodKind;
-import com.lec.spring.matzip.domain.Matzip;
-import com.lec.spring.matzip.domain.Review;
-import com.lec.spring.matzip.domain.Tag;
+import com.lec.spring.matzip.domain.*;
 import com.lec.spring.member.domain.Member;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -12,11 +10,15 @@ public interface ReviewService {
 
     List<Review> getAllReviews();
 
-    int addReview(Review review, List<Tag> tags, FoodKind foodKind);
+    Review findById(Long id);
 
-    boolean isHiddenMatzip(MyMatzip myMatzip, Friend friend);
+    int addReview(ReviewDTO reviewDTO, Model model);
 
-    int rewardReview(Review review, Member member);
+    List<ReviewTag> addReviewTag(List<Long> tagIds, Long reviewId);
 
-    int deleteReview(Long id);
+    boolean isHiddenMatzip(Long matzipId, Long memberId);
+
+    int rewardReview(Long memberId, Integer memberPoint, int rewardPoint);
+
+    Review deleteReview(Long id);
 }

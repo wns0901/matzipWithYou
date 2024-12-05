@@ -17,8 +17,4 @@ public class Review {
     private String content;
     private LocalDateTime regdate;
     private int starRating;
-    private boolean isDeleted;
-
-    private Matzip matzip;
-    private Member member;
 }

@@ -9,7 +9,7 @@ public interface TagRepository {
 
     Tag findById(int id);
 
-    List<Tag> findByIds(List<Integer> ids);
+    List<Tag> findByIds(List<Long> ids);
 
     List<Tag> findAll();
 

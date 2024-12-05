@@ -1,21 +1,21 @@
 package com.lec.spring.matzip.repository;
 
-import com.lec.spring.matzip.domain.FoodKind;
-import com.lec.spring.matzip.domain.Matzip;
-import com.lec.spring.matzip.domain.Review;
-import com.lec.spring.matzip.domain.Tag;
+import com.lec.spring.matzip.domain.*;
 import com.lec.spring.member.domain.Member;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
 public interface ReviewRepository {
     List<Review> findAll();
 
-    int save(Review review, List<Tag> tags, FoodKind foodKind);
+    Review findById(Long id);
 
-    boolean checkHiddenMatzip(MyMatzip myMatzip, Friend friend);
+    int save(ReviewDTO reviewDTO, Model model);
 
-    int rewardHidden(Review review, Member member);
+    int saveReviewTags(List<ReviewTag> reviewTags);
 
-    int deleteById(Long id);
+    boolean checkHiddenMatzip(Long matzipId, Long memberId);
+
+    Review deleteById(Long id);
 }
