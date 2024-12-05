@@ -25,6 +25,11 @@ ALTER TABLE matzip
     AUTO_INCREMENT = 1;
 
 DELETE
+FROM my_matzip;
+ALTER TABLE my_matzip
+    AUTO_INCREMENT = 1;
+
+DELETE
 FROM food_kind;
 ALTER TABLE food_kind
     AUTO_INCREMENT = 1;
@@ -33,6 +38,35 @@ DELETE
 FROM wish_list;
 ALTER TABLE wish_list
     AUTO_INCREMENT = 1;
+
+DELETE
+FROM my_review;
+ALTER TABLE my_review
+    AUTO_INCREMENT = 1;
+
+DELETE
+FROM authority;
+ALTER TABLE authority
+    AUTO_INCREMENT=1;
+
+DELETE
+FROM matzip_tag;
+ALTER TABLE matzip_tag
+    AUTO_INCREMENT = 1;
+
+DELETE
+FROM user_matzip_tag_status;
+ALTER TABLE user_matzip_tag_status
+    AUTO_INCREMENT = 1;
+
+DELETE
+FROM tag;
+ALTER TABLE tag
+    AUTO_INCREMENT = 1;
+
+
+
+
 
 -- authority 테이블 더미 데이터
 INSERT INTO authority (name)
@@ -96,3 +130,125 @@ VALUES
 
      ,(4,3)
      ,(4,6);
+
+-- my_matzip 나의 맛집 테이블 샘플 데이터
+INSERT INTO my_matzip (matzip_id, member_id, visibility, content, star_rating)
+VALUES
+    (1,3,'PRIVATE','나만 알고 싶은 비공개 맛집',5),
+    (2,2,'PUBLIC','누구에게나 알려주고 싶은 맛없는 맛집',2),
+    (5,4,'HIDDEN','누군가 찾아줬으면 하는  맛집',4),
+    (6,1,'HIDDEN','힌트 구매해줬으면 히든맛집',1),
+    (4,3,'PUBLIC','좋아요',1),
+    (3,2,'PRIVATE','개인맛집',5),
+    (1,4,'HIDDEN','히든맛집',4),
+    (6,1,'PUBLIC','공개맛집',5)
+;
+
+-- friend 테이블 샘플 데이터
+INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept) VALUES
+                                                                    (1, 2, 200, TRUE),
+                                                                    (1, 3, 100, TRUE),
+                                                                    (1, 4, 0, FALSE),
+                                                                    (2, 4, 500, TRUE),
+                                                                    (2, 3, 300, TRUE),
+                                                                    (3, 4, 0, FALSE);
+
+-- tag 데이터 생성
+INSERT INTO tag (tagname)
+VALUES
+    ('혼밥'), -- 1
+    ('느낌 좋은'), -- 2
+    ('JMT'), -- 3
+    ('맛있다'), -- 4
+    ('깔끔하다'), -- 5
+    ('친절하다'), -- 6
+    ('양많다'), -- 7
+    ('분위기좋다'), -- 8
+    ('가성비굿'), -- 9
+    ('음식이 빨리 나와요'), -- 10
+    ('카공'), -- 11
+    ('친구와 함께'), -- 12
+    ('연인과 함께'), -- 13
+    ('매장이 청결해여'), -- 14
+    ('인테리어가 멋져요'); -- 15
+
+-- my_review 테이블 샘플 데이터
+INSERT INTO my_review (member_id, matzip_id, content, regdate, star_rating)
+VALUES
+    (1, 3, '분위기 좋고 음식이 정말 맛있어요!', '2024-01-15 12:30:00', 5),
+    (1, 4, '조금 비싸지만 퀄리티는 좋네요', '2024-02-20 18:45:00', 4),
+    (1, 6, '서비스가 별로였어요', '2024-03-10 19:15:00', 2),
+
+    (2, 2, '친구들과 오기 좋은 맛집!', '2024-01-25 20:00:00', 4),
+    (2, 4, '특별한 맛은 없지만 무난합니다', '2024-02-05 13:20:00', 3),
+    (2, 1, '완벽한 맛집!', '2024-03-05 20:15:00', 5),
+
+    (3, 2, '매운 음식 좋아하는 분들 추천!', '2024-01-10 11:45:00', 4),
+    (3, 6, '양이 너무 많아요', '2024-03-15 14:00:00', 3),
+    (3, 6, '최고의 맛집!!!', '2024-04-20 19:45:00', 5),
+
+    (4, 1, '가성비 최고', '2024-02-15 12:10:00', 5),
+    (4, 2, '분위기 좋은 레스토랑', '2024-03-25 20:30:00', 4),
+    (4, 5, '실망스러운 경험', '2024-01-05 19:00:00', 2);
+
+-- review_tag
+INSERT INTO review_tag (my_review_id, tag_id)
+VALUES
+    (1, 1),
+    (1, 5),
+    (1, 2),
+    (1, 8),
+    (1, 9),
+    (2, 7),
+    (2, 5),
+    (2, 12),
+    (2, 11),
+    (2, 9),
+    (3, 1),
+    (3, 5),
+    (3, 2),
+    (4, 8),
+    (4, 9),
+    (4, 10),
+    (4, 3),
+    (5, 12),
+    (5, 15),
+    (5, 14),
+    (6, 1),
+    (6, 15),
+    (6, 7),
+    (6, 3),
+    (6, 9);
+
+insert into matzip_tag (tag_id, my_matzip_id) values
+                                                  (1,1),
+                                                  (12, 1),
+                                                  (11, 1),
+
+                                                  (15, 2),
+                                                  (6, 2),
+                                                  (8, 2),
+
+                                                  (9, 3),
+                                                  (11, 3),
+                                                  (3, 3),
+
+                                                  (3, 4),
+                                                  (1, 4),
+                                                  (2, 4),
+                                                  (8, 4),
+                                                  (9, 4),
+
+                                                  (2, 5),
+                                                  (9, 5),
+                                                  (7, 5),
+
+                                                  (7, 6),
+                                                  (2, 6),
+                                                  (1, 6);
+
+--  친구관계 && 히든
+insert into user_matzip_tag_status (member_id, my_matzip_id, tag_id) values
+                                                                         (3, 2, 15),
+                                                                         (4, 5, 7),
+                                                                         (2, 4, 1);
