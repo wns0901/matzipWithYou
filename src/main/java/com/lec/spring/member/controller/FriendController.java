@@ -21,14 +21,13 @@ public class FriendController {
     // 친구 요청 보내기
     @PostMapping("/request")
     public ResponseEntity<String> sendFriendRequest(
-            @RequestParam Long senderId,
-            @RequestParam Long receiverId) {
-        int result = friendService.sendFriendRequest(senderId, receiverId);
+            Friend friend) {
+        int result = friendService.sendFriendRequest(friend);
         if (result > 0) {
             return ResponseEntity.ok("친구 신청에 성공했습니다.");
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("친구 신청에 실패했습니다.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("친구 신청에 실패했습니다. 이미 친구거나 수락 대기중입니다.");
         }
     }
 
@@ -42,14 +41,12 @@ public class FriendController {
     // 요청 수락/거절
     @PostMapping("/response")
     public ResponseEntity<Integer> respondToRequest(
-            @RequestParam Long senderId,
-            @RequestParam Long receiverId,
-            @RequestParam Boolean accept) {
-        int affectedRows = friendService.respondToRequest(senderId, receiverId, accept);
+            Friend friend) {
+        int affectedRows = friendService.respondToRequest(friend);
         return ResponseEntity.ok(affectedRows);
     }
 
-    // 친구 목록 가져오기
+    // 내 친구 목록 가져오기
     @GetMapping("/list/{id}")
     public ResponseEntity<List<Friend>> getFriends(@PathVariable Long id) {
         List<Friend> friends = friendService.getFriends(id);

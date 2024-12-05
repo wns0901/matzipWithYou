@@ -8,21 +8,17 @@ import java.util.List;
 @Repository
 public interface FriendRepository{
 
-    // id 로 신청 받은 유저 리턴
-    List<Friend> findByReceiver(Long receiverId);
-
-    // id로 내가 보낸 신청 리턴
-    List<Friend> findBySender(Long senderId);
+    // 친구 신청시 이미 보낸 신청은 없나 확인용
+    boolean isAlreadyFriend(Friend friend);
 
     // 친구 목록 조회 (수락된 상태만)
-    List<Friend> findFriends(Long userId);
+    List<Friend> findFriends(Long id);
 
     // 대기 중인 요청 목록 조회
-    List<Friend> findPendingRequests(Long userId);
+    List<Friend> findPendingRequests(Long id);
 
-
-
-
+    // 요청 하나 수락/거절 하기
+    Friend findPendingRequest(Friend friend);
 
     // 친구 요청 보내기
     int sendFriendRequest(Long receiverId, Long senderId);
