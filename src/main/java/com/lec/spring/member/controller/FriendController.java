@@ -2,6 +2,7 @@ package com.lec.spring.member.controller;
 
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.service.FriendService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,16 @@ public class FriendController {
 
     // 친구 요청 보내기
     @PostMapping("/request")
-    public ResponseEntity<Void> sendFriendRequest(@RequestParam Long senderId, @RequestParam Long receiverId) {
-        friendService.sendFriendRequest(senderId, receiverId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> sendFriendRequest(
+            @RequestParam Long senderId,
+            @RequestParam Long receiverId) {
+        int result = friendService.sendFriendRequest(senderId, receiverId);
+        if (result > 0) {
+            return ResponseEntity.ok("친구 신청에 성공했습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("친구 신청에 실패했습니다.");
+        }
     }
 
     // 친구 요청 목록 가져오기
@@ -33,12 +41,12 @@ public class FriendController {
 
     // 요청 수락/거절
     @PostMapping("/response")
-    public ResponseEntity<Void> respondToRequest(
+    public ResponseEntity<Integer> respondToRequest(
             @RequestParam Long senderId,
             @RequestParam Long receiverId,
             @RequestParam Boolean accept) {
-        friendService.respondToRequest(senderId, receiverId, accept);
-        return ResponseEntity.ok().build();
+        int affectedRows = friendService.respondToRequest(senderId, receiverId, accept);
+        return ResponseEntity.ok(affectedRows);
     }
 
     // 친구 목록 가져오기

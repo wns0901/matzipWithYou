@@ -7,10 +7,10 @@ import java.util.List;
 public interface FriendService {
 
     // 친구 요청 보내기
-    void sendFriendRequest(Long senderId, Long receiverId);
+    int sendFriendRequest(Long senderId, Long receiverId);
 
     // 친구 요청 수락/거절
-    void respondToRequest(Long senderId, Long receiverId, boolean accept);
+    int respondToRequest(Long senderId, Long receiverId, boolean accept);
 
     // 친구 목록 가져오기
     List<Friend> getFriends(Long userId);
@@ -18,3 +18,4 @@ public interface FriendService {
     // 친구 요청 대기중
     List<Friend> getPendingRequests(Long receiverId);
 }
+
