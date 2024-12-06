@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,6 +8,13 @@
 <div class="container">
     <h1>HOME</h1>
 <!--    <a class="btn" th:href="@{/}"></a>-->
+    <!-- 로그인 했을때는 username 과 로그아웃 form 보여주기 -->
+    <form th:action="@{/member/logout}" method="POST" sec:authorize="isAuthenticated()" th:with="member=${#authentication.getPrincipal().getMember()}">
+        <span>
+        <span>[[${member.username}]]([[${member.name}]]) 님 환영합니다</span>
+        <span><button class="btn" type="submit">Logout</button></span>
+    </span>
+    </form>
 </div>
 </body>
 </html>

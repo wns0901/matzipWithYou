@@ -32,11 +32,11 @@ public class MemberValidator implements Validator {
         // username 검증 (8~20자)
         String username = member.getUsername();
         if(username == null || username.trim().isEmpty()){
-            errors.rejectValue("username", "username은 필수입니다");
+            errors.rejectValue("username", "ID는 필수입니다");
         } else if(username.length() < 8 || username.length() > 20) {
-            errors.rejectValue("username", "username은 8~20자 여야 합니다");
+            errors.rejectValue("username", "ID는 8~20자 여야 합니다");
         } else if(memberService.isExist(username)){
-            errors.rejectValue("username", "이미 존재하는 아이디(username) 입니다");
+            errors.rejectValue("username", "이미 존재하는 아이디입니다");
         }
 
         // password 검증 (8~16자)
@@ -68,7 +68,7 @@ public class MemberValidator implements Validator {
 
         // 비밀번호 확인 검증
         if(!member.getPassword().equals(member.getRe_password())){
-            errors.rejectValue("re_password", "비밀번호와 비밀번호 확인 입력값은 같아야 합니다");
+            errors.rejectValue("re_password", "비밀번호 확인란을 다시 입력해주세요");
         }
     }
 
