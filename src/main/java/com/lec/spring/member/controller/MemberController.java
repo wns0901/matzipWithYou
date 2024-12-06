@@ -39,14 +39,14 @@ public class MemberController {
             , Model model
             , RedirectAttributes redirectAttributes
     ) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("username", member.getUsername());
             redirectAttributes.addFlashAttribute("name", member.getName());
             redirectAttributes.addFlashAttribute("email", member.getEmail());
             redirectAttributes.addFlashAttribute("nickname", member.getNickname());
 
             List<FieldError> errorList = bindingResult.getFieldErrors();
-            for(FieldError error : errorList){
+            for (FieldError error : errorList) {
                 redirectAttributes.addFlashAttribute("error", error.getCode());
                 break;
             }
@@ -57,6 +57,7 @@ public class MemberController {
         int cnt = memberService.register(member);
         model.addAttribute("result", cnt);
 
+        System.out.println(member.getUsername());
         return "member/registerOk";
     }
 
@@ -66,7 +67,11 @@ public class MemberController {
         return "member/login";
     }
 
-    // rejectAuth
+
+    @RequestMapping("/rejectAuth")
+    public String rejectAuth() {
+        return "common/rejectAuth";
+    }
 
     MemberValidator memberValidator;
 
