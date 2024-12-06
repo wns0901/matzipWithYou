@@ -81,10 +81,10 @@ VALUES ('ROLE_MEMBER'),
 
 INSERT INTO member (username, password, email, point, nickname, name)
 VALUES
-    ('member1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member1@email.com', 100, 'foodie1', '이동희'),
-    ('member2', '$2a$10$9eSoUc/.K3YyzQq5ZpOxnO01H0.oT8l.hlxgGDLS.mRBShESweioC', 'member2@email.com', 150, 'matzip2', '이유나'),
-    ('admin1', '$2a$10$csFKAeIbLoeMc.CdW0/AN.ydPVEZstCSLUf6L2st8ExYO4.JakF8.', 'admin@email.com', 500, 'admin_kim', '장준영'),
-    ('member3', '$2a$10$Qk.A1REypdS/s1YmvjmiIO2ES/6AfB45asIW7kM/7d3yLbOKp1zS2', 'member3@email.com', 80, 'gourmet3', '현지윤');
+    ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member1@email.com', 100, 'foodie1', '이동희'),
+    ('member_user2', '$2a$10$9eSoUc/.K3YyzQq5ZpOxnO01H0.oT8l.hlxgGDLS.mRBShESweioC', 'member2@email.com', 150, 'matzip2', '이유나'),
+    ('admin1_admin1', '$2a$10$csFKAeIbLoeMc.CdW0/AN.ydPVEZstCSLUf6L2st8ExYO4.JakF8.', 'admin@email.com', 500, 'admin_kim', '장준영'),
+    ('member_user3', '$2a$10$Qk.A1REypdS/s1YmvjmiIO2ES/6AfB45asIW7kM/7d3yLbOKp1zS2', 'member3@email.com', 80, 'gourmet3', '현지윤');
 
 -- member_authorities 테이블 더미 데이터
 INSERT INTO member_authorities (authorities_id, member_id)
