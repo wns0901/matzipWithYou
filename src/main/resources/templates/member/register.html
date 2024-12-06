@@ -6,6 +6,12 @@
 </head>
 <body>
 <h1>회원가입</h1>
+<div>
+    <div class="text-danger" th:text="${error }">
+        <!-- 오류 -->
+    </div>
+</div>
+<br>
 <div class="row">
     <form method="POST" th:action="@{/member/register}">
         <div class="form-group">
