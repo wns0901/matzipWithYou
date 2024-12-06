@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import java.io.IOException;
@@ -16,12 +17,24 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     }
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-        PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws ServletException, IOException {
 
         LocalDateTime loginTime = LocalDateTime.now();
         request.getSession().setAttribute("loginTime", loginTime);
 
+        // OAuth2 로그인인 경우
+        if (authentication instanceof OAuth2AuthenticationToken) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+
+            // 추가 정보가 필요한 경우 (임시 닉네임으로 확인)
+            if (principalDetails.getMember().getNickname().startsWith("TEMP_")) {
+                response.sendRedirect("/member/additional-info");
+                return;
+            }
+        }
+
+        // OAuth2가 아니거나 추가 정보가 필요없는 경우
         super.onAuthenticationSuccess(request, response, authentication);
     }
 
@@ -45,5 +58,4 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         }
         return ip;
     }
-
 }
