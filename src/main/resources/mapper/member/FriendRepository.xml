@@ -42,10 +42,19 @@
 
     <!-- 수락된 친구 목록 조회 -->
     <select id="findFriends" resultType="com.lec.spring.member.domain.Friend">
-        SELECT * FROM friend f
-        JOIN member m ON (f.sender_id = m.id OR f.receiver_id = m.id)
-        WHERE (sender_id = #{id} OR receiver_id = #{id})
-          AND is_accept = true
+        SELECT
+            CASE
+                WHEN f.sender_id = #{id} THEN f.receiver_id
+                WHEN f.receiver_id = #{id} THEN f.sender_id
+                END AS friend_id,
+            m.nickname,
+            f.intimacy,
+            f.regdate
+        FROM friend f
+                 JOIN member m ON
+            (f.sender_id = #{id} AND f.receiver_id = m.id) OR
+            (f.receiver_id = #{id} AND f.sender_id = m.id)
+        WHERE f.is_accept = true
     </select>
 
     <!-- 친구 삭제 -->

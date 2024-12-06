@@ -64,7 +64,10 @@ FROM tag;
 ALTER TABLE tag
     AUTO_INCREMENT = 1;
 
-
+DELETE
+    FROM friend;
+ALTER TABLE friend
+    AUTO_INCREMENT = 1;
 
 
 
@@ -146,12 +149,12 @@ VALUES
 
 -- friend 테이블 샘플 데이터
 INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept) VALUES
-                                                                    (1, 2, 200, TRUE),
-                                                                    (1, 3, 100, TRUE),
-                                                                    (1, 4, 0, FALSE),
-                                                                    (2, 4, 500, TRUE),
-                                                                    (2, 3, 300, TRUE),
-                                                                    (3, 4, 0, FALSE);
+     (1, 2, 200, TRUE),
+     (1, 3, 100, TRUE),
+     (1, 4, 0, FALSE),
+     (2, 4, 500, TRUE),
+     (2, 3, 300, TRUE),
+     (3, 4, 0, FALSE);
 
 -- tag 데이터 생성
 INSERT INTO tag (tagname)
