@@ -33,32 +33,57 @@ public class MemberController {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         Member member = principalDetails.getMember();
         model.addAttribute("member", member);
-        return "member/additional-info";    // templates/member/additional-info.html
+        return "member/additional-info";
     }
 
-    // POST: 추가 정보 저장
+    // 추가 정보 저장 처리
     @PostMapping("/additional-info")
     public String saveAdditionalInfo(
-            Authentication authentication,
+            @RequestParam String name,
             @RequestParam String nickname,
+            @RequestParam String email,
+            @RequestParam(required = false) String referrerNickname,
+            Authentication authentication,
             RedirectAttributes redirectAttributes) {
 
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        Member member = principalDetails.getMember();
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            Member member = principalDetails.getMember();
 
-        // 중복 닉네임 체크
-        if (memberService.isExistNickname(nickname)) {
-            redirectAttributes.addFlashAttribute("error", "이미 사용 중인 닉네임입니다.");
+            // Check if nickname is already taken
+            if (memberService.isExistNickname(nickname) &&
+                    !nickname.equals(member.getNickname())) {
+                redirectAttributes.addFlashAttribute("error", "이미 사용 중인 닉네임입니다.");
+                return "redirect:/member/additional-info";
+            }
+
+            // Update member information
+            member.setName(name);
+            member.setNickname(nickname);
+            member.setEmail(email);
+
+            // If referrer nickname is provided and exists
+            if (referrerNickname != null && !referrerNickname.trim().isEmpty()) {
+                Member referrer = memberService.findByNickname(referrerNickname);
+                if (referrer == null) {
+                    redirectAttributes.addFlashAttribute("error", "존재하지 않는 추천인 닉네임입니다.");
+                    return "redirect:/member/additional-info";
+                }
+                member.setReferrerNickname(referrerNickname);
+            }
+
+            // Save the updated member
+            memberService.updateMember(member);
+            redirectAttributes.addFlashAttribute("message", "추가 정보가 저장되었습니다.");
+
+            return "redirect:/home";  // 성공시 홈으로 리다이렉트
+
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "정보 저장 중 오류가 발생했습니다.");
             return "redirect:/member/additional-info";
         }
-
-        // 닉네임 업데이트
-        member.setNickname(nickname);
-        memberService.updateMember(member);
-
-        redirectAttributes.addFlashAttribute("message", "추가 정보가 저장되었습니다.");
-        return "redirect:/home";  // 정보 저장 후 홈으로 리다이렉트
     }
+
     @GetMapping("/login")
     public void login() {
     }

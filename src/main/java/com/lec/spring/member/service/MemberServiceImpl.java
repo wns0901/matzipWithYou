@@ -96,6 +96,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Member findByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname);
+    }
+
+    @Override
     public int updateMember(Member member) {
         return memberRepository.update(member);
     }
