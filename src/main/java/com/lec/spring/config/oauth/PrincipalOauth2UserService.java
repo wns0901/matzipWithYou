@@ -9,6 +9,7 @@ import com.lec.spring.member.domain.Authority;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.repository.AuthorityRepository;
 import com.lec.spring.member.repository.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
@@ -50,7 +52,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String password = oauth2Password;
         String email = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
-        String tempNickname = "MATDORI_" + providerId;
+        String tempNickname = "익명의 MATDORI";
 
         Member member = memberRepository.findByUsername(username);
         if(member == null) {
