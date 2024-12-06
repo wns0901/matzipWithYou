@@ -17,4 +17,6 @@ public interface MemberService {
     Member findByUsername(String username);
 
     List<Member> findAll();
+
+    int updateMember(Member member);
 }

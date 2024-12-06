@@ -43,14 +43,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-
-                // request URL에 대한 접근 권한 세팅 (완료 이전)
                 .authorizeHttpRequests(auth -> auth
-                        // "" URL로 들어오는 요청은 "인증"만 필요
+                        .requestMatchers("/member/additional-info").authenticated()  // 추가: additional-info 페이지는 인증 필요
                         .requestMatchers("/matzip/matzipDetail/**").authenticated()
-                        // "" URL로 들어오는 요청은 "인증" 뿐 아니라 ROLE_MEMBER, ROLE_ADMIN 권한을 가져야 한다 (인가)
                         .requestMatchers("/matzip/").hasAnyRole("MEMBER", "ADMIN")
-                        // 그 밖의 다른 요청들 모두 허용
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
@@ -60,7 +56,13 @@ public class SecurityConfig {
                         .successHandler(new CustomLoginSuccessHandler("/home"))
                         .failureHandler(new CustomLoginFailureHandler())
                 )
-
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/member/login")
+                        .successHandler(new CustomLoginSuccessHandler("/member/additional-info"))  // OAuth2 로그인 성공시 additional-info로
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(principalOauth2UserService)
+                        )
+                )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
                         .logoutUrl("/member/logout")
                         .invalidateHttpSession(false)
@@ -69,15 +71,6 @@ public class SecurityConfig {
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
                         .accessDeniedHandler(new CustomAccessDeniedHandler())
                 )
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/member/login")
-                        .successHandler(new CustomLoginSuccessHandler("/"))
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(principalOauth2UserService)
-                        )
-                )
-
-
                 .build();
     }
 }

@@ -23,15 +23,15 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         LocalDateTime loginTime = LocalDateTime.now();
         request.getSession().setAttribute("loginTime", loginTime);
 
+        clearAuthenticationAttributes(request);
+
         // OAuth2 로그인인 경우
         if (authentication instanceof OAuth2AuthenticationToken) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 
-            // 추가 정보가 필요한 경우 (임시 닉네임으로 확인)
-            if (principalDetails.getMember().getNickname().startsWith("TEMP_")) {
-                response.sendRedirect("/member/additional-info");
-                return;
-            }
+            // 무조건 additional-info 페이지로 리다이렉트
+            getRedirectStrategy().sendRedirect(request, response, "/member/additional-info");
+            return;
         }
 
         // OAuth2가 아니거나 추가 정보가 필요없는 경우

@@ -94,4 +94,9 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> findAll() {
         return memberRepository.findAll();
     }
+
+    @Override
+    public int updateMember(Member member) {
+        return memberRepository.update(member);
+    }
 }
