@@ -83,7 +83,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public boolean isHiddenMatzip(Long matzipId, Long memberId) {
+    public Boolean isHiddenMatzip(Long matzipId, Long memberId) {
         return reviewRepository.checkHiddenMatzip(matzipId, memberId);
     }
 
@@ -91,10 +91,9 @@ public class ReviewServiceImpl implements ReviewService {
     public int rewardReview(Long memberId, Integer memberPoint, int rewardPoint) {
         Member member = memberRepository.findById(memberId);
 
-        int newPoint = memberPoint + rewardPoint;
-        member.setPoint(newPoint);
+        memberPoint += rewardPoint;
 
-        memberRepository.save(member);
+        memberRepository.updatePoint(member.getId(), memberPoint);
 
         return 1;
     }

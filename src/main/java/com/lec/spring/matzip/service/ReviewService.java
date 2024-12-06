@@ -16,7 +16,7 @@ public interface ReviewService {
 
     List<ReviewTag> addReviewTag(List<Long> tagIds, Long reviewId);
 
-    boolean isHiddenMatzip(Long matzipId, Long memberId);
+    Boolean isHiddenMatzip(Long matzipId, Long memberId);
 
     int rewardReview(Long memberId, Integer memberPoint, int rewardPoint);
 

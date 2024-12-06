@@ -38,7 +38,7 @@
             ON (f.sender_id = #{memberId} AND f.receiver_id = m.member_id
             OR f.receiver_id = #{memberId} AND f.sender_id = m.member_id)
         WHERE
-            f.is_accept = true
+            f.is_accept = TRUE
             AND m.visibility = 'HIDDEN'
             AND matzip_id = #{matzipId}
     </select>

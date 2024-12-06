@@ -83,7 +83,7 @@ class ReviewRepositoryTest {
     @Test
     void testCheckHiddenMatzip() {
         Long matzipId = 1L;
-        Long memberId = 2L;
+        Long memberId = 3L;
 
         ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);
 
@@ -100,32 +100,25 @@ class ReviewRepositoryTest {
 
         Long matzipId = 1L;
 
-        String uniqueUsername = "user" + System.nanoTime();
-        String uniqueNickname = "nick" + System.nanoTime();
-        Member member = Member.builder()
-                .id(3L)
-                .name("test")
-                .username(uniqueUsername)
-                .password("1234")
-                .email("test@gmail.com")
-                .nickname(uniqueNickname)
-                .point(500)
-                .build();
-        assertNotNull(member, "Member should exist in the repository");
+        Member member = memberRepository.findById(3L);
+        assertNotNull(member.getId(), "Member ID should be generated");
+
+        Integer memberPoint = member.getPoint();
 
         boolean isHiddenMatzip = reviewRepository.checkHiddenMatzip(matzipId, member.getId());
         int rewardPoint = isHiddenMatzip ? 100 : 10;
-        Integer memberPoint = member.getPoint();
 
         int newPoint = memberPoint + rewardPoint;
-        member.setPoint(newPoint);
 
-        memberRepository.save(member);
+        memberRepository.updatePoint(member.getId(), rewardPoint);
 
-        int result = reviewServiceImpl.rewardReview(member.getId(), memberPoint, rewardPoint);
+        int result = reviewServiceImpl.rewardReview(member.getId(), member.getPoint(), rewardPoint);
 
         assertEquals(1, result);
+
         assertEquals(newPoint, member.getPoint());
+
+        sqlSession.clearCache();
     }
 
     @Test
