@@ -9,6 +9,11 @@
 <div class="row">
     <form method="POST" th:action="@{/member/register}">
         <div class="form-group">
+
+            <div class="row">
+                <div th:text="${errorMessage}"></div>
+            </div>
+
             <label for="name">사용자 이름</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="이름"
                    th:value="${name}">

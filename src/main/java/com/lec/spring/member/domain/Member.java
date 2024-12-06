@@ -1,10 +1,8 @@
 package com.lec.spring.member.domain;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,4 +16,5 @@ public class Member {
     private Integer point;
     private String nickname;
     private String name;
+    private String referrerNickname; // 추천인 닉네임
 }
