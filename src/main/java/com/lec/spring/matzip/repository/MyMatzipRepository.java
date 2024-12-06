@@ -2,20 +2,24 @@ package com.lec.spring.matzip.repository;
 
 import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.domain.MyMatzipDTO;
+import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
+import java.util.Map;
 
 public interface MyMatzipRepository {
-    List<MyMatzipDTO> findAll();
+    List<MyMatzipDTO> findAll(Long id);
 
-    List<MyMatzip> findAllOrderByNameAsc();
+    List<MyMatzipDTO> findAllOrderByNameAsc(Long id);
 
-    List<MyMatzip> findAllOrderByFoodKindAsc();
+    List<MyMatzipDTO> findAllOrderByFoodKindAsc(Long id, String kindName);
 
-    List<MyMatzip> findAllOrderByTagAsc();
+    List<MyMatzipDTO> findAllOrderByTagAsc(@Param("id")Long id, @Param("array")List<String> tagName);
 
-    int updateMatzip(String visibility);
+    int listCountAll();
 
-    int deletemyMatzip(MyMatzip myMatzip);
+    int updatemyMatzipvisibility(Long id, String visibility);
+
+    int deletemyMatzip(Long id);
 }

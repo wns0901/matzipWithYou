@@ -13,9 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class MyMatzipDTO {
-    private MyMatzip myMatzip;
-    private String imgUrl;
+    private MyMatzip MyMatzip;
     private String name;
+    private String imgUrl;
     private String kindName;
-    private List<String> tagName;
+    private String tagName;
 }
