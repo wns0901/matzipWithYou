@@ -97,26 +97,27 @@ class ReviewRepositoryTest {
     void testRewardReview() {
         MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);
+        MatzipRepository matzipRepository = sqlSession.getMapper(MatzipRepository.class);
 
-        Long matzipId = 1L;
+        ReviewDTO reviewDTO = ReviewDTO.builder()
+                .matzipId(1L)
+                .memberId(3L)
+                .build();
 
-        Member member = memberRepository.findById(3L);
+        Matzip matzip = matzipRepository.findById(reviewDTO.getMatzipId());
+        Member member = memberRepository.findById(reviewDTO.getMemberId());
         assertNotNull(member.getId(), "Member ID should be generated");
 
         Integer memberPoint = member.getPoint();
 
-        boolean isHiddenMatzip = reviewRepository.checkHiddenMatzip(matzipId, member.getId());
+        boolean isHiddenMatzip = reviewRepository.checkHiddenMatzip(matzip.getId(), member.getId());
         int rewardPoint = isHiddenMatzip ? 100 : 10;
 
         int newPoint = memberPoint + rewardPoint;
 
-        memberRepository.updatePoint(member.getId(), rewardPoint);
+        int result = reviewServiceImpl.rewardReview(reviewDTO, rewardPoint);
 
-        int result = reviewServiceImpl.rewardReview(member.getId(), member.getPoint(), rewardPoint);
-
-        assertEquals(1, result);
-
-        assertEquals(newPoint, member.getPoint());
+        assertEquals(newPoint, result);
 
         sqlSession.clearCache();
     }

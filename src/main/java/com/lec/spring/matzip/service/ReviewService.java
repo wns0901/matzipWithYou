@@ -18,7 +18,7 @@ public interface ReviewService {
 
     Boolean isHiddenMatzip(Long matzipId, Long memberId);
 
-    int rewardReview(Long memberId, Integer memberPoint, int rewardPoint);
+    int rewardReview(ReviewDTO reviewDTO, int rewardPoint);
 
     Review deleteReview(Long id);
 }

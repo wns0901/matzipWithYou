@@ -52,13 +52,12 @@ public class ReviewServiceImpl implements ReviewService {
         int saved = reviewRepository.save(reviewDTO, model);
 
         Member member = memberRepository.findById(reviewDTO.getMemberId());
-        Integer memberPoint = member.getPoint();
 
-        String result = isHiddenMatzip(matzip.getId(), member.getId()) ? "UNLOCK" : "saveOk";
-        model.addAttribute("result", result);
+        boolean isHidden = isHiddenMatzip(matzip.getId(), member.getId());
+        model.addAttribute("result", isHidden ? "UNLOCK" : "saveOk");
 
-        int rewardPoint = isHiddenMatzip(matzip.getId(), member.getId()) ? 110 : 10;
-        rewardReview(member.getId(), memberPoint, rewardPoint);
+        int rewardPoint = isHidden ? 100 : 10;
+        rewardReview(reviewDTO, rewardPoint);
 
         return saved;
     }
@@ -88,14 +87,24 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public int rewardReview(Long memberId, Integer memberPoint, int rewardPoint) {
-        Member member = memberRepository.findById(memberId);
+    public int rewardReview(ReviewDTO reviewDTO, int rewardPoint) {
+        Member member = memberRepository.findById(reviewDTO.getMemberId());
+        if (member == null) {
+            throw new IllegalArgumentException("Member not found");
+        }
 
-        memberPoint += rewardPoint;
+        Matzip matzip = matzipRepository.findById(reviewDTO.getMatzipId());
+        if (matzip == null) {
+            throw new IllegalArgumentException("Matzip not found");
+        }
 
-        memberRepository.updatePoint(member.getId(), memberPoint);
+        boolean isHiddenMatzip = isHiddenMatzip(matzip.getId(), member.getId());
+        rewardPoint = isHiddenMatzip ? 100 : 10;
 
-        return 1;
+        member.setPoint(member.getPoint() + rewardPoint);
+        memberRepository.updatePoint(member.getId(), member.getPoint());
+
+        return member.getPoint();
     }
 
     @Override
