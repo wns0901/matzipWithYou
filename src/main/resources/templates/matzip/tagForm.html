@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>태그 구매 저장</title>
+</head>
+<body>
+<h1>태그 구매 저장</h1>
+<div> 사용자가 친구의 태그를 구매하는 과정</div>
+<li> 히든 맛집을 클릭한다</li>
+<li> 힌트 구매 버튼을 누른다</li>
+<li> 히든 맛집에 부여된 태그들의 중복을 제거하여 랜덤으로 하나가 부여된다</li>
+<li> 구매된 태그가 db에 저장된다.</li>
+<li> 나중에 또 힌트를 구매하면 db에 저장된 태그를 제외해서 랜덤으로 하나가부여된다</li>
+<br>
+<hr>
+<br>
+
+
+<form action="/matzip/save" method="post" >
+    <label for="memberId">회원 ID:</label>
+    <input type="text" id="memberId" name="memberId" required><br><br>
+
+    <label for="myMatzipId">내 맛집 ID:</label>
+    <input type="text" id="myMatzipId" name="myMatzipId" required><br><br>
+
+    <label for="tagId">태그 ID:</label>
+    <input type="text" id="tagId" name="tagId" required><br><br><br>
+
+    <li>matzipTagList : 가게에게 달린태그 </li>
+    <li>singleTagList : 회원과 맛집 기반 태그 (원래 하려던거) </li>
+    <li>tagList : 회원 기반 태그</li>
+    <br><button type="submit">저장</button> <button><a href="http://localhost:8080/matzip/matzipList">matzipTagList</a></button>
+    <button><a href="http://localhost:8080/matzip/singleList">singleTagList</a></button><button><a href="http://localhost:8080/matzip/list">tagList</a></button>
+</form>
+</body>
+</html>

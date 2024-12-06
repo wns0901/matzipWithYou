@@ -7,23 +7,28 @@
 <body>
 <div class="container">
     <!-- OAuth 로그인 버튼 -->
-    <a><img th:src=""></a>
-    <a><img th:src=""></a>
-    <a><img th:src=""></a>
+<!--    <a><img th:src=""></a>-->
+<!--    <a><img th:src=""></a>-->
+<!--    <a><img th:src=""></a>-->
 
     <form th:action="@{/member/login}" method="POST">
-        <h1>Log into your accout</h1>
+        <h1>Log into your account</h1>
         <div>
-            <input type="text" class="form-control" name="username" id="username" value="" placeholder="name@example.com" th:value="${username}" required>
+            <input type="text" class="form-control" name="username" id="username" value="" placeholder="아이디" th:value="${username}" required>
             <label for="username">Username</label>
         </div>
         <div>
-            <input type="password" class="form-control" name="password" id="password" value="" placeholder="Password" required>
+            <input type="password" class="form-control" name="password" id="password" value="" placeholder="비밀번호" required>
             <label for="password">Password</label>
         </div>
 
         <a>Forgot password?</a>
-        <a class="btn" th:href="@{/member/register}">로그인</a>
+        <button class="btn" type="submit">로그인</button>
+
+        <p>
+            Don't have an account?
+            <a class="btn" th:href="@{/member/register}">Sign-up</a>
+        </p>
     </form>
 </div>
 </body>
