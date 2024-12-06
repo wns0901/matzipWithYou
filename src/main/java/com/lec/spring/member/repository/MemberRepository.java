@@ -1,6 +1,7 @@
 package com.lec.spring.member.repository;
 
 import com.lec.spring.member.domain.Member;
+import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
@@ -22,5 +23,6 @@ public interface MemberRepository {
 
     Member findByEmail(String email);
 
+    int updatePoint(@Param("id") Long id, @Param("point") Integer point);
 
 }
