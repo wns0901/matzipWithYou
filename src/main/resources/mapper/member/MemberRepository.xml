@@ -4,21 +4,23 @@
 <mapper namespace="com.lec.spring.member.repository.MemberRepository">
 
     <sql id="SELECT_BASE">
-        SELECT id       "id"
-             , username "username"
-             , password "password"
-             , email    "email"
-             , point    "point"
-             , nickname "nickname"
-             , name     "name"
+        SELECT id         "id"
+             , username   "username"
+             , password   "password"
+             , email      "email"
+             , point      "point"
+             , nickname   "nickname"
+             , name       "name"
+             , provider   "provider"
+             , providerId "providerId"
         FROM member
         WHERE 1 = 1
     </sql>
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.member.domain.Member"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO member(username, password, email, point, nickname, name)
-        VALUES(#{username}, #{password}, #{email}, #{point}, #{nickname}, #{name})
+        INSERT INTO member(username, password, email, point, nickname, name, provider, providerId)
+        VALUES(#{username}, #{password}, #{email}, #{point}, #{nickname}, #{name}, #{provider}, #{providerId})
     </insert>
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.member.domain.Member">

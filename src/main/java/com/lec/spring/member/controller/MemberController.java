@@ -1,10 +1,12 @@
 package com.lec.spring.member.controller;
 
+import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.domain.MemberValidator;
 import com.lec.spring.member.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +27,38 @@ public class MemberController {
         this.memberService = memberService;
     }
 
+    // GET: 추가 정보 입력 폼
+    @GetMapping("/additional-info")
+    public String additionalInfo(Authentication authentication, Model model) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Member member = principalDetails.getMember();
+        model.addAttribute("member", member);
+        return "member/additional-info";    // templates/member/additional-info.html
+    }
+
+    // POST: 추가 정보 저장
+    @PostMapping("/additional-info")
+    public String saveAdditionalInfo(
+            Authentication authentication,
+            @RequestParam String nickname,
+            RedirectAttributes redirectAttributes) {
+
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Member member = principalDetails.getMember();
+
+        // 중복 닉네임 체크
+        if (memberService.isExistNickname(nickname)) {
+            redirectAttributes.addFlashAttribute("error", "이미 사용 중인 닉네임입니다.");
+            return "redirect:/member/additional-info";
+        }
+
+        // 닉네임 업데이트
+        member.setNickname(nickname);
+        memberService.updateMember(member);
+
+        redirectAttributes.addFlashAttribute("message", "추가 정보가 저장되었습니다.");
+        return "redirect:/home";  // 정보 저장 후 홈으로 리다이렉트
+    }
     @GetMapping("/login")
     public void login() {
     }

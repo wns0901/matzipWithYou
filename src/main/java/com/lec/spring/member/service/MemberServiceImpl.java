@@ -46,18 +46,18 @@ public class MemberServiceImpl implements MemberService {
         return result;
     }
 
-    @Override
-    public int registerWithReferral(Member member, String referrerNickname) {
-        int result = register(member);
-
-        // Referrer Handler
-        if (referrerNickname != null && !referrerNickname.isEmpty()) {
-            Member referrer = memberRepository.findByNickname(referrerNickname);
-
-            if (referrer != null) {
-                // 두 사람 모두 포인트 추가
-                memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
-                memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
+//    @Override
+//    public int registerWithReferral(Member member, String referrerNickname) {
+//        int result = register(member);
+//
+//        // Referrer Handler
+//        if (referrerNickname != null && !referrerNickname.isEmpty()) {
+//            Member referrer = memberRepository.findByNickname(referrerNickname);
+//
+//            if (referrer != null) {
+//                // 두 사람 모두 포인트 추가
+//                memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
+//                memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
 
                 // 서로 친구
 //                Friend friendship = new Friend();
@@ -66,11 +66,11 @@ public class MemberServiceImpl implements MemberService {
 //                friendship.setIntimacy(10);
 //                friendship.setAccept(true);
 //                friendRepository.save(friendship);
-            }
-        }
-
-        return result;
-    }
+//            }
+//        }
+//
+//        return result;
+//    }
 
 
     @Override
@@ -93,5 +93,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Member> findAll() {
         return memberRepository.findAll();
+    }
+
+    @Override
+    public int updateMember(Member member) {
+        return memberRepository.update(member);
     }
 }
