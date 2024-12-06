@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.domain;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class ReviewDTO extends Review {
     private Long matzipId;
     private Long memberId;

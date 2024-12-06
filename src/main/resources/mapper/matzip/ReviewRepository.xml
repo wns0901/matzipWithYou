@@ -15,11 +15,11 @@
         WHERE id = #{id}
     </select>
 
-    <insert id="save" flushCache="true" parameterType="map" useGeneratedKeys="true" keyProperty="review.id">
+    <insert id="save" flushCache="true" parameterType="map" useGeneratedKeys="true" keyProperty="reviewDTO.id" keyColumn="id">
         INSERT INTO my_review
             (matzip_id, member_id, content, regdate, star_rating)
         VALUES
-            (#{review.matzip.id}, #{review.member.id}, #{review.content}, #{review.regdate}, #{review.starRating})
+            (#{reviewDTO.matzipId}, #{reviewDTO.memberId}, #{reviewDTO.content}, #{reviewDTO.regdate}, #{reviewDTO.starRating})
     </insert>
 
     <insert id="saveReviewTag" parameterType="list">
@@ -27,7 +27,7 @@
             INSERT INTO review_tag
             (tag_id, my_review_id, regdate)
             VALUES
-            (#{reviewTag.id}, #{reviewTag.review,id}, #{reviewTag.regdate})
+            (#{reviewTag.id}, #{reviewTag.reviewId}, #{reviewTag.regdate})
         </foreach>
     </insert>
 
@@ -35,12 +35,12 @@
         SELECT COUNT(*)
         FROM my_matzip m
         INNER JOIN friend f
-            ON (f.sender_id = #{member.id} AND f.receiver_id = m.member_id
-            OR f.receiver_id = #{member.id} AND f.sender_id = m.member_id)
+            ON (f.sender_id = #{memberId} AND f.receiver_id = m.member_id
+            OR f.receiver_id = #{memberId} AND f.sender_id = m.member_id)
         WHERE
             f.is_accept = true
             AND m.visibility = 'HIDDEN'
-            AND matzip_id = #{matzip.id}
+            AND matzip_id = #{matzipId}
     </select>
 
     <delete id="deleteById" flushCache="true">
