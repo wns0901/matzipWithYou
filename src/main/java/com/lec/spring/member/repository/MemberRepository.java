@@ -2,6 +2,7 @@ package com.lec.spring.member.repository;
 
 import com.lec.spring.member.domain.Member;
 
+
 import java.util.List;
 
 public interface MemberRepository {
@@ -21,5 +22,5 @@ public interface MemberRepository {
 
     Member findByEmail(String email);
 
-    int updatePoint(Long id, Integer point);
+
 }
