@@ -13,5 +13,6 @@ import java.util.List;
 public class ReviewDTO extends Review {
     private Long matzipId;
     private Long memberId;
+    private List<Long> memberIds;
     private List<Long> tagIds;
 }
