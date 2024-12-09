@@ -1,5 +1,6 @@
 package com.lec.spring.member.repository;
 
+import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.member.domain.Member;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,6 +17,8 @@ public interface MemberRepository {
     List<Member> findAll();
 
     Member findById(Long id);
+
+    List<Member> findByIds(List<Long> ids);
 
     Member findByUsername(String username);
 
