@@ -8,7 +8,7 @@ public interface MemberService {
 
     int register(Member member);
 
-    int registerWithReferral(Member member, String referrerNickname);
+    //int registerWithReferral(Member member, String referrerNickname);
 
     boolean isExist(String username);
 
@@ -16,5 +16,11 @@ public interface MemberService {
 
     Member findByUsername(String username);
 
+    Member findByNickname(String nickname);
+
     List<Member> findAll();
+
+    int updateMember(Member member);
+
+    int updateAdditionalInfo(Long id, String name, String nickname, String email);
 }

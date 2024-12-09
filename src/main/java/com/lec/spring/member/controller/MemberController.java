@@ -1,10 +1,12 @@
 package com.lec.spring.member.controller;
 
+import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.domain.MemberValidator;
 import com.lec.spring.member.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +25,58 @@ public class MemberController {
 
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+    }
+
+    // GET: 추가 정보 입력 폼
+    @GetMapping("/additional-info")
+    public String additionalInfo(Authentication authentication, Model model) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Member member = principalDetails.getMember();
+        model.addAttribute("member", member);
+        return "member/additional-info";
+    }
+
+    // 추가 정보 저장 처리
+    @PostMapping("/additional-info")
+    public String saveAdditionalInfo(
+            @RequestParam String name,
+            @RequestParam String nickname,
+            @RequestParam String email,
+            Authentication authentication,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            Member member = principalDetails.getMember();
+
+            // Check if nickname is already taken by a different user
+            Member existingMember = memberService.findByNickname(nickname);
+            if (existingMember != null && !existingMember.getId().equals(member.getId())) {
+                redirectAttributes.addFlashAttribute("error", "이미 사용 중인 닉네임입니다.");
+                return "redirect:/member/additional-info";
+            }
+
+            // Update additional info
+            int result = memberService.updateAdditionalInfo(member.getId(), name, nickname, email);
+
+            if (result > 0) {
+                // Update the member object in PrincipalDetails
+                member.setName(name);
+                member.setNickname(nickname);
+                member.setEmail(email);
+
+                redirectAttributes.addFlashAttribute("message", "추가 정보가 저장되었습니다.");
+                return "redirect:/home";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "정보 저장에 실패했습니다.");
+                return "redirect:/member/additional-info";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "처리 중 오류가 발생했습니다: " + e.getMessage());
+            return "redirect:/member/additional-info";
+        }
     }
 
     @GetMapping("/login")
