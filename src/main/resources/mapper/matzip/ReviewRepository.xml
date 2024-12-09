@@ -42,6 +42,16 @@
             AND matzip_id = #{matzipId}
     </select>
 
+    <update id="updateIntimacy" flushCache="true">
+        UPDATE friend f
+        SET f.intimacy = f.intimacy + #{member.intimacy}
+        WHERE f.is_accept = TRUE
+          AND (
+            (f.sender_id = #{memberId} AND f.receiver_id = #{targetId})
+                OR (f.receiver_id = #{memberId} AND f.sender_id = #{targetId})
+            )
+    </update>
+
     <delete id="deleteById" flushCache="true">
         DELETE FROM my_review WHERE id = #{id}
     </delete>
