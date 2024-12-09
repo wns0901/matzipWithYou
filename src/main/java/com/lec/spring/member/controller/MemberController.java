@@ -33,32 +33,52 @@ public class MemberController {
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         Member member = principalDetails.getMember();
         model.addAttribute("member", member);
-        return "member/additional-info";    // templates/member/additional-info.html
+        return "member/additional-info";
     }
 
-    // POST: 추가 정보 저장
+    // 추가 정보 저장 처리
     @PostMapping("/additional-info")
     public String saveAdditionalInfo(
-            Authentication authentication,
+            @RequestParam String name,
             @RequestParam String nickname,
+            @RequestParam String email,
+            Authentication authentication,
             RedirectAttributes redirectAttributes) {
 
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        Member member = principalDetails.getMember();
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            Member member = principalDetails.getMember();
 
-        // 중복 닉네임 체크
-        if (memberService.isExistNickname(nickname)) {
-            redirectAttributes.addFlashAttribute("error", "이미 사용 중인 닉네임입니다.");
+            // Check if nickname is already taken by a different user
+            Member existingMember = memberService.findByNickname(nickname);
+            if (existingMember != null && !existingMember.getId().equals(member.getId())) {
+                redirectAttributes.addFlashAttribute("error", "이미 사용 중인 닉네임입니다.");
+                return "redirect:/member/additional-info";
+            }
+
+            // Update additional info
+            int result = memberService.updateAdditionalInfo(member.getId(), name, nickname, email);
+
+            if (result > 0) {
+                // Update the member object in PrincipalDetails
+                member.setName(name);
+                member.setNickname(nickname);
+                member.setEmail(email);
+
+                redirectAttributes.addFlashAttribute("message", "추가 정보가 저장되었습니다.");
+                return "redirect:/home";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "정보 저장에 실패했습니다.");
+                return "redirect:/member/additional-info";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "처리 중 오류가 발생했습니다: " + e.getMessage());
             return "redirect:/member/additional-info";
         }
-
-        // 닉네임 업데이트
-        member.setNickname(nickname);
-        memberService.updateMember(member);
-
-        redirectAttributes.addFlashAttribute("message", "추가 정보가 저장되었습니다.");
-        return "redirect:/home";  // 정보 저장 후 홈으로 리다이렉트
     }
+
     @GetMapping("/login")
     public void login() {
     }

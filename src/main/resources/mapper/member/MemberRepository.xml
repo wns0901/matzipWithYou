@@ -23,12 +23,22 @@
         VALUES(#{username}, #{password}, #{email}, #{point}, #{nickname}, #{name}, #{provider}, #{providerId})
     </insert>
 
+
     <update id="update" flushCache="true" parameterType="com.lec.spring.member.domain.Member">
         UPDATE member
-        SET password = #{password}
-          , email = #{email}
+        SET password         = #{password}
+          , email            = #{email}
+          , nickname         = #{nickname}
+          , name             = #{name}
+          , referrerNickname = #{referrerNickname}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateAdditionalInfo">
+        UPDATE member
+        SET email    = #{email}
           , nickname = #{nickname}
-          , name = #{name}
+          , name     = #{name}
         WHERE id = #{id}
     </update>
 
@@ -51,8 +61,9 @@
     </select>
 
     <select id="findByNickname" resultType="com.lec.spring.member.domain.Member">
-        <include refid="SELECT_BASE"/>
-        AND nickname = #{nickname}
+        SELECT *
+        FROM member
+        WHERE nickname = #{nickname}
     </select>
 
     <select id="findByEmail" resultType="com.lec.spring.member.domain.Member">

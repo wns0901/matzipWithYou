@@ -16,7 +16,11 @@ public interface MemberService {
 
     Member findByUsername(String username);
 
+    Member findByNickname(String nickname);
+
     List<Member> findAll();
 
     int updateMember(Member member);
+
+    int updateAdditionalInfo(Long id, String name, String nickname, String email);
 }

@@ -1,22 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>추가 정보 입력</title>
 </head>
 <body>
-<div>
-    이름:
-</div>
-<div>
-    닉네임:
-</div>
-<div>
-    이메일:
-</div>
-<div>
-    추천인닉네임:
-</div>
+<div class="container">
+    <h2>추가 정보를 입력해주세요</h2>
 
+    <!-- Add error message display -->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+    <form th:action="@{/member/additional-info}" method="post">
+        <div class="form-group">
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name"
+                   class="form-control"
+                   th:value="${member?.name}"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="nickname">닉네임:</label>
+            <input type="text" id="nickname" name="nickname"
+                   class="form-control"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">이메일:</label>
+            <input type="email" id="email" name="email"
+                   class="form-control"
+                   th:value="${member?.email}"
+                   required>
+        </div>
+
+<!--        <div class="form-group">-->
+<!--            <label for="referrerNickname">추천해준 사람이 있나요? 닉네임을 입력해주세요!</label>-->
+<!--            <input type="text" id="referrerNickname" name="referrerNickname"-->
+<!--                   class="form-control">-->
+<!--            <div class="text-danger" th:if="${error}" th:text="${error}"></div>-->
+<!--        </div>-->
+
+        <button type="submit" class="btn btn-primary">저장</button>
+    </form>
+</div>
 </body>
 </html>

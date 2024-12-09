@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-    private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
+//    private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
 
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
@@ -72,6 +72,11 @@ public class MemberServiceImpl implements MemberService {
 //        return result;
 //    }
 
+    @Override
+    public int updateAdditionalInfo(Long id, String name, String nickname, String email) {
+        return memberRepository.updateAdditionalInfo(id, name, nickname, email);
+    }
+
 
     @Override
     public boolean isExist(String username) {
@@ -93,6 +98,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Member> findAll() {
         return memberRepository.findAll();
+    }
+
+    @Override
+    public Member findByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname);
     }
 
     @Override
