@@ -26,9 +26,6 @@ public class MatzipController {
         return data;
     }
 
-//    @GetMapping("/seoul-map")
-//    public void seoulMap() {
-//    }
 
 }
 
