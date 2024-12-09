@@ -58,6 +58,8 @@ public class SecurityConfig {
                         .successHandler(new CustomLoginSuccessHandler("/home"))
                         .failureHandler(new CustomLoginFailureHandler())
                 )
+
+
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/member/login")
                         .successHandler(new CustomLoginSuccessHandler("/member/additional-info"))  // OAuth2 로그인 성공시 additional-info로
