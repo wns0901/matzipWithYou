@@ -85,4 +85,10 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public Map<String, Object> getAttributes(){
         return this.attributes;
     }
+
+    public boolean isNewOAuthUser() {
+        return member != null
+                && member.getProviderId() != null
+                && "익명의 MATDORI".equals(member.getNickname());
+    }
 }
