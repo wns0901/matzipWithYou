@@ -1,0 +1,28 @@
+Index: src/main/java/com/lec/spring/config/SecurityConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.lec.spring.config;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;\nimport org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;\nimport org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;\nimport org.springframework.security.crypto.password.PasswordEncoder;\nimport org.springframework.security.web.SecurityFilterChain;\n\n@Configuration\n@EnableWebSecurity\npublic class SecurityConfig {\n\n//    Security 동작 막기\n//    @Bean\n//    public WebSecurityCustomizer webSecurityCustomizer() {\n//        return web -> web.ignoring().anyRequest();\n//    }\n\n    @Bean\n    public PasswordEncoder passwordEncoder() {\n        return new BCryptPasswordEncoder();\n    }\n\n    @Bean\n    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {\n        return http\n                .csrf(csrf -> csrf.disable())\n\n                // request URL에 대한 접근 권한 세팅 (완료 이전)\n                .authorizeHttpRequests(auth -> auth\n                        // \"\" URL로 들어오는 요청은 \"인증\"만 필요\n                        .requestMatchers(\"/matzip/matzipDetail/**\").authenticated()\n                        // \"\" URL로 들어오는 요청은 \"인증\" 뿐 아니라 ROLE_MEMBER, ROLE_ADMIN 권한을 가져야 한다 (인가)\n                        .requestMatchers(\"/matzip/\").hasAnyRole(\"MEMBER\", \"ADMIN\")\n                        // 그 밖의 다른 요청들 모두 허용\n                        .anyRequest().permitAll()\n                )\n                .formLogin(form -> form\n                        .loginPage(\"/member/login\")\n                        .loginProcessingUrl(\"/member/login\")\n                        .defaultSuccessUrl(\"/\")\n                        .successHandler(new CustomLoginSuccessHandler(\"/index\"))\n                        .failureHandler(new CustomLoginFailureHandler())\n                )\n\n                .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer\n                        .logoutUrl(\"/member/logout\")\n                        .invalidateHttpSession(false)\n                        .logoutSuccessHandler(new CustomLogoutSuccessHandler())\n                )\n                .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer\n                        .accessDeniedHandler(new CustomAccessDeniedHandler())\n                ).build();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/lec/spring/config/SecurityConfig.java b/src/main/java/com/lec/spring/config/SecurityConfig.java
+--- a/src/main/java/com/lec/spring/config/SecurityConfig.java	(revision b6c77e9c7eebbd772147304bad0fdea4b4b6c4dd)
++++ b/src/main/java/com/lec/spring/config/SecurityConfig.java	(date 1733367705994)
+@@ -4,7 +4,7 @@
+ import org.springframework.context.annotation.Configuration;
+ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+ import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
++import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+ import org.springframework.security.crypto.password.PasswordEncoder;
+ import org.springframework.security.web.SecurityFilterChain;
+@@ -27,7 +27,7 @@
+     @Bean
+     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+         return http
+-                .csrf(csrf -> csrf.disable())
++                .csrf(AbstractHttpConfigurer::disable)
+ 
+                 // request URL에 대한 접근 권한 세팅 (완료 이전)
+                 .authorizeHttpRequests(auth -> auth
