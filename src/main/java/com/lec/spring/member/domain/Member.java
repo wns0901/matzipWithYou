@@ -18,4 +18,9 @@ public class Member {
     private Integer point;
     private String nickname;
     private String name;
+
+    //private String referrerNickname; // 추천인 닉네임
+
+    private String provider;
+    private String providerId;
 }
