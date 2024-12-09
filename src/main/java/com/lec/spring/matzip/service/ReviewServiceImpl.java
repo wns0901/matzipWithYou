@@ -53,8 +53,13 @@ public class ReviewServiceImpl implements ReviewService {
 
         Member member = memberRepository.findById(reviewDTO.getMemberId());
 
-        boolean isHidden = isHiddenMatzip(matzip.getId(), member.getId());
+        boolean isHidden = false;
+        List<Member> isHiddenMatzip = isHiddenMatzip(matzip.getId(), member.getIds());
+        if (!isHiddenMatzip.isEmpty()) {
+            isHidden = true;
+        }
         model.addAttribute("result", isHidden ? "UNLOCK" : "saveOk");
+        model.addAttribute("member", member);
 
         int rewardPoint = isHidden ? 100 : 10;
         rewardReview(reviewDTO, rewardPoint);
@@ -63,17 +68,19 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewTag> addReviewTag(List<Long> tagIds, Long reviewId) {
-
-        Review review = reviewRepository.findById(reviewId);
+    public List<ReviewTag> addReviewTag(Long id, List<Long> tagIds) {
         List<Tag> tags = tagRepository.findByIds(tagIds);
 
+        if (tags == null || tags.isEmpty()) {
+            throw new IllegalArgumentException("태그 정보를 찾을 수 없습니다.");
+        }
+
         List<ReviewTag> reviewTags = tags.stream()
-            .map(tag -> ReviewTag.builder()
-                    .review(review)
-                    .tag(tag)
-                    .regdate(LocalDateTime.now())
-                    .build())
+                .map(tag -> ReviewTag.builder()
+                        .tagId(tag.getId())
+                        .reviewId(id)
+                        .regdate(LocalDateTime.now())
+                        .build())
                 .toList();
 
         reviewRepository.saveReviewTags(reviewTags);
@@ -82,8 +89,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Boolean isHiddenMatzip(Long matzipId, Long memberId) {
-        return reviewRepository.checkHiddenMatzip(matzipId, memberId);
+    public List<Member> isHiddenMatzip(Long matzipId, List<Member> memberIds) {
+        return reviewRepository.checkHiddenMatzip(matzipId, memberIds);
     }
 
     @Override
@@ -98,8 +105,12 @@ public class ReviewServiceImpl implements ReviewService {
             throw new IllegalArgumentException("Matzip not found");
         }
 
-        boolean isHiddenMatzip = isHiddenMatzip(matzip.getId(), member.getId());
-        rewardPoint = isHiddenMatzip ? 100 : 10;
+        boolean isHidden = false;
+        List<Member> isHiddenMatzip = isHiddenMatzip(matzip.getId(), member.getIds());
+        if (!isHiddenMatzip.isEmpty()) {
+            isHidden = true;
+        }
+        rewardPoint = isHidden ? 100 : 10;
 
         member.setPoint(member.getPoint() + rewardPoint);
         memberRepository.updatePoint(member.getId(), member.getPoint());

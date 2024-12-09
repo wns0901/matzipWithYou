@@ -14,6 +14,6 @@ import java.time.LocalDateTime;
 public class ReviewTag {
     private LocalDateTime regdate;
 
-    private Tag tag;
-    private Review review;
+    private Long tagId;
+    private Long reviewId;
 }

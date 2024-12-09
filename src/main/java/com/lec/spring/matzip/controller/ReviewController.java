@@ -1,9 +1,6 @@
 package com.lec.spring.matzip.controller;
 
-import com.lec.spring.matzip.domain.FoodKind;
-import com.lec.spring.matzip.domain.Review;
-import com.lec.spring.matzip.domain.ReviewDTO;
-import com.lec.spring.matzip.domain.Tag;
+import com.lec.spring.matzip.domain.*;
 import com.lec.spring.matzip.service.ReviewService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -36,7 +33,9 @@ public class ReviewController {
     }
 
     @GetMapping("/write")
-    public void write() {}
+    public void write(Model model) {
+        List<>
+    }
 
     @PostMapping("/write")
     public String writeOk(@Valid ReviewDTO reviewDTO
@@ -60,7 +59,7 @@ public class ReviewController {
             return "redirect:/review/write";
         }
         model.addAttribute("review", reviewService.addReview(reviewDTO, model));
-        model.addAttribute("tags", reviewService.addReviewTag(tagIds, reviewDTO.getId()));
+//        model.addAttribute("tags", reviewService.addReviewTag(tagIds));
         return "review/writeOk";
     }
 

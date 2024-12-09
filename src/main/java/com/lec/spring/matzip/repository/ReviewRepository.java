@@ -15,7 +15,7 @@ public interface ReviewRepository {
 
     int saveReviewTags(List<ReviewTag> reviewTags);
 
-    Boolean checkHiddenMatzip(Long matzipId, Long memberId);
+    List<Member> checkHiddenMatzip(Long matzipId, List<Member> memberIds);
 
     Review deleteById(Long id);
 }

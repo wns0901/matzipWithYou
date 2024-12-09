@@ -69,9 +69,13 @@ class ReviewRepositoryTest {
         Member member = memberRepository.findById(reviewDTO.getMemberId());
         assertNotNull(member);
 
-        boolean isHiddenMatzip = reviewRepository.checkHiddenMatzip(matzip.getId(), member.getId());
+        boolean isHidden = false;
+        List<Member> isHiddenMatzip = isHiddenMatzip(matzip.getId(), member.getIds());
+        if (!isHiddenMatzip.isEmpty()) {
+            isHidden = true;
+        }
 
-        String result = isHiddenMatzip ? "UNLOCK" : "saveOk";
+        String result = isHidden ? "UNLOCK" : "saveOk";
         assertNotNull(result);
         assertTrue(result.equals("UNLOCK") || result.equals("saveOk"));
 
@@ -81,13 +85,38 @@ class ReviewRepositoryTest {
     }
 
     @Test
+    public void testAddReviewTag() {
+        TagRepository tagRepository = sqlSession.getMapper(TagRepository.class);
+        ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);
+        Review review = reviewRepository.findById(1L);
+        List<Long> tagIds = List.of(1L, 2L, 3L);
+
+        List<Tag> tags = tagRepository.findByIds(tagIds);
+        assertNotNull(tags);
+
+        List<ReviewTag> reviewTags = tags.stream()
+                .map(tag -> ReviewTag.builder()
+                        .tagId(tag.getId())
+                        .reviewId(review.getId())
+                        .regdate(LocalDateTime.now())
+                        .build())
+                .toList();
+
+        reviewRepository.saveReviewTags(reviewTags);
+
+        List<ReviewTag> testReviewTags = reviewServiceImpl.addReviewTag(review.getId(), tagIds);
+
+        assertNotNull(reviewTags);
+    }
+
+    @Test
     void testCheckHiddenMatzip() {
         Long matzipId = 1L;
         Long memberId = 3L;
 
         ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);
 
-        boolean isHiddenMatzip = reviewRepository.checkHiddenMatzip(matzipId, memberId);
+        List<Member> isHiddenMatzip = reviewRepository.checkHiddenMatzip(matzipId, List<Member> memberIds);
 
         System.out.println("숨겨진 맛집 여부: " + isHiddenMatzip);
         assertNotNull(isHiddenMatzip);
@@ -110,8 +139,12 @@ class ReviewRepositoryTest {
 
         Integer memberPoint = member.getPoint();
 
-        boolean isHiddenMatzip = reviewRepository.checkHiddenMatzip(matzip.getId(), member.getId());
-        int rewardPoint = isHiddenMatzip ? 100 : 10;
+        boolean isHidden = false;
+        List<Member> isHiddenMatzip = isHiddenMatzip(matzip.getId(), member.getIds());
+        if (!isHiddenMatzip.isEmpty()) {
+            isHidden = true;
+        }
+        int rewardPoint = isHidden ? 100 : 10;
 
         int newPoint = memberPoint + rewardPoint;
 

@@ -22,17 +22,16 @@
             (#{reviewDTO.matzipId}, #{reviewDTO.memberId}, #{reviewDTO.content}, #{reviewDTO.regdate}, #{reviewDTO.starRating})
     </insert>
 
-    <insert id="saveReviewTag" parameterType="list">
-        <foreach collection="reviewTags" item="reviewTag" separator=";">
-            INSERT INTO review_tag
-            (tag_id, my_review_id, regdate)
-            VALUES
-            (#{reviewTag.id}, #{reviewTag.reviewId}, #{reviewTag.regdate})
+    <insert id="saveReviewTags" parameterType="list">
+        INSERT IGNORE INTO review_tag (tag_id, my_review_id, regdate)
+        VALUES
+        <foreach collection="list" item="reviewTag" separator=",">
+            (#{reviewTag.tagId}, #{reviewTag.reviewId}, COALESCE(#{reviewTag.regdate}, NOW()))
         </foreach>
     </insert>
 
-    <select id="checkHiddenMatzip" resultType="boolean">
-        SELECT COUNT(*)
+    <select id="checkHiddenMatzip" resultType="list">
+        SELECT m.member_id
         FROM my_matzip m
         INNER JOIN friend f
             ON (f.sender_id = #{memberId} AND f.receiver_id = m.member_id
