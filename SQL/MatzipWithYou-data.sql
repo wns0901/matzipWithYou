@@ -64,15 +64,13 @@ FROM tag;
 ALTER TABLE tag
     AUTO_INCREMENT = 1;
 
-<<<<<<< HEAD
 DELETE
     FROM friend;
 ALTER TABLE friend
     AUTO_INCREMENT = 1;
 
 
-=======
->>>>>>> develop
+
 
 -- authority 테이블 더미 데이터
 INSERT INTO authority (name)

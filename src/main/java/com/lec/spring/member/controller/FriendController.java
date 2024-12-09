@@ -1,25 +1,33 @@
 package com.lec.spring.member.controller;
 
 import com.lec.spring.member.domain.Friend;
+import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.service.FriendService;
+import com.lec.spring.member.service.MemberServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/friends")
+@Controller
+@RequestMapping("/members/{memberId}/friends")
 public class FriendController {
 
     private final FriendService friendService;
+    private final MemberServiceImpl memberServiceImpl;
 
-    public FriendController(FriendService friendService) {
+    public FriendController(FriendService friendService, MemberServiceImpl memberServiceImpl) {
         this.friendService = friendService;
+        this.memberServiceImpl = memberServiceImpl;
     }
 
-    // 친구 요청 보내기
-    @PostMapping("/request")
+
+    // 팝업으로 뜨는 애들은 비동기. 제이슨 보내줘야함
+    // 친구 요청 보내기 / 비동기 팝업
+    @ResponseBody
+    @PostMapping("")
     public ResponseEntity<String> sendFriendRequest(
             Friend friend) {
         int result = friendService.sendFriendRequest(friend);
@@ -31,27 +39,36 @@ public class FriendController {
         }
     }
 
-    // 친구 요청 목록 가져오기
-    @GetMapping("/pending/{receiverId}")
-    public ResponseEntity<List<Friend>> getPendingRequests(@PathVariable Long receiverId) {
-        List<Friend> pendingRequests = friendService.getPendingRequests(receiverId);
+    // 친구 요청 목록 가져오기 / 비동기 팝업
+    @ResponseBody
+    @GetMapping("")
+    public ResponseEntity<List<Friend>> getPendingRequests(@PathVariable Long memberId) {
+        List<Friend> pendingRequests = friendService.getPendingRequests(memberId);
         return ResponseEntity.ok(pendingRequests);
     }
 
-    // 요청 수락/거절
-    @PostMapping("/response")
+    // 요청 수락/거절 (update) / 비동기 팝업
+    @ResponseBody
+    @PatchMapping("")
     public ResponseEntity<Integer> respondToRequest(
-            Friend friend) {
+            @RequestBody Friend friend,
+            @PathVariable Long memberId
+    ) {
+        friend.setReceiverId(memberId);
         int affectedRows = friendService.respondToRequest(friend);
         return ResponseEntity.ok(affectedRows);
     }
 
     // 내 친구 목록 가져오기
-    @GetMapping("/list/{id}")
-    public ResponseEntity<List<Friend>> getFriends(@PathVariable Long id) {
-        List<Friend> friends = friendService.getFriends(id);
+    @GetMapping("/list")
+    public ResponseEntity<List<FriendDetailsDTO>> getFriendsWithDetailsDTO(@PathVariable Long memberId) {
+        List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
         return ResponseEntity.ok(friends);
     }
+
+
+
+
 }
 
 

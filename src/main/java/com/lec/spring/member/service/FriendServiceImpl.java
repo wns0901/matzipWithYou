@@ -1,6 +1,7 @@
 package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.Friend;
+import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.repository.FriendRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class FriendServiceImpl implements FriendService {
     // 친구 요청 수락/거절
     @Override
     public int respondToRequest(Friend friend) {
-        Friend newFriend = friendRepository.findPendingRequest(friend);
+        Friend newFriend = friendRepository.acceptFriendRequest(friend);
         if (newFriend == null) {
             return 0;
         }
@@ -46,21 +47,24 @@ public class FriendServiceImpl implements FriendService {
         }
     }
 
+
     // 친구 목록 가져오기
     @Override
-    public List<Friend> getFriends(Long id) {
-        // senderId 또는 receiverId에 해당하고 isAccept가 true인 친구 목록 조회
-        return friendRepository.findFriends(id);
+    public List<FriendDetailsDTO> getFriendsWithDetailsDTO(Long memberId) {
+        return friendRepository.findFriendsWithDetailsDTO(memberId);
     }
 
-    // 대기 중인 친구 요청
+    // 대기 중인 친구 요청 조회...
     @Override
-    public List<Friend> getPendingRequests(Long id) {
-        // receiverId에 해당하고 isAccept가 false인 요청 조회
-        return friendRepository.findPendingRequests(id);
+    public List<Friend> getPendingRequests(Long memberId) {
+        // receiverId에 해당하고 isAccept 가 false 인 요청 조회
+        return friendRepository.findPendingRequests(memberId);
     }
 
 
+//    private Long getUserId(FriendDetails friendDetails) {
+//        Member member = memberServiceImpl.getId(memberId)
+//    } 로그인 유저의 iD 가져오기
 
 
 

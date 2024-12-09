@@ -17,5 +17,4 @@ public class Friend {
     private boolean isAccept = false;
     private LocalDateTime regdate;
 
-
 }
