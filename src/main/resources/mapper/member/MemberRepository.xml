@@ -55,6 +55,14 @@
         AND id = #{id}
     </select>
 
+    <select id="findByIds" resultType="com.lec.spring.member.domain.Member" parameterType="arraylist">
+        SELECT id, username FROM member WHERE id IN
+        <foreach collection="ids" item="e" separator="," open="(" close=")">
+            #{e}
+        </foreach>
+        ORDER BY regdate DESC
+    </select>
+
     <select id="findByUsername" resultType="com.lec.spring.member.domain.Member">
         <include refid="SELECT_BASE"/>
         AND username = #{username}
