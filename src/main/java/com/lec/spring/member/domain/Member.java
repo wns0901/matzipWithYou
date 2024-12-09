@@ -19,5 +19,8 @@ public class Member {
     private String nickname;
     private String name;
 
-    private String referrerNickname; // 추천인 닉네임
+    //private String referrerNickname; // 추천인 닉네임
+
+    private String provider;
+    private String providerId;
 }

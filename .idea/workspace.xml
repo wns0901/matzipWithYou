@@ -5,7 +5,105 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Feat(#27): merge conflict 해결">
+      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SQL/MatzipWithYou-oauth.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/CustomAccessDeniedHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/CustomLoginFailureHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/CustomLoginSuccessHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/CustomLogoutSuccessHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/PrincipalDetailService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/PrincipalDetails.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/SecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/PrincipalOauth2UserService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/provider/GoogleUserInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/provider/KakaoUserInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/provider/NaverUserInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/provider/OAuth2UserInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/controller/UserMatzipTagStatusController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/FoodKind$FoodKindBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/KakaoPlaceDTO$KakaoPlaceDTOBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/KakaoPlaceDTO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/Matzip$MatzipBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/MatzipDTO$MatzipDTOBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/MatzipDTO$MatzipDTOBuilderImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/UserMatzipTagStatus$UserMatzipTagStatusBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/UserMatzipTagStatus.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/repository/FoodKindRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/repository/TagRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/repository/UserMatzipTagStatusRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/service/MatzipServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/service/UserMatzipTagStatusService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/service/UserMatzipTagStatusServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/MyPageController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/ProfileImgController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/Member$MemberBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/MemberValidator.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/ProfileImg$ProfileImgBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/ProfileImg.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/member.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/repository/ProfileImgRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/MyPageService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/ProfileImgService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/ProfileImgServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/classes/java/test/com/lec/spring/matzip/repository/TagRepositoryTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/mapper/matzip/FoodKindRepository.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/mapper/matzip/TagRepository.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/mapper/matzip/UserMatzipTagStatusRepository.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/mapper/member/ProfileImgRepository.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/static/CSS/matzip/seoul-map.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/static/IMG/google.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/static/IMG/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/static/IMG/naver.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/static/JS/matzip/seoul-map.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/resources/main/templates/member/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MatzipController.class.uniqueId0" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/PrincipalOauth2UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/provider/GoogleUserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/provider/KakaoUserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/provider/NaverUserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/provider/OAuth2UserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/common/rejectAuth.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/hiddenTags.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/matzipTagList.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/seoul-map.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/singleTagList.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/tagForm.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/tagList.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/additional-info.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/changePassword.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/forgotPassword.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/registerOk.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/resetPassword.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/member/additional-info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/MatzipWithYou-data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/CustomLoginSuccessHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/CustomLoginSuccessHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/PrincipalDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/PrincipalDetailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/PrincipalDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/PrincipalDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/MemberValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/MemberValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/member.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/repository/MemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/repository/MemberRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/member/MemberRepository.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/member/MemberRepository.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/common/rejectAuth.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/common/rejectAuth.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/rejectAuth" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +186,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.MatzipWithYouApplication.executor": "Run",
-    "git-widget-placeholder": "FE/feat-signup",
+    "git-widget-placeholder": "Merging FE/feat-signup",
     "kotlin-language-version-configured": "true",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -172,7 +270,7 @@
       <workItem from="1733718085285" duration="7765000" />
       <workItem from="1733726410315" duration="4693000" />
       <workItem from="1733731486550" duration="520000" />
-      <workItem from="1733732009941" duration="89000" />
+      <workItem from="1733732009941" duration="242000" />
     </task>
     <task id="LOCAL-00001" summary="Fix(): SecurityFilterChain 오류 해결">
       <option name="closed" value="true" />

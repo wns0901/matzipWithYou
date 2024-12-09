@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-    private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
+//    private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
 
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
@@ -46,18 +46,18 @@ public class MemberServiceImpl implements MemberService {
         return result;
     }
 
-    @Override
-    public int registerWithReferral(Member member, String referrerNickname) {
-        int result = register(member);
-
-        // Referrer Handler
-        if (referrerNickname != null && !referrerNickname.isEmpty()) {
-            Member referrer = memberRepository.findByNickname(referrerNickname);
-
-            if (referrer != null) {
-                // 두 사람 모두 포인트 추가
-                memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
-                memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
+//    @Override
+//    public int registerWithReferral(Member member, String referrerNickname) {
+//        int result = register(member);
+//
+//        // Referrer Handler
+//        if (referrerNickname != null && !referrerNickname.isEmpty()) {
+//            Member referrer = memberRepository.findByNickname(referrerNickname);
+//
+//            if (referrer != null) {
+//                // 두 사람 모두 포인트 추가
+//                memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
+//                memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
 
                 // 서로 친구
 //                Friend friendship = new Friend();
@@ -66,10 +66,15 @@ public class MemberServiceImpl implements MemberService {
 //                friendship.setIntimacy(10);
 //                friendship.setAccept(true);
 //                friendRepository.save(friendship);
-            }
-        }
+//            }
+//        }
+//
+//        return result;
+//    }
 
-        return result;
+    @Override
+    public int updateAdditionalInfo(Long id, String name, String nickname, String email) {
+        return memberRepository.updateAdditionalInfo(id, name, nickname, email);
     }
 
 
@@ -93,5 +98,15 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Member> findAll() {
         return memberRepository.findAll();
+    }
+
+    @Override
+    public Member findByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname);
+    }
+
+    @Override
+    public int updateMember(Member member) {
+        return memberRepository.update(member);
     }
 }
