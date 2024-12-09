@@ -27,12 +27,17 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         clearAuthenticationAttributes(request);
 
-        // OAuth2 로그인인 경우
         if (authentication instanceof OAuth2AuthenticationToken) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 
-            // 무조건 additional-info 페이지로 리다이렉트
-            getRedirectStrategy().sendRedirect(request, response, "/member/additional-info");
+            // 새로운 OAuth 사용자만 additional-info로, 나머지는 홈으로
+            if (principalDetails.isNewOAuthUser()) {
+                getRedirectStrategy().sendRedirect(request, response, "/member/additional-info");
+                return;
+            }
+
+            // 기존 OAuth 사용자는 홈으로
+            super.onAuthenticationSuccess(request, response, authentication);
             return;
         }
 
