@@ -48,7 +48,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         };
 
         String providerId = oAuth2UserInfo.getProviderId();
-        String username = "익명의 " + provider + "_MATDORI";
+        String username = "익명의_"+ provider + "MATDORI";
         String password = oauth2Password;
         String email = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
