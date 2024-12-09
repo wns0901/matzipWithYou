@@ -52,6 +52,12 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String password = oauth2Password;
         String email = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
+
+        // For Kakao, generate a temporary email if needed
+        if (email == null && provider.equals("kakao")) {
+            email = username + "@kakao.user.com";  // Generate temporary email
+        }
+
         String tempNickname = "익명의 MATDORI";
 
         Member member = memberRepository.findByUsername(username);

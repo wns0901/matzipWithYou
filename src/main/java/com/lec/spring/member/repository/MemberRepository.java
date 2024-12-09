@@ -25,4 +25,8 @@ public interface MemberRepository {
 
     int updatePoint(@Param("id") Long id, @Param("point") Integer point);
 
+    int updateAdditionalInfo(@Param("id") Long id,
+                             @Param("name") String name,
+                             @Param("nickname") String nickname,
+                             @Param("email") String email);
 }

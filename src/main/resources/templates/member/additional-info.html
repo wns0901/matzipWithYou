@@ -8,6 +8,10 @@
 <div class="container">
     <h2>추가 정보를 입력해주세요</h2>
 
+    <!-- Add error message display -->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
     <form th:action="@{/member/additional-info}" method="post">
         <div class="form-group">
             <label for="name">이름:</label>
@@ -32,12 +36,12 @@
                    required>
         </div>
 
-        <div class="form-group">
-            <label for="referrerNickname">추천인 닉네임:</label>
-            <input type="text" id="referrerNickname" name="referrerNickname"
-                   class="form-control">
-            <div class="text-danger" th:if="${error}" th:text="${error}"></div>
-        </div>
+<!--        <div class="form-group">-->
+<!--            <label for="referrerNickname">추천해준 사람이 있나요? 닉네임을 입력해주세요!</label>-->
+<!--            <input type="text" id="referrerNickname" name="referrerNickname"-->
+<!--                   class="form-control">-->
+<!--            <div class="text-danger" th:if="${error}" th:text="${error}"></div>-->
+<!--        </div>-->
 
         <button type="submit" class="btn btn-primary">저장</button>
     </form>

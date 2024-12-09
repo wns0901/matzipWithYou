@@ -34,6 +34,14 @@
         WHERE id = #{id}
     </update>
 
+    <update id="updateAdditionalInfo">
+        UPDATE member
+        SET email    = #{email}
+          , nickname = #{nickname}
+          , name     = #{name}
+        WHERE id = #{id}
+    </update>
+
     <delete id="deleteById">
         DELETE FROM member WHERE id = #{id}
     </delete>

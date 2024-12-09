@@ -21,4 +21,6 @@ public interface MemberService {
     List<Member> findAll();
 
     int updateMember(Member member);
+
+    int updateAdditionalInfo(Long id, String name, String nickname, String email);
 }
