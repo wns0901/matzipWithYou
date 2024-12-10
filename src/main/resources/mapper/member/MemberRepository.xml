@@ -56,11 +56,11 @@
     </select>
 
     <select id="findByIds" resultType="com.lec.spring.member.domain.Member" parameterType="arraylist">
-        SELECT id, username FROM member WHERE id IN
-        <foreach collection="ids" item="e" separator="," open="(" close=")">
-            #{e}
+        SELECT id FROM member WHERE id IN
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
         </foreach>
-        ORDER BY regdate DESC
+        ORDER BY id DESC
     </select>
 
     <select id="findByUsername" resultType="com.lec.spring.member.domain.Member">
