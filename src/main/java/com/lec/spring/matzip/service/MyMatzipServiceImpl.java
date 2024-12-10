@@ -1,11 +1,14 @@
 package com.lec.spring.matzip.service;
 
+import com.lec.spring.matzip.domain.FindingResultMyMatzipDTO;
 import com.lec.spring.matzip.domain.MyMatzipDTO;
 import com.lec.spring.matzip.repository.MyMatzipRepository;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MyMatzipServiceImpl implements MyMatzipService {
@@ -19,36 +22,34 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
 
     @Override
-    public List<MyMatzipDTO> findSeries(Long id, String query, String kindName, List<String> tagName) {
-
-
-        return switch (query) {
-            case "nameAsc" -> myMatzipRepository.findAllOrderByNameAsc(id);
-            case "foodKindAsc" -> myMatzipRepository.findAllOrderByFoodKindAsc(id, kindName);
-            case "tagAsc" -> myMatzipRepository.findAllOrderByTagAsc(id, tagName);
-            default -> myMatzipRepository.findAll(id);
-        };
-
+    public FindingResultMyMatzipDTO findByMemberId(Long id) {
+        return FindingResultMyMatzipDTO.builder()
+                .cnt(myMatzipRepository.listCntByMemberId(id))
+                .list(myMatzipRepository.findAll(id))
+                .build();
     }
 
     @Override
-    public int myMatzipvisibilityUpdate(Long id, String visibility) {
-        int result = 0;
-        result = myMatzipRepository.updatemyMatzipvisibility(id, visibility);
-        return result;
+    public ResponseEntity<Map<String, String>> updateMyMatzipVisibility(Long id, String visibility) {
+        if(myMatzipRepository.updateMyMatzipVisibility(id, visibility)) {
+            return ResponseEntity.ok(Map.of("status", "SUCCESS"));
+        } else {
+            return ResponseEntity.ok(Map.of(
+                    "status", "FAIL",
+                    "msg","수정에 실패했습니다."
+                    ));
+        }
     }
 
     @Override
-    public int myMatzipDelete(Long id) {
-        int result = 0;
-        result = myMatzipRepository.deletemyMatzip(id);
-        return result;
-    }
-
-    @Override
-    public int myMatzipListAll() {
-        int result = 0;
-        result = myMatzipRepository.listCountAll();
-        return result;
+    public ResponseEntity<Map<String, String>> deleteMyMatzip(Long id) {
+        if(myMatzipRepository.deleteMyMatzip(id)) {
+            return ResponseEntity.ok(Map.of("status", "SUCCESS"));
+        } else {
+            return ResponseEntity.ok(Map.of(
+                    "status", "FAIL",
+                    "msg","삭제에 실패했습니다."
+            ));
+        }
     }
 }

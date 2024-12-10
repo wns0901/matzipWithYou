@@ -56,43 +56,17 @@
         ORDER BY a.regdate DESC
     </select>
 
-    <select id="findAllOrderByNameAsc" resultMap="mapMatzipDTO">
-        <include refid="SELECT_BASE"/>
-        AND a.id = #{id}
-        GROUP BY 1
-     ORDER BY b.name ASC
-    </select>
-
-    <select id="findAllOrderByFoodKindAsc" resultMap="mapMatzipDTO">
-        <include refid="SELECT_BASE"/>
-        AND a.id = #{id}
-        GROUP BY 1
-    AND k.kindname = #{kindName}
-    </select>
-
-    <select id="findAllOrderByTagAsc" resultMap="mapMatzipDTO">
-        <include refid="SELECT_BASE"/>
-     AND a.id = #{id}
-     AND
-     g.tagname IN
-     <foreach collection="array" item="e" separator="," open="(" close=")">
-            #{e}
-     </foreach>
-     GROUP BY a.id, g.tagname
-     ORDER BY g.tagname DESC
-    </select>
-
-    <update id="updatemyMatzipvisibility" flushCache="true" parameterType="com.lec.spring.matzip.domain.MyMatzipDTO">
+    <update id="updateMyMatzipVisibility" flushCache="true" parameterType="com.lec.spring.matzip.domain.MyMatzipDTO">
         UPDATE my_matzip
         SET visibility = #{visibility}
         WHERE id = #{id}
     </update>
 
-    <delete id="deletemyMatzip" flushCache="true" parameterType="com.lec.spring.matzip.domain.MyMatzipDTO">
+    <delete id="deleteMyMatzip" flushCache="true" parameterType="com.lec.spring.matzip.domain.MyMatzipDTO">
         DELETE FROM my_matzip WHERE id = #{id}
     </delete>
 
-    <select id="listCountAll" resultType="int">
-        SELECT count(*) FROM my_matzip
+    <select id="listCntByMemberId" resultType="int">
+        SELECT count(*) FROM my_matzip WHERE member_id = #{id}
     </select>
 </mapper>

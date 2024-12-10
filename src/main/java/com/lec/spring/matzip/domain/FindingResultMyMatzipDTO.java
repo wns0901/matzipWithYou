@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class FoodKind {
-    private Long id;
-    private String kindName;
-    private LocalDateTime regdate;
+public class FindingResultMyMatzipDTO {
+    private int cnt;
+    private List<MyMatzipDTO> list;
 }

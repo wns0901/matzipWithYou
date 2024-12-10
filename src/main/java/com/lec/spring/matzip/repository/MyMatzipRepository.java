@@ -11,15 +11,9 @@ import java.util.Map;
 public interface MyMatzipRepository {
     List<MyMatzipDTO> findAll(Long id);
 
-    List<MyMatzipDTO> findAllOrderByNameAsc(Long id);
+    int listCntByMemberId(Long id);
 
-    List<MyMatzipDTO> findAllOrderByFoodKindAsc(Long id, String kindName);
+    boolean updateMyMatzipVisibility(Long id, String visibility);
 
-    List<MyMatzipDTO> findAllOrderByTagAsc(@Param("id")Long id, @Param("array")List<String> tagName);
-
-    int listCountAll();
-
-    int updatemyMatzipvisibility(Long id, String visibility);
-
-    int deletemyMatzip(Long id);
+    boolean deleteMyMatzip(Long id);
 }
