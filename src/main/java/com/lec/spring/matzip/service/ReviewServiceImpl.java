@@ -56,12 +56,14 @@ public class ReviewServiceImpl implements ReviewService {
 
         Member member = memberRepository.findById(reviewDTO.getMemberId());
 
+        List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
+        int rewardReviewPoint = rewardReviewPoint(reviewDTO, 100, 10);
+        int rewardReviewIntimacy = rewardReviewIntimacy(reviewDTO, 100, 10);
 
-        model.addAttribute("result", isHidden ? "UNLOCK" : "saveOk");
-        model.addAttribute("member", member);
-
-
-        rewardReview(reviewDTO, rewardPoint);
+        model.addAttribute("result", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
+        model.addAttribute("member", hiddenMatzipMemberIds);
+        model.addAttribute("rewardReviewPoint", rewardReviewPoint);
+        model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
 
         return saved;
     }
@@ -109,11 +111,6 @@ public class ReviewServiceImpl implements ReviewService {
             throw new IllegalArgumentException("Member not found");
         }
 
-        Matzip matzip = matzipRepository.findById(reviewDTO.getMatzipId());
-        if (matzip == null) {
-            throw new IllegalArgumentException("Matzip not found");
-        }
-
         List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
 
         int resultPoint = !hiddenMatzipMemberIds.isEmpty() ?  rewardHiddenPoint: rewardPoint;
@@ -126,17 +123,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy, int rewardIntimacy) {
-        Matzip matzip = matzipRepository.findById(reviewDTO.getMatzipId());
-        if (matzip == null) {
-            throw new IllegalArgumentException("Matzip not found");
-        }
-
-        Member member = memberRepository.findById(reviewDTO.getMemberId());
-        if (member == null) {
-            throw new IllegalArgumentException("Member not found");
-        }
-
-        Friend friend = friendRepository.findFriends(member.getId());
+        Friend friend = friendRepository.findFriends(reviewDTO.getId());
         if (friend == null) {
             throw new IllegalArgumentException("Friend not found");
         }
@@ -146,7 +133,9 @@ public class ReviewServiceImpl implements ReviewService {
         int resultIntimacy = !hiddenMatzipMemberIds.isEmpty() ? rewardHiddenIntimacy : rewardIntimacy;
 
         friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
-        reviewRepository.updateIntimacy(member.getId(), friend.getIntimacy());
+        friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
+
+        return friend.getIntimacy();
     }
 
 

@@ -47,8 +47,8 @@ class ReviewRepositoryTest {
         MatzipRepository matzipRepository = sqlSession.getMapper(MatzipRepository.class);
 
         ReviewDTO reviewDTO = ReviewDTO.builder()
-                .matzipId(1L)
-                .memberId(3L)
+                .matzipId(6L)
+                .memberId(2L)
                 .content("좋은 맛집입니다")
                 .starRating(5)
                 .regdate(LocalDateTime.now())
@@ -61,30 +61,32 @@ class ReviewRepositoryTest {
 
         Model model = new ExtendedModelMap();
 
-        int saved = reviewRepository.save(reviewDTO, model);
-
-        assertEquals(1, saved);
-
-
         Member member = memberRepository.findById(reviewDTO.getMemberId());
         assertNotNull(member);
 
         List<Long> memberIds = List.of(1L, 2L, 3L);
         List<Member> members = memberRepository.findByIds(memberIds);
 
-        boolean isHidden = false;
-        List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(matzip.getId(), memberIds);
-        if (!hiddenMatzipMemberIds.isEmpty()) {
-            isHidden = true;
-        }
+        List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
+        int rewardReviewPoint = reviewServiceImpl.rewardReviewPoint(reviewDTO, 100, 10);
+        int rewardReviewIntimacy = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, 100, 10);
 
-        String result = isHidden ? "UNLOCK" : "saveOk";
+        model.addAttribute("result", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
+        model.addAttribute("member", hiddenMatzipMemberIds);
+        model.addAttribute("rewardReviewPoint", rewardReviewPoint);
+        model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
+
+        int saved = reviewRepository.save(reviewDTO, model);
+        assertEquals(1, saved);
+
+        String result = !hiddenMatzipMemberIds.isEmpty() ? "UNLOCK" : "saveOk";
         assertNotNull(result);
         assertTrue(result.equals("UNLOCK") || result.equals("saveOk"));
 
         int newPoint = result.equals("UNLOCK") ? 610 : 510;
         assertEquals(newPoint, member.getPoint());
-
+        int newIntimacy = result.equals("UNLOCK") ? 610 : 510;
+        assertEquals(newIntimacy, friend.getIntimacy());
     }
 
     @Test
