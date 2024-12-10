@@ -1002,7 +1002,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="290" parent="1" name="matzip_with_you_db">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-12-10.05:44:45</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-12-10.07:33:28</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="291" parent="1" name="mysql">
