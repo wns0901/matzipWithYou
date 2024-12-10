@@ -52,6 +52,8 @@ public class SecurityConfig {
                         .successHandler(new CustomLoginSuccessHandler("/home"))
                         .failureHandler(new CustomLoginFailureHandler())
                 )
+
+
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/member/login")
                         .successHandler(new CustomLoginSuccessHandler("/home"))
