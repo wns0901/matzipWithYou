@@ -1,23 +1,22 @@
 package com.lec.spring.config;
 
+import com.lec.spring.config.oauth.PrincipalOauth2UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class SecurityConfig {
-
-//    Security 동작 막기
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return web -> web.ignoring().anyRequest();
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -25,27 +24,43 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    private PrincipalOauth2UserService principalOauth2UserService;
+
+    @Autowired
+    public void setPrincipalOauth2UserService(PrincipalOauth2UserService principalOauth2UserService) {
+        this.principalOauth2UserService = principalOauth2UserService;
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-
-                // request URL에 대한 접근 권한 세팅 (완료 이전)
                 .authorizeHttpRequests(auth -> auth
-                        // "" URL로 들어오는 요청은 "인증"만 필요
-                        .requestMatchers("/test/**").authenticated()
-                        // "" URL로 들어오는 요청은 "인증" 뿐 아니라 ROLE_MEMBER, ROLE_ADMIN 권한을 가져야 한다 (인가)
-                        .requestMatchers("/test/**").hasAnyRole("MEMBER", "ADMIN")
-                        // 그 밖의 다른 요청들 모두 허용
+                        .requestMatchers("/member/additional-info").authenticated()  // 추가: additional-info 페이지는 인증 필요
+                        .requestMatchers("/matzip/matzipDetail/**").authenticated()
+                        .requestMatchers("/matzip/").hasAnyRole("MEMBER", "ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
                         .loginPage("/member/login")
                         .loginProcessingUrl("/member/login")
                         .defaultSuccessUrl("/")
-                        .successHandler(new CustomLoginSuccessHandler("/index"))
+                        .successHandler(new CustomLoginSuccessHandler("/home"))
                         .failureHandler(new CustomLoginFailureHandler())
                 )
 
+
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/member/login")
+                        .successHandler(new CustomLoginSuccessHandler("/home"))
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(principalOauth2UserService)
+                        )
+                )
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
                         .logoutUrl("/member/logout")
                         .invalidateHttpSession(false)
@@ -53,6 +68,7 @@ public class SecurityConfig {
                 )
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer
                         .accessDeniedHandler(new CustomAccessDeniedHandler())
-                ).build();
+                )
+                .build();
     }
 }

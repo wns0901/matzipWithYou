@@ -73,11 +73,11 @@ CREATE TABLE matzip_tag
 CREATE TABLE member
 (
     id       INT         NOT NULL AUTO_INCREMENT COMMENT '회원 일련번호',
-    username VARCHAR(20) NOT NULL COMMENT '아이디 (8~20)',
+    username VARCHAR(100) NOT NULL COMMENT '아이디 (8~20)',
     password VARCHAR(100) NOT NULL COMMENT '비밀번호(8~16)',
-    email    VARCHAR(35) NOT NULL COMMENT '이메일',
+    email    VARCHAR(100) NOT NULL COMMENT '이메일',
     point    INT         NULL     DEFAULT 0 COMMENT '포인트',
-    nickname VARCHAR(20) NOT NULL COMMENT '닉네임',
+    nickname VARCHAR(100) NOT NULL COMMENT '닉네임',
     name     VARCHAR(20) NOT NULL COMMENT '이름',
     PRIMARY KEY (id)
 ) COMMENT '회원';
