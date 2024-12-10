@@ -5,7 +5,7 @@ import com.lec.spring.matzip.domain.Matzip;
 import java.util.List;
 
 public interface MatzipRepository {
-    int save(Matzip matzip);
+    boolean save(Matzip matzip);
 
     List<Matzip> findAll();
 
