@@ -50,7 +50,7 @@ public class FriendServiceImpl implements FriendService {
 
     // 친구 목록 가져오기
     @Override
-    public List<FriendDetailsDTO> getFriendsWithDetailsDTO(Long memberId) {
+    public List<Friend> getFriendsWithDetailsDTO(Long memberId) {
         return friendRepository.findFriendsWithDetailsDTO(memberId);
     }
 

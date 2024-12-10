@@ -55,28 +55,37 @@
 
 
     <!-- 수락된 친구 목록 조회 -->
-    <select id="findFriendsWithDetailsDTO" resultType="com.lec.spring.member.domain.FriendDetailsDTO">
-#         SELECT
-#             m.nickname AS nickname,
-#             f.intimacy AS intimacy,
-#             COUNT(CASE WHEN mm.visibility = 'PUBLIC' THEN 1 END) AS public_count,
-#             COUNT(CASE WHEN mm.visibility = 'HIDDEN' THEN 1 END) AS hidden_count,
-#             pi.filename AS profile_img
-#         FROM friend f
-#                  JOIN member m
-#                       ON (f.sender_id = m.id OR f.receiver_id = m.id)
-#                  LEFT JOIN my_matzip mm
-#                            ON mm.member_id = m.id
-#                  LEFT JOIN profile_img pi
-#                            ON pi.member_id = m.id
-#         WHERE
-#             (f.sender_id = #{memberId} OR f.receiver_id = #{memberId})
-#           AND f.is_accept = TRUE
-#         GROUP BY m.id;
-    SELECT * FROM friend
+    <select id="findFriendsWithDetailsDTO" resultType="com.lec.spring.member.domain.Friend" parameterType="long">
+    SELECT sender_id senderId, receiver_id receiverId, intimacy, is_accept isAccept, regdate FROM friend
               WHERE receiver_id = #{memberId}  or sender_id = #{memberId}
     AND is_accept is true;
+
+
     </select>
+
+
+<!--    #                 m.nickname AS nickname,-->
+<!--    #                 f.intimacy AS intimacy,-->
+<!--    #                 COUNT(CASE WHEN mm.visibility = 'PUBLIC' THEN 1 END) AS public_count,-->
+<!--    #                 COUNT(CASE WHEN mm.visibility = 'HIDDEN' THEN 1 END) AS hidden_count,-->
+<!--    #                 pi.filename AS profile_img-->
+<!--    #             FROM friend f-->
+<!--    #                      JOIN member m-->
+<!--    #                           ON (f.sender_id = m.id OR f.receiver_id = m.id)-->
+<!--    #                      LEFT JOIN my_matzip mm-->
+<!--    #                                ON mm.member_id = m.id-->
+<!--    #                      LEFT JOIN profile_img pi-->
+<!--    #                                ON pi.member_id = m.id-->
+<!--    #             WHERE-->
+<!--    #                 (f.sender_id = #{memberId} OR f.receiver_id = #{memberId})-->
+<!--    #               AND f.is_accept = TRUE-->
+<!--    #             GROUP BY m.id;-->
+
+
+
+
+
+
 
     <!-- 친구 삭제 -->
     <delete id="delete" parameterType="com.lec.spring.member.domain.Friend">

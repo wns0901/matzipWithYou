@@ -15,7 +15,7 @@ public interface FriendService {
 
 
     // 친구 상세 정보
-    List<FriendDetailsDTO> getFriendsWithDetailsDTO(Long memberId);
+    List<Friend> getFriendsWithDetailsDTO(Long memberId);
 
     // 친구 요청 대기중
     List<Friend> getPendingRequests(Long memberId);

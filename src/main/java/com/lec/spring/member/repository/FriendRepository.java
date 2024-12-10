@@ -13,7 +13,7 @@ public interface FriendRepository{
     boolean isAlreadyFriend(Friend friend);
 
     // 친구 목록 조회 (친구와 맛집 공개 상태 정보 포함)
-    List<FriendDetailsDTO> findFriendsWithDetailsDTO(Long memberId);
+    List<Friend> findFriendsWithDetailsDTO(Long memberId);
 
     // 대기 중인 요청 목록 조회
     List<Friend> findPendingRequests(Long memberId);

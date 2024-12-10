@@ -61,8 +61,8 @@ public class FriendController {
 
     // 내 친구 목록 가져오기
     @GetMapping("/list")
-    public ResponseEntity<List<FriendDetailsDTO>> getFriendsWithDetailsDTO(@PathVariable Long memberId) {
-        List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
+    public ResponseEntity<List<Friend>> getFriendsWithDetailsDTO(@PathVariable Long memberId) {
+        List<Friend> friends = friendService.getFriendsWithDetailsDTO(memberId);
         return ResponseEntity.ok(friends);
     }
 
