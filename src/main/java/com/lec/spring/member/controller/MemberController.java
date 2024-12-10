@@ -89,6 +89,7 @@ public class MemberController {
 
     @PostMapping("/register")
     public String registerOk(@Valid Member member
+            , @RequestParam(required = false) String referrerNickname
             , BindingResult bindingResult
             , Model model
             , RedirectAttributes redirectAttributes
@@ -108,10 +109,24 @@ public class MemberController {
             return "redirect:/member/register";
         }
 
-        int cnt = memberService.register(member);
+        // 추천인 닉네임 검증
+        if (referrerNickname != null && !referrerNickname.isEmpty()) {
+            Member referrer = memberService.findByNickname(referrerNickname);
+            if (referrer == null) {
+                redirectAttributes.addFlashAttribute("error", "존재하지 않는 추천인입니다.");
+                return "redirect:/member/register";
+            }
+        }
+
+//        int cnt = memberService.register(member);
+//        model.addAttribute("result", cnt);
+//
+//        System.out.println(member.getUsername());
+//        return "member/registerOk";
+
+        int cnt = memberService.registerWithReferral(member, referrerNickname);
         model.addAttribute("result", cnt);
 
-        System.out.println(member.getUsername());
         return "member/registerOk";
     }
 
