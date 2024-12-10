@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final FriendRepository friendRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder) {
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);

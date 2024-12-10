@@ -5,19 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1f0fa1c-aeee-4823-a914-84ff58b453ff" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/CSS/member/additional-info.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/aa0e57b8-bad9-4b48-b6ea-ae71d04294b6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/aa0e57b8-bad9-4b48-b6ea-ae71d04294b6.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/additional-info.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/additional-info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/MemberController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/MemberController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/CSS/member/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/static/CSS/member/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/additional-info.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/member/additional-info.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/member/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/Member.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="matzipWithYou" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -26,11 +53,27 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "FE/feat-signup",
+    "Gradle.Build matzipWithYou.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "Spring Boot.MatzipWithYouApplication.executor": "Run",
+    "git-widget-placeholder": "FE/feat-login",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="MatzipWithYouApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="matzipWithYou.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.lec.spring.MatzipWithYouApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="TaskManager">
     <servers />
   </component>
