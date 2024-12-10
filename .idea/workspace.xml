@@ -6,20 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Feat(#50): signup page design">
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/aa0e57b8-bad9-4b48-b6ea-ae71d04294b6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/aa0e57b8-bad9-4b48-b6ea-ae71d04294b6.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-test.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/MatzipWithYou-test.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/MemberController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/MemberController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/MemberService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/MemberService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/MemberServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/MemberServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/member/MemberRepository.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/mapper/member/MemberRepository.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/member/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/MemberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/member/MemberRepository.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/member/MemberRepository.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/member/FriendRepository.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/member/FriendRepository.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +180,8 @@
       <workItem from="1733732009941" duration="242000" />
       <workItem from="1733806730796" duration="52000" />
       <workItem from="1733815105730" duration="323000" />
-      <workItem from="1733815432283" duration="1000" />
+      <workItem from="1733815432283" duration="53000" />
+      <workItem from="1733815498383" duration="439000" />
     </task>
     <task id="LOCAL-00001" summary="Fix(): SecurityFilterChain 오류 해결">
       <option name="closed" value="true" />

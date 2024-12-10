@@ -1,3 +1,5 @@
 SELECT *
 FROM member;
-ㄷㄷㄷㄴ
+
+select *
+from friend;
