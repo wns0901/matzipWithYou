@@ -56,12 +56,14 @@ public class ReviewServiceImpl implements ReviewService {
 
         Member member = memberRepository.findById(reviewDTO.getMemberId());
 
+        List<ReviewTag> addReviewTag = addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
         List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
         int rewardReviewPoint = rewardReviewPoint(reviewDTO, 100, 10);
         int rewardReviewIntimacy = rewardReviewIntimacy(reviewDTO, 100, 10);
 
-        model.addAttribute("result", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
-        model.addAttribute("member", hiddenMatzipMemberIds);
+        model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
+        model.addAttribute("reviewTags", addReviewTag);
+        model.addAttribute("members", hiddenMatzipMemberIds);
         model.addAttribute("rewardReviewPoint", rewardReviewPoint);
         model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
 
@@ -69,7 +71,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewTag> addReviewTag(Long id, List<Long> tagIds) {
+    public List<ReviewTag> addReviewTags(Long id, List<Long> tagIds) {
         List<Tag> tags = tagRepository.findByIds(tagIds);
 
         if (tags == null || tags.isEmpty()) {
@@ -140,7 +142,16 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public Review deleteReview(Long id) {
-        return reviewRepository.deleteById(id);
+    public int deleteReview(ReviewDTO reviewDTO) {
+        int result = 0;
+
+        Review review = reviewRepository.findById(reviewDTO.getId());
+        if (review == null) {
+            throw new IllegalArgumentException("삭제하려는 리뷰를 찾을 수 없습니다.");
+        } else {
+            result = reviewRepository.deleteById(reviewDTO.getId());
+        }
+
+        return result;
     }
 }

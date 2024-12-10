@@ -2,6 +2,7 @@ package com.lec.spring.matzip.controller;
 
 import com.lec.spring.matzip.domain.*;
 import com.lec.spring.matzip.service.ReviewService;
+import com.lec.spring.member.domain.Member;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,6 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     public ReviewController(ReviewService reviewService) {
-        System.out.println("ReviewController() 생성");
         this.reviewService = reviewService;
     }
 
@@ -38,15 +38,10 @@ public class ReviewController {
 
     @PostMapping("/write")
     public String writeOk(@Valid ReviewDTO reviewDTO
-            , @RequestParam List<Long> tagIds
             , BindingResult bindingResult
             , Model model
             , RedirectAttributes redirectAttributes
     ) {
-        if (tagIds == null || tagIds.size() < 3 || tagIds.size() > 5) {
-            redirectAttributes.addFlashAttribute("error_tag", "태그는 최소 3개, 최대 5개까지 선택 가능합니다.");
-        }
-
         if(bindingResult.hasErrors()) {
             List<FieldError> errorList = bindingResult.getFieldErrors();
             for (FieldError error : errorList) {
@@ -56,13 +51,41 @@ public class ReviewController {
             return "redirect:/review/write";
         }
 
+        int saved = reviewService.addReview(reviewDTO, model);
 
+        if (saved > 0) {
+            String isHidden = (String) model.getAttribute("isHidden");
+            List<ReviewTag> reviewTags = (List<ReviewTag>) model.getAttribute("reviewTags");
+            List<Member> hiddenMatzipMemberIds = (List<Member>) model.getAttribute("members");
+            Integer rewardReviewPoint = (Integer) model.getAttribute("rewardReviewPoint");
+            Integer rewardReviewIntimacy = (Integer) model.getAttribute("rewardReviewIntimacy");
 
+            redirectAttributes.addFlashAttribute("saveOk", "리뷰 작성이 완료되었습니다.");
+
+            if(rewardReviewPoint != null && rewardReviewIntimacy != null) {
+                redirectAttributes.addFlashAttribute("rewardReviewPoint", rewardReviewPoint);
+                redirectAttributes.addFlashAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
+            }
+
+            if(!hiddenMatzipMemberIds.isEmpty()) {
+                redirectAttributes.addFlashAttribute("isHidden", isHidden);
+            }
+
+            if(!reviewTags.isEmpty()) {
+                redirectAttributes.addFlashAttribute("reviewTags", reviewTags);
+            }
+
+            redirectAttributes.addFlashAttribute("saveError", "리뷰작성에 실패했습니다.");
+            return "redirect:/review/writeOk";
+        }
 
         model.addAttribute("review", reviewService.addReview(reviewDTO, model));
-//        model.addAttribute("tags", reviewService.addReviewTag(tagIds));
-        return "review/writeOk";
+        return "redirect:/review/write";
     }
 
+    @PostMapping("/delete/{id}")
+    public String deleteOk(ReviewDTO reviewDTO, Model model) {
+        model.addAttribute("")
+    }
 
 }

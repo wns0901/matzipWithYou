@@ -109,7 +109,7 @@ class ReviewRepositoryTest {
 
         reviewRepository.saveReviewTags(reviewTags);
 
-        List<ReviewTag> testReviewTags = reviewServiceImpl.addReviewTag(review.getId(), tagIds);
+        List<ReviewTag> testReviewTags = reviewServiceImpl.addReviewTags(review.getId(), tagIds);
 
         assertNotNull(reviewTags);
     }

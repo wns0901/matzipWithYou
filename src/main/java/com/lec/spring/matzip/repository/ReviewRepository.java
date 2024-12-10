@@ -19,5 +19,5 @@ public interface ReviewRepository {
 
     int updateIntimacy(Long memberId, Integer intimacy);
 
-    Review deleteById(Long id);
+    int deleteById(Long id);
 }

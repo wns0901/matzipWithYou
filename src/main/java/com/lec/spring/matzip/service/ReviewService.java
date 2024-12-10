@@ -14,7 +14,7 @@ public interface ReviewService {
 
     int addReview(ReviewDTO reviewDTO, Model model);
 
-    List<ReviewTag> addReviewTag(Long id, List<Long> tagIds);
+    List<ReviewTag> addReviewTags(Long id, List<Long> tagIds);
 
     List<Member> hiddenMatzipMemberIds(ReviewDTO reviewDTO);
 
@@ -22,5 +22,5 @@ public interface ReviewService {
 
     int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy ,int rewardIntimacy);
 
-    Review deleteReview(Long id);
+    int deleteReview(ReviewDTO reviewDTO);
 }
