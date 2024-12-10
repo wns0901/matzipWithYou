@@ -64,6 +64,13 @@ FROM tag;
 ALTER TABLE tag
     AUTO_INCREMENT = 1;
 
+DELETE
+    FROM friend;
+ALTER TABLE friend
+    AUTO_INCREMENT = 1;
+
+
+
 
 -- authority 테이블 더미 데이터
 INSERT INTO authority (name)
@@ -153,13 +160,14 @@ VALUES (1, 3, 'PRIVATE', '나만 알고 싶은 비공개 맛집', 5),
 ;
 
 -- friend 테이블 샘플 데이터
-INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept)
-VALUES (1, 2, 200, TRUE),
-       (1, 3, 100, TRUE),
-       (1, 4, 0, FALSE),
-       (2, 4, 500, TRUE),
-       (2, 3, 300, TRUE),
-       (3, 4, 0, FALSE);
+INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept) VALUES
+     (1, 2, 200, TRUE),
+     (1, 3, 100, TRUE),
+     (1, 4, 0, FALSE),
+     (2, 4, 500, TRUE),
+     (2, 3, 300, TRUE),
+     (3, 4, 0, FALSE);
+
 
 -- tag 데이터 생성
 INSERT INTO tag (tagname)

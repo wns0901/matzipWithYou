@@ -42,6 +42,7 @@ public class MemberController {
             @RequestParam String name,
             @RequestParam String nickname,
             @RequestParam String email,
+            @RequestParam(required = false) String referrerNickname,
             Authentication authentication,
             RedirectAttributes redirectAttributes) {
 
@@ -49,11 +50,25 @@ public class MemberController {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
             Member member = principalDetails.getMember();
 
-            // Check if nickname is already taken by a different user
             Member existingMember = memberService.findByNickname(nickname);
             if (existingMember != null && !existingMember.getId().equals(member.getId())) {
                 redirectAttributes.addFlashAttribute("error", "이미 사용 중인 닉네임입니다.");
                 return "redirect:/member/additional-info";
+            }
+
+            // 추천인 닉네임 검증
+            if (referrerNickname != null && !referrerNickname.isEmpty()) {
+                Member referrer = memberService.findByNickname(referrerNickname);
+                if (referrer == null) {
+                    redirectAttributes.addFlashAttribute("error", "존재하지 않는 추천인입니다.");
+                    return "redirect:/member/additional-info";
+                }
+
+                // 자기 자신을 추천인으로 등록하는 것 방지
+                if (member.getId().equals(referrer.getId())) {
+                    redirectAttributes.addFlashAttribute("error", "자기 자신을 추천인으로 등록할 수 없습니다.");
+                    return "redirect:/member/additional-info";
+                }
             }
 
             // Update additional info
@@ -65,6 +80,11 @@ public class MemberController {
                 member.setNickname(nickname);
                 member.setEmail(email);
 
+                // 추천인 처리
+                if (referrerNickname != null && !referrerNickname.isEmpty()) {
+                    Member referrer = memberService.findByNickname(referrerNickname);
+                    memberService.processReferral(member, referrer);
+                }
                 redirectAttributes.addFlashAttribute("message", "추가 정보가 저장되었습니다.");
                 return "redirect:/home";
             } else {
@@ -89,6 +109,7 @@ public class MemberController {
 
     @PostMapping("/register")
     public String registerOk(@Valid Member member
+            , @RequestParam(required = false) String referrerNickname
             , BindingResult bindingResult
             , Model model
             , RedirectAttributes redirectAttributes
@@ -108,10 +129,24 @@ public class MemberController {
             return "redirect:/member/register";
         }
 
-        int cnt = memberService.register(member);
+        // 추천인 닉네임 검증
+        if (referrerNickname != null && !referrerNickname.isEmpty()) {
+            Member referrer = memberService.findByNickname(referrerNickname);
+            if (referrer == null) {
+                redirectAttributes.addFlashAttribute("error", "존재하지 않는 추천인입니다.");
+                return "redirect:/member/register";
+            }
+        }
+
+//        int cnt = memberService.register(member);
+//        model.addAttribute("result", cnt);
+//
+//        System.out.println(member.getUsername());
+//        return "member/registerOk";
+
+        int cnt = memberService.registerWithReferral(member, referrerNickname);
         model.addAttribute("result", cnt);
 
-        System.out.println(member.getUsername());
         return "member/registerOk";
     }
 
