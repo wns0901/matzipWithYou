@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>(회원) 태그 목록</title>
+</head>
+<body>
+<h1>회원별 저장된 태그 목록</h1>
+<li> 회원이 작성한 가게의 태그들을 보여주는 페이지 입니다</li>
+<li> localhost:8080/matzip/list?memberId= </li>
+
+<hr>
+
+<!-- tags가 null이거나 비어있을 때 -->
+<div th:if="${tags == null or #lists.isEmpty(tags)}">
+  <p>저장된 태그가 없습니다.</p>
+</div>
+
+<!-- tags가 존재할 때 -->
+<div th:if="${tags != null and !#lists.isEmpty(tags)}">
+  <table border="1">
+    <thead>
+    <tr>
+      <th>회원 ID</th>
+      <th>내 맛집 ID</th>
+      <th>태그 ID</th>
+      <th>태그 이름</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 태그 반복 출력 -->
+    <tr th:each="tag : ${tags}">
+      <td th:text="${tag.memberId}"></td> <!-- 회원 ID -->
+      <td th:text="${tag.myMatzipId}"></td> <!-- 맛집 ID -->
+      <td th:text="${tag.tagId}"></td> <!-- 태그 ID -->
+      <td th:text="${tag.tagName != null ? tag.TagName : '태그 없음'}"></td> <!-- 태그 이름, null 체크 -->
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<br>
+<hr>
+
+<button><a href="/matzip/new">새 태그 추가</a></button>
+</body>
+</html>

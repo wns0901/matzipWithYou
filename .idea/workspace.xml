@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Feat(#27): merge conflict 해결">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-ddl.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-oauth.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-test.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/CustomAccessDeniedHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/CustomLoginFailureHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/CustomLoginSuccessHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/CustomLogoutSuccessHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/PrincipalDetailService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/PrincipalDetails.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/PrincipalOauth2UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/provider/GoogleUserInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/provider/KakaoUserInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/provider/NaverUserInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/config/oauth/provider/OAuth2UserInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/controller/UserMatzipTagStatusController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/FoodKind$FoodKindBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/KakaoPlaceDTO$KakaoPlaceDTOBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/KakaoPlaceDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/Matzip$MatzipBuilderImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/MatzipDTO$MatzipDTOBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/MatzipDTO$MatzipDTOBuilderImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/UserMatzipTagStatus$UserMatzipTagStatusBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/UserMatzipTagStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/repository/FoodKindRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/repository/TagRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/repository/UserMatzipTagStatusRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/service/MatzipServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/service/UserMatzipTagStatusService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/service/UserMatzipTagStatusServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/MyPageController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/ProfileImgController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/Member$MemberBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/MemberValidator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/ProfileImg$ProfileImgBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/ProfileImg.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/member.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/repository/ProfileImgRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/MyPageService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/ProfileImgService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/ProfileImgServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/com/lec/spring/matzip/repository/TagRepositoryTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/matzip/FoodKindRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/matzip/TagRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/matzip/UserMatzipTagStatusRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/member/ProfileImgRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/CSS/matzip/seoul-map.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/IMG/google.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/IMG/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/IMG/naver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/JS/matzip/seoul-map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MatzipController.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/CustomAccessDeniedHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/CustomLoginFailureHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/CustomLoginSuccessHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/CustomLogoutSuccessHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/PrincipalDetailService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/PrincipalDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/PrincipalOauth2UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/provider/GoogleUserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/provider/KakaoUserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/provider/NaverUserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/oauth/provider/OAuth2UserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/controller/UserMatzipTagStatusController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/KakaoPlaceDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/UserMatzipTagStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/repository/FoodKindRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/repository/TagRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/repository/UserMatzipTagStatusRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MatzipServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/UserMatzipTagStatusService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/UserMatzipTagStatusServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/HomeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/MemberController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/MyPageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/Member.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/domain/MemberValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/repository/MemberRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MyPageService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/matzip/FoodKindRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/matzip/TagRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/matzip/UserMatzipTagStatusRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/member/MemberRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/CSS/matzip/matzipDetail.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/common/rejectAuth.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/common/rejectAuth.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/hiddenTags.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/hiddenTags.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/matzipTagList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/seoul-map.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/singleTagList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/tagForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzip/tagList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzipDetail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/matzipTagList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/additional-info.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/changePassword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/forgotPassword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/registerOk.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/member/resetPassword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/singleTagList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/tagForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/matzip/tagList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/additional-info.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/changePassword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/forgotPassword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/resetPassword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/lec/spring/matzip/repository/TagRepositoryTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="matzipWithYou" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="BE/feat-member-domain" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="SOFT" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;dhlee47-l&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/wns0901/matzipWithYou.git&quot;,
+    &quot;accountId&quot;: &quot;9c19205a-45da-40ad-abcf-2ae52dbde5ae&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2pm99BXk2PhuNW68UViesnynpPD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Gradle.Build matzipWithYou.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.MatzipWithYouApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging FE/feat-signup&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/static/IMG" />
+      <recent name="$PROJECT_DIR$/src/main/resources/templates/matzip" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static/JS/matzip" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static/CSS/matzip" />
+      <recent name="$PROJECT_DIR$/src/main/resources/templates/common" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="MatzipWithYouApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="matzipWithYou.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.lec.spring.MatzipWithYouApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lec.spring.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.MatzipWithYouApplication" />
+        <item itemvalue="Spring Boot.MatzipWithYouApplication" />
+        <item itemvalue="Spring Boot.MatzipWithYouApplication" />
+        <item itemvalue="Spring Boot.MatzipWithYouApplication" />
+        <item itemvalue="Spring Boot.MatzipWithYouApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="" />
+      <created>1733360229738</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1733360229738</updated>
+      <workItem from="1733360231083" duration="484000" />
+      <workItem from="1733360722095" duration="9267000" />
+      <workItem from="1733374149373" duration="5302000" />
+      <workItem from="1733379704068" duration="524000" />
+      <workItem from="1733380231431" duration="8111000" />
+      <workItem from="1733402818315" duration="132000" />
+      <workItem from="1733441932904" duration="4564000" />
+      <workItem from="1733447077766" duration="12512000" />
+      <workItem from="1733465574974" duration="9375000" />
+      <workItem from="1733704354197" duration="9815000" />
+      <workItem from="1733718085285" duration="7765000" />
+      <workItem from="1733726410315" duration="4693000" />
+      <workItem from="1733731486550" duration="520000" />
+      <workItem from="1733732009941" duration="242000" />
+    </task>
+    <task id="LOCAL-00001" summary="Fix(): SecurityFilterChain 오류 해결">
+      <option name="closed" value="true" />
+      <created>1733367673416</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1733367673416</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Feat(): merge 해결">
+      <option name="closed" value="true" />
+      <created>1733387757880</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1733387757880</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Docs(): username dummy data 변경">
+      <option name="closed" value="true" />
+      <created>1733444617117</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1733444617117</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Feat(#27): MemberValidator 수정">
+      <option name="closed" value="true" />
+      <created>1733445695373</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733445695373</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Feat(#27): oauth 진행">
+      <option name="closed" value="true" />
+      <created>1733464491155</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1733464491155</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Feat(#27): oauth 진행">
+      <option name="closed" value="true" />
+      <created>1733464525039</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1733464525039</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Feat(#27): merge conflict 해결">
+      <option name="closed" value="true" />
+      <created>1733471045204</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1733471045204</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fix(): SecurityFilterChain 오류 해결" />
+    <MESSAGE value="Feat(): merge 해결" />
+    <MESSAGE value="Docs(): username dummy data 변경" />
+    <MESSAGE value="Feat(#27): MemberValidator 수정" />
+    <MESSAGE value="Feat(#27): home username, name 수정" />
+    <MESSAGE value="Feat(#27): oauth 진행" />
+    <MESSAGE value="Feat(#27): merge conflict 해결" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat(#27): merge conflict 해결" />
+  </component>
+</project>

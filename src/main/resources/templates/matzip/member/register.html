@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
+    <title>회원가입</title>
     <style>
         :root {
             --primary-color: #ff7327;
@@ -38,13 +38,27 @@
             font-size: 16px;
         }
 
-        .container {
+        .main-container {
             display: flex;
             flex-direction: column;
             width: 100%;
             max-width: 400px;
             margin: 40px auto;
             padding: 0 20px;
+        }
+
+        .widget-container {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 20px;
+            color: var(--title-font-color);
+            text-align: center;
+            margin: 24px 0;
+            font-weight: 600;
         }
 
         .logo {
@@ -54,12 +68,50 @@
             display: block;
         }
 
-        h1 {
-            font-size: 20px;
-            color: var(--title-font-color);
-            text-align: center;
-            margin: 24px 0;
-            font-weight: 600;
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--input-border-color);
+            border-radius: 4px;
+            font-size: 16px;
+            color: var(--input-text-color);
+            background: var(--input-background-color);
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: var(--font-default-color);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: var(--button-font-color);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 24px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #ff7327;
         }
 
         .social-buttons {
@@ -80,7 +132,6 @@
             justify-content: center;
             color: var(--secondary-button-text-color);
             transition: background-color 0.2s;
-            text-decoration: none;
         }
 
         .social-button:hover {
@@ -124,80 +175,6 @@
             font-size: 14px;
         }
 
-        .form-group {
-            margin-bottom: 16px;
-            position: relative;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--input-border-color);
-            border-radius: 4px;
-            font-size: 16px;
-            color: var(--input-text-color);
-            background: var(--input-background-color);
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 16px;
-            color: var(--font-default-color);
-        }
-
-        .forgot-password {
-            display: block;
-            text-align: right;
-            color: var(--link-color);
-            text-decoration: none;
-            font-size: 14px;
-            margin: 8px 0;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary-color);
-            color: var(--button-font-color);
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 24px;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
-
-        .btn-submit:hover {
-            background-color: #ff7327;
-        }
-
-        .signup-prompt {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 14px;
-        }
-
-        .signup-prompt a {
-            color: var(--link-color);
-            text-decoration: none;
-        }
-
-        .signup-prompt a:hover {
-            text-decoration: underline;
-        }
-
         .text-danger {
             color: var(--error-color);
             font-size: 14px;
@@ -225,7 +202,7 @@
         }
 
         @media screen and (min-width: 576px) and (min-height: 900px) {
-            .container {
+            .main-container {
                 justify-content: center;
                 margin-top: 80px;
             }
@@ -233,14 +210,15 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <img class="logo" src="/IMG/logo.png" alt="LOGO">
+<div class="main-container">
+    <div class="widget-container">
+        <img class="logo" src="/IMG/logo.png" alt="logo">
 
-    <form th:action="@{/member/login}" method="POST">
-        <h1>로그인</h1>
+        <h1>회원가입</h1>
 
-        <div class="text-danger" th:text="${error}">
-            <!-- 오류 -->
+        <div>
+            <div class="text-danger" th:text="${error}"></div>
+            <div class="text-danger" th:text="${errorMessage}"></div>
         </div>
 
         <div class="social-buttons">
@@ -250,7 +228,7 @@
                 카카오로 계속하기
             </a>
             <a class="social-button" th:href="@{/oauth2/authorization/google}">
-                <img src="/IMG/google.png"
+                <img src="/IMG/google.svg"
                      alt="Google" class="social-icon">
                 구글로 계속하기
             </a>
@@ -265,35 +243,55 @@
             <span>또는</span>
         </div>
 
-        <div class="form-group">
-            <label for="username">아이디</label>
-            <input type="text" class="form-control" name="username" id="username"
-                   placeholder="아이디를 입력하세요" th:value="${username}" required>
+        <form method="POST" th:action="@{/member/register}">
+            <div class="form-group">
+                <label for="name">사용자 이름</label>
+                <input type="text" class="form-control" id="name" name="name"
+                       placeholder="이름을 입력하세요" th:value="${name}">
+            </div>
+
+            <div class="form-group">
+                <label for="nickname">사용자 닉네임</label>
+                <input type="text" class="form-control" id="nickname" name="nickname"
+                       placeholder="닉네임을 입력하세요" th:value="${nickname}">
+            </div>
+
+            <div class="form-group">
+                <label for="username">사용자 아이디</label>
+                <input type="text" class="form-control" id="username" name="username"
+                       placeholder="아이디를 입력하세요" th:value="${username}">
+            </div>
+
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="password"
+                       placeholder="비밀번호를 입력하세요">
+            </div>
+
+            <div class="form-group">
+                <label for="re_password">비밀번호 확인</label>
+                <input type="password" class="form-control" id="re_password" name="re_password"
+                       placeholder="비밀번호를 다시 입력하세요">
+            </div>
+
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" class="form-control" id="email" name="email"
+                       placeholder="이메일을 입력하세요" th:value="${email}">
+            </div>
+
+            <button type="submit" class="btn">가입하기</button>
+        </form>
+
+        <div class="banner">
+            <p>
+                계속 진행함으로써 MZWY의
+                <a href="https://splice.com/privacy_policy" target="_blank">개인정보처리방침</a>
+                에 동의하게 됩니다.
+            </p>
         </div>
-
-        <div class="form-group">
-            <label for="password">비밀번호</label>
-            <input type="password" class="form-control" name="password" id="password"
-                   placeholder="비밀번호를 입력하세요" required>
-        </div>
-
-        <a href="#" class="forgot-password">비밀번호를 잊으셨나요?</a>
-
-        <button class="btn-submit" type="submit">로그인</button>
-
-        <p class="signup-prompt">
-            계정이 없으신가요?
-            <a th:href="@{/member/register}">회원가입</a>
-        </p>
-    </form>
-
-    <div class="banner">
-        <p>
-            계속 진행함으로써 Pull Guys의
-            <a href="https://splice.com/privacy_policy" target="_blank">개인정보처리방침</a>
-            에 동의하게 됩니다.
-        </p>
     </div>
 </div>
 </body>
 </html>
+
