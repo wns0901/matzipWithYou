@@ -48,7 +48,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         };
 
         String providerId = oAuth2UserInfo.getProviderId();
-        String username = "익명의_"+ provider + "MATDORI";
+        String username = "MATDORI_" + providerId;
         String password = oauth2Password;
         String email = oAuth2UserInfo.getEmail();
         String name = oAuth2UserInfo.getName();
@@ -57,7 +57,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             email = username + "@kakao.user.com";
         }
 
-        String tempNickname = "익명의 MATDORI";
+        String tempNickname = "MATDORI_" + providerId;
 
         Member member = memberRepository.findByUsername(username);
         if(member == null) {
