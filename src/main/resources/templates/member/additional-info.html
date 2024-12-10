@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>추가 정보 입력</title>
+    <style>
+        :root {
+            --primary-color: #ff7327;
+            --button-font-color: #ffffff;
+            --secondary-button-border-color: #c8c9cc;
+            --secondary-button-text-color: #303236;
+            --link-color: #ff7327;
+            --title-font-color: #ff7327;
+            --font-default-color: #63656d;
+            --widget-background-color: #ffffff;
+            --box-border-color: #ffffff;
+            --input-text-color: #121214;
+            --input-border-color: #c8c9cc;
+            --input-background-color: #ffffff;
+            --error-color: #e81d01;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', Roboto, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: var(--widget-background-color);
+            color: var(--font-default-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            width: auto;
+            height: 60px;
+            margin: 0 auto 24px;
+            display: block;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: var(--title-font-color);
+            text-align: center;
+            margin: 24px 0;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--input-border-color);
+            border-radius: 4px;
+            font-size: 16px;
+            color: var(--input-text-color);
+            background: var(--input-background-color);
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: var(--font-default-color);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: var(--button-font-color);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 24px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff7327;
+        }
+
+        .alert {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .alert-danger {
+            background-color: #ffebee;
+            color: var(--error-color);
+            border: 1px solid #ffcdd2;
+        }
+
+        .alert-success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        @media screen and (min-width: 576px) and (min-height: 900px) {
+            .container {
+                justify-content: center;
+                margin-top: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img class="logo" src="/IMG/logo.png" alt="LOGO">
+
+    <h2>추가 정보를 입력해주세요</h2>
+
+    <!-- Alert messages -->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+    <form th:action="@{/member/additional-info}" method="post">
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name"
+                   class="form-control"
+                   th:value="${member?.name}"
+                   placeholder="이름을 입력하세요"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" name="nickname"
+                   class="form-control"
+                   placeholder="닉네임을 입력하세요"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="email"
+                   class="form-control"
+                   th:value="${member?.provider == 'kakao' ? '' : member?.email}"
+                   placeholder="이메일을 입력하세요"
+                   required>
+        </div>
+
+        <button type="submit" class="btn-primary">저장</button>
+    </form>
+</div>
+</body>
+</html>

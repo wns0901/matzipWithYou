@@ -7,12 +7,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Setter
     private AuthorityRepository authorityRepository;
@@ -22,6 +24,11 @@ public class PrincipalDetails implements UserDetails {
 
     public PrincipalDetails(Member member) {
         this.member = member;
+    }
+
+    public PrincipalDetails(Member member, Map<String, Object> attributes){
+        this.member = member;
+        this.attributes = attributes;
     }
 
     @Override
@@ -65,5 +72,23 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    private Map<String, Object> attributes;
+
+    @Override
+    public String getName(){
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes(){
+        return this.attributes;
+    }
+
+    public boolean isNewOAuthUser() {
+        return member != null
+                && member.getProviderId() != null
+                && member.getNickname().contains("MATDORI_");
     }
 }
