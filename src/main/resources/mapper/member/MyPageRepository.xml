@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.member.repository.MyPageRepository">
+
+<!-- 프로필 이미지 -->
+    <select id="profileImage">
+
+    </select>
+
+<!-- 닉네임, 친구수, 포인트 -->
+    <select id="myProfile">
+        SELECT
+            m.nickname,
+            (
+                SELECT COUNT(*)
+                FROM friend f
+                WHERE (f.sender_id = m.id OR f.receiver_id = m.id)
+                  AND f.is_accept = true
+            ) AS my_friends,
+            m.point
+        FROM
+            member m
+        WHERE
+            m.id = #{memberId}
+    </select>
+
+
+<!-- 위시리스트 개수, 내맛집 개수, 나의리뷰 개수-->
+
+
+
+    <select id="myActsCount">
+        SELECT
+            (SELECT COUNT(*)
+            FROM wish_list w WHERE member_id = #{memberId}) 위시리스트,
+            (SELECT COUNT(*)
+             FROM my_matzip WHERE member_id = #{memberId}) 나의맛집,
+            (SELECT COUNT(*)
+             FROM my_review WHERE member_id = #{memberId}) 나의리뷰
+        FROM member m
+        WHERE m.id = #{memberId};
+    </select>
+
+    <update id="updateNick">
+        UPDATE member
+        SET nickname = #{newNick}
+        WHERE id = #{memberId}
+    </update>
+
+
+
+
+</mapper>
