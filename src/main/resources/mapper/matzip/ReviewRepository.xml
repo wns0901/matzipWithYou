@@ -30,7 +30,7 @@
         </foreach>
     </insert>
 
-    <select id="checkHiddenMatzip" resultType="list">
+    <select id="checkHiddenMatzip" resultType="Long">
         SELECT m.member_id
         FROM my_matzip m
         INNER JOIN friend f

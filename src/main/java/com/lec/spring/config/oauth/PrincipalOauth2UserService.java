@@ -26,6 +26,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
 
+    @Autowired // Autowired 이슈 해결
     public PrincipalOauth2UserService(SqlSession sqlSession){
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
         this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);

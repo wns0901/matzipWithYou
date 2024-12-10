@@ -91,18 +91,16 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<Member> hiddenMatzipMemberIds(ReviewDTO reviewDTO) {
         Long matzipId = reviewDTO.getMatzipId();
-        List <Long> hiddenMemberIds = reviewDTO.getMemberIds();
+        Long memberId = reviewDTO.getMemberId();
 
-        List<Member> hiddenMembers = new ArrayList<>();
+        List<Long> hiddenFriendIds = reviewRepository.checkHiddenMatzip(matzipId, memberId);
 
-        for(Long hiddenMember : hiddenMemberIds) {
-            int countMember = reviewRepository.checkHiddenMatzip(matzipId, hiddenMember);
-            if (countMember > 0) {
-                hiddenMembers.add(memberRepository.findById(hiddenMember));
-            }
+        List<Member> hiddenMatzipMembers = new ArrayList<>();
+        if (hiddenFriendIds != null && !hiddenFriendIds.isEmpty()) {
+            hiddenMatzipMembers = memberRepository.findByIds(hiddenFriendIds);
         }
 
-        return hiddenMembers;
+        return hiddenMatzipMembers;
     }
 
     @Override
@@ -118,6 +116,7 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         member.setPoint(member.getPoint() + rewardPoint);
+        reviewRepository.updateIntimacy(member.getId(), rewardIntimacy);
         memberRepository.updatePoint(member.getId(), member.getPoint());
 
         return member.getPoint();
