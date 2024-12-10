@@ -20,7 +20,7 @@
     <insert id="save" flushCache="true" parameterType="com.lec.spring.member.domain.Member"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO member(username, password, email, point, nickname, name, provider, providerId)
-        VALUES(#{username}, #{password}, #{email}, #{point}, #{nickname}, #{name}, #{provider}, #{providerId})
+        VALUES(#{username}, #{password}, #{email}, COALESCE(#{point}, 0), #{nickname}, #{name}, #{provider}, #{providerId})
     </insert>
 
 
@@ -84,4 +84,10 @@
         SET point = point + #{point}
         WHERE id = #{id}
     </update>
+
+    <select id="findReferrer" resultType="com.lec.spring.member.domain.Member">
+        SELECT id, username, nickname, point
+        FROM member
+        WHERE nickname = #{referrerNickname}
+    </select>
 </mapper>
