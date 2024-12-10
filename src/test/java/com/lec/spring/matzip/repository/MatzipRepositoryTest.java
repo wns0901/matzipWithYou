@@ -1,8 +1,7 @@
 package com.lec.spring.matzip.repository;
 
-import com.lec.spring.matzip.domain.KakaoPlaceDTO;
-import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.domain.MatzipDTO;
+import com.lec.spring.matzip.domain.MatzipDataDTO;
 import com.lec.spring.matzip.service.MatzipService;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
@@ -10,11 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.ResponseEntity;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class MatzipRepositoryTest {
@@ -30,7 +24,7 @@ class MatzipRepositoryTest {
     private MatzipService matzipService;
     @Test
     void test1() {
-        MatzipDTO matzipDTO = MatzipDTO.builder()
+        MatzipDataDTO matzipDataDTO = MatzipDataDTO.builder()
                 .lng(37.5308561175718)
                 .lat(126.990949104616)
                 .name("명동교자 이태원점")
@@ -39,15 +33,15 @@ class MatzipRepositoryTest {
                 .gu("용산구")
                 .build();
 
-        KakaoPlaceDTO kakaoPlaceDTO = KakaoPlaceDTO.builder()
-                .kakao(matzipDTO)
+        MatzipDTO kakaoPlaceDTO = MatzipDTO.builder()
+                .data(matzipDataDTO)
                 .kind("중식")
                 .build();
 
-        System.out.println(kakaoPlaceDTO.getKakao());
+        System.out.println(kakaoPlaceDTO.getData());
 
-        matzipService.saveMatzip(kakaoPlaceDTO.getKakao(), kakaoPlaceDTO.getKind());
+        matzipService.saveMatzip(kakaoPlaceDTO.getData(), kakaoPlaceDTO.getKind());
 
-        System.out.println(kakaoPlaceDTO.getKakao());
+        System.out.println(kakaoPlaceDTO.getData());
     }
 }
