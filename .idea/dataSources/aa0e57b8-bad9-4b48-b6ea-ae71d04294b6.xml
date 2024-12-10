@@ -1002,7 +1002,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="290" parent="1" name="matzip_with_you_db">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-12-09.04:24:18</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-12-10.05:44:45</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="291" parent="1" name="mysql">
@@ -1364,7 +1364,7 @@ my_matzip_id</ColNames>
       <Comment>아이디 (8~20)</Comment>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>varchar(20)|0s</StoredType>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="359" parent="303" name="password">
       <Comment>비밀번호(8~16)</Comment>
@@ -1376,7 +1376,7 @@ my_matzip_id</ColNames>
       <Comment>이메일</Comment>
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StoredType>varchar(35)|0s</StoredType>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="361" parent="303" name="point">
       <Comment>포인트</Comment>
@@ -1388,7 +1388,7 @@ my_matzip_id</ColNames>
       <Comment>닉네임</Comment>
       <NotNull>1</NotNull>
       <Position>6</Position>
-      <StoredType>varchar(20)|0s</StoredType>
+      <StoredType>varchar(100)|0s</StoredType>
     </column>
     <column id="363" parent="303" name="name">
       <Comment>이름</Comment>
