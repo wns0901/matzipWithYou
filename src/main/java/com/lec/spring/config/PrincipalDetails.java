@@ -89,6 +89,6 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public boolean isNewOAuthUser() {
         return member != null
                 && member.getProviderId() != null
-                && "익명의 MATDORI".equals(member.getNickname());
+                && member.getNickname().contains("MATDORI_");
     }
 }
