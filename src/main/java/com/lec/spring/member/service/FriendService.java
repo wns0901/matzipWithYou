@@ -13,6 +13,8 @@ public interface FriendService {
     // 친구 요청 수락/거절
     int respondToRequest(Friend friend);
 
+    // 친구 삭제
+    int deleteFriend(Friend friend);
 
     // 친구 상세 정보
     List<Friend> getFriendsWithDetailsDTO(Long memberId);

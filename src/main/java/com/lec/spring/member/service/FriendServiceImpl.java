@@ -27,24 +27,31 @@ public class FriendServiceImpl implements FriendService {
         if (friendRepository.isAlreadyFriend(friend)) { // ?
             return 0;
         }
-        return friendRepository.save(friend); // DB에 저장
+        return friendRepository.sendFriendRequest(friend); // DB에 저장
     }
 
     // 친구 요청 수락/거절
     @Override
     public int respondToRequest(Friend friend) {
-        Friend newFriend = friendRepository.acceptFriendRequest(friend);
-        if (newFriend == null) {
+        int newFriend = friendRepository.acceptFriendRequest(friend);
+        if (newFriend == 0) {
             return 0;
         }
-        if (newFriend.isAccept()) {
+        if (newFriend == 1) {
             // 요청 수락
-            friend.setAccept(true);
-            return friendRepository.save(friend); // 업데이트된 행 수 반환
+            friend.setIsAccept(true);
+            return friendRepository.acceptFriendRequest(friend); // 업데이트된 행 수 반환
         } else {
             // 요청 거절
-            return friendRepository.delete(friend); // 삭제된 행 수 반환
+            return friendRepository.rejectFriendRequest(friend); // 삭제된 행 수 반환
         }
+    }
+
+
+    // 친구 삭제
+    @Override
+    public int deleteFriend(Friend friend) {
+        return friendRepository.rejectFriendRequest(friend);
     }
 
 

@@ -29,7 +29,8 @@ public class FriendController {
     @ResponseBody
     @PostMapping("")
     public ResponseEntity<String> sendFriendRequest(
-            Friend friend) {
+
+          @RequestBody  Friend friend) {
         int result = friendService.sendFriendRequest(friend);
         if (result > 0) {
             return ResponseEntity.ok("친구 신청에 성공했습니다.");
@@ -59,6 +60,19 @@ public class FriendController {
         return ResponseEntity.ok(affectedRows);
     }
 
+    // 친구 삭제
+    @ResponseBody
+    @DeleteMapping("")
+    public ResponseEntity<Integer> deleteFriend(
+            @RequestBody Friend friend,
+            @PathVariable Long memberId
+    ){
+        friend.setReceiverId(memberId);
+        int affectedRows = friendService.deleteFriend(friend);
+        return ResponseEntity.ok(affectedRows);
+    }
+
+
     // 내 친구 목록 가져오기
     @GetMapping("/list")
     public ResponseEntity<List<Friend>> getFriendsWithDetailsDTO(@PathVariable Long memberId) {
@@ -67,6 +81,8 @@ public class FriendController {
     }
 
 
+    // 친밀도
+//    friendRepository.updateIntimacy(member.getId(), friend.getIntimacy());
 
 
 }

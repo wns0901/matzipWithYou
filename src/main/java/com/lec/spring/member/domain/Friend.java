@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 public class Friend {
     private Long senderId;
     private Long receiverId;
-    private int intimacy;
-    private boolean isAccept;
+    private Integer intimacy;
+    private Boolean isAccept;
     private LocalDateTime regdate;
 
 }

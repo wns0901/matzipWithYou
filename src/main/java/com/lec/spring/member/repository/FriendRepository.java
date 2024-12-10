@@ -18,22 +18,29 @@ public interface FriendRepository{
     // 대기 중인 요청 목록 조회
     List<Friend> findPendingRequests(Long memberId);
 
-//    // 요청 하나 수락/거절 하기
-//    Friend findPendingRequest(Friend friend);
-
     // 친구 요청 수락
-    Friend acceptFriendRequest(Friend friend);
+    int acceptFriendRequest(Friend friend);
+//    int update(Friend friend);
 
-    // 친구 요청 거절
-    Friend rejectFriendRequest(Friend friend);
+    // 친구 요청 거절 & 친삭
+    int rejectFriendRequest(Friend friend);
 
 
     // 친구 요청 보내기
-    int sendFriendRequest(Long receiverId, Long senderId);
+    int sendFriendRequest(Friend friend);
 
-    // 새로운 친구 DB에 저장
+    // 친구 요청 DB에 저장
     int save(Friend friend);
 
-    // 친구 삭제
-    int delete(Friend friend);
+//
+//    // 친구 삭제
+//    int delete(Friend friend);
+//    int deleteFriend(Friend friend);
+
+//    // 친밀도 조회
+//    int getIntimacy(Friend friend);
+//
+//    // 친밀도 업데이트
+//    int updateIntimacy(Friend friend);
+
 }
