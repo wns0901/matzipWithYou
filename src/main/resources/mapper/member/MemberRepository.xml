@@ -5,12 +5,12 @@
 
     <sql id="SELECT_BASE">
         SELECT id       "id"
-             , username "username"
-             , password "password"
-             , email    "email"
-             , point    "point"
-             , nickname "nickname"
-             , name     "name"
+             , username "username" -- id
+             , password "password" -- 비번
+             , email    "email" -- email
+             , point    "point" -- point
+             , nickname "nickname" -- nickname
+             , name     "name" -- 이름
         FROM member
         WHERE 1 = 1
     </sql>
@@ -63,4 +63,22 @@
         SET point = point + #{point}
         WHERE id = #{id}
     </update>
+<!--비밀번호 재설정-->
+<!--이메일 찾기-->
+    <select id="selectEmail">
+        select id, email
+        from member
+        where email =#{email}
+    </select>
+<!--비밀번호 업데이트하기-->
+    <update id="updatePassword">
+        update member
+        set password = #{newPassword}
+        where email = #{email}
+    </update>
+<!--이메일로 아이디 찾기-->
+    <select id="findMemberIdByEmail" >
+        select id from member where email = #{email}
+    </select>
+
 </mapper>

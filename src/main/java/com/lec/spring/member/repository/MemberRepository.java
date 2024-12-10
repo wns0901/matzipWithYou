@@ -22,4 +22,11 @@ public interface MemberRepository {
     Member findByEmail(String email);
 
     int updatePoint(Long id, Integer point);
-}
+
+    String findMemberIdByEmail(String email);
+
+    int updatePassword(String email, String newPassword);
+
+
+}//end MemberRepository
+

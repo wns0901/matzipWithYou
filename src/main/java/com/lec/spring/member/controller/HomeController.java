@@ -60,4 +60,7 @@ public class HomeController {
 //    public Map<String, Object> oauth2user(@AuthenticationPrincipal OAuth2User oAuth2User){
 //        return (oAuth2User != null) ? oAuth2User.getAttributes() : null;
 //    }
-}
+
+
+
+}//end HomeController
