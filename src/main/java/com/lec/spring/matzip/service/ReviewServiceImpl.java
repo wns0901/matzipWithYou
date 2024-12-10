@@ -5,6 +5,7 @@ import com.lec.spring.matzip.repository.MatzipRepository;
 import com.lec.spring.matzip.repository.ReviewRepository;
 import com.lec.spring.matzip.repository.TagRepository;
 import com.lec.spring.member.domain.Member;
+import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,12 +23,14 @@ public class ReviewServiceImpl implements ReviewService {
     private final MatzipRepository matzipRepository;
     private final TagRepository tagRepository;
     private final MemberRepository memberRepository;
+    private final FriendRepository friendRepository;
 
-    public ReviewServiceImpl(SqlSession sqlSession, MatzipService matzipService) {
+    public ReviewServiceImpl(SqlSession sqlSession, MatzipService matzipService, FriendRepository friendRepository) {
         this.reviewRepository = sqlSession.getMapper(ReviewRepository.class);
         this.matzipRepository = sqlSession.getMapper(MatzipRepository.class);
         this.tagRepository = sqlSession.getMapper(TagRepository.class);
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
+        this.friendRepository = friendRepository;
     }
 
     @Override
@@ -53,16 +56,12 @@ public class ReviewServiceImpl implements ReviewService {
 
         Member member = memberRepository.findById(reviewDTO.getMemberId());
 
-//        boolean isHidden = false;
-//        List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(matzip.getId(), member.getId());
-//        if (!hiddenMatzipMemberIds.isEmpty()) {
-//            isHidden = true;
-//        }
-//        model.addAttribute("result", isHidden ? "UNLOCK" : "saveOk");
-//        model.addAttribute("member", member);
-//
-//        int rewardPoint = isHidden ? 100 : 10;
-//        rewardReview(reviewDTO, rewardPoint);
+
+        model.addAttribute("result", isHidden ? "UNLOCK" : "saveOk");
+        model.addAttribute("member", member);
+
+
+        rewardReview(reviewDTO, rewardPoint);
 
         return saved;
     }
@@ -104,7 +103,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public int rewardReview(ReviewDTO reviewDTO, int rewardPoint, int rewardIntimacy) {
+    public int rewardReviewPoint(ReviewDTO reviewDTO, int rewardHiddenPoint, int rewardPoint) {
         Member member = memberRepository.findById(reviewDTO.getMemberId());
         if (member == null) {
             throw new IllegalArgumentException("Member not found");
@@ -115,12 +114,41 @@ public class ReviewServiceImpl implements ReviewService {
             throw new IllegalArgumentException("Matzip not found");
         }
 
-        member.setPoint(member.getPoint() + rewardPoint);
-        reviewRepository.updateIntimacy(member.getId(), rewardIntimacy);
+        List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
+
+        int resultPoint = !hiddenMatzipMemberIds.isEmpty() ?  rewardHiddenPoint: rewardPoint;
+
+        member.setPoint(member.getPoint() + resultPoint);
         memberRepository.updatePoint(member.getId(), member.getPoint());
 
         return member.getPoint();
     }
+
+    @Override
+    public int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy, int rewardIntimacy) {
+        Matzip matzip = matzipRepository.findById(reviewDTO.getMatzipId());
+        if (matzip == null) {
+            throw new IllegalArgumentException("Matzip not found");
+        }
+
+        Member member = memberRepository.findById(reviewDTO.getMemberId());
+        if (member == null) {
+            throw new IllegalArgumentException("Member not found");
+        }
+
+        Friend friend = friendRepository.findFriends(member.getId());
+        if (friend == null) {
+            throw new IllegalArgumentException("Friend not found");
+        }
+
+        List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
+
+        int resultIntimacy = !hiddenMatzipMemberIds.isEmpty() ? rewardHiddenIntimacy : rewardIntimacy;
+
+        friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
+        reviewRepository.updateIntimacy(member.getId(), friend.getIntimacy());
+    }
+
 
     @Override
     public Review deleteReview(Long id) {

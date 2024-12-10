@@ -18,7 +18,9 @@ public interface ReviewService {
 
     List<Member> hiddenMatzipMemberIds(ReviewDTO reviewDTO);
 
-    int rewardReview(ReviewDTO reviewDTO, int rewardPoint, int rewardIntimacy);
+    int rewardReviewPoint(ReviewDTO reviewDTO, int rewardHiddenPoint, int rewardPoint);
+
+    int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy ,int rewardIntimacy);
 
     Review deleteReview(Long id);
 }
