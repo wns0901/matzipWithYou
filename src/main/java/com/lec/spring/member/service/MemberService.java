@@ -23,4 +23,6 @@ public interface MemberService {
     int updateMember(Member member);
 
     int updateAdditionalInfo(Long id, String name, String nickname, String email);
+
+    void processReferral(Member member, Member referrer);
 }

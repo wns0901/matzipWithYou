@@ -83,6 +83,24 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public void processReferral(Member member, Member referrer) {
+        // 두 사람 모두 포인트 추가
+        memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
+        memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
+
+        // 친구 관계 설정 및 친밀도 부여
+        Friend friendship = Friend.builder()
+                .senderId(member.getId())
+                .receiverId(referrer.getId())
+                .intimacy(REFERRAL_INTIMACY)
+                .isAccept(true)
+                .build();
+
+        friendRepository.sendFriendRequest(friendship);
+        friendRepository.acceptFriendRequest(friendship);
+    }
+
+    @Override
     public int updateAdditionalInfo(Long id, String name, String nickname, String email) {
         return memberRepository.updateAdditionalInfo(id, name, nickname, email);
     }
@@ -99,6 +117,8 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByNickname(nickname);
         return (member != null);
     }
+
+
 
     @Override
     public Member findByUsername(String username) {
