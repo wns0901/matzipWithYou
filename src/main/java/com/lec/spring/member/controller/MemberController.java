@@ -1,11 +1,15 @@
 package com.lec.spring.member.controller;
 
+import com.lec.spring.member.domain.EmailMessage;
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.domain.MemberValidator;
 import com.lec.spring.member.service.MemberService;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +26,15 @@ import java.util.List;
 public class MemberController {
 
     private final MemberService memberService;
+    private MemberValidator validator;
+    private WebDataBinder binder;
+    private RedisTemplate redisTemplate;
 
+    @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+        this.validator = new MemberValidator();
+        this.binder = new WebDataBinder(new Object(), "member");
     }
 
     // GET: 추가 정보 입력 폼
@@ -99,6 +109,7 @@ public class MemberController {
         }
     }
 
+
     @GetMapping("/login")
     public void login() {
     }
@@ -163,8 +174,74 @@ public class MemberController {
         this.memberValidator = memberValidator;
     }
 
-    @InitBinder
+   @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(memberValidator);
     }
-}
+
+
+    // 이메일 입력받는 창
+    @GetMapping("/request-reset")
+    public String requestResett() {
+        System.out.println("123");
+        return "member/request-reset";
+    }
+
+
+    // 이메일 입력창 2
+    @PostMapping("/request-reset")
+    public String requestReset( @ModelAttribute("email") String email, Model model) {
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(email)
+                .subject("비밀번호 재설정 요청")
+                .build();
+        System.out.println("#######emailMessage: " + emailMessage);
+        String result = memberService.sendEmail(emailMessage);
+        System.out.println("#####이메일이 보내졌나요???: " + result);
+
+        if ("이메일이 등록되지 않았습니다;".equals(result)) {
+            // 이메일이 등록되지 않은 경우 reset-fail.html로 이동
+            return "member/reset-fail";
+        }
+
+        model.addAttribute("result", result);
+        return "member/request-reset-ok";
+
+
+    }
+
+    // 패스워드 리셋
+    @GetMapping("/reset-password")
+    public String showResetForm(@RequestParam("uuid") String uuid, Model model){
+        Long memberId = (Long)redisTemplate.opsForValue().get(uuid);
+        if (memberId == null) {
+            return "redirect:member/reset-fail";
+        }
+        Model member = model.addAttribute("id", memberId);
+        System.out.println("#######id "+member);
+        return "member/reset-password";
+    }
+
+
+    @PostMapping("/update-password")
+    public String updatePassword(@RequestParam Long id, String newPassword) {
+        System.out.println("##########id: " + id);
+        System.out.println("#########New Password: " + newPassword);
+
+        boolean isUpdated = memberService.updatePassword(id, newPassword);
+
+        return isUpdated ? "redirect:/member/reset-fail" : "redirect:/member/reset-success";
+    }
+
+
+    @GetMapping("/reset-success")
+    public String resetSuccess(){
+        return "member/reset-success";
+    }
+
+    @Qualifier("redisTemplate")
+    @Autowired
+    public void setRedisTemplate(RedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+}// end memberController

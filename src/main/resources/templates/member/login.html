@@ -53,7 +53,9 @@
             <div class="text-danger" th:text="${errorMessage}"></div>
         </div>
 
-        <a href="#" class="forgot-password">비밀번호를 잊으셨나요?</a>
+
+        <a th:href="@{'/member/request-reset'}">Forgot password?</a>
+        <button class="btn" type="submit">로그인</button>
 
 
 
