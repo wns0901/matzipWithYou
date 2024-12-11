@@ -1,99 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="matzip_with_you_db@localhost">
-  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.53">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.52">
     <root id="1">
       <DefaultCasing>mixed/mixed</DefaultCasing>
       <DefaultEngine>InnoDB</DefaultEngine>
       <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
       <Grants>|root||root|localhost|ALTER|G
+|root||user2409||ALTER|G
 |root||root|localhost|ALTER ROUTINE|G
+|root||user2409||ALTER ROUTINE|G
 |root||root|localhost|APPLICATION_PASSWORD_ADMIN|G
+|root||user2409||APPLICATION_PASSWORD_ADMIN|G
 |root||mysql.infoschema|localhost|AUDIT_ABORT_EXEMPT|G
 |root||mysql.session|localhost|AUDIT_ABORT_EXEMPT|G
 |root||mysql.sys|localhost|AUDIT_ABORT_EXEMPT|G
 |root||root|localhost|AUDIT_ABORT_EXEMPT|G
+|root||user2409||AUDIT_ABORT_EXEMPT|G
 |root||root|localhost|AUDIT_ADMIN|G
+|root||user2409||AUDIT_ADMIN|G
 |root||mysql.session|localhost|AUTHENTICATION_POLICY_ADMIN|G
 |root||root|localhost|AUTHENTICATION_POLICY_ADMIN|G
+|root||user2409||AUTHENTICATION_POLICY_ADMIN|G
 |root||mysql.session|localhost|BACKUP_ADMIN|G
 |root||root|localhost|BACKUP_ADMIN|G
+|root||user2409||BACKUP_ADMIN|G
 |root||root|localhost|BINLOG_ADMIN|G
+|root||user2409||BINLOG_ADMIN|G
 |root||root|localhost|BINLOG_ENCRYPTION_ADMIN|G
+|root||user2409||BINLOG_ENCRYPTION_ADMIN|G
 |root||mysql.session|localhost|CLONE_ADMIN|G
 |root||root|localhost|CLONE_ADMIN|G
+|root||user2409||CLONE_ADMIN|G
 |root||mysql.session|localhost|CONNECTION_ADMIN|G
 |root||root|localhost|CONNECTION_ADMIN|G
+|root||user2409||CONNECTION_ADMIN|G
 |root||root|localhost|CREATE|G
+|root||user2409||CREATE|G
 |root||root|localhost|CREATE ROLE|G
+|root||user2409||CREATE ROLE|G
 |root||root|localhost|CREATE ROUTINE|G
+|root||user2409||CREATE ROUTINE|G
 |root||root|localhost|CREATE TABLESPACE|G
+|root||user2409||CREATE TABLESPACE|G
 |root||root|localhost|CREATE TEMPORARY TABLES|G
+|root||user2409||CREATE TEMPORARY TABLES|G
 |root||root|localhost|CREATE USER|G
+|root||user2409||CREATE USER|G
 |root||root|localhost|CREATE VIEW|G
+|root||user2409||CREATE VIEW|G
 |root||root|localhost|DELETE|G
+|root||user2409||DELETE|G
 |root||root|localhost|DROP|G
+|root||user2409||DROP|G
 |root||root|localhost|DROP ROLE|G
+|root||user2409||DROP ROLE|G
 |root||root|localhost|ENCRYPTION_KEY_ADMIN|G
+|root||user2409||ENCRYPTION_KEY_ADMIN|G
 |root||root|localhost|EVENT|G
+|root||user2409||EVENT|G
 |root||root|localhost|EXECUTE|G
+|root||user2409||EXECUTE|G
 |root||root|localhost|FILE|G
+|root||user2409||FILE|G
 |root||mysql.infoschema|localhost|FIREWALL_EXEMPT|G
 |root||mysql.session|localhost|FIREWALL_EXEMPT|G
 |root||mysql.sys|localhost|FIREWALL_EXEMPT|G
 |root||root|localhost|FIREWALL_EXEMPT|G
+|root||user2409||FIREWALL_EXEMPT|G
 |root||root|localhost|FLUSH_OPTIMIZER_COSTS|G
+|root||user2409||FLUSH_OPTIMIZER_COSTS|G
 |root||root|localhost|FLUSH_STATUS|G
+|root||user2409||FLUSH_STATUS|G
 |root||root|localhost|FLUSH_TABLES|G
+|root||user2409||FLUSH_TABLES|G
 |root||root|localhost|FLUSH_USER_RESOURCES|G
+|root||user2409||FLUSH_USER_RESOURCES|G
 |root||root|localhost|GROUP_REPLICATION_ADMIN|G
+|root||user2409||GROUP_REPLICATION_ADMIN|G
 |root||root|localhost|GROUP_REPLICATION_STREAM|G
+|root||user2409||GROUP_REPLICATION_STREAM|G
 |root||root|localhost|INDEX|G
+|root||user2409||INDEX|G
 |root||root|localhost|INNODB_REDO_LOG_ARCHIVE|G
+|root||user2409||INNODB_REDO_LOG_ARCHIVE|G
 |root||root|localhost|INNODB_REDO_LOG_ENABLE|G
+|root||user2409||INNODB_REDO_LOG_ENABLE|G
 |root||root|localhost|INSERT|G
+|root||user2409||INSERT|G
 |root||root|localhost|LOCK TABLES|G
+|root||user2409||LOCK TABLES|G
 |root||root|localhost|PASSWORDLESS_USER_ADMIN|G
+|root||user2409||PASSWORDLESS_USER_ADMIN|G
 |root||mysql.session|localhost|PERSIST_RO_VARIABLES_ADMIN|G
 |root||root|localhost|PERSIST_RO_VARIABLES_ADMIN|G
+|root||user2409||PERSIST_RO_VARIABLES_ADMIN|G
 |root||root|localhost|PROCESS|G
+|root||user2409||PROCESS|G
 |root||root|localhost|REFERENCES|G
+|root||user2409||REFERENCES|G
 |root||root|localhost|RELOAD|G
+|root||user2409||RELOAD|G
 |root||root|localhost|REPLICATION CLIENT|G
+|root||user2409||REPLICATION CLIENT|G
 |root||root|localhost|REPLICATION SLAVE|G
+|root||user2409||REPLICATION SLAVE|G
 |root||root|localhost|REPLICATION_APPLIER|G
+|root||user2409||REPLICATION_APPLIER|G
 |root||root|localhost|REPLICATION_SLAVE_ADMIN|G
+|root||user2409||REPLICATION_SLAVE_ADMIN|G
 |root||root|localhost|RESOURCE_GROUP_ADMIN|G
+|root||user2409||RESOURCE_GROUP_ADMIN|G
 |root||root|localhost|RESOURCE_GROUP_USER|G
+|root||user2409||RESOURCE_GROUP_USER|G
 |root||root|localhost|ROLE_ADMIN|G
+|root||user2409||ROLE_ADMIN|G
 |root||mysql.infoschema|localhost|SELECT|G
 |root||root|localhost|SELECT|G
+|root||user2409||SELECT|G
 |root||root|localhost|SENSITIVE_VARIABLES_OBSERVER|G
+|root||user2409||SENSITIVE_VARIABLES_OBSERVER|G
 |root||root|localhost|SERVICE_CONNECTION_ADMIN|G
+|root||user2409||SERVICE_CONNECTION_ADMIN|G
 |root||mysql.session|localhost|SESSION_VARIABLES_ADMIN|G
 |root||root|localhost|SESSION_VARIABLES_ADMIN|G
+|root||user2409||SESSION_VARIABLES_ADMIN|G
 |root||root|localhost|SET_USER_ID|G
+|root||user2409||SET_USER_ID|G
 |root||root|localhost|SHOW DATABASES|G
+|root||user2409||SHOW DATABASES|G
 |root||root|localhost|SHOW VIEW|G
+|root||user2409||SHOW VIEW|G
 |root||root|localhost|SHOW_ROUTINE|G
+|root||user2409||SHOW_ROUTINE|G
 |root||mysql.session|localhost|SHUTDOWN|G
 |root||root|localhost|SHUTDOWN|G
+|root||user2409||SHUTDOWN|G
 |root||mysql.session|localhost|SUPER|G
 |root||root|localhost|SUPER|G
+|root||user2409||SUPER|G
 |root||mysql.infoschema|localhost|SYSTEM_USER|G
 |root||mysql.session|localhost|SYSTEM_USER|G
 |root||mysql.sys|localhost|SYSTEM_USER|G
 |root||root|localhost|SYSTEM_USER|G
+|root||user2409||SYSTEM_USER|G
 |root||mysql.session|localhost|SYSTEM_VARIABLES_ADMIN|G
 |root||root|localhost|SYSTEM_VARIABLES_ADMIN|G
+|root||user2409||SYSTEM_VARIABLES_ADMIN|G
 |root||root|localhost|TABLE_ENCRYPTION_ADMIN|G
+|root||user2409||TABLE_ENCRYPTION_ADMIN|G
 |root||root|localhost|TELEMETRY_LOG_ADMIN|G
+|root||user2409||TELEMETRY_LOG_ADMIN|G
 |root||root|localhost|TRIGGER|G
+|root||user2409||TRIGGER|G
 |root||root|localhost|UPDATE|G
+|root||user2409||UPDATE|G
 |root||root|localhost|XA_RECOVER_ADMIN|G
+|root||user2409||XA_RECOVER_ADMIN|G
 |root||root|localhost|grant option|G
 performance_schema|schema||mysql.session|localhost|SELECT|G
+routineroutine|schema||routineroutine||ALTER|G
+routineroutine|schema||routineroutine||ALTER ROUTINE|G
+routineroutine|schema||routineroutine||CREATE|G
+routineroutine|schema||routineroutine||CREATE ROUTINE|G
+routineroutine|schema||routineroutine||CREATE TEMPORARY TABLES|G
+routineroutine|schema||routineroutine||CREATE VIEW|G
+routineroutine|schema||routineroutine||DELETE|G
+routineroutine|schema||routineroutine||DROP|G
+routineroutine|schema||routineroutine||EVENT|G
+routineroutine|schema||routineroutine||EXECUTE|G
+routineroutine|schema||routineroutine||INDEX|G
+routineroutine|schema||routineroutine||INSERT|G
+routineroutine|schema||routineroutine||LOCK TABLES|G
+routineroutine|schema||routineroutine||REFERENCES|G
+routineroutine|schema||routineroutine||SELECT|G
+routineroutine|schema||routineroutine||SHOW VIEW|G
+routineroutine|schema||routineroutine||TRIGGER|G
+routineroutine|schema||routineroutine||UPDATE|G
 sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
-      <ServerVersion>8.0.39</ServerVersion>
+      <ServerVersion>8.0.38</ServerVersion>
     </root>
     <collation id="2" parent="1" name="armscii8_bin">
       <Charset>armscii8</Charset>
@@ -1002,7 +1086,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="290" parent="1" name="matzip_with_you_db">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-12-11.02:24:18</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-12-11.05:11:47</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="291" parent="1" name="mysql">
@@ -1011,762 +1095,761 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="292" parent="1" name="performance_schema">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="293" parent="1" name="sys">
+    <schema id="293" parent="1" name="routineroutine">
+      <CollationName>utf8mb3_bin</CollationName>
+    </schema>
+    <schema id="294" parent="1" name="sys">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <user id="294" parent="1" name="mysql.infoschema">
+    <user id="295" parent="1" name="mysql.infoschema">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="295" parent="1" name="mysql.session">
+    <user id="296" parent="1" name="mysql.session">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="296" parent="1" name="mysql.sys">
+    <user id="297" parent="1" name="mysql.sys">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="297" parent="1" name="root">
+    <user id="298" parent="1" name="root">
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="298" parent="290" name="authority">
+    <user id="299" parent="1" name="routineroutine"/>
+    <user id="300" parent="1" name="user2409">
+      <Plugin>caching_sha2_password</Plugin>
+    </user>
+    <table id="301" parent="290" name="authority">
       <Comment>권한</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="299" parent="290" name="food_kind">
+    <table id="302" parent="290" name="food_kind">
       <Comment>음식 종류</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="300" parent="290" name="friend">
+    <table id="303" parent="290" name="friend">
       <Comment>친구</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="301" parent="290" name="matzip">
+    <table id="304" parent="290" name="matzip">
       <Comment>맛집</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="302" parent="290" name="matzip_tag">
+    <table id="305" parent="290" name="matzip_tag">
       <Comment>나의 맛집태그</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="303" parent="290" name="member">
+    <table id="306" parent="290" name="member">
       <Comment>회원</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="304" parent="290" name="member_authorities">
+    <table id="307" parent="290" name="member_authorities">
       <Comment>권한 리스트</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="305" parent="290" name="my_matzip">
+    <table id="308" parent="290" name="my_matzip">
       <Comment>나의 맛집</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="306" parent="290" name="my_review">
+    <table id="309" parent="290" name="my_review">
       <Comment>나의 리뷰</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="307" parent="290" name="profile_img">
+    <table id="310" parent="290" name="profile_img">
       <Comment>프로필 이미지</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="308" parent="290" name="review_tag">
+    <table id="311" parent="290" name="review_tag">
       <Comment>나의 리뷰 태크</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="309" parent="290" name="tag">
+    <table id="312" parent="290" name="tag">
       <Comment>태그</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="310" parent="290" name="user_matzip_tag_status">
+    <table id="313" parent="290" name="user_matzip_tag_status">
       <Comment>맛집 태그와 회원 관계</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="311" parent="290" name="wish_list">
+    <table id="314" parent="290" name="wish_list">
       <Comment>위시리스트</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="312" parent="298" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="315" parent="301" name="id">
+      <AutoIncrement>3</AutoIncrement>
       <Comment>권한 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="313" parent="298" name="name">
+    <column id="316" parent="301" name="name">
       <Comment>권한명</Comment>
+      <DasType>varchar(15)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>varchar(15)|0s</StoredType>
     </column>
-    <index id="314" parent="298" name="PRIMARY">
+    <index id="317" parent="301" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="315" parent="298" name="UQ_name">
+    <index id="318" parent="301" name="UQ_name">
       <ColNames>name</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="316" parent="298" name="PRIMARY">
+    <key id="319" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="317" parent="298" name="UQ_name">
+    <key id="320" parent="301" name="UQ_name">
       <UnderlyingIndexName>UQ_name</UnderlyingIndexName>
     </key>
-    <column id="318" parent="299" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="321" parent="302" name="id">
+      <AutoIncrement>8</AutoIncrement>
       <Comment>음식 종류 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="319" parent="299" name="kindname">
+    <column id="322" parent="302" name="kindname">
       <Comment>종류</Comment>
+      <DasType>varchar(30)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>varchar(30)|0s</StoredType>
     </column>
-    <column id="320" parent="299" name="regdate">
+    <column id="323" parent="302" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>3</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <index id="321" parent="299" name="PRIMARY">
+    <index id="324" parent="302" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="322" parent="299" name="UQ_kindname">
+    <index id="325" parent="302" name="UQ_kindname">
       <ColNames>kindname</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="323" parent="299" name="PRIMARY">
+    <key id="326" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="324" parent="299" name="UQ_kindname">
+    <key id="327" parent="302" name="UQ_kindname">
       <UnderlyingIndexName>UQ_kindname</UnderlyingIndexName>
     </key>
-    <column id="325" parent="300" name="sender_id">
+    <column id="328" parent="303" name="sender_id">
       <Comment>요청 보낸 회원 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="326" parent="300" name="receiver_id">
+    <column id="329" parent="303" name="receiver_id">
       <Comment>요청 받은 회원 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="327" parent="300" name="intimacy">
+    <column id="330" parent="303" name="intimacy">
       <Comment>친밀도</Comment>
+      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>3</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="328" parent="300" name="is_accept">
+    <column id="331" parent="303" name="is_accept">
       <Comment>수락여부</Comment>
+      <DasType>tinyint(1)|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>4</Position>
-      <StoredType>tinyint(1)|0s</StoredType>
     </column>
-    <column id="329" parent="300" name="regdate">
+    <column id="332" parent="303" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>5</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <foreign-key id="330" parent="300" name="FK_member_TO_friend">
+    <foreign-key id="333" parent="303" name="FK_member_TO_friend">
       <ColNames>sender_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <foreign-key id="331" parent="300" name="FK_member_TO_friend1">
+    <foreign-key id="334" parent="303" name="FK_member_TO_friend1">
       <ColNames>receiver_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="332" parent="300" name="PRIMARY">
+    <index id="335" parent="303" name="PRIMARY">
       <ColNames>sender_id
 receiver_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="333" parent="300" name="FK_member_TO_friend1">
+    <index id="336" parent="303" name="FK_member_TO_friend1">
       <ColNames>receiver_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="334" parent="300" name="PRIMARY">
+    <key id="337" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="335" parent="301" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="338" parent="304" name="id">
+      <AutoIncrement>7</AutoIncrement>
       <Comment>맛집 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="336" parent="301" name="kind_id">
+    <column id="339" parent="304" name="kind_id">
       <Comment>음식 종류 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="337" parent="301" name="address">
+    <column id="340" parent="304" name="address">
       <Comment>주소</Comment>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StoredType>text|0s</StoredType>
     </column>
-    <column id="338" parent="301" name="lat">
+    <column id="341" parent="304" name="lat">
       <Comment>위도</Comment>
+      <DasType>double|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StoredType>double|0s</StoredType>
     </column>
-    <column id="339" parent="301" name="lng">
+    <column id="342" parent="304" name="lng">
       <Comment>경도</Comment>
+      <DasType>double|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
-      <StoredType>double|0s</StoredType>
     </column>
-    <column id="340" parent="301" name="img_url">
+    <column id="343" parent="304" name="img_url">
       <Comment>가게 이미지 url</Comment>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
-      <StoredType>text|0s</StoredType>
     </column>
-    <column id="341" parent="301" name="gu">
+    <column id="344" parent="304" name="gu">
       <Comment>지역구</Comment>
+      <DasType>varchar(5)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
-      <StoredType>varchar(5)|0s</StoredType>
     </column>
-    <column id="342" parent="301" name="kakao_map_url">
+    <column id="345" parent="304" name="kakao_map_url">
       <Comment>카카오맵 상세페이지 url</Comment>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>8</Position>
-      <StoredType>text|0s</StoredType>
     </column>
-    <column id="343" parent="301" name="name">
+    <column id="346" parent="304" name="name">
       <Comment>가게 이름</Comment>
+      <DasType>varchar(50)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>9</Position>
-      <StoredType>varchar(50)|0s</StoredType>
     </column>
-    <column id="344" parent="301" name="regdate">
+    <column id="347" parent="304" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>10</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <foreign-key id="345" parent="301" name="FK_food_kind_TO_matzip">
+    <foreign-key id="348" parent="304" name="FK_food_kind_TO_matzip">
       <ColNames>kind_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>food_kind</RefTableName>
     </foreign-key>
-    <index id="346" parent="301" name="PRIMARY">
+    <index id="349" parent="304" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="347" parent="301" name="FK_food_kind_TO_matzip">
+    <index id="350" parent="304" name="FK_food_kind_TO_matzip">
       <ColNames>kind_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="348" parent="301" name="PRIMARY">
+    <key id="351" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="349" parent="302" name="tag_id">
+    <column id="352" parent="305" name="tag_id">
       <Comment>태그 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="350" parent="302" name="my_matzip_id">
+    <column id="353" parent="305" name="my_matzip_id">
       <Comment>나의 맛집 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="351" parent="302" name="regdate">
+    <column id="354" parent="305" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>3</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <foreign-key id="352" parent="302" name="FK_tag_TO_matzip_tag">
+    <foreign-key id="355" parent="305" name="FK_tag_TO_matzip_tag">
       <ColNames>tag_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>tag</RefTableName>
     </foreign-key>
-    <foreign-key id="353" parent="302" name="FK_my_matzip_TO_matzip_tag">
+    <foreign-key id="356" parent="305" name="FK_my_matzip_TO_matzip_tag">
       <ColNames>my_matzip_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>my_matzip</RefTableName>
     </foreign-key>
-    <index id="354" parent="302" name="PRIMARY">
+    <index id="357" parent="305" name="PRIMARY">
       <ColNames>tag_id
 my_matzip_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="355" parent="302" name="FK_my_matzip_TO_matzip_tag">
+    <index id="358" parent="305" name="FK_my_matzip_TO_matzip_tag">
       <ColNames>my_matzip_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="356" parent="302" name="PRIMARY">
+    <key id="359" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="357" parent="303" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="360" parent="306" name="id">
+      <AutoIncrement>5</AutoIncrement>
       <Comment>회원 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="358" parent="303" name="username">
+    <column id="361" parent="306" name="username">
       <Comment>아이디 (8~20)</Comment>
+      <DasType>varchar(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="359" parent="303" name="password">
+    <column id="362" parent="306" name="password">
       <Comment>비밀번호(8~16)</Comment>
+      <DasType>varchar(100)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="360" parent="303" name="email">
+    <column id="363" parent="306" name="email">
       <Comment>이메일</Comment>
+      <DasType>varchar(35)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="361" parent="303" name="point">
+    <column id="364" parent="306" name="point">
       <Comment>포인트</Comment>
+      <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <Position>5</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="362" parent="303" name="nickname">
+    <column id="365" parent="306" name="nickname">
       <Comment>닉네임</Comment>
+      <DasType>varchar(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
-      <StoredType>varchar(100)|0s</StoredType>
     </column>
-    <column id="363" parent="303" name="name">
+    <column id="366" parent="306" name="name">
       <Comment>이름</Comment>
+      <DasType>varchar(20)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
-      <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="364" parent="303" name="provider">
-      <Position>8</Position>
-      <StoredType>varchar(40)|0s</StoredType>
-    </column>
-    <column id="365" parent="303" name="providerId">
-      <Position>9</Position>
-      <StoredType>varchar(200)|0s</StoredType>
-    </column>
-    <index id="366" parent="303" name="PRIMARY">
+    <index id="367" parent="306" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="367" parent="303" name="UQ_username">
+    <index id="368" parent="306" name="UQ_username">
       <ColNames>username</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="368" parent="303" name="UQ_nickname">
+    <index id="369" parent="306" name="UQ_nickname">
       <ColNames>nickname</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="369" parent="303" name="PRIMARY">
+    <key id="370" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="370" parent="303" name="UQ_username">
+    <key id="371" parent="306" name="UQ_username">
       <UnderlyingIndexName>UQ_username</UnderlyingIndexName>
     </key>
-    <key id="371" parent="303" name="UQ_nickname">
+    <key id="372" parent="306" name="UQ_nickname">
       <UnderlyingIndexName>UQ_nickname</UnderlyingIndexName>
     </key>
-    <column id="372" parent="304" name="authorities_id">
+    <column id="373" parent="307" name="authorities_id">
       <Comment>권한 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="373" parent="304" name="member_id">
+    <column id="374" parent="307" name="member_id">
       <Comment>회원 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="374" parent="304" name="FK_authority_TO_member_authorities">
+    <foreign-key id="375" parent="307" name="FK_authority_TO_member_authorities">
       <ColNames>authorities_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>authority</RefTableName>
     </foreign-key>
-    <foreign-key id="375" parent="304" name="FK_member_TO_member_authorities">
+    <foreign-key id="376" parent="307" name="FK_member_TO_member_authorities">
       <ColNames>member_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="376" parent="304" name="PRIMARY">
+    <index id="377" parent="307" name="PRIMARY">
       <ColNames>authorities_id
 member_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="377" parent="304" name="FK_member_TO_member_authorities">
+    <index id="378" parent="307" name="FK_member_TO_member_authorities">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="378" parent="304" name="PRIMARY">
+    <key id="379" parent="307" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="379" parent="305" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="380" parent="308" name="id">
+      <AutoIncrement>9</AutoIncrement>
       <Comment>나의 맛집 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="380" parent="305" name="matzip_id">
+    <column id="381" parent="308" name="matzip_id">
       <Comment>맛집 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="381" parent="305" name="member_id">
+    <column id="382" parent="308" name="member_id">
       <Comment>회원 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="382" parent="305" name="regdate">
+    <column id="383" parent="308" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>4</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="383" parent="305" name="visibility">
+    <column id="384" parent="308" name="visibility">
       <Comment>공개여부</Comment>
+      <DasType>enum(&apos;PRIVATE&apos;, &apos;PUBLIC&apos;, &apos;HIDDEN&apos;)|0e</DasType>
       <DefaultExpression>&apos;PUBLIC&apos;</DefaultExpression>
       <Position>5</Position>
-      <StoredType>enum(&apos;PRIVATE&apos;, &apos;PUBLIC&apos;, &apos;HIDDEN&apos;)|0e</StoredType>
     </column>
-    <column id="384" parent="305" name="content">
+    <column id="385" parent="308" name="content">
       <Comment>리뷰</Comment>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
-      <StoredType>text|0s</StoredType>
     </column>
-    <column id="385" parent="305" name="star_rating">
+    <column id="386" parent="308" name="star_rating">
       <Comment>리뷰 점수</Comment>
+      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <Position>7</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="386" parent="305" name="FK_matzip_TO_my_matzip">
+    <foreign-key id="387" parent="308" name="FK_matzip_TO_my_matzip">
       <ColNames>matzip_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>matzip</RefTableName>
     </foreign-key>
-    <foreign-key id="387" parent="305" name="FK_member_TO_my_matzip">
+    <foreign-key id="388" parent="308" name="FK_member_TO_my_matzip">
       <ColNames>member_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="388" parent="305" name="PRIMARY">
+    <index id="389" parent="308" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="389" parent="305" name="FK_matzip_TO_my_matzip">
+    <index id="390" parent="308" name="FK_matzip_TO_my_matzip">
       <ColNames>matzip_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="390" parent="305" name="FK_member_TO_my_matzip">
+    <index id="391" parent="308" name="FK_member_TO_my_matzip">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="391" parent="305" name="PRIMARY">
+    <key id="392" parent="308" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="392" parent="306" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="393" parent="309" name="id">
+      <AutoIncrement>13</AutoIncrement>
       <Comment>나의 리뷰 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="393" parent="306" name="matzip_id">
+    <column id="394" parent="309" name="matzip_id">
       <Comment>맛집 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="394" parent="306" name="member_id">
+    <column id="395" parent="309" name="member_id">
       <Comment>회원 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="395" parent="306" name="content">
+    <column id="396" parent="309" name="content">
       <Comment>리뷰</Comment>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StoredType>text|0s</StoredType>
     </column>
-    <column id="396" parent="306" name="regdate">
+    <column id="397" parent="309" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>5</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <column id="397" parent="306" name="star_rating">
+    <column id="398" parent="309" name="star_rating">
       <Comment>리뷰 점수</Comment>
+      <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <Position>6</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="398" parent="306" name="FK_matzip_TO_my_review">
+    <foreign-key id="399" parent="309" name="FK_matzip_TO_my_review">
       <ColNames>matzip_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>matzip</RefTableName>
     </foreign-key>
-    <foreign-key id="399" parent="306" name="FK_member_TO_my_review">
+    <foreign-key id="400" parent="309" name="FK_member_TO_my_review">
       <ColNames>member_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="400" parent="306" name="PRIMARY">
+    <index id="401" parent="309" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="401" parent="306" name="FK_matzip_TO_my_review">
+    <index id="402" parent="309" name="FK_matzip_TO_my_review">
       <ColNames>matzip_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="402" parent="306" name="FK_member_TO_my_review">
+    <index id="403" parent="309" name="FK_member_TO_my_review">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="403" parent="306" name="PRIMARY">
+    <key id="404" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="404" parent="307" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="405" parent="310" name="id">
+      <AutoIncrement>5</AutoIncrement>
       <Comment>프로필 사진 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="405" parent="307" name="member_id">
+    <column id="406" parent="310" name="member_id">
       <Comment>회원 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="406" parent="307" name="sourcename">
+    <column id="407" parent="310" name="sourcename">
       <Comment>원본 이름</Comment>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StoredType>text|0s</StoredType>
     </column>
-    <column id="407" parent="307" name="filename">
+    <column id="408" parent="310" name="filename">
       <Comment>저장 이름</Comment>
+      <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StoredType>text|0s</StoredType>
     </column>
-    <foreign-key id="408" parent="307" name="FK_member_TO_profile_img">
+    <foreign-key id="409" parent="310" name="FK_member_TO_profile_img">
       <ColNames>member_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="409" parent="307" name="PRIMARY">
+    <index id="410" parent="310" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="410" parent="307" name="FK_member_TO_profile_img">
+    <index id="411" parent="310" name="FK_member_TO_profile_img">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="411" parent="307" name="PRIMARY">
+    <key id="412" parent="310" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="412" parent="308" name="tag_id">
+    <column id="413" parent="311" name="tag_id">
       <Comment>태그 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="413" parent="308" name="my_review_id">
+    <column id="414" parent="311" name="my_review_id">
       <Comment>나의 리뷰 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="414" parent="308" name="regdate">
+    <column id="415" parent="311" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>3</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <foreign-key id="415" parent="308" name="FK_tag_TO_review_tag">
+    <foreign-key id="416" parent="311" name="FK_tag_TO_review_tag">
       <ColNames>tag_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>tag</RefTableName>
     </foreign-key>
-    <foreign-key id="416" parent="308" name="FK_my_review_TO_review_tag">
+    <foreign-key id="417" parent="311" name="FK_my_review_TO_review_tag">
       <ColNames>my_review_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>my_review</RefTableName>
     </foreign-key>
-    <index id="417" parent="308" name="PRIMARY">
+    <index id="418" parent="311" name="PRIMARY">
       <ColNames>tag_id
 my_review_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="418" parent="308" name="FK_my_review_TO_review_tag">
+    <index id="419" parent="311" name="FK_my_review_TO_review_tag">
       <ColNames>my_review_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="419" parent="308" name="PRIMARY">
+    <key id="420" parent="311" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="420" parent="309" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="421" parent="312" name="id">
+      <AutoIncrement>16</AutoIncrement>
       <Comment>태그 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="421" parent="309" name="tagname">
+    <column id="422" parent="312" name="tagname">
       <Comment>태그</Comment>
+      <DasType>varchar(30)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>varchar(30)|0s</StoredType>
     </column>
-    <column id="422" parent="309" name="regdate">
+    <column id="423" parent="312" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>3</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <index id="423" parent="309" name="PRIMARY">
+    <index id="424" parent="312" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="424" parent="309" name="UQ_tagname">
+    <index id="425" parent="312" name="UQ_tagname">
       <ColNames>tagname</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="425" parent="309" name="PRIMARY">
+    <key id="426" parent="312" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="426" parent="309" name="UQ_tagname">
+    <key id="427" parent="312" name="UQ_tagname">
       <UnderlyingIndexName>UQ_tagname</UnderlyingIndexName>
     </key>
-    <column id="427" parent="310" name="member_id">
+    <column id="428" parent="313" name="member_id">
       <Comment>회원 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="428" parent="310" name="my_matzip_id">
+    <column id="429" parent="313" name="my_matzip_id">
       <Comment>나의 맛집 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="429" parent="310" name="tag_id">
+    <column id="430" parent="313" name="tag_id">
       <Comment>태그 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="430" parent="310" name="regdate">
+    <column id="431" parent="313" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>4</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <foreign-key id="431" parent="310" name="FK_member_TO_user_matzip_tag_status">
+    <foreign-key id="432" parent="313" name="FK_member_TO_user_matzip_tag_status">
       <ColNames>member_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <foreign-key id="432" parent="310" name="FK_matzip_tag_TO_user_matzip_tag_status">
+    <foreign-key id="433" parent="313" name="FK_matzip_tag_TO_user_matzip_tag_status">
       <ColNames>tag_id
 my_matzip_id</ColNames>
       <OnDelete>cascade</OnDelete>
@@ -1774,64 +1857,64 @@ my_matzip_id</ColNames>
 my_matzip_id</RefColNames>
       <RefTableName>matzip_tag</RefTableName>
     </foreign-key>
-    <index id="433" parent="310" name="PRIMARY">
+    <index id="434" parent="313" name="PRIMARY">
       <ColNames>member_id
 my_matzip_id
 tag_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="434" parent="310" name="FK_matzip_tag_TO_user_matzip_tag_status">
+    <index id="435" parent="313" name="FK_matzip_tag_TO_user_matzip_tag_status">
       <ColNames>tag_id
 my_matzip_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="435" parent="310" name="PRIMARY">
+    <key id="436" parent="313" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="436" parent="311" name="member_id">
+    <column id="437" parent="314" name="member_id">
       <Comment>회원 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="437" parent="311" name="matzip_id">
+    <column id="438" parent="314" name="matzip_id">
       <Comment>맛집 일련번호</Comment>
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StoredType>int|0s</StoredType>
     </column>
-    <column id="438" parent="311" name="regdate">
+    <column id="439" parent="314" name="regdate">
       <Comment>등록일</Comment>
+      <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <Position>3</Position>
-      <StoredType>datetime|0s</StoredType>
     </column>
-    <foreign-key id="439" parent="311" name="FK_member_TO_wish_list">
+    <foreign-key id="440" parent="314" name="FK_member_TO_wish_list">
       <ColNames>member_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <foreign-key id="440" parent="311" name="FK_matzip_TO_wish_list">
+    <foreign-key id="441" parent="314" name="FK_matzip_TO_wish_list">
       <ColNames>matzip_id</ColNames>
       <OnDelete>cascade</OnDelete>
       <RefColNames>id</RefColNames>
       <RefTableName>matzip</RefTableName>
     </foreign-key>
-    <index id="441" parent="311" name="PRIMARY">
+    <index id="442" parent="314" name="PRIMARY">
       <ColNames>member_id
 matzip_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="442" parent="311" name="FK_matzip_TO_wish_list">
+    <index id="443" parent="314" name="FK_matzip_TO_wish_list">
       <ColNames>matzip_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="443" parent="311" name="PRIMARY">
+    <key id="444" parent="314" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

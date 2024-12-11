@@ -4,6 +4,7 @@ import com.lec.spring.matzip.domain.*;
 import com.lec.spring.matzip.repository.MatzipRepository;
 import com.lec.spring.matzip.repository.ReviewRepository;
 import com.lec.spring.matzip.repository.TagRepository;
+import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
@@ -18,7 +19,6 @@ import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-
     private final ReviewRepository reviewRepository;
     private final MatzipRepository matzipRepository;
     private final TagRepository tagRepository;
@@ -49,8 +49,6 @@ public class ReviewServiceImpl implements ReviewService {
         if (matzip == null) {
             throw new IllegalArgumentException("음식점 정보를 찾을 수 없습니다");
         }
-
-        Review review = reviewDTO;
 
         int saved = reviewRepository.save(reviewDTO, model);
 
@@ -125,19 +123,23 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy, int rewardIntimacy) {
-        Friend friend = friendRepository.findFriends(reviewDTO.getId());
-        if (friend == null) {
+        List<Friend> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getId());
+        if (friends == null) {
             throw new IllegalArgumentException("Friend not found");
         }
 
         List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
 
         int resultIntimacy = !hiddenMatzipMemberIds.isEmpty() ? rewardHiddenIntimacy : rewardIntimacy;
+        int newIntimacy = 0;
 
-        friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
-        friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
+        for(Friend friend : friends) {
+            friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
+            friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
+            newIntimacy = friend.getIntimacy();
+        }
 
-        return friend.getIntimacy();
+        return newIntimacy;
     }
 
 

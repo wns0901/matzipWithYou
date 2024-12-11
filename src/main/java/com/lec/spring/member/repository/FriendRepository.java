@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface FriendRepository{
 
     // 친구 신청시 이미 보낸 신청은 없나 확인용

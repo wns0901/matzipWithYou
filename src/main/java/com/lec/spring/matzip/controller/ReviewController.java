@@ -1,7 +1,7 @@
 package com.lec.spring.matzip.controller;
 
 import com.lec.spring.matzip.domain.*;
-import com.lec.spring.matzip.service.ReviewService;
+        import com.lec.spring.matzip.service.ReviewService;
 import com.lec.spring.member.domain.Member;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -62,30 +61,27 @@ public class ReviewController {
 
             redirectAttributes.addFlashAttribute("saveOk", "리뷰 작성이 완료되었습니다.");
 
-            if(rewardReviewPoint != null && rewardReviewIntimacy != null) {
+            if (rewardReviewPoint != null && rewardReviewIntimacy != null) {
                 redirectAttributes.addFlashAttribute("rewardReviewPoint", rewardReviewPoint);
                 redirectAttributes.addFlashAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
             }
 
-            if(!hiddenMatzipMemberIds.isEmpty()) {
+            if (hiddenMatzipMemberIds != null && !hiddenMatzipMemberIds.isEmpty()) {
                 redirectAttributes.addFlashAttribute("isHidden", isHidden);
             }
 
-            if(!reviewTags.isEmpty()) {
+            if (reviewTags != null && !reviewTags.isEmpty()) {
                 redirectAttributes.addFlashAttribute("reviewTags", reviewTags);
             }
 
+            return "redirect:/review/list";
+        }else {
             redirectAttributes.addFlashAttribute("saveError", "리뷰작성에 실패했습니다.");
-            return "redirect:/review/writeOk";
+            return "redirect:/review/write";
         }
-
-        model.addAttribute("review", reviewService.addReview(reviewDTO, model));
-        return "redirect:/review/write";
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteOk(ReviewDTO reviewDTO, Model model) {
-        model.addAttribute("")
+//    @PostMapping("/delete/{id}")
+//    public String deleteOk(ReviewDTO reviewDTO, Model model) {
+//        model.addAttribute("");
     }
-
-}
