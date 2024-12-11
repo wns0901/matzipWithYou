@@ -13,10 +13,6 @@
 
         <h1>회원가입</h1>
 
-        <div>
-            <div class="text-danger" th:text="${error}"></div>
-            <div class="text-danger" th:text="${errorMessage}"></div>
-        </div>
 
         <div class="social-buttons">
             <a class="social-button" th:href="@{/oauth2/authorization/kakao}">
@@ -82,6 +78,11 @@
                 <label for="referrerNickname">추천인 닉네임 (선택사항)</label>
                 <input type="text" class="form-control" id="referrerNickname" name="referrerNickname"
                        th:value="${referrerNickname}" placeholder="추천인 닉네임을 입력하세요">
+            </div>
+
+            <div>
+                <div class="text-danger" th:text="${error}"></div>
+                <div class="text-danger" th:text="${errorMessage}"></div>
             </div>
 
             <button type="submit" class="btn">가입하기</button>
