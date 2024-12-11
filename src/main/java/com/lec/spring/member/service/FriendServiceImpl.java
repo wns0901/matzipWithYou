@@ -1,7 +1,6 @@
 package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.Friend;
-import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.repository.FriendRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -21,57 +20,58 @@ public class FriendServiceImpl implements FriendService {
 
     // 친구 요청 보내기
     @Override
-    public int sendFriendRequest(Friend friend) {
-
+    public int sendFriendRequest(Long senderId, Long receiverId) {
         // 중복 요청 확인
-        if (friendRepository.isAlreadyFriend(friend)) { // ?
-            return 0;
+        if (!friendRepository.findBySender(senderId).isEmpty() ||
+                !friendRepository.findByReceiver(receiverId).isEmpty()) {
+            throw new IllegalArgumentException("이미 친구 요청을 보낸 상대입니다.");
         }
-        return friendRepository.sendFriendRequest(friend); // DB에 저장
+
+        // 새로운 요청 생성 및 저장
+        Friend friend = Friend.builder()
+                .senderId(senderId)
+                .receiverId(receiverId)
+                .isAccept(false) // 대기 상태
+                .regdate(LocalDateTime.now())
+                .build();
+
+        return friendRepository.save(friend); // DB에 저장
     }
 
     // 친구 요청 수락/거절
     @Override
-    public int respondToRequest(Friend friend) {
-        int newFriend = friendRepository.acceptFriendRequest(friend);
-        if (newFriend == 0) {
-            return 0;
-        }
-        if (newFriend == 1) {
+    public int respondToRequest(Long senderId, Long receiverId, boolean accept) {
+        List<Friend> requests = friendRepository.findByReceiver(receiverId);
+        Friend friend = requests.stream()
+                .filter(req -> req.getSenderId().equals(senderId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("친구 요청이 존재하지 않습니다."));
+
+        if (accept) {
             // 요청 수락
-            friend.setIsAccept(true);
-            return friendRepository.acceptFriendRequest(friend); // 업데이트된 행 수 반환
+            friend.setAccept(true);
+            return friendRepository.save(friend); // 업데이트된 행 수 반환
         } else {
             // 요청 거절
-            return friendRepository.rejectFriendRequest(friend); // 삭제된 행 수 반환
+            return friendRepository.delete(friend); // 삭제된 행 수 반환
         }
     }
-
-
-    // 친구 삭제
-    @Override
-    public int deleteFriend(Friend friend) {
-        return friendRepository.rejectFriendRequest(friend);
-    }
-
 
     // 친구 목록 가져오기
     @Override
-    public List<Friend> getFriendsWithDetailsDTO(Long memberId) {
-        return friendRepository.findFriendsWithDetailsDTO(memberId);
+    public List<Friend> getFriends(Long userId) {
+        // senderId 또는 receiverId에 해당하고 isAccept가 true인 친구 목록 조회
+        return friendRepository.findFriends(userId);
     }
 
-    // 대기 중인 친구 요청 조회...
+    // 대기 중인 친구 요청
     @Override
-    public List<Friend> getPendingRequests(Long memberId) {
-        // receiverId에 해당하고 isAccept 가 false 인 요청 조회
-        return friendRepository.findPendingRequests(memberId);
+    public List<Friend> getPendingRequests(Long userId) {
+        // receiverId에 해당하고 isAccept가 false인 요청 조회
+        return friendRepository.findPendingRequests(userId);
     }
 
 
-//    private Long getUserId(FriendDetails friendDetails) {
-//        Member member = memberServiceImpl.getId(memberId)
-//    } 로그인 유저의 iD 가져오기
 
 
 
