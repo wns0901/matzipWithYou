@@ -5,41 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Merge(#3): merge commit">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/typeHandler/StringListHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/typeHandler/TagListHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/FriendDataDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/MyMatzipDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/SeoulMapDBDataDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/SeoulMapDataDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/ToTalDataDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/MatzipWithYou-data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-test.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/MatzipWithYou-test.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/controller/MatzipController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/controller/MatzipController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/MatzipDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/matzip/MyMatzipRepository.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/mapper/matzip/MyMatzipRepository.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.lec.spring.matzip.repository.MyMatzipRepositoryTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-com.lec.spring.matzip.repository.MyMatzipRepositoryTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/controller/MatzipController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/controller/MatzipController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/controller/MyMatzipController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/controller/MyMatzipController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/FindingResultMyMatzipDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/FindingResultMyMatzipDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MatzipDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/MatzipDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MatzipDataDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/MatzipDataDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MyMatzip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MyMatzip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MyMatzipDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/repository/MyMatzipRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/repository/MyMatzipRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/matzip/MyMatzipRepository.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/matzip/MyMatzipRepository.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/lec/spring/matzip/repository/MatzipRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/lec/spring/matzip/repository/MatzipRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/lec/spring/matzip/repository/MyMatzipRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/lec/spring/matzip/repository/MyMatzipRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,7 +211,7 @@
       <workItem from="1733815498383" duration="439000" />
       <workItem from="1733875322384" duration="9470000" />
       <workItem from="1733884833663" duration="59000" />
-      <workItem from="1733884895663" duration="10429000" />
+      <workItem from="1733884895663" duration="11251000" />
     </task>
     <task id="LOCAL-00001" summary="Fix(): SecurityFilterChain 오류 해결">
       <option name="closed" value="true" />
