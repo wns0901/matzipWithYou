@@ -4,29 +4,42 @@
 <mapper namespace="com.lec.spring.member.repository.MemberRepository">
 
     <sql id="SELECT_BASE">
-        SELECT id       "id"
-             , username "username" -- id
-             , password "password" -- 비번
-             , email    "email" -- email
-             , point    "point" -- point
-             , nickname "nickname" -- nickname
-             , name     "name" -- 이름
+
+        SELECT id         "id"
+             , username   "username"
+             , password   "password"
+             , email      "email"
+             , point      "point"
+             , nickname   "nickname"
+             , name       "name"
+             , provider   "provider"
+             , providerId "providerId"
         FROM member
         WHERE 1 = 1
     </sql>
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.member.domain.Member"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO member(username, password, email, point, nickname, name)
-        VALUES(#{username}, #{password}, #{email}, #{point}, #{nickname}, #{name})
+        INSERT INTO member(username, password, email, point, nickname, name, provider, providerId)
+        VALUES(#{username}, #{password}, #{email}, COALESCE(#{point}, 0), #{nickname}, #{name}, #{provider}, #{providerId})
     </insert>
+
 
     <update id="update" flushCache="true" parameterType="com.lec.spring.member.domain.Member">
         UPDATE member
-        SET password = #{password}
-          , email = #{email}
+        SET password         = #{password}
+          , email            = #{email}
+          , nickname         = #{nickname}
+          , name             = #{name}
+          , referrerNickname = #{referrerNickname}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateAdditionalInfo">
+        UPDATE member
+        SET email    = #{email}
           , nickname = #{nickname}
-          , name = #{name}
+          , name     = #{name}
         WHERE id = #{id}
     </update>
 
@@ -43,14 +56,23 @@
         AND id = #{id}
     </select>
 
+    <select id="findByIds" resultType="com.lec.spring.member.domain.Member" parameterType="arraylist">
+        SELECT id, username FROM member WHERE id IN
+        <foreach collection="ids" item="e" separator="," open="(" close=")">
+            #{e}
+        </foreach>
+        ORDER BY regdate DESC
+    </select>
+
     <select id="findByUsername" resultType="com.lec.spring.member.domain.Member">
         <include refid="SELECT_BASE"/>
         AND username = #{username}
     </select>
 
     <select id="findByNickname" resultType="com.lec.spring.member.domain.Member">
-        <include refid="SELECT_BASE"/>
-        AND nickname = #{nickname}
+        SELECT *
+        FROM member
+        WHERE nickname = #{nickname}
     </select>
 
     <select id="findByEmail" resultType="com.lec.spring.member.domain.Member">
@@ -63,6 +85,7 @@
         SET point = point + #{point}
         WHERE id = #{id}
     </update>
+
 <!--비밀번호 재설정-->
 <!--이메일 찾기-->
     <select id="selectEmail">
@@ -79,6 +102,12 @@
 <!--이메일로 아이디 찾기-->
     <select id="findMemberIdByEmail" >
         select id from member where email = #{email}
+    </select>
+
+    <select id="findReferrer" resultType="com.lec.spring.member.domain.Member">
+        SELECT id, username, nickname, point
+        FROM member
+        WHERE nickname = #{referrerNickname}
     </select>
 
 </mapper>

@@ -17,9 +17,9 @@ public interface MemberService {
 
     Member findByUsername(String username);
 
+    Member findByNickname(String nickname);
+
     List<Member> findAll();
-
-
 
     //이메일이 화원db에 있는지 확인
     String sendEmail(EmailMessage emailMessage);
@@ -29,4 +29,11 @@ public interface MemberService {
 
    //이메일이 존재하는지 확인
     boolean isExistEmail(String email);
+
+    int updateMember(Member member);
+
+    int updateAdditionalInfo(Long id, String name, String nickname, String email);
+
+    void processReferral(Member member, Member referrer);
+
 }

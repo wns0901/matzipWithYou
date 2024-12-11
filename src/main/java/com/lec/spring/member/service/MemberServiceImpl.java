@@ -3,9 +3,11 @@ package com.lec.spring.member.service;
 // import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.Authority;
 import com.lec.spring.member.domain.EmailMessage;
+import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.Member;
 //import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.AuthorityRepository;
+import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -30,14 +32,18 @@ import java.util.concurrent.TimeUnit;
 public class MemberServiceImpl implements MemberService {
 
     private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
+    private static final int REFERRAL_INTIMACY = 10;
 
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
-
+    private final FriendRepository friendRepository;
+    private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
     private final RedisTemplate redisTemplate;
     private PasswordEncoder passwordEncoder;
+    
+
 
 
 
@@ -48,7 +54,7 @@ public class MemberServiceImpl implements MemberService {
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
         this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
         this.mailSender = mailSender;
-        //this.friendRepository = sqlSession.getMapper(FriendRepository.class);
+        this.friendRepository = sqlSession.getMapper(FriendRepository.class);
         this.passwordEncoder = passwordEncoder;
         this.templateEngine = templateEngine;
         this.redisTemplate = redisTemplate;
@@ -70,28 +76,45 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int registerWithReferral(Member member, String referrerNickname) {
+
+        member.setPoint(0);
         int result = register(member);
 
-        // Referrer Handler
+        // 일반 회원가입 시 추천인 처리
         if (referrerNickname != null && !referrerNickname.isEmpty()) {
             Member referrer = memberRepository.findByNickname(referrerNickname);
-
             if (referrer != null) {
-                // 두 사람 모두 포인트 추가
-                memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
-                memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
-
-                // 서로 친구
-//                Friend friendship = new Friend();
-//                friendship.setSenderId(member.getId());
-//                friendship.setReceiverId(referrer.getId());
-//                friendship.setIntimacy(10);
-//                friendship.setAccept(true);
-//                friendRepository.save(friendship);
+                handleReferralProcess(member, referrer);
             }
         }
 
         return result;
+    }
+
+    @Override
+    public void processReferral(Member member, Member referrer) {
+        // OAuth 회원 추가 정보 입력 시 추천인 처리
+        handleReferralProcess(member, referrer);
+    }
+
+    private void handleReferralProcess(Member member, Member referrer) {
+        memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
+        memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
+
+        Friend friendship = Friend.builder()
+                .senderId(member.getId())
+                .receiverId(referrer.getId())
+                .intimacy(REFERRAL_INTIMACY)
+                .isAccept(true)
+                .build();
+
+        friendRepository.sendFriendRequest(friendship);
+        friendRepository.acceptFriendRequest(friendship);
+    }
+
+    @Override
+    public int updateAdditionalInfo(Long id, String name, String nickname, String email) {
+        return memberRepository.updateAdditionalInfo(id, name, nickname, email);
     }
 
 
@@ -116,7 +139,6 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> findAll() {
         return memberRepository.findAll();
     }
-
 
 
     //이메일이 화원db에 있는지 확인
@@ -179,5 +201,13 @@ public class MemberServiceImpl implements MemberService {
         return false;
     }
 
+    @Override
+    public Member findByNickname(String nickname) {
+        return memberRepository.findByNickname(nickname);
+    }
 
+    @Override
+    public int updateMember(Member member) {
+        return memberRepository.update(member);
+    }
 }

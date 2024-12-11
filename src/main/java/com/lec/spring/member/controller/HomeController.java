@@ -10,6 +10,7 @@ import com.lec.spring.member.domain.Member;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,19 +49,22 @@ public class HomeController {
         return (userDetails != null) ? userDetails.getMember() : null;
     }
 
-//    @RequestMapping("/oauth2")
-//    @ResponseBody
-//    public OAuth2User oauth2(Authentication authentication){
-//        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-//        return oAuth2User;
-//    }
-
-//    @RequestMapping("/oauth2user")
-//    @ResponseBody
-//    public Map<String, Object> oauth2user(@AuthenticationPrincipal OAuth2User oAuth2User){
-//        return (oAuth2User != null) ? oAuth2User.getAttributes() : null;
-//    }
 
 
 
 }//end HomeController
+
+    @RequestMapping("/oauth2")
+    @ResponseBody
+    public OAuth2User oauth2(Authentication authentication){
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        return oAuth2User;
+    }
+
+    @RequestMapping("/oauth2user")
+    @ResponseBody
+    public Map<String, Object> oauth2user(@AuthenticationPrincipal OAuth2User oAuth2User){
+        return (oAuth2User != null) ? oAuth2User.getAttributes() : null;
+    }
+}
+

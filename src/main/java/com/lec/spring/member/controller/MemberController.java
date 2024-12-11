@@ -1,6 +1,7 @@
 package com.lec.spring.member.controller;
 
 import com.lec.spring.member.domain.EmailMessage;
+import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.domain.MemberValidator;
 import com.lec.spring.member.service.MemberService;
@@ -9,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,13 +37,78 @@ public class MemberController {
         this.binder = new WebDataBinder(new Object(), "member");
     }
 
-    @InitBinder("email")
-    public void initBinder(WebDataBinder binder) {
-        this.binder = binder;
-        // 해당 객체가 Member 타입일 때만 Validator를 설정
-        if (binder.getTarget() instanceof Member) {
-            binder.setValidator(new MemberValidator());
-        } }
+    // GET: 추가 정보 입력 폼
+    @GetMapping("/additional-info")
+    public String additionalInfo(Authentication authentication, Model model) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Member member = principalDetails.getMember();
+        model.addAttribute("member", member);
+        return "member/additional-info";
+    }
+
+    // 추가 정보 저장 처리
+    @PostMapping("/additional-info")
+    public String saveAdditionalInfo(
+            @RequestParam String name,
+            @RequestParam String nickname,
+            @RequestParam String email,
+            @RequestParam(required = false) String referrerNickname,
+            Authentication authentication,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+            Member member = principalDetails.getMember();
+
+            Member existingMember = memberService.findByNickname(nickname);
+            if (existingMember != null && !existingMember.getId().equals(member.getId())) {
+                redirectAttributes.addFlashAttribute("error", "이미 사용 중인 닉네임입니다.");
+                return "redirect:/member/additional-info";
+            }
+
+            // 추천인 닉네임 검증
+            if (referrerNickname != null && !referrerNickname.isEmpty()) {
+                Member referrer = memberService.findByNickname(referrerNickname);
+                if (referrer == null) {
+                    redirectAttributes.addFlashAttribute("error", "존재하지 않는 추천인입니다.");
+                    return "redirect:/member/additional-info";
+                }
+
+                // 자기 자신을 추천인으로 등록하는 것 방지
+                if (member.getId().equals(referrer.getId())) {
+                    redirectAttributes.addFlashAttribute("error", "자기 자신을 추천인으로 등록할 수 없습니다.");
+                    return "redirect:/member/additional-info";
+                }
+            }
+
+            // Update additional info
+            int result = memberService.updateAdditionalInfo(member.getId(), name, nickname, email);
+
+            if (result > 0) {
+                // Update the member object in PrincipalDetails
+                member.setName(name);
+                member.setNickname(nickname);
+                member.setEmail(email);
+
+                // 추천인 처리
+                if (referrerNickname != null && !referrerNickname.isEmpty()) {
+                    Member referrer = memberService.findByNickname(referrerNickname);
+                    memberService.processReferral(member, referrer);
+                }
+                redirectAttributes.addFlashAttribute("message", "추가 정보가 저장되었습니다.");
+                return "redirect:/home";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "정보 저장에 실패했습니다.");
+                return "redirect:/member/additional-info";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "처리 중 오류가 발생했습니다: " + e.getMessage());
+            return "redirect:/member/additional-info";
+        }
+    }
+
 
     @GetMapping("/login")
     public void login() {
@@ -54,6 +121,7 @@ public class MemberController {
     @PostMapping("/register")
     public String registerOk(@Valid Member member
             , BindingResult bindingResult
+            , @RequestParam(required = false) String referrerNickname
             , Model model
             , RedirectAttributes redirectAttributes
     ) {
@@ -72,10 +140,18 @@ public class MemberController {
             return "redirect:/member/register";
         }
 
-        int cnt = memberService.register(member);
+        // 추천인 닉네임 검증
+        if (referrerNickname != null && !referrerNickname.isEmpty()) {
+            Member referrer = memberService.findByNickname(referrerNickname);
+            if (referrer == null) {
+                redirectAttributes.addFlashAttribute("error", "존재하지 않는 추천인입니다.");
+                return "redirect:/member/register";
+            }
+        }
+
+        int cnt = memberService.registerWithReferral(member, referrerNickname);
         model.addAttribute("result", cnt);
 
-        System.out.println(member.getUsername());
         return "member/registerOk";
     }
 
@@ -98,10 +174,10 @@ public class MemberController {
         this.memberValidator = memberValidator;
     }
 
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder) {
-//        binder.setValidator(memberValidator);
-//    }
+   @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(memberValidator);
+    }
 
 
     // 이메일 입력받는 창

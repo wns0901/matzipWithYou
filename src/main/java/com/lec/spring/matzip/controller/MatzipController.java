@@ -11,12 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller // @restController 하면 오류가 생긴다고해서 @Controller 로 바꿨습니당(지윤)
+
+@Controller
 @RequestMapping("/matzip")
 public class MatzipController {
 
@@ -27,10 +29,12 @@ public class MatzipController {
     }
 
     @PostMapping("/test")
+    @ResponseBody
     public KakaoPlaceDTO saveMatZip(@RequestBody KakaoPlaceDTO data) {
         matzipService.saveMatzip((Matzip) data.getKakao(), data.getKind());
         return data;
     }
+
 
     @GetMapping("/homework/{id}")
     public String getHomework(@PathVariable Long id, Model model) {
@@ -52,4 +56,13 @@ public class MatzipController {
         return "matzip/detail";
     }
 
+
+    @GetMapping("/seoul-map")
+    public ModelAndView showSeoulMap() {
+        return new ModelAndView("matzip/seoul-map");
+    }
+
+
+
 }
+
