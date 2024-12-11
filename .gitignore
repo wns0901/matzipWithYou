@@ -30,10 +30,6 @@ bin/
 .DS_Store
 
 application-dev.yml
-<<<<<<< HEAD
-.gradle/
-build/
-=======
 
 .gradle/
 build/

@@ -1,6 +1,7 @@
-package com.lec.spring.matzip.domain;
+package com.lec.spring.matzip.domain.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.lec.spring.matzip.domain.Matzip;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

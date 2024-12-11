@@ -255,7 +255,16 @@ values (1, 1),
 
        (7, 6),
        (2, 6),
-       (1, 6);
+       (1, 6),
+
+       (1,7),
+       (2,7),
+       (3,7),
+
+       (1,8),
+       (2,8),
+       (3,8)
+        ;
 
 --  친구관계 && 히든
 insert into user_matzip_tag_status (member_id, my_matzip_id, tag_id)

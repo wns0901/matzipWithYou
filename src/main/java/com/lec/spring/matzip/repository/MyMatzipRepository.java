@@ -1,12 +1,10 @@
 package com.lec.spring.matzip.repository;
 
-import com.lec.spring.matzip.domain.MyMatzip;
-import com.lec.spring.matzip.domain.MyMatzipDTO;
-import org.apache.ibatis.annotations.Param;
+import com.lec.spring.matzip.domain.DTO.MyMatzipDTO;
+import com.lec.spring.matzip.domain.DTO.SeoulMapDBDataDTO;
 
 
 import java.util.List;
-import java.util.Map;
 
 public interface MyMatzipRepository {
     List<MyMatzipDTO> findAll(Long id);
@@ -16,4 +14,6 @@ public interface MyMatzipRepository {
     boolean updateMyMatzipVisibility(Long id, String visibility);
 
     boolean deleteMyMatzip(Long id);
+
+    List<SeoulMapDBDataDTO> findSeoulMapData(Long id);
 }

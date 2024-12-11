@@ -1,6 +1,9 @@
 package com.lec.spring.matzip.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lec.spring.matzip.domain.DTO.FindingResultMyMatzipDTO;
 import com.lec.spring.matzip.service.MyMatzipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +26,18 @@ public class MyMatzipController {
     }
 
 
+    @ResponseBody
     @GetMapping("/{memberId}")
-    public String list(
+    public ResponseEntity<FindingResultMyMatzipDTO> list(
             @PathVariable Long memberId,
             Model model) {
-        model.addAttribute("result",myMatzipService.findByMemberId(memberId));
-
-        return "/myMatzip/list";
+        FindingResultMyMatzipDTO result = myMatzipService.findByMemberId(memberId);
+        model.addAttribute("result", result);
+        System.out.println(result);
+        ObjectMapper objectMapper = new ObjectMapper(); try { String jsonResult = objectMapper.writeValueAsString(result); System.out.println(jsonResult); } catch (
+                JsonProcessingException e) { e.printStackTrace(); }
+        return ResponseEntity.ok(result);
+//        return "/myMatzip/list";
 
     }
 

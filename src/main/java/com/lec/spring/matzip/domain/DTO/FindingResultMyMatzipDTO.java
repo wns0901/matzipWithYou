@@ -1,4 +1,4 @@
-package com.lec.spring.matzip.domain;
+package com.lec.spring.matzip.domain.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -19,7 +19,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/matzip_with_you_db?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: root
-    password: 12345678
+    password: 1234
 
   # security
   security:
@@ -83,6 +83,7 @@ spring:
 # src/main/resources 이하의 경로 지정
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
+  type-handlers-package: com.lec.spring.config.typeHandler
 
 app:
   # 파일 업로드 경로

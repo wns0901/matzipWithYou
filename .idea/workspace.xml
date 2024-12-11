@@ -4,17 +4,42 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Feat(#3): 코드 전체적으로 수정">
+    <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Merge(#3): merge commit">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/typeHandler/StringListHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/config/typeHandler/TagListHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/FriendDataDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/MyMatzipDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/SeoulMapDBDataDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/SeoulMapDataDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/ToTalDataDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/MatzipWithYou-data.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SQL/MatzipWithYou-test.sql" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/MatzipWithYou-test.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/controller/MatzipController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/controller/MatzipController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/FoodKind.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/FoodKind.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/MatzipDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/MatzipDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/repository/MatzipRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/repository/MatzipRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/service/MatzipService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/service/MatzipService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/MatzipDTO.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/matzip/MyMatzipRepository.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/mapper/matzip/MyMatzipRepository.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.lec.spring.matzip.repository.MyMatzipRepositoryTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-com.lec.spring.matzip.repository.MyMatzipRepositoryTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/controller/MatzipController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/controller/MatzipController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/controller/MyMatzipController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/controller/MyMatzipController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/FindingResultMyMatzipDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/FindingResultMyMatzipDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MatzipDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/MatzipDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MatzipDataDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/DTO/MatzipDataDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MyMatzip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MyMatzip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/domain/MyMatzipDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/repository/MyMatzipRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/repository/MyMatzipRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/matzip/MyMatzipRepository.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/matzip/MyMatzipRepository.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/lec/spring/matzip/repository/MatzipRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/lec/spring/matzip/repository/MatzipRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/lec/spring/matzip/repository/MyMatzipRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/lec/spring/matzip/repository/MyMatzipRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,11 +61,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="matzipWithYou" type="f1a62948:ProjectNode" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="matzipWithYou" type="f1a62948:ProjectNode" />
-                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -51,11 +71,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
         <option value="HTML File" />
         <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -80,10 +100,10 @@
     &quot;accountId&quot;: &quot;9c19205a-45da-40ad-abcf-2ae52dbde5ae&quot;
   }
 }</component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -103,6 +123,7 @@
   "keyToString": {
     "DefaultHtmlFileTemplate": "HTML File",
     "Gradle.Build matzipWithYou.executor": "Run",
+    "Gradle.MyMatzipRepositoryTest.testSeoul.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -139,7 +160,31 @@
       <recent name="$PROJECT_DIR$/src/main/resources/templates/common" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.MyMatzipRepositoryTest.testSeoul">
+    <configuration name="MyMatzipRepositoryTest.testSeoul" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.lec.spring.matzip.repository.MyMatzipRepositoryTest.testSeoul&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="MatzipWithYouApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="matzipWithYou.main" />
@@ -156,7 +201,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.MatzipWithYouApplication" />
+        <item itemvalue="Gradle.MyMatzipRepositoryTest.testSeoul" />
         <item itemvalue="Spring Boot.MatzipWithYouApplication" />
         <item itemvalue="Spring Boot.MatzipWithYouApplication" />
         <item itemvalue="Spring Boot.MatzipWithYouApplication" />
@@ -167,8 +212,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19072.14" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19072.14" />
       </set>
     </attachedChunks>
   </component>
@@ -198,6 +243,9 @@
       <workItem from="1733815105730" duration="323000" />
       <workItem from="1733815432283" duration="53000" />
       <workItem from="1733815498383" duration="439000" />
+      <workItem from="1733875322384" duration="9470000" />
+      <workItem from="1733884833663" duration="59000" />
+      <workItem from="1733884895663" duration="10429000" />
     </task>
     <task id="LOCAL-00001" summary="Fix(): SecurityFilterChain 오류 해결">
       <option name="closed" value="true" />
@@ -263,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733806657024</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Merge(#3): merge commit">
+      <option name="closed" value="true" />
+      <created>1733820511207</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1733820511207</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,6 +358,7 @@
     <MESSAGE value="Feat(#27): merge conflict 해결" />
     <MESSAGE value="Feat(#50): signup page design" />
     <MESSAGE value="Feat(#3): 코드 전체적으로 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat(#3): 코드 전체적으로 수정" />
+    <MESSAGE value="Merge(#3): merge commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge(#3): merge commit" />
   </component>
 </project>

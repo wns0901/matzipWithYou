@@ -1,10 +1,8 @@
 package com.lec.spring.matzip.service;
 
-import com.lec.spring.matzip.domain.FindingResultMyMatzipDTO;
-import com.lec.spring.matzip.domain.MyMatzipDTO;
+import com.lec.spring.matzip.domain.DTO.FindingResultMyMatzipDTO;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
 import java.util.Map;
 
 public interface MyMatzipService {

@@ -1,13 +1,11 @@
 package com.lec.spring.matzip.service;
 
-import com.lec.spring.matzip.domain.FindingResultMyMatzipDTO;
-import com.lec.spring.matzip.domain.MyMatzipDTO;
+import com.lec.spring.matzip.domain.DTO.FindingResultMyMatzipDTO;
 import com.lec.spring.matzip.repository.MyMatzipRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 @Service

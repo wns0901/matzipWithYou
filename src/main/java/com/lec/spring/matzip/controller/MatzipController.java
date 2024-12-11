@@ -1,6 +1,6 @@
 package com.lec.spring.matzip.controller;
 
-import com.lec.spring.matzip.domain.MatzipDTO;
+import com.lec.spring.matzip.domain.DTO.MatzipDTO;
 import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.service.MatzipService;
 import org.springframework.http.ResponseEntity;

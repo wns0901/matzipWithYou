@@ -1,7 +1,7 @@
 package com.lec.spring.matzip.repository;
 
-import com.lec.spring.matzip.domain.MatzipDTO;
-import com.lec.spring.matzip.domain.MatzipDataDTO;
+import com.lec.spring.matzip.domain.DTO.MatzipDTO;
+import com.lec.spring.matzip.domain.DTO.MatzipDataDTO;
 import com.lec.spring.matzip.service.MatzipService;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
