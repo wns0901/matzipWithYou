@@ -9,11 +9,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.time.Duration;
-import java.util.List;
+import java.util.Map;
 
 @Service
 public class MatzipServiceImpl implements MatzipService {
@@ -27,7 +29,8 @@ public class MatzipServiceImpl implements MatzipService {
 
 
     @Override
-    public int saveMatzip(Matzip matzip, String kind) {
+    @Transactional
+    public ResponseEntity<Map<String, String>> saveMatzip(Matzip matzip, String kind) {
         String kakaoImgUrl = getImgUrlFromKakao(matzip.getKakaoMapUrl());
 
         FoodKind foodKind = foodKindRepository.findByKindName(kind);
@@ -35,7 +38,21 @@ public class MatzipServiceImpl implements MatzipService {
         matzip.setImgUrl(kakaoImgUrl);
         matzip.setKindId(foodKind.getId());
 
-        return matzipRepository.save(matzip);
+        String gu = matzip.getAddress().split(" ")[1];
+        matzip.setGu(gu);
+
+        boolean result = matzipRepository.save(matzip);
+
+        if (result) {
+            return ResponseEntity.ok(Map.of(
+                    "status","SUCCESS"
+            ));
+        } else {
+            return ResponseEntity.ok(Map.of(
+                    "status","FAIL",
+                    "msg","맛집 저장에 실패했습니다."
+            ));
+        }
     }
 
     @Override
@@ -55,15 +72,5 @@ public class MatzipServiceImpl implements MatzipService {
     public Matzip getMatzipById(Long id, Model model) {
 
         return matzipRepository.findById(id);
-    }
-    // 현지...윤..
-    @Override
-    public List<String> listTagName(Long id, Model model) {
-        return matzipRepository.listTagName(id);
-    }
-
-    @Override
-    public List<String> listKindName(Long id, Model model) {
-        return matzipRepository.listKindName(id);
     }
 }
