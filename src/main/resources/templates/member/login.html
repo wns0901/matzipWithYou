@@ -13,9 +13,6 @@
     <form th:action="@{/member/login}" method="POST">
         <h1>로그인</h1>
 
-        <div class="text-danger" th:text="${error}">
-            <!-- 오류 -->
-        </div>
 
         <div class="social-buttons">
             <a class="social-button" th:href="@{/oauth2/authorization/kakao}">
@@ -51,7 +48,14 @@
                    placeholder="비밀번호를 입력하세요" required>
         </div>
 
+        <div>
+            <div class="text-danger" th:text="${error}"></div>
+            <div class="text-danger" th:text="${errorMessage}"></div>
+        </div>
+
         <a href="#" class="forgot-password">비밀번호를 잊으셨나요?</a>
+
+
 
         <button class="btn-submit" type="submit">로그인</button>
 
