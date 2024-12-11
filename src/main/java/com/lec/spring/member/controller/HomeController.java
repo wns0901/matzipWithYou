@@ -27,44 +27,29 @@ public class HomeController {
     }
 
     @RequestMapping("/home")
-    public void home(){}
+    public void home() {
+    }
 
     @RequestMapping("/auth")
     @ResponseBody
-    public Authentication auth(){
+    public Authentication auth() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
     @RequestMapping("/userDetails")
     @ResponseBody
-    public PrincipalDetails userDetails(Authentication authentication){
-        if(authentication != null)
+    public PrincipalDetails userDetails(Authentication authentication) {
+        if (authentication != null)
             return (PrincipalDetails) authentication.getPrincipal();
         return null;
     }
 
     @RequestMapping("/member")
     @ResponseBody
-    public Member member(@AuthenticationPrincipal PrincipalDetails userDetails){
+    public Member member(@AuthenticationPrincipal PrincipalDetails userDetails) {
         return (userDetails != null) ? userDetails.getMember() : null;
     }
 
 
-
-
-}//end HomeController
-
-    @RequestMapping("/oauth2")
-    @ResponseBody
-    public OAuth2User oauth2(Authentication authentication){
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        return oAuth2User;
-    }
-
-    @RequestMapping("/oauth2user")
-    @ResponseBody
-    public Map<String, Object> oauth2user(@AuthenticationPrincipal OAuth2User oAuth2User){
-        return (oAuth2User != null) ? oAuth2User.getAttributes() : null;
-    }
 }
 

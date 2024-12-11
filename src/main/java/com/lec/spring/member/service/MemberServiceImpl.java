@@ -41,14 +41,7 @@ public class MemberServiceImpl implements MemberService {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
     private final RedisTemplate redisTemplate;
-    private PasswordEncoder passwordEncoder;
     
-
-
-
-
-
-
 
     public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder, JavaMailSender mailSender, SpringTemplateEngine templateEngine, @Qualifier("redisTemplate") RedisTemplate redisTemplate) {
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);

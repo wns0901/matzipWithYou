@@ -73,7 +73,4 @@ public class FriendServiceImpl implements FriendService {
 //        Member member = memberServiceImpl.getId(memberId)
 //    } 로그인 유저의 iD 가져오기
 
-
-
-
 }
