@@ -4,6 +4,7 @@
 <mapper namespace="com.lec.spring.member.repository.MemberRepository">
 
     <sql id="SELECT_BASE">
+
         SELECT id         "id"
              , username   "username"
              , password   "password"
@@ -85,9 +86,28 @@
         WHERE id = #{id}
     </update>
 
+<!--비밀번호 재설정-->
+<!--이메일 찾기-->
+    <select id="selectEmail">
+        select id, email
+        from member
+        where email =#{email}
+    </select>
+<!--비밀번호 업데이트하기-->
+    <update id="updatePassword">
+        update member
+        set password = #{newPassword}
+        where id = #{id}
+    </update>
+<!--이메일로 아이디 찾기-->
+    <select id="findMemberIdByEmail" >
+        select id from member where email = #{email}
+    </select>
+
     <select id="findReferrer" resultType="com.lec.spring.member.domain.Member">
         SELECT id, username, nickname, point
         FROM member
         WHERE nickname = #{referrerNickname}
     </select>
+
 </mapper>

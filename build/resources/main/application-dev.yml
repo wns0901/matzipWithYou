@@ -10,6 +10,21 @@ spring:
   application:
     name: MatzipWithYou
 
+  #resetPassword(hjy)
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "cooconut0226@gmail.com"
+    password: "pjaz vazz xxep gvmx"
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+
+
+
   thymeleaf:
     cache: false
     prefix: classpath:templates/
@@ -72,7 +87,7 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-  
+
   servlet:
     # Multipart request 의 업로드 파일 크기 제한 설정
     multipart:
