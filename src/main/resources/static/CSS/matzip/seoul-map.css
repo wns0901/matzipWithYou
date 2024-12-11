@@ -10,13 +10,13 @@
 }
 
 #seoul-map path {
-    fill: #C8C8C8;
+    fill: lightsalmon;
     transition: fill 0.3s ease;
     cursor: pointer;
 }
 
 #seoul-map path:hover {
-    fill: #4A90E2;
+    fill: #ff7327;
 }
 
 #tooltip {
