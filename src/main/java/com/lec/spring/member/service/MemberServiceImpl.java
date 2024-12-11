@@ -23,9 +23,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
-
     private final FriendRepository friendRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder) {
@@ -53,29 +51,13 @@ public class MemberServiceImpl implements MemberService {
     public int registerWithReferral(Member member, String referrerNickname) {
 
         member.setPoint(0);
-
         int result = register(member);
 
-        // Referrer Handler
+        // 일반 회원가입 시 추천인 처리
         if (referrerNickname != null && !referrerNickname.isEmpty()) {
             Member referrer = memberRepository.findByNickname(referrerNickname);
-
             if (referrer != null) {
-                // 두 사람 모두 포인트 추가
-                memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
-                memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
-
-
-                // 친구 관계 설정 및 친밀도 부여
-                Friend friendship = Friend.builder()
-                        .senderId(member.getId())
-                        .receiverId(referrer.getId())
-                        .intimacy(REFERRAL_INTIMACY)
-                        .isAccept(true)
-                        .build();
-
-                friendRepository.sendFriendRequest(friendship);
-                friendRepository.acceptFriendRequest(friendship);
+                handleReferralProcess(member, referrer);
             }
         }
 
@@ -84,11 +66,14 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void processReferral(Member member, Member referrer) {
-        // 두 사람 모두 포인트 추가
+        // OAuth 회원 추가 정보 입력 시 추천인 처리
+        handleReferralProcess(member, referrer);
+    }
+
+    private void handleReferralProcess(Member member, Member referrer) {
         memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
         memberRepository.updatePoint(referrer.getId(), REFERRAL_POINTS);
 
-        // 친구 관계 설정 및 친밀도 부여
         Friend friendship = Friend.builder()
                 .senderId(member.getId())
                 .receiverId(referrer.getId())
@@ -117,8 +102,6 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByNickname(nickname);
         return (member != null);
     }
-
-
 
     @Override
     public Member findByUsername(String username) {

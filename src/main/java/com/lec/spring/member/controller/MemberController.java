@@ -109,8 +109,8 @@ public class MemberController {
 
     @PostMapping("/register")
     public String registerOk(@Valid Member member
-            , @RequestParam(required = false) String referrerNickname
             , BindingResult bindingResult
+            , @RequestParam(required = false) String referrerNickname
             , Model model
             , RedirectAttributes redirectAttributes
     ) {
@@ -137,12 +137,6 @@ public class MemberController {
                 return "redirect:/member/register";
             }
         }
-
-//        int cnt = memberService.register(member);
-//        model.addAttribute("result", cnt);
-//
-//        System.out.println(member.getUsername());
-//        return "member/registerOk";
 
         int cnt = memberService.registerWithReferral(member, referrerNickname);
         model.addAttribute("result", cnt);

@@ -19,6 +19,8 @@ public class Member {
     private String nickname;
     private String name;
 
+    private String referrerNickname;
+
     private String provider;
     private String providerId;
 }
