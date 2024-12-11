@@ -41,6 +41,11 @@ public class UserMatzipTagStatusServiceImpl implements UserMatzipTagStatusServic
 
     }
 
+    @Override
+    public String listKindName(Long myMatzipId) {
+        return "";
+    }
+
     // 오픈된 태그(userMatzipTagStatus : 구매된 태그) 개수와
     // 미공개된 태그(구매하지 않은 태그: 히든맛집인데 구매되지 않은 태그\]]])의 개수를 리턴해 주는 메소드
     // (리턴타입 List(int)(index 0: open tag, index 1: close tag))

@@ -54,8 +54,9 @@
 
     <!--kindName 조회-->
     <select id="listKindName">
-        select kindName
-        from
+        select f.kindName
+        from food_kind f join user_matzip_tag_status u
+        on
     </select>
 
 
