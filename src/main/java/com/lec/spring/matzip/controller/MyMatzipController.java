@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/matzip/mine")
+@RequestMapping("/matzips/mine")
 public class MyMatzipController {
 
     private final MyMatzipService myMatzipService;
@@ -26,19 +26,14 @@ public class MyMatzipController {
     }
 
 
-    @ResponseBody
     @GetMapping("/{memberId}")
-    public ResponseEntity<FindingResultMyMatzipDTO> list(
+    public String list(
             @PathVariable Long memberId,
             Model model) {
         FindingResultMyMatzipDTO result = myMatzipService.findByMemberId(memberId);
         model.addAttribute("result", result);
-        System.out.println(result);
-        ObjectMapper objectMapper = new ObjectMapper(); try { String jsonResult = objectMapper.writeValueAsString(result); System.out.println(jsonResult); } catch (
-                JsonProcessingException e) { e.printStackTrace(); }
-        return ResponseEntity.ok(result);
-//        return "/myMatzip/list";
 
+        return "/myMatzip/list";
     }
 
     @PatchMapping("/{myMatzipId}/visibility")
