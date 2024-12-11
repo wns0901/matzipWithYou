@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Merge(#3): merge commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Fix(#3): 수정" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -211,7 +209,7 @@
       <workItem from="1733815498383" duration="439000" />
       <workItem from="1733875322384" duration="9470000" />
       <workItem from="1733884833663" duration="59000" />
-      <workItem from="1733884895663" duration="11251000" />
+      <workItem from="1733884895663" duration="11552000" />
     </task>
     <task id="LOCAL-00001" summary="Fix(): SecurityFilterChain 오류 해결">
       <option name="closed" value="true" />
@@ -285,7 +283,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733820511207</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fix(#3): 수정">
+      <option name="closed" value="true" />
+      <created>1733900368608</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1733900368608</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -325,6 +331,7 @@
     <MESSAGE value="Feat(#50): signup page design" />
     <MESSAGE value="Feat(#3): 코드 전체적으로 수정" />
     <MESSAGE value="Merge(#3): merge commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge(#3): merge commit" />
+    <MESSAGE value="Fix(#3): 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix(#3): 수정" />
   </component>
 </project>
