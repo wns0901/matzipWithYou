@@ -58,6 +58,9 @@
     &quot;assignee&quot;: &quot;dhlee47-l&quot;
   }
 }</component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="77e2c589-17fa-4013-a3b5-6f7108b896ad" />
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/wns0901/matzipWithYou.git&quot;,
