@@ -52,6 +52,12 @@
         )
     </select>
 
+    <!--kindName 조회-->
+    <select id="listKindName">
+        select kindName
+        from
+    </select>
+
 
     <!-- 저장-->
     <insert id="tagSave" flushCache="true" parameterType="com.lec.spring.matzip.domain.UserMatzipTagStatus" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >

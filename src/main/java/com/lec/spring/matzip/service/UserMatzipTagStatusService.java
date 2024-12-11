@@ -23,6 +23,9 @@ public interface UserMatzipTagStatusService {
    //히든태그 조회
    List<Long> listHiddenMatzipTagIds(Long myMatzipId);
 
+   //kindName 조회
+   String listKindName(Long myMatzipId);
+
 
 
 
