@@ -43,9 +43,13 @@
     </select>
 
     <!-- 친구 삭제 -->
-    <delete id="delete" parameterType="com.lec.spring.member.domain.Friend">
-        DELETE FROM friend f WHERE sender_id = #{senderId} AND receiver_id = #{receiverId}
-    </delete>
+    <update id="updateIntimacy" flushCache="true">
+        UPDATE friend
+        SET intimacy = intimacy + #{member.intimacy}
+        WHERE is_accept = TRUE
+          AND
+            (sender_id = #{memberId} AND receiver_id = #{targetId})
+    </update>
 
 
 </mapper>

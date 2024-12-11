@@ -17,7 +17,5 @@ public interface ReviewRepository {
 
     List<Long> checkHiddenMatzip(Long matzipId, Long memberId);
 
-    int updateIntimacy(Long memberId, Integer intimacy);
-
     int deleteById(Long id);
 }
