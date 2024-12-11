@@ -1,12 +1,7 @@
 package com.lec.spring.member.controller;
 
-//import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.member.domain.Member;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.annotation.AuthenticationPrincipal;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
