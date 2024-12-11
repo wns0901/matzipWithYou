@@ -135,14 +135,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean updatePassword(String email, String newPassword) {
+    public boolean updatePassword(Long id, String newPassword) {
 
         String encodedPassword = passwordEncoder.encode(newPassword);
         System.out.println("######encodPassword : "  + encodedPassword);
         Map<String, String> updatelist = new HashMap<String, String>();
-        updatelist.put("email", email);
-        updatelist.put("newPassword", encodedPassword);
-       int result = memberRepository.updatePassword(email, encodedPassword);
+        updatelist.put(String.valueOf(id), "id");
+        updatelist.put("newPassword", encodedPassword );
+       int result = memberRepository.updatePassword(id, encodedPassword);
        if (result > 0) {
            System.out.println("비밀번호 업데이트 성공");
            System.out.println("변경된 암호화된 비밀번호 :" + encodedPassword);

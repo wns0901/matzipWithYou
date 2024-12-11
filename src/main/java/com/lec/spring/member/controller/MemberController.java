@@ -103,6 +103,8 @@ public class MemberController {
 //        binder.setValidator(memberValidator);
 //    }
 
+
+    // 이메일 입력받는 창
     @GetMapping("/request-reset")
     public String requestResett() {
         System.out.println("123");
@@ -110,7 +112,7 @@ public class MemberController {
     }
 
 
-
+    // 이메일 입력창 2
     @PostMapping("/request-reset")
     public String requestReset( @ModelAttribute("email") String email, Model model) {
         EmailMessage emailMessage = EmailMessage.builder()
@@ -126,26 +128,25 @@ public class MemberController {
 
     }
 
+    // 패스워드 리셋
     @GetMapping("/reset-password")
-    public String showResetForm(@RequestParam("email") String email, Model model){
-        Model member = model.addAttribute("email", email);
-        System.out.println(member);
+    public String showResetForm(@RequestParam("id") Long id, Model model){
+        Model member = model.addAttribute("id", id);
+        System.out.println("#######id "+member);
         return "member/reset-password";
     }
 
+
     @PostMapping("/update-password")
-    public String updatePassword(@RequestParam String email, String newPassword) {
-        System.out.println("Email: " + email);
-        System.out.println("New Password: " + newPassword);
+    public String updatePassword(@RequestParam Long id, String newPassword) {
+        System.out.println("##########id: " + id);
+        System.out.println("#########New Password: " + newPassword);
 
-        boolean isUpdated = memberService.updatePassword(email, newPassword);
+        boolean isUpdated = memberService.updatePassword(id, newPassword);
 
-        return isUpdated ? "redirect:/member/reset-success" : "redirect:/member/reset-fail";
+        return isUpdated ? "redirect:/member/reset-fail" : "redirect:/member/reset-success";
     }
-//    public String updatePassword(String email, String newPassword){
-//        memberService.updatePassword(email, newPassword);
-//        return "redirect:/member/reset-success";
-//    }
+
 
     @GetMapping("/reset-success")
     public String resetSuccess(){

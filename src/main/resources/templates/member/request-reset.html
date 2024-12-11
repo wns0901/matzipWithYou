@@ -12,7 +12,7 @@
     <form action="/member/request-reset" method="post">
         <div class="form-group">
             <label for="email">이메일 주소</label>
-            <input type="email" class="form-control" id="email" name="email" value="${email}" required>
+            <input type="email" class="form-control" id="email" name="email" th:value="${email}" required>
         </div>
         <button type="submit" class="btn btn-primary">비밀번호 재설정 링크 요청</button>
     </form>

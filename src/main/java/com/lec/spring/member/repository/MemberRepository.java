@@ -25,7 +25,7 @@ public interface MemberRepository {
 
     String findMemberIdByEmail(String email);
 
-    int updatePassword(String email, String newPassword);
+    int updatePassword(Long id, String newPassword);
 
 
 }//end MemberRepository

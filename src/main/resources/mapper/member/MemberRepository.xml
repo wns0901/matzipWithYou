@@ -74,7 +74,7 @@
     <update id="updatePassword">
         update member
         set password = #{newPassword}
-        where email = #{email}
+        where id = #{id}
     </update>
 <!--이메일로 아이디 찾기-->
     <select id="findMemberIdByEmail" >

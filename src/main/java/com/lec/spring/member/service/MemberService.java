@@ -25,7 +25,7 @@ public interface MemberService {
     String sendEmail(EmailMessage emailMessage);
 
     //비밀번호 업데이트하기
-    boolean updatePassword(String email, String newPassword);
+    boolean updatePassword(Long id, String newPassword);
 
    //이메일이 존재하는지 확인
     boolean isExistEmail(String email);
