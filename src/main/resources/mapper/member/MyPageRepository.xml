@@ -4,7 +4,7 @@
 <mapper namespace="com.lec.spring.member.repository.MyPageRepository">
 
 <!-- 닉네임, 친구수, 포인트 -->
-    <select id="myProfile">
+    <select id="myProfile" resultType="com.lec.spring.member.domain.MyPage">
         SELECT
             m.nickname,
             (
@@ -30,7 +30,7 @@
 
 
 <!-- 위시리스트, 내맛집, 내리뷰 개수 -->
-    <select id="myActsCount">
+    <select id="myActsCount" resultType="int">
         SELECT
             (SELECT COUNT(*)
             FROM wish_list w WHERE member_id = #{memberId}) 위시리스트,
@@ -43,7 +43,7 @@
     </select>
 
     <!-- 위시 미리보기 -->
-    <select id="wishContents">
+    <select id="wishContents" resultType="com.lec.spring.member.domain.MyPage">
         SELECT mz.name, mz.img_url
         FROM wish_list w, matzip mz
         WHERE w.matzip_id = mz.id and w.member_id = #{memberId}
@@ -51,7 +51,7 @@
 
 
     <!-- 내맛집 미리보기 -->
-    <select id="myMatzipContents">
+    <select id="myMatzipContents" resultType="com.lec.spring.member.domain.MyPage">
         SELECT mz.name, mz.img_url
         FROM my_matzip mm, matzip mz
         WHERE mm.matzip_id = mz.id and mm.member_id = #{memberId}
@@ -59,7 +59,7 @@
 
 
     <!-- 내리뷰 미리보기 -->
-    <select id="myReviewContents">
+    <select id="myReviewContents" resultType="com.lec.spring.member.domain.MyPage">
         SELECT mr.member_id, mr.star_rating, mz.name, mr.content
         FROM my_review mr, matzip mz
         WHERE mr.matzip_id = mz.id and mr.member_id = #{memberId}

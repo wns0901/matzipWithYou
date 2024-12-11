@@ -7,24 +7,21 @@ import org.springframework.stereotype.Repository;
 public interface MyPageRepository {
 
     // 닉, 친구수, 포인트
-    MyPage myProfile();
+    MyPage myProfile(MyPage mypage);
 
     // 위시리스트 & 내맛집 & 내리뷰 개수
-    int myActsCount(MyPage mypage);
+    MyPage myActsCount(MyPage mypage);
 
     // 위시 미리보기
-    String wishContents();
+    String wishContents(MyPage mypage);
 
     // 내맛집 미리보기
-    String myMatzipContents();
+    String myMatzipContents(MyPage mypage);
 
     // 내리뷰 미리보기
-    String myReviewContents();
+    String myReviewContents(MyPage mypage);
 
     // 닉네임 수정
-    int updateNick();
-
-
-
+    int updateNick(String nickname);
 
 }
