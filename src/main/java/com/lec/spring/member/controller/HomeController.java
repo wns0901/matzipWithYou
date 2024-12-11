@@ -49,6 +49,11 @@ public class HomeController {
         return (userDetails != null) ? userDetails.getMember() : null;
     }
 
+
+
+
+}//end HomeController
+
     @RequestMapping("/oauth2")
     @ResponseBody
     public OAuth2User oauth2(Authentication authentication){
@@ -62,3 +67,4 @@ public class HomeController {
         return (oAuth2User != null) ? oAuth2User.getAttributes() : null;
     }
 }
+

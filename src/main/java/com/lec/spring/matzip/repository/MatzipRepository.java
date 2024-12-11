@@ -14,4 +14,8 @@ public interface MatzipRepository {
     Matzip findById(Long id);
 
     int deleteById(Long id);
+    // 지윤...
+   List<String> listTagName(Long id);
+
+   List<String> listKindName(Long id);
 }
