@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+    <style>
+        .starRating {
+            display: flex;
+        }
+
+        .star {
+            appearance: none;
+            padding: 1px;
+        }
+
+        .star::after {
+            content: '☆';
+            color: #ff8a5b;
+            font-size: 20px;
+        }
+
+        .star:hover::after {
+            content: '★';
+        }
+
+        .star:has(~ .star:hover)::after {
+            content: '★';
+        }
+
+        .star.active::after,
+        .star:has(~ .star.active)::after {
+            content: '★';
+        }
+    </style>
+</head>
+<body>
+<img th:src="${matzip.imgUrl}" alt="가게 이미지">
+<br>
+<h2><a th:text="${matzip.name}" th:href="${matzip.kakaoMapUrl}"></a></h2>
+
+ <!--tags가 존재할 때 -->
+<div th:if="${tagName != null and !#lists.isEmpty(tagName)}">
+    <table>
+        <tbody>
+        <!-- 태그 반복 출력 -->
+        <tr th:each="tag : ${tagName}">
+            <td th:text="${tag}"></td> <!-- 태그 이름, null 체크 -->
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:text="${kindName}" id="kindName"></div>
+<div th:text="${matzip.address}" id="address">kindId:</div>
+
+<div class="starRating">
+    <input type="radio" class="star" name="rating" value="1">
+    <input type="radio" class="star" name="rating" value="2">
+    <input type="radio" class="star" name="rating" value="3">
+    <input type="radio" class="star" name="rating" value="4">
+    <input type="radio" class="star" name="rating" value="5">
+</div>
+
+<button>리뷰 작성</button>
+<button>위시리스트</button>
+
+<script>
+    document.querySelectorAll('.star').forEach(($star) => {
+        $star.addEventListener('click', ({ target }) => {
+            // 모든 .star에서 .active 삭제
+            document.querySelectorAll('.star').forEach(($star) => {
+                $star.classList.remove('active');
+            });
+
+            // 클릭한 .star에 .active 추가
+            target.classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.lec.spring.member.service;
 
+import com.lec.spring.member.domain.EmailMessage;
 import com.lec.spring.member.domain.Member;
 
 import java.util.List;
@@ -16,5 +17,23 @@ public interface MemberService {
 
     Member findByUsername(String username);
 
+    Member findByNickname(String nickname);
+
     List<Member> findAll();
+
+    //이메일이 화원db에 있는지 확인
+    String sendEmail(EmailMessage emailMessage);
+
+    //비밀번호 업데이트하기
+    boolean updatePassword(Long id, String newPassword);
+
+   //이메일이 존재하는지 확인
+    boolean isExistEmail(String email);
+
+    int updateMember(Member member);
+
+    int updateAdditionalInfo(Long id, String name, String nickname, String email);
+
+    void processReferral(Member member, Member referrer);
+
 }
