@@ -4,211 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입</title>
-    <style>
-        :root {
-            --primary-color: #ff7327;
-            --button-font-color: #ffffff;
-            --secondary-button-border-color: #c8c9cc;
-            --secondary-button-text-color: #303236;
-            --link-color: #ff7327;
-            --title-font-color: #ff7327;
-            --font-default-color: #63656d;
-            --widget-background-color: #ffffff;
-            --box-border-color: #ffffff;
-            --input-text-color: #121214;
-            --input-border-color: #c8c9cc;
-            --input-background-color: #ffffff;
-            --error-color: #e81d01;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Inter', Roboto, Helvetica, sans-serif;
-        }
-
-        body {
-            background-color: var(--widget-background-color);
-            color: var(--font-default-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 16px;
-        }
-
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 400px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .widget-container {
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-        }
-
-        h1 {
-            font-size: 20px;
-            color: var(--title-font-color);
-            text-align: center;
-            margin: 24px 0;
-            font-weight: 600;
-        }
-
-        .logo {
-            width: auto;
-            height: 60px;
-            margin: 0 auto 24px;
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-            position: relative;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--input-border-color);
-            border-radius: 4px;
-            font-size: 16px;
-            color: var(--input-text-color);
-            background: var(--input-background-color);
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 16px;
-            color: var(--font-default-color);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary-color);
-            color: var(--button-font-color);
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 24px;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
-
-        .btn:hover {
-            background-color: #ff7327;
-        }
-
-        .social-buttons {
-            margin-bottom: 24px;
-        }
-
-        .social-button {
-            width: 100%;
-            padding: 12px;
-            background-color: white;
-            border: 1px solid var(--secondary-button-border-color);
-            border-radius: 8px;
-            font-size: 16px;
-            text-decoration: none;
-            cursor: pointer;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--secondary-button-text-color);
-            transition: background-color 0.2s;
-        }
-
-        .social-button:hover {
-            background-color: #f5f5f5;
-        }
-
-        .social-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
-        }
-
-        .divider {
-            text-align: center;
-            margin: 24px 0;
-            position: relative;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            width: calc(50% - 20px);
-            height: 1px;
-            background-color: var(--secondary-button-border-color);
-        }
-
-        .divider::before {
-            left: 0;
-        }
-
-        .divider::after {
-            right: 0;
-        }
-
-        .divider span {
-            background-color: white;
-            padding: 0 10px;
-            color: var(--font-default-color);
-            font-size: 14px;
-        }
-
-        .text-danger {
-            color: var(--error-color);
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
-        .banner {
-            margin-top: 20px;
-            background-color: #edf9ff;
-            padding: 20px;
-            border-radius: 4px;
-            text-align: center;
-            font-size: 14px;
-            line-height: 1.5;
-            color: var(--font-default-color);
-        }
-
-        .banner a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .banner a:hover {
-            text-decoration: underline;
-        }
-
-        @media screen and (min-width: 576px) and (min-height: 900px) {
-            .main-container {
-                justify-content: center;
-                margin-top: 80px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/CSS/member/register.css}">
 </head>
 <body>
 <div class="main-container">
@@ -217,75 +13,55 @@
 
         <h1>회원가입</h1>
 
-        <div>
-            <div class="text-danger" th:text="${error}"></div>
-            <div class="text-danger" th:text="${errorMessage}"></div>
-        </div>
-
-        <div class="social-buttons">
-            <a class="social-button" th:href="@{/oauth2/authorization/kakao}">
-                <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-                     alt="Kakao" class="social-icon">
-                카카오로 계속하기
-            </a>
-            <a class="social-button" th:href="@{/oauth2/authorization/google}">
-                <img src="/IMG/google.png"
-                     alt="Google" class="social-icon">
-                구글로 계속하기
-            </a>
-            <a class="social-button" th:href="@{/oauth2/authorization/naver}">
-                <img src="/IMG/naver.png"
-                     alt="Naver" class="social-icon">
-                네이버로 계속하기
-            </a>
-        </div>
-
-        <div class="divider">
-            <span>또는</span>
-        </div>
-
-
         <form method="POST" th:action="@{/member/register}">
             <div class="form-group">
                 <label for="name">사용자 이름</label>
                 <input type="text" class="form-control" id="name" name="name"
-                       placeholder="이름을 입력하세요" th:value="${name}">
+                       placeholder="성명" th:value="${name}">
             </div>
 
             <div class="form-group">
                 <label for="nickname">사용자 닉네임</label>
                 <input type="text" class="form-control" id="nickname" name="nickname"
-                       placeholder="닉네임을 입력하세요" th:value="${nickname}">
+                       placeholder="닉네임" th:value="${nickname}">
             </div>
 
             <div class="form-group">
                 <label for="username">사용자 아이디</label>
                 <input type="text" class="form-control" id="username" name="username"
-                       placeholder="아이디를 입력하세요" th:value="${username}">
+                       placeholder="로그인 ID" th:value="${username}">
             </div>
 
             <div class="form-group">
                 <label for="password">비밀번호</label>
                 <input type="password" class="form-control" id="password" name="password"
-                       placeholder="비밀번호를 입력하세요">
+                       placeholder="비밀번호">
             </div>
 
             <div class="form-group">
                 <label for="re_password">비밀번호 확인</label>
                 <input type="password" class="form-control" id="re_password" name="re_password"
-                       placeholder="비밀번호를 다시 입력하세요">
+                       placeholder="비밀번호 재입력">
             </div>
 
             <div class="form-group">
                 <label for="email">이메일</label>
-                <input type="email" class="form-control" id="email" name="email"
-                       placeholder="이메일을 입력하세요" th:value="${email}">
+                <div class="email-input-container">
+                    <input type="email" class="form-control with-button" id="email" name="email"
+                           placeholder="email@example.com" th:value="${email}">
+                    <button type="button" class="email-verify-button">인증하기</button>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="referrerNickname">추천인 닉네임 (선택사항)</label>
                 <input type="text" class="form-control" id="referrerNickname" name="referrerNickname"
-                       th:value="${referrerNickname}" placeholder="추천인 닉네임을 입력하세요">
+                       th:value="${referrerNickname}" placeholder="추천인 닉네임">
+            </div>
+
+            <div>
+                <div class="text-danger" th:text="${error}"></div>
+                <div class="text-danger" th:text="${errorMessage}"></div>
             </div>
 
             <button type="submit" class="btn">가입하기</button>
@@ -299,6 +75,26 @@
             </p>
         </div>
     </div>
+
+    <div class="divider">
+        <span>간편 회원가입</span>
+    </div>
+
+    <div class="social-buttons">
+        <a class="social-button" th:href="@{/oauth2/authorization/kakao}">
+            <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+                 alt="Kakao" class="social-icon">
+        </a>
+        <a class="social-button" th:href="@{/oauth2/authorization/google}">
+            <img src="/IMG/google.png"
+                 alt="Google" class="social-icon">
+        </a>
+        <a class="social-button" th:href="@{/oauth2/authorization/naver}">
+            <img src="/IMG/naver.png"
+                 alt="Naver" class="social-icon">
+        </a>
+    </div>
+
 </div>
 </body>
 </html>
