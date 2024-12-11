@@ -25,7 +25,7 @@
        or (sender_id = #{receiverId} and receiver_id = #{senderId})
     </select>
 
-    <!-- 보낸 요청과 받은 요청 중 대기 중인 목록 -->
+    <!-- 보낸&받은요청 중 대기상태인 목록 -->
     <select id="findPendingRequests" resultType="com.lec.spring.member.domain.Friend">
         SELECT * FROM friend f
         JOIN member m ON (f.sender_id = m.id OR f.receiver_id = m.id)
@@ -52,13 +52,12 @@
     <select id="findFriendsWithDetailsDTO" resultType="com.lec.spring.member.domain.Friend" parameterType="long">
     SELECT sender_id senderId, receiver_id receiverId, intimacy, is_accept isAccept, regdate FROM friend
               WHERE receiver_id = #{memberId}  or sender_id = #{memberId}
-    AND is_accept is true;
-
-
+    AND is_accept is true
+    ORDER BY intimacy;
     </select>
 
-    <!-- 친밀도 불러오기 -->
-    <update id="updateIntimacy" flushCache="true" >
+    <!-- 친밀도 업데이트 -->
+    <update id="updateIntimacy" flushCache="true">
         UPDATE friend f
         SET f.intimacy = f.intimacy + #{member.intimacy}
         WHERE f.is_accept = TRUE
