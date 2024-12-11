@@ -1,21 +1,27 @@
 package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.Friend;
+import com.lec.spring.member.domain.FriendDetailsDTO;
 
 import java.util.List;
 
 public interface FriendService {
 
     // 친구 요청 보내기
-    int sendFriendRequest(Long senderId, Long receiverId);
+    int sendFriendRequest(Friend friend);
 
     // 친구 요청 수락/거절
-    int respondToRequest(Long senderId, Long receiverId, boolean accept);
+    int respondToRequest(Friend friend);
 
-    // 친구 목록 가져오기
-    List<Friend> getFriends(Long userId);
+    // 친구 삭제
+    int deleteFriend(Friend friend);
+
+    // 친구 상세 정보
+    List<Friend> getFriendsWithDetailsDTO(Long memberId);
 
     // 친구 요청 대기중
-    List<Friend> getPendingRequests(Long receiverId);
+    List<Friend> getPendingRequests(Long memberId);
+
+
 }
 
