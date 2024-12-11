@@ -10,14 +10,21 @@ import com.lec.spring.member.repository.MemberRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -28,6 +35,8 @@ public class MemberServiceImpl implements MemberService {
     private final AuthorityRepository authorityRepository;
 
     private final JavaMailSender mailSender;
+    private final SpringTemplateEngine templateEngine;
+    private final RedisTemplate redisTemplate;
     private PasswordEncoder passwordEncoder;
 
 
@@ -35,13 +44,14 @@ public class MemberServiceImpl implements MemberService {
 
 
 
-    public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder,JavaMailSender mailSender) {
+    public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder, JavaMailSender mailSender, SpringTemplateEngine templateEngine, @Qualifier("redisTemplate") RedisTemplate redisTemplate) {
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
         this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
         this.mailSender = mailSender;
         //this.friendRepository = sqlSession.getMapper(FriendRepository.class);
         this.passwordEncoder = passwordEncoder;
-
+        this.templateEngine = templateEngine;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -116,9 +126,18 @@ public class MemberServiceImpl implements MemberService {
         if (member == null) {
             return "이메일이 등록되지 않았습니다;";
         }
+        String uuid = UUID.randomUUID().toString();
+
+        redisTemplate.opsForValue().set(uuid, member.getId(), 3, TimeUnit.MINUTES);
         // 비밀번호 재설정 링크 생성
-        String resetLink = "http://localhost:8080/member/reset-password?id=" + member.getId();
-        String emailContet ="비밀번호 재설정을 위해 아래 링크를 클릭하세요 :" + resetLink;
+        String resetLink = "http://localhost:8080/member/reset-password?id=" + member.getId() + "&uuid=" + uuid;
+//        String emailContet ="비밀번호 재설정을 위해 아래 링크를 클릭하세요 :" + resetLink;
+
+        Context context = new Context();
+        context.setVariable("resetLink", resetLink);
+        String emailContet = templateEngine.process("email-template", context);
+
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
