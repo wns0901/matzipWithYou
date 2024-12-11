@@ -22,7 +22,7 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public int sendFriendRequest(Long senderId, Long receiverId) {
         // 중복 요청 확인
-        if (!friendRepository.findBySender(senderId).isEmpty() ||
+        if (!friendRepository.findBySendergit(senderId).isEmpty() ||
                 !friendRepository.findByReceiver(receiverId).isEmpty()) {
             throw new IllegalArgumentException("이미 친구 요청을 보낸 상대입니다.");
         }
