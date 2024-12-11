@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Fix(#3): 수정" />
+    <list default="true" id="842d400b-4899-42fc-8f3f-0209abd32aac" name="Changes" comment="Fix(#3): 수정2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.lec.spring.matzip.repository.MyMatzipRepositoryTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-com.lec.spring.matzip.repository.MyMatzipRepositoryTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/matzip/service/MyMatzipServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -212,7 +217,7 @@
       <workItem from="1733815498383" duration="439000" />
       <workItem from="1733875322384" duration="9470000" />
       <workItem from="1733884833663" duration="59000" />
-      <workItem from="1733884895663" duration="11552000" />
+      <workItem from="1733884895663" duration="13813000" />
     </task>
     <task id="LOCAL-00001" summary="Fix(): SecurityFilterChain 오류 해결">
       <option name="closed" value="true" />
@@ -294,7 +299,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733900368608</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fix(#3): 수정2">
+      <option name="closed" value="true" />
+      <created>1733900625601</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1733900625601</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,6 +348,7 @@
     <MESSAGE value="Feat(#3): 코드 전체적으로 수정" />
     <MESSAGE value="Merge(#3): merge commit" />
     <MESSAGE value="Fix(#3): 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix(#3): 수정" />
+    <MESSAGE value="Fix(#3): 수정2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix(#3): 수정2" />
   </component>
 </project>

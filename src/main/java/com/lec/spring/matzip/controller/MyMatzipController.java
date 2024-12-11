@@ -51,5 +51,4 @@ public class MyMatzipController {
     public ResponseEntity<Map<String,String>> deleteMyMatzip(@PathVariable Long myMatzipId) {
         return myMatzipService.deleteMyMatzip(myMatzipId);
     }
-
 }

@@ -2,6 +2,7 @@ package com.lec.spring.matzip.repository;
 
 import com.lec.spring.matzip.domain.DTO.MyMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.SeoulMapDBDataDTO;
+import com.lec.spring.matzip.service.MyMatzipService;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ class  MyMatzipRepositoryTest {
 
     @Autowired
     private SqlSession sqlSession;
+
+    @Autowired
+    private MyMatzipService myMatzipService;
 
     @Test
     void findAll() {
@@ -28,5 +32,9 @@ class  MyMatzipRepositoryTest {
         List<SeoulMapDBDataDTO> result = myMatzipRepository.findSeoulMapData(1L);
 
         result.forEach(System.out::println);
+    }
+
+    @Test void testSeoulService() {
+        myMatzipService.findSeoulMapDataById(1L);
     }
 }

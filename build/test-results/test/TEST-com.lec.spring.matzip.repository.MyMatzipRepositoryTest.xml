@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.lec.spring.matzip.repository.MyMatzipRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-11T06:38:20" hostname="jangjun-yeongs-MacBook-Air.local" time="0.562">
+<testsuite name="com.lec.spring.matzip.repository.MyMatzipRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-11T07:58:21" hostname="jangjun-yeongs-MacBook-Air.local" time="0.593">
   <properties/>
-  <testcase name="testSeoul()" classname="com.lec.spring.matzip.repository.MyMatzipRepositoryTest" time="0.562"/>
-  <system-out><![CDATA[15:38:19.448 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lec.spring.matzip.repository.MyMatzipRepositoryTest]: MyMatzipRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-15:38:19.504 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lec.spring.MatzipWithYouApplication for test class com.lec.spring.matzip.repository.MyMatzipRepositoryTest
+  <testcase name="testSeoulService()" classname="com.lec.spring.matzip.repository.MyMatzipRepositoryTest" time="0.593"/>
+  <system-out><![CDATA[16:58:19.777 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lec.spring.matzip.repository.MyMatzipRepositoryTest]: MyMatzipRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:58:19.838 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lec.spring.MatzipWithYouApplication for test class com.lec.spring.matzip.repository.MyMatzipRepositoryTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,24 +14,22 @@
 
  :: Spring Boot ::                (v3.3.6)
 
-2024-12-11T15:38:19.694+09:00  INFO 97363 --- [MatzipWithYou] [    Test worker] c.l.s.m.r.MyMatzipRepositoryTest         : Starting MyMatzipRepositoryTest using Java 17.0.12 with PID 97363 (started by jjy in /Users/jjy/Documents/gugbi/FullStack2409/matzipWithYou)
-2024-12-11T15:38:19.695+09:00  INFO 97363 --- [MatzipWithYou] [    Test worker] c.l.s.m.r.MyMatzipRepositoryTest         : The following 1 profile is active: "dev"
-2024-12-11T15:38:19.707+09:00 DEBUG 97363 --- [MatzipWithYou] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@5af97169
-2024-12-11T15:38:20.060+09:00  WARN 97363 --- [MatzipWithYou] [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.lec.spring]' package. Please check your configuration.
-2024-12-11T15:38:20.383+09:00 TRACE 97363 --- [MatzipWithYou] [    Test worker] eGlobalAuthenticationAutowiredConfigurer : Eagerly initializing {securityConfig=com.lec.spring.config.SecurityConfig$$SpringCGLIB$$0@10e9a5fe}
-2024-12-11T15:38:20.386+09:00  INFO 97363 --- [MatzipWithYou] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name principalDetailService
-2024-12-11T15:38:20.451+09:00 DEBUG 97363 --- [MatzipWithYou] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 36 mappings in 'requestMappingHandlerMapping'
-2024-12-11T15:38:20.493+09:00 DEBUG 97363 --- [MatzipWithYou] [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2024-12-11T15:38:20.529+09:00 DEBUG 97363 --- [MatzipWithYou] [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, OAuth2AuthorizationRequestRedirectFilter, OAuth2LoginAuthenticationFilter, UsernamePasswordAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
-2024-12-11T15:38:20.607+09:00 DEBUG 97363 --- [MatzipWithYou] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2024-12-11T15:38:20.623+09:00 DEBUG 97363 --- [MatzipWithYou] [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
-2024-12-11T15:38:20.690+09:00  INFO 97363 --- [MatzipWithYou] [    Test worker] c.l.s.m.r.MyMatzipRepositoryTest         : Started MyMatzipRepositoryTest in 1.111 seconds (process running for 1.666)
-2024-12-11T15:38:21.138+09:00  INFO 97363 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-12-11T15:38:21.218+09:00  INFO 97363 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@24f2608b
-2024-12-11T15:38:21.219+09:00  INFO 97363 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-SeoulMapDBDataDTO(firendId=2, nickname=matzip2, profileImg=m2_987654321.png, publicGu=[강남구], hiddenGu=[null])
-SeoulMapDBDataDTO(firendId=3, nickname=admin_kim, profileImg=ad_456789123.jpg, publicGu=[강남구], hiddenGu=[null])
-SeoulMapDBDataDTO(firendId=4, nickname=gourmet3, profileImg=m3_147258369.jpg, publicGu=[null, null], hiddenGu=[강남구, 강남구])
+2024-12-11T16:58:20.051+09:00  INFO 20088 --- [MatzipWithYou] [    Test worker] c.l.s.m.r.MyMatzipRepositoryTest         : Starting MyMatzipRepositoryTest using Java 17.0.12 with PID 20088 (started by jjy in /Users/jjy/Documents/gugbi/FullStack2409/matzipWithYou)
+2024-12-11T16:58:20.051+09:00  INFO 20088 --- [MatzipWithYou] [    Test worker] c.l.s.m.r.MyMatzipRepositoryTest         : The following 1 profile is active: "dev"
+2024-12-11T16:58:20.065+09:00 DEBUG 20088 --- [MatzipWithYou] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@99a78d7
+2024-12-11T16:58:20.428+09:00  WARN 20088 --- [MatzipWithYou] [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.lec.spring]' package. Please check your configuration.
+2024-12-11T16:58:20.772+09:00 TRACE 20088 --- [MatzipWithYou] [    Test worker] eGlobalAuthenticationAutowiredConfigurer : Eagerly initializing {securityConfig=com.lec.spring.config.SecurityConfig$$SpringCGLIB$$0@167a21b}
+2024-12-11T16:58:20.774+09:00  INFO 20088 --- [MatzipWithYou] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name principalDetailService
+2024-12-11T16:58:20.838+09:00 DEBUG 20088 --- [MatzipWithYou] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 36 mappings in 'requestMappingHandlerMapping'
+2024-12-11T16:58:20.876+09:00 DEBUG 20088 --- [MatzipWithYou] [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-12-11T16:58:20.907+09:00 DEBUG 20088 --- [MatzipWithYou] [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, OAuth2AuthorizationRequestRedirectFilter, OAuth2LoginAuthenticationFilter, UsernamePasswordAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2024-12-11T16:58:20.985+09:00 DEBUG 20088 --- [MatzipWithYou] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-12-11T16:58:20.999+09:00 DEBUG 20088 --- [MatzipWithYou] [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-12-11T16:58:21.067+09:00  INFO 20088 --- [MatzipWithYou] [    Test worker] c.l.s.m.r.MyMatzipRepositoryTest         : Started MyMatzipRepositoryTest in 1.154 seconds (process running for 1.807)
+2024-12-11T16:58:21.499+09:00  INFO 20088 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-11T16:58:21.614+09:00  INFO 20088 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1002d1c8
+2024-12-11T16:58:21.615+09:00  INFO 20088 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+SeoulMapDataDTO(toTalData=ToTalDataDTO(publicGu={강남구=2}, hiddenGu={강남구=2}), friendData=[FriendDataDTO(super=ToTalDataDTO(publicGu={강남구=1}, hiddenGu={}), firendId=2, nickname=matzip2, profileImg=m2_987654321.png), FriendDataDTO(super=ToTalDataDTO(publicGu={강남구=1}, hiddenGu={}), firendId=3, nickname=admin_kim, profileImg=ad_456789123.jpg), FriendDataDTO(super=ToTalDataDTO(publicGu={}, hiddenGu={강남구=2}), firendId=4, nickname=gourmet3, profileImg=m3_147258369.jpg)])
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
