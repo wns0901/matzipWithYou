@@ -3,11 +3,6 @@
 
 <mapper namespace="com.lec.spring.member.repository.MyPageRepository">
 
-<!-- 프로필 이미지 -->
-    <select id="profileImage">
-
-    </select>
-
 <!-- 닉네임, 친구수, 포인트 -->
     <select id="myProfile">
         SELECT
@@ -25,11 +20,16 @@
             m.id = #{memberId}
     </select>
 
+    <!-- 닉네임 수정 -->
+    <update id="updateNick">
+        UPDATE member
+        SET nickname = #{newNick}
+        WHERE id = #{memberId}
+    </update>
 
-<!-- 위시리스트 개수, 내맛집 개수, 나의리뷰 개수-->
 
 
-
+<!-- 위시리스트, 내맛집, 내리뷰 개수 -->
     <select id="myActsCount">
         SELECT
             (SELECT COUNT(*)
@@ -42,12 +42,28 @@
         WHERE m.id = #{memberId};
     </select>
 
-    <update id="updateNick">
-        UPDATE member
-        SET nickname = #{newNick}
-        WHERE id = #{memberId}
-    </update>
+    <!-- 위시 미리보기 -->
+    <select id="wishContents">
+        SELECT mz.name, mz.img_url
+        FROM wish_list w, matzip mz
+        WHERE w.matzip_id = mz.id and w.member_id = #{memberId}
+    </select>
 
+
+    <!-- 내맛집 미리보기 -->
+    <select id="myMatzipContents">
+        SELECT mz.name, mz.img_url
+        FROM my_matzip mm, matzip mz
+        WHERE mm.matzip_id = mz.id and mm.member_id = #{memberId}
+    </select>
+
+
+    <!-- 내리뷰 미리보기 -->
+    <select id="myReviewContents">
+        SELECT mr.member_id, mr.star_rating, mz.name, mr.content
+        FROM my_review mr, matzip mz
+        WHERE mr.matzip_id = mz.id and mr.member_id = #{memberId}
+    </select>
 
 
 
