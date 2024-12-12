@@ -1,11 +1,9 @@
 package com.lec.spring.member.service;
 
-// import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.Authority;
 import com.lec.spring.member.domain.EmailMessage;
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.Member;
-//import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.AuthorityRepository;
 import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
@@ -144,9 +142,7 @@ public class MemberServiceImpl implements MemberService {
         String uuid = UUID.randomUUID().toString();
 
         redisTemplate.opsForValue().set(uuid, member.getId(), 3, TimeUnit.MINUTES);
-        // 비밀번호 재설정 링크 생성
         String resetLink = "http://localhost:8080/member/reset-password?id=" + member.getId() + "&uuid=" + uuid;
-//        String emailContet ="비밀번호 재설정을 위해 아래 링크를 클릭하세요 :" + resetLink;
 
         Context context = new Context();
         context.setVariable("resetLink", resetLink);
@@ -172,17 +168,10 @@ public class MemberServiceImpl implements MemberService {
     public boolean updatePassword(Long id, String newPassword) {
 
         String encodedPassword = passwordEncoder.encode(newPassword);
-        System.out.println("######encodPassword : "  + encodedPassword);
         Map<String, String> updatelist = new HashMap<String, String>();
         updatelist.put(String.valueOf(id), "id");
         updatelist.put("newPassword", encodedPassword );
        int result = memberRepository.updatePassword(id, encodedPassword);
-       if (result > 0) {
-           System.out.println("비밀번호 업데이트 성공");
-           System.out.println("변경된 암호화된 비밀번호 :" + encodedPassword);
-       } else{
-           System.out.println("비밀번호 업데이트 실패");
-       }
 
 
         return false;
@@ -190,8 +179,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean isExistEmail(String email) {
-        memberRepository.findByEmail(email);
-        return false;
+        Member member = memberRepository.findByEmail(email);
+        return member != null;
     }
 
     @Override

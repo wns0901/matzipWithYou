@@ -174,68 +174,70 @@ public class MemberController {
         this.memberValidator = memberValidator;
     }
 
-   @InitBinder
-    public void initBinder(WebDataBinder binder) {
+    @InitBinder("member")
+    public void initMemberBinder(WebDataBinder binder) {
         binder.setValidator(memberValidator);
     }
 
-
     // 이메일 입력받는 창
     @GetMapping("/request-reset")
-    public String requestResett() {
-        System.out.println("123");
+    public String requestReset(Model model) {
+        model.addAttribute("emailMessage", new EmailMessage());
         return "member/request-reset";
     }
 
-
-    // 이메일 입력창 2
+    // 이메일 입력창 처리
     @PostMapping("/request-reset")
-    public String requestReset( @ModelAttribute("email") String email, Model model) {
-        EmailMessage emailMessage = EmailMessage.builder()
-                .to(email)
-                .subject("비밀번호 재설정 요청")
-                .build();
-        System.out.println("#######emailMessage: " + emailMessage);
-        String result = memberService.sendEmail(emailMessage);
-        System.out.println("#####이메일이 보내졌나요???: " + result);
+    public String requestReset(@ModelAttribute EmailMessage emailMessage, Model model) {
+        String email = emailMessage.getTo();
+        String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
-        if ("이메일이 등록되지 않았습니다;".equals(result)) {
-            // 이메일이 등록되지 않은 경우 reset-fail.html로 이동
-            return "member/reset-fail";
+        // 유효성 검사
+        if(email == null || email.trim().isEmpty()) {
+            model.addAttribute("error", "이메일은 필수입니다");
+            return "member/request-reset";
         }
 
-        model.addAttribute("result", result);
-        return "member/request-reset-ok";
+        if(!email.matches(emailPattern)) {
+            model.addAttribute("error", "유효하지 않은 이메일 형식입니다");
+            return "member/request-reset";
+        }
 
-
+        if(!memberService.isExistEmail(email)) {
+            model.addAttribute("error", "존재하지 않는 이메일입니다");
+            return "member/request-reset";
+        }
+        try {
+            emailMessage.setSubject("비밀번호 재설정 요청");
+            String result = memberService.sendEmail(emailMessage);
+            model.addAttribute("result", result);
+            return "member/request-reset-ok";
+        } catch (Exception e) {
+            model.addAttribute("error", "이메일 전송 중 오류가 발생했습니다");
+            return "member/request-reset";
+        }
     }
 
     // 패스워드 리셋
     @GetMapping("/reset-password")
-    public String showResetForm(@RequestParam("uuid") String uuid, Model model){
-        Long memberId = (Long)redisTemplate.opsForValue().get(uuid);
+    public String showResetForm(@RequestParam("uuid") String uuid, Model model) {
+        Long memberId = (Long) redisTemplate.opsForValue().get(uuid);
         if (memberId == null) {
             return "redirect:member/reset-fail";
         }
         Model member = model.addAttribute("id", memberId);
-        System.out.println("#######id "+member);
         return "member/reset-password";
     }
 
 
     @PostMapping("/update-password")
     public String updatePassword(@RequestParam Long id, String newPassword) {
-        System.out.println("##########id: " + id);
-        System.out.println("#########New Password: " + newPassword);
-
         boolean isUpdated = memberService.updatePassword(id, newPassword);
-
         return isUpdated ? "redirect:/member/reset-fail" : "redirect:/member/reset-success";
     }
 
-
     @GetMapping("/reset-success")
-    public String resetSuccess(){
+    public String resetSuccess() {
         return "member/reset-success";
     }
 
@@ -244,4 +246,6 @@ public class MemberController {
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
+
+
 }// end memberController
