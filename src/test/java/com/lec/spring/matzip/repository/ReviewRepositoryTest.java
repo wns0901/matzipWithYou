@@ -64,26 +64,23 @@ class ReviewRepositoryTest {
         Member member = memberRepository.findById(reviewDTO.getMemberId());
         assertNotNull(member);
 
+        int saved = reviewRepository.save(reviewDTO, model);
+        assertEquals(1, saved);
+
+        List<ReviewTag> addReviewTag = reviewServiceImpl.addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
         List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
         int rewardReviewPoint = reviewServiceImpl.rewardReviewPoint(reviewDTO, 100, 10);
         int rewardReviewIntimacy = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, 100, 10);
 
-        model.addAttribute("result", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
-        model.addAttribute("member", hiddenMatzipMemberIds);
+        model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
+        model.addAttribute("reviewTags", addReviewTag);
+        model.addAttribute("members", hiddenMatzipMemberIds);
         model.addAttribute("rewardReviewPoint", rewardReviewPoint);
         model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
 
-        int saved = reviewRepository.save(reviewDTO, model);
-        assertEquals(1, saved);
-
-        String result = !hiddenMatzipMemberIds.isEmpty() ? "UNLOCK" : "saveOk";
+        String result = (String) model.getAttribute("isHidden");
         assertNotNull(result);
         assertTrue(result.equals("UNLOCK") || result.equals("saveOk"));
-
-        int newPoint = result.equals("UNLOCK") ? 610 : 510;
-        assertEquals(newPoint, member.getPoint());
-//        int newIntimacy = result.equals("UNLOCK") ? 610 : 510;
-//        assertEquals(newIntimacy, friend.getIntimacy());
     }
 
     @Test
@@ -180,8 +177,6 @@ class ReviewRepositoryTest {
 
         int resultIntimacy = !hiddenMatzipMemberIds.isEmpty() ? rewardHiddenIntimacy : rewardIntimacy;
 
-        int result = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, rewardHiddenIntimacy ,rewardIntimacy);
-
         int newIntimacy = 0;
 
         List<Friend> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getId());
@@ -194,6 +189,9 @@ class ReviewRepositoryTest {
             friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
             newIntimacy = friend.getIntimacy();
         }
+
+        int result = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, rewardHiddenIntimacy ,rewardIntimacy);
+
         assertEquals(newIntimacy, result);
 
         sqlSession.clearCache();

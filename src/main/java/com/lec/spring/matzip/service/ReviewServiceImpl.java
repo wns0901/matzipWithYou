@@ -25,12 +25,12 @@ public class ReviewServiceImpl implements ReviewService {
     private final MemberRepository memberRepository;
     private final FriendRepository friendRepository;
 
-    public ReviewServiceImpl(SqlSession sqlSession, MatzipService matzipService, FriendRepository friendRepository) {
+    public ReviewServiceImpl(SqlSession sqlSession, MatzipService matzipService) {
         this.reviewRepository = sqlSession.getMapper(ReviewRepository.class);
         this.matzipRepository = sqlSession.getMapper(MatzipRepository.class);
         this.tagRepository = sqlSession.getMapper(TagRepository.class);
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
-        this.friendRepository = friendRepository;
+        this.friendRepository = sqlSession.getMapper(FriendRepository.class);
     }
 
     @Override
@@ -51,8 +51,6 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         int saved = reviewRepository.save(reviewDTO, model);
-
-        Member member = memberRepository.findById(reviewDTO.getMemberId());
 
         List<ReviewTag> addReviewTag = addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
         List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
