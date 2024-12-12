@@ -53,7 +53,9 @@
             <div class="text-danger" th:text="${errorMessage}"></div>
         </div>
 
-        <a href="#" class="forgot-password">비밀번호를 잊으셨나요?</a>
+
+        <a th:href="@{'/member/request-reset'}">비밀번호를 잊어버리셨나요?</a>
+
 
 
 

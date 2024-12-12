@@ -25,11 +25,20 @@ public interface MemberRepository {
     Member findByNickname(String nickname);
 
     Member findByEmail(String email);
-
+  
     int updatePoint(@Param("id") Long id, @Param("point") Integer point);
 
     int updateAdditionalInfo(@Param("id") Long id,
                              @Param("name") String name,
                              @Param("nickname") String nickname,
                              @Param("email") String email);
-}
+
+
+    int updatePassword(Long id, String newPassword);
+
+
+}//end MemberRepository
+
+
+
+

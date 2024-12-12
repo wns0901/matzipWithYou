@@ -23,4 +23,7 @@ public class Matzip {
     private String gu;
     private String kakaoMapUrl;
     private LocalDateTime regdate;
+    // sorry...
+    private String tagName;//(지윤)
+    private String kindName;
 }

@@ -13,8 +13,6 @@
 
         <h1>회원가입</h1>
 
-
-
         <form method="POST" th:action="@{/member/register}">
             <div class="form-group">
                 <label for="name">사용자 이름</label>
@@ -48,8 +46,11 @@
 
             <div class="form-group">
                 <label for="email">이메일</label>
-                <input type="email" class="form-control" id="email" name="email"
-                       placeholder="email@example.com" th:value="${email}">
+                <div class="email-input-container">
+                    <input type="email" class="form-control with-button" id="email" name="email"
+                           placeholder="email@example.com" th:value="${email}">
+                    <button type="button" class="email-verify-button">인증하기</button>
+                </div>
             </div>
 
             <div class="form-group">
