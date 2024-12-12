@@ -29,7 +29,6 @@ const districtNames = {
 let currentData = serverData.toTalData;
 
 function updateMap(data) {
-    // 기존 텍스트 삭제
     document.querySelectorAll('.district-count').forEach(el => el.remove());
 
     Object.keys(districtNames).forEach(engName => {
@@ -41,7 +40,7 @@ function updateMap(data) {
             const hiddenCount = data.hiddenGu[korName] || 0;
 
             if (publicCount > 0 || hiddenCount > 0) {
-                // Get the center of the path
+                // Center
                 const bbox = path.getBBox();
                 const centerX = bbox.x + bbox.width / 2;
                 const centerY = bbox.y + bbox.height / 2;
@@ -84,13 +83,11 @@ function showTooltip(e, districtId) {
     const koreanName = districtNames[districtId];
     tooltip.textContent = koreanName;
 
-    // 툴팁 위치 계산
     const x = e.clientX + 10;
     const y = e.clientY + 10;
     const tooltipWidth = tooltip.offsetWidth;
     const windowWidth = window.innerWidth;
 
-    // 오른쪽 경계 체크 및 위치 조정
     if (x + tooltipWidth > windowWidth) {
         tooltip.style.left = (x - tooltipWidth - 20) + 'px';
     } else {
@@ -131,18 +128,14 @@ function showFriendData(friendId) {
     }
 }
 
-// DOM 로드 시 초기화
 document.addEventListener('DOMContentLoaded', () => {
-    // 지도 이벤트 설정
     const paths = document.querySelectorAll('#seoul-map path');
     paths.forEach(path => {
         path.addEventListener('mousemove', (e) => showTooltip(e, path.id));
         path.addEventListener('mouseleave', hideTooltip);
     });
 
-    // 친구 카드 이벤트 설정
     initializeFriendCards();
 
-    // 초기 데이터로 지도 업데이트
     updateMap(currentData);
 });

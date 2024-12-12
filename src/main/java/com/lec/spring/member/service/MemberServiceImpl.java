@@ -16,7 +16,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
@@ -146,7 +145,7 @@ public class MemberServiceImpl implements MemberService {
 
         Context context = new Context();
         context.setVariable("resetLink", resetLink);
-        String emailContet = templateEngine.process("email-template", context);
+        String emailContet = templateEngine.process("member/email-template", context);
 
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
