@@ -66,7 +66,7 @@
     </select>
 
     <resultMap id="seoulDBDataDTO" type="com.lec.spring.matzip.domain.DTO.SeoulMapDBDataDTO">
-        <result column="friendId" property="firendId"/>
+        <result column="friendId" property="friendId"/>
         <result column="nickname" property="nickname"/>
         <result column="profileImg" property="profileImg" />
         <result column="publicGu" property="publicGu" typeHandler="com.lec.spring.config.typeHandler.StringListHandler"/>

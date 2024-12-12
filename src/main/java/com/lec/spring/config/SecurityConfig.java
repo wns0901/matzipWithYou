@@ -75,7 +75,6 @@ public class SecurityConfig {
                                 "/member/additional-info",
                                 "/matzip/matzipDetail/**"
                         ).authenticated()
-
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
