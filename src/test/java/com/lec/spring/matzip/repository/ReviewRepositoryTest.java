@@ -64,9 +64,6 @@ class ReviewRepositoryTest {
         Member member = memberRepository.findById(reviewDTO.getMemberId());
         assertNotNull(member);
 
-        List<Long> memberIds = List.of(1L, 2L, 3L);
-        List<Member> members = memberRepository.findByIds(memberIds);
-
         List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
         int rewardReviewPoint = reviewServiceImpl.rewardReviewPoint(reviewDTO, 100, 10);
         int rewardReviewIntimacy = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, 100, 10);
