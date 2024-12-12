@@ -1,3 +1,10 @@
+body {
+    background: linear-gradient(to bottom, white, #ffc593);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
 .map-container {
     position: relative;
     width: 800px;
@@ -10,13 +17,14 @@
 }
 
 #seoul-map path {
-    fill: lightsalmon;
+    fill: white;
+    fill: #ff7327;
     transition: fill 0.3s ease;
     cursor: pointer;
 }
 
 #seoul-map path:hover {
-    fill: #ff7327;
+    fill: white;
 }
 
 #tooltip {
