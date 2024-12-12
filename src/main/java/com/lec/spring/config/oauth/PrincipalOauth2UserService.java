@@ -78,14 +78,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             authorityRepository.addAuthority(memberId, authId);
 
             if (cnt > 0) {
-                System.out.println("[OAuth2 인증 회원 가입 성공]");
                 member = memberRepository.findByUsername(username);
-            } else {
-                System.out.println("[OAuth2 인증 회원 가입 실패]");
             }
 
-        } else {
-            System.out.println("[OAuth2 인증.  이미 가입된 회원입니다]");
         }
 
         PrincipalDetails principalDetails = new PrincipalDetails(member, oAuth2User.getAttributes());

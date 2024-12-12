@@ -256,7 +256,6 @@ public class MemberController {
         }
     }
 
-    // 패스워드 리셋
     @GetMapping("/reset-password")
     public String showResetForm(@RequestParam("uuid") String uuid, Model model) {
         Long memberId = (Long) redisTemplate.opsForValue().get(uuid);

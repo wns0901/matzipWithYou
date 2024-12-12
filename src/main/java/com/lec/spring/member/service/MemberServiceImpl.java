@@ -182,7 +182,7 @@ public class MemberServiceImpl implements MemberService {
 
         Context context = new Context();
         context.setVariable("resetLink", resetLink);
-        String emailContet = templateEngine.process("email-template", context);
+        String emailContet = templateEngine.process("member/email-template", context);
 
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
