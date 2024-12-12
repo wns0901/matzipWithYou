@@ -29,15 +29,9 @@ const districtNames = {
 let currentData = serverData.toTalData;
 
 function updateMap(data) {
-    // 모든 path의 클래스와 기존 텍스트 초기화
-    document.querySelectorAll('#seoul-map path').forEach(path => {
-        path.style.fill = '#eead84';
-    });
-
     // 기존 텍스트 삭제
     document.querySelectorAll('.district-count').forEach(el => el.remove());
 
-    // 각 구별로 처리
     Object.keys(districtNames).forEach(engName => {
         const korName = districtNames[engName];
         const path = document.getElementById(engName);
@@ -46,38 +40,41 @@ function updateMap(data) {
             const publicCount = data.publicGu[korName] || 0;
             const hiddenCount = data.hiddenGu[korName] || 0;
 
-            // bbox를 사용하여 중심점 계산
-            const bbox = path.getBBox();
-            const centerX = bbox.x + bbox.width / 2;
-            const centerY = bbox.y + bbox.height / 2;
+            if (publicCount > 0 || hiddenCount > 0) {
+                // Get the center of the path
+                const bbox = path.getBBox();
+                const centerX = bbox.x + bbox.width / 2;
+                const centerY = bbox.y + bbox.height / 2;
 
-            if (hiddenCount > 0) {
-                // 히든 맛집이 있으면 빨간색으로 표시하고 전체 합계 표시
-                path.style.fill = '#E74C3C';
-                if (publicCount > 0) {
-                    addCountText(centerX, centerY, hiddenCount + publicCount);
+                let textClass, textContent;
+
+                if (publicCount > 0 && hiddenCount > 0) {
+                    textClass = 'mixed';
+                    textContent = publicCount + hiddenCount;
+                } else if (hiddenCount > 0) {
+                    textClass = 'hidden';
+                    textContent = hiddenCount;
                 } else {
-                    addCountText(centerX, centerY, hiddenCount);
+                    textClass = 'public';
+                    textContent = publicCount;
                 }
-            } else if (publicCount > 0) {
-                // 공개 맛집만 있는 경우
-                path.style.fill = '#4B89DC';
-                addCountText(centerX, centerY, publicCount);
+
+                addCountText(centerX, centerY, textContent, textClass);
             }
         }
     });
 }
 
-function addCountText(x, y, count) {
+function addCountText(x, y, count, className) {
     const svg = document.getElementById('seoul-map');
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     text.setAttribute('x', x);
     text.setAttribute('y', y);
-    text.setAttribute('class', 'district-count');
-    text.setAttribute('fill', 'white');
+    text.setAttribute('class', `district-count ${className}`);
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('dominant-baseline', 'middle');
     text.setAttribute('font-size', '24');
+    text.setAttribute('font-weight', 'bold');
     text.textContent = count;
     svg.appendChild(text);
 }
@@ -85,40 +82,46 @@ function addCountText(x, y, count) {
 function showTooltip(e, districtId) {
     const tooltip = document.getElementById('tooltip');
     const koreanName = districtNames[districtId];
-    tooltip.style.display = 'block';
-    tooltip.style.left = e.pageX + 10 + 'px';
-    tooltip.style.top = e.pageY + 10 + 'px';
     tooltip.textContent = koreanName;
+
+    // 툴팁 위치 계산
+    const x = e.clientX + 10;
+    const y = e.clientY + 10;
+    const tooltipWidth = tooltip.offsetWidth;
+    const windowWidth = window.innerWidth;
+
+    // 오른쪽 경계 체크 및 위치 조정
+    if (x + tooltipWidth > windowWidth) {
+        tooltip.style.left = (x - tooltipWidth - 20) + 'px';
+    } else {
+        tooltip.style.left = x + 'px';
+    }
+
+    tooltip.style.top = y + 'px';
+    tooltip.style.display = 'block';
 }
 
 function hideTooltip() {
     document.getElementById('tooltip').style.display = 'none';
 }
 
-function displayFriendList() {
-    const friendListEl = document.getElementById('friendList');
-    friendListEl.innerHTML = serverData.friendData
-        .map(friend => `
-            <div class="friend-item" data-friend-id="${friend.firendId}">
-                <img src="${friend.profileImg}" alt="${friend.nickname}" class="friend-img">
-                <div>
-                    <div>${friend.nickname}</div>
-                    <div>ID: ${friend.firendId}</div>
-                </div>
-            </div>
-        `)
-        .join('');
+function initializeFriendCards() {
+    document.querySelectorAll('.friend-card').forEach(card => {
+        card.addEventListener('click', () => {
+            // 선택 효과 처리
+            document.querySelectorAll('.friend-card').forEach(c =>
+                c.classList.remove('selected'));
+            card.classList.add('selected');
 
-    document.querySelectorAll('.friend-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const friendId = parseInt(item.dataset.friendId);
+            // 데이터 업데이트
+            const friendId = parseInt(card.dataset.friendId);
             showFriendData(friendId);
         });
     });
 }
 
 function showFriendData(friendId) {
-    const friend = serverData.friendData.find(f => f.firendId === friendId);
+    const friend = serverData.friendData.find(f => f.friendId === friendId);
     if (friend) {
         currentData = {
             publicGu: friend.publicGu,
@@ -126,21 +129,6 @@ function showFriendData(friendId) {
         };
         updateMap(currentData);
     }
-    closeModal();
-}
-
-function resetToTotalData() {
-    currentData = serverData.toTalData;
-    updateMap(currentData);
-}
-
-function openModal() {
-    document.getElementById('friendModal').style.display = 'block';
-    displayFriendList();
-}
-
-function closeModal() {
-    document.getElementById('friendModal').style.display = 'none';
 }
 
 // DOM 로드 시 초기화
@@ -152,20 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
         path.addEventListener('mouseleave', hideTooltip);
     });
 
-    // 모달 버튼 이벤트 설정
-    const showFriendsBtn = document.getElementById('showFriendsBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-
-    showFriendsBtn.addEventListener('click', openModal);
-    closeModalBtn.addEventListener('click', closeModal);
-
-    // 모달 외부 클릭 시 닫기
-    window.addEventListener('click', (event) => {
-        const modal = document.getElementById('friendModal');
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
+    // 친구 카드 이벤트 설정
+    initializeFriendCards();
 
     // 초기 데이터로 지도 업데이트
     updateMap(currentData);
