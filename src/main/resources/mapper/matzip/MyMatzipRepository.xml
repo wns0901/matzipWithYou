@@ -5,26 +5,6 @@
 
 <mapper namespace="com.lec.spring.matzip.repository.MyMatzipRepository">
 
-
-<!--    <resultMap id="mapMyMatzip" type="com.lec.spring.matzip.domain.MyMatzip">-->
-<!--        <result column="id"  property="id" />-->
-<!--        <result column="memberId" property="memberId"/>-->
-<!--        <result column="matzipId" property="matzipId"/>-->
-<!--        <result column="regdate" property="regdate"/>-->
-<!--        <result column="visibility" property="visibility"/>-->
-<!--        <result column="content" property="content"/>-->
-<!--        <result column="starRating" property="starRating"/>-->
-<!--    </resultMap>-->
-
-<!--    <resultMap id="mapMatzipDTO" type="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">-->
-<!--        <result column="imgUrl" property="imgUrl"/>-->
-<!--        <result column="name" property="name"/>-->
-<!--        <result column="kindName" property="kindName"/>-->
-<!--        <result column="tagNames" property="tagNames" />-->
-<!--        <collection property="myMatzip" resultMap="mapMyMatzip"/>-->
-<!--    </resultMap>-->
-
-
     <resultMap id="mapMatzipDTO" type="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
         <result column="id" property="id" />
         <result column="imgUrl" property="imgUrl"/>
