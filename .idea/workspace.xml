@@ -5,11 +5,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1f0fa1c-aeee-4823-a914-84ff58b453ff" name="Changes" comment="Feat(#50): signup page design">
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/aa0e57b8-bad9-4b48-b6ea-ae71d04294b6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/aa0e57b8-bad9-4b48-b6ea-ae71d04294b6.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/additional-info.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/member/additional-info.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/templates/member/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/CSS/member/register.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/CSS/member/register.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/MatzipWithYouApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/controller/MatzipController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/FoodKind.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/Matzip$MatzipBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/Matzip.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/MatzipDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/Tag$TagBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/domain/Tag.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/repository/MatzipRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/matzip/service/MatzipService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/HomeController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/controller/MemberController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/Authority$AuthorityBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/domain/Authority.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/repository/AuthorityRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/repository/MemberRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/MemberService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/lec/spring/member/service/MemberServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application-dev.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application-prod.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/matzip/MatzipRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/member/AuthorityRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/mapper/member/MemberRepository.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/CSS/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/CSS/matzip/matzipDetail.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/CSS/member/login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/IMG/google.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/JS/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/JS/matzip/matzipDetail.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/static/JS/member/login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/common/rejectAuth.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/matzip/hiddenTags.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/matzip/matzipDetail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/matzip/matzipTagList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/matzip/singleTagList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/matzip/tagForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/matzip/tagList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/additional-info.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/changePassword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/forgotPassword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/registerOk.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/templates/member/resetPassword.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/controller/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/lec/spring/member/service/MemberServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/email-template.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/email-template.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/request-reset-ok.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/request-reset-ok.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/request-reset.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/request-reset.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/reset-fail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/reset-fail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/reset-password.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/reset-password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/member/reset-success.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/member/reset-success.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +135,7 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.MatzipWithYouApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;FE/feat-signup&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -94,6 +146,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="MatzipWithYouApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -122,6 +179,7 @@
       <updated>1733875350914</updated>
       <workItem from="1733875351370" duration="376000" />
       <workItem from="1733875731119" duration="2625000" />
+      <workItem from="1733967281406" duration="1072000" />
     </task>
     <servers />
   </component>
