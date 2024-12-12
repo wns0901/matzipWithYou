@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.spring.matzip.repository.WishListRepository">
+    <insert id="save" parameterType="com.lec.spring.matzip.domain.WishList" flushCache="true">
+        INSERT INTO wish_list (member_id, matzip_id) VALUES (#{memberId}, #{matzipId})
+    </insert>
+
+    <select id="getByMemberId" resultType="com.lec.spring.matzip.domain.DTO.WishListDTO">
+        SELECT
+            mz.id AS id,
+            mz.name AS name,
+            mz.img_url AS imgUrl
+        FROM wish_list wl
+        JOIN matzip mz ON wl.matzip_id = mz.id
+        WHERE member_id = #{memberId}
+    </select>
+
+    <delete id="delete" flushCache="true" parameterType="com.lec.spring.matzip.domain.WishList">
+        DELETE FROM wish_list
+               WHERE member_id = #{memberId}
+                 AND matzip_id = #{matzipId}
+    </delete>
+</mapper>

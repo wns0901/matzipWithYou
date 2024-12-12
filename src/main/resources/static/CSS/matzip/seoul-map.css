@@ -1,26 +1,110 @@
-.map-container {
-    position: relative;
-    width: 800px;
-    margin: 0 auto;
+body{
+    background-color:lightsalmon;
 }
 
-#seoul-map {
+.container {
+    display: flex;
+    margin: 20px;
+    gap: 20px;
+}
+
+.friends-sidebar {
+    width: 300px;
+    height: calc(100vh - 60px);
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow-y: auto;
+}
+
+.friends-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 10px;
+}
+
+.friend-card {
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.friend-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.friend-card.selected {
+    border: 2px solid #007bff;
+}
+
+.friend-image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+.friend-nickname {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.map-container {
+    position: relative;
     width: 800px;
     height: 800px;
 }
 
+#seoul-map {
+    width: 100%;
+    height: 100%;
+}
+
 #seoul-map path {
-    fill: #C8C8C8;
-    transition: fill 0.3s ease;
+    fill: white;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
 #seoul-map path:hover {
-    fill: #4A90E2;
+    opacity: 0.8;
+}
+
+/* District Count Text */
+.district-count {
+    font-weight: bold;
+    pointer-events: none;
+    font-family: Arial, sans-serif;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.district-count.public {
+    fill: #4B89DC;
+}
+
+.district-count.hidden {
+    fill: #E74C3C;
+}
+
+.district-count.mixed {
+    fill: #9B59B6;
 }
 
 #tooltip {
-    position: absolute;
+    position: fixed;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     padding: 5px 10px;
@@ -29,4 +113,22 @@
     pointer-events: none;
     display: none;
     z-index: 1000;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 1200px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .friends-sidebar {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+    }
+
+    .map-container {
+        margin: 0 auto;
+    }
 }

@@ -77,7 +77,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
             });
 
             friendDataDTOS.add(FriendDataDTO.builder()
-                            .firendId(data.getFirendId())
+                            .friendId(data.getFriendId())
                             .nickname(data.getNickname())
                             .profileImg(data.getProfileImg())
                             .publicGu(publicGuMap)
