@@ -40,9 +40,41 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/member/additional-info").authenticated()  // 추가: additional-info 페이지는 인증 필요
-                        .requestMatchers("/matzips/matzipDetail/**").authenticated()
-                        .requestMatchers("/matzips/").hasAnyRole("MEMBER", "ADMIN")
+                        .requestMatchers(
+                                "/",
+                                "/member/login",
+                                "/member/register",
+                                "/member/additional-info",
+                                "/member/password-recovery",
+                                "/member/password-recovery/**"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                "/matzip/food-kinds/**",
+                                "/matzip/tags/**"
+                        ).hasRole("ADMIN")
+
+                        .requestMatchers(
+                                "/matzip/*/visibility",
+                                "/matzip/reviews/**",
+                                "/matzip/hint-tags/**",
+                                "/matzip/wish-list/**",
+                                "/member/*/friends/**",
+                                "/member/*/matzip/**",
+                                "/member/*/nickname",
+                                "/member/*/profile-img",
+                                "/member/*/wish-list/**"
+                        ).hasAnyRole("MEMBER", "ADMIN")
+
+                        .requestMatchers(
+                                "/matzip/**",
+                                "/member/**",
+                                "/member/*/friends",
+                                "/matzip/reviews",
+                                "/matzip/hints/**",
+                                "/member/additional-info",
+                                "/matzip/matzipDetail/**"
+                        ).authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
@@ -52,8 +84,6 @@ public class SecurityConfig {
                         .successHandler(new CustomLoginSuccessHandler("/home"))
                         .failureHandler(new CustomLoginFailureHandler())
                 )
-
-
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/member/login")
                         .successHandler(new CustomLoginSuccessHandler("/home"))
