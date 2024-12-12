@@ -41,8 +41,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/member/additional-info").authenticated()  // 추가: additional-info 페이지는 인증 필요
-                        .requestMatchers("/matzip/matzipDetail/**").authenticated()
-                        .requestMatchers("/matzip/").hasAnyRole("MEMBER", "ADMIN")
+                        .requestMatchers("/matzips/matzipDetail/**").authenticated()
+                        .requestMatchers("/matzips/").hasAnyRole("MEMBER", "ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
