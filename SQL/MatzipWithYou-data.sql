@@ -60,7 +60,7 @@ ALTER TABLE tag
     AUTO_INCREMENT = 1;
 
 DELETE
-    FROM friend;
+FROM friend;
 ALTER TABLE friend
     AUTO_INCREMENT = 1;
 
@@ -108,7 +108,7 @@ VALUES ('기타'),
 
 -- matzip 테이블 샘플 데이터
 INSERT INTO matzip
-    (name, kind_id, address, lat, lng, img_url, gu, kakao_map_url)
+(name, kind_id, address, lat, lng, img_url, gu, kakao_map_url)
 VALUES ('치킨공식', 2, '서울 강남구 역삼로17길 64 역삼동A4스페이스 1층', '37.49882190149589', '127.03662632505247',
         '//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2F0C4DB8929DDF4EAFA24A56B9EB3BAB97',
         '강남구', 'https://place.map.kakao.com/753087736'),
@@ -157,12 +157,12 @@ VALUES (1, 3, 'PRIVATE', '나만 알고 싶은 비공개 맛집', 5),
 
 -- friend 테이블 샘플 데이터
 INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept) VALUES
-     (1, 2, 200, TRUE),
-     (1, 3, 100, TRUE),
-     (1, 4, 0, FALSE),
-     (2, 4, 500, TRUE),
-     (2, 3, 300, TRUE),
-     (3, 4, 0, FALSE);
+                                                                    (1, 2, 200, TRUE),
+                                                                    (1, 3, 100, TRUE),
+                                                                    (1, 4, 0, FALSE),
+                                                                    (2, 4, 500, TRUE),
+                                                                    (2, 3, 300, TRUE),
+                                                                    (3, 4, 0, FALSE);
 
 
 -- tag 데이터 생성
@@ -264,7 +264,7 @@ values (1, 1),
        (1,8),
        (2,8),
        (3,8)
-        ;
+;
 
 --  친구관계 && 히든
 insert into user_matzip_tag_status (member_id, my_matzip_id, tag_id)
