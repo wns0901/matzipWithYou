@@ -25,11 +25,6 @@ ALTER TABLE matzip
     AUTO_INCREMENT = 1;
 
 DELETE
-FROM my_matzip;
-ALTER TABLE my_matzip
-    AUTO_INCREMENT = 1;
-
-DELETE
 FROM food_kind;
 ALTER TABLE food_kind
     AUTO_INCREMENT = 1;
@@ -135,8 +130,9 @@ VALUES ('치킨공식', 2, '서울 강남구 역삼로17길 64 역삼동A4스페
 
 -- wish_list 테이블 샘플 데이터
 INSERT INTO wish_list (member_id, matzip_id)
-VALUES (1, 1)
-     , (1, 2)
+VALUES
+(1,1)
+     ,(1,2)
 
      , (2, 3)
      , (2, 6)
@@ -259,7 +255,16 @@ values (1, 1),
 
        (7, 6),
        (2, 6),
-       (1, 6);
+       (1, 6),
+
+       (1,7),
+       (2,7),
+       (3,7),
+
+       (1,8),
+       (2,8),
+       (3,8)
+        ;
 
 --  친구관계 && 히든
 insert into user_matzip_tag_status (member_id, my_matzip_id, tag_id)
