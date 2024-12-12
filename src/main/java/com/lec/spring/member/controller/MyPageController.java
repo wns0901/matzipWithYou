@@ -17,47 +17,91 @@ public class MyPageController {
         this.myPageService = myPageService;
     }
 
-    @RequestMapping("/")
-    public void MyPage(Model model) {}
 
-    // 내 정보
+    // 닉네임 + 친구, 위시/내맛집/내리뷰 Count + 위시/내맛집/내리뷰 Preview
     @GetMapping("")
-    public ResponseEntity<MyPage> getMyPageInfo(
-            @PathVariable Long memberId
-    ) {
-        MyPage mypage = new MyPage();
-        return ResponseEntity.ok(mypage);
-    };
-
-    // 위시, 내맛집, 내리뷰 카운팅
-    @GetMapping("")
-    public ResponseEntity<MyPage> myActsCount(
-    ) {
-
-    };
+    public ResponseEntity<MyPage> getMyPageInfo(@PathVariable Long memberId) {
+        MyPage myPageInfo = myPageService.getFullMyPageInfo(memberId);
+        return ResponseEntity.ok(myPageInfo);
+    }
 
 
-
-    // 위시, 내맛집, 내리뷰 내용
-    @GetMapping("")
-    public ResponseEntity<MyPage> getMyPage(
-    ) {
-
-    };
-
-    // 관리 페이지로 이동
-
-
+//    @GetMapping("")
+//    public ResponseEntity<MyPage> getMyProfile(
+//            @PathVariable Long memberId
+//    ) {
+//        MyPage myPage = new MyPage();
+//        return ResponseEntity.ok(myPage);
+//    }
+//
+//
+//
+//    // 위시, 내맛집, 내리뷰 카운팅
+//    @GetMapping("")
+//    public ResponseEntity<MyPage> wishlistCnt(
+//            @PathVariable Long memberId
+//    ) {
+//        MyPage myPage = myPageService.wishlistCnt(MyPage);
+//        return ResponseEntity.ok(myPage);
+//    }
+//    @GetMapping("")
+//    public ResponseEntity<MyPage> myMatzipCnt(
+//            @PathVariable Long memberId
+//    ) {
+//        MyPage myPage = myPageService.myMatzipCnt(MyPage);
+//        return ResponseEntity.ok(myPage);
+//    }
+//    @GetMapping("")
+//    public ResponseEntity<String> myReviewCnt(
+//            @PathVariable Long memberId
+//    ) {
+//        MyPage myPage = myPageService.myReviewCnt(MyPage);
+//        return ResponseEntity.ok(MyPage);
+//    }
+//
+//
+//    // 위시 내용
+//    @GetMapping("")
+//    public ResponseEntity<MyPage> getWishContents(
+//            @PathVariable Long memberId
+//    ) {
+//
+//    }
+//
+//    // 내맛집 내용
+//    @GetMapping("")
+//    public ResponseEntity<MyPage> getMyMatzipContents(
+//            @PathVariable Long memberId
+//    ) {
+//
+//    }
+//
+//    // 내리뷰 내용
+//    @GetMapping("")
+//    public ResponseEntity<MyPage> getMyReviewContents(
+//            @PathVariable Long memberId
+//    ) {
+//
+//    }
 
 
     // 닉네임 변경
     @ResponseBody
     @PatchMapping("")
-    public ResponseEntity<MyPage> updateNick(
-
-    ){
-
+    public ResponseEntity<String> updateNick(
+            @PathVariable Long memberId,
+            @RequestBody String newNickname
+    ) {
+        int rowsAffected = myPageService.updateNick(newNickname);
+        if (rowsAffected > 0) {
+            return ResponseEntity.ok("닉네임 변경에 성공했습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("닉네임 변경에 실패했습니다.");
+        }
     }
+
+
+
 
 
 }

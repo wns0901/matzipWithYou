@@ -3,23 +3,6 @@
 
 <mapper namespace="com.lec.spring.member.repository.MyPageRepository">
 
-<!-- 닉네임, 친구수, 포인트 -->
-    <select id="myProfile" resultType="com.lec.spring.member.domain.MyPage">
-        SELECT
-            m.nickname,
-            (
-                SELECT COUNT(*)
-                FROM friend f
-                WHERE (f.sender_id = m.id OR f.receiver_id = m.id)
-                  AND f.is_accept = true
-            ) AS my_friends,
-            m.point
-        FROM
-            member m
-        WHERE
-            m.id = #{memberId}
-    </select>
-
     <!-- 닉네임 수정 -->
     <update id="updateNick">
         UPDATE member
@@ -27,43 +10,115 @@
         WHERE id = #{memberId}
     </update>
 
-
-
-<!-- 위시리스트, 내맛집, 내리뷰 개수 -->
-    <select id="myActsCount" resultType="int">
+    <!-- 나의 정보 -->
+    <select id="getMyPageInfo" resultType="com.lec.spring.member.domain.MyPage">
         SELECT
-            (SELECT COUNT(*)
-            FROM wish_list w WHERE member_id = #{memberId}) 위시리스트,
-            (SELECT COUNT(*)
-             FROM my_matzip WHERE member_id = #{memberId}) 나의맛집,
-            (SELECT COUNT(*)
-             FROM my_review WHERE member_id = #{memberId}) 나의리뷰
+            m.nickname AS "닉네임",
+            (
+                SELECT COUNT(*)
+                FROM friend f
+                WHERE (f.sender_id = m.id OR f.receiver_id = m.id)
+                  AND f.is_accept = true
+            ) AS "친구 수",
+            m.point AS "포인트",
+            (SELECT filename FROM profile_img WHERE member_id = #{memberId}) AS "프사",
+            (SELECT COUNT(*) FROM wish_list WHERE member_id = #{memberId}) AS "위시 수",
+            (SELECT COUNT(*) FROM my_matzip WHERE member_id = #{memberId}) AS "내맛집 수",
+            (SELECT COUNT(*) FROM my_review WHERE member_id = #{memberId}) AS "내리뷰 수"
         FROM member m
-        WHERE m.id = #{memberId};
+        WHERE m.id = #{memberId}
     </select>
 
-    <!-- 위시 미리보기 -->
-    <select id="wishContents" resultType="com.lec.spring.member.domain.MyPage">
-        SELECT mz.name, mz.img_url
-        FROM wish_list w, matzip mz
-        WHERE w.matzip_id = mz.id and w.member_id = #{memberId}
+    <!-- 위시리스트 미리보기 -->
+    <select id="getWishPreview" resultType="com.lec.spring.member.domain.MyPage$MatzipInfo">
+        SELECT
+            mz.name AS "가게명",
+            mz.img_url AS "가게사진"
+        FROM wish_list w
+                 JOIN matzip mz ON w.matzip_id = mz.id
+        WHERE w.member_id = #{memberId}
+    </select>
+
+    <!-- 내 맛집 미리보기 -->
+    <select id="getMyMatzipPreview" resultType="com.lec.spring.member.domain.MyPage$MatzipInfo">
+        SELECT
+            mz.name AS "가게명",
+            mz.img_url AS "가게사진"
+        FROM my_matzip mm
+                 JOIN matzip mz ON mm.matzip_id = mz.id
+        WHERE mm.member_id = #{memberId}
+    </select>
+
+    <!-- 내 리뷰 미리보기 -->
+    <select id="getMyReviewPreview" resultType="com.lec.spring.member.domain.MyPage$ReviewInfo">
+        SELECT
+            mz.name AS "가게명",
+            mz.img_url AS "가게사진",
+            mr.content AS "리뷰",
+            mr.star_rating AS "별점"
+        FROM my_review mr
+                 JOIN matzip mz ON mr.matzip_id = mz.id
+        WHERE mr.member_id = #{memberId}
     </select>
 
 
-    <!-- 내맛집 미리보기 -->
-    <select id="myMatzipContents" resultType="com.lec.spring.member.domain.MyPage">
-        SELECT mz.name, mz.img_url
-        FROM my_matzip mm, matzip mz
-        WHERE mm.matzip_id = mz.id and mm.member_id = #{memberId}
-    </select>
 
 
-    <!-- 내리뷰 미리보기 -->
-    <select id="myReviewContents" resultType="com.lec.spring.member.domain.MyPage">
-        SELECT mr.member_id, mr.star_rating, mz.name, mr.content
-        FROM my_review mr, matzip mz
-        WHERE mr.matzip_id = mz.id and mr.member_id = #{memberId}
-    </select>
+<!--&lt;!&ndash; 닉네임, 친구수, 포인트 &ndash;&gt;-->
+<!--    <select id="myProfile" resultType="com.lec.spring.member.domain.MyPage">-->
+<!--        SELECT-->
+<!--            m.nickname,-->
+<!--            (-->
+<!--                SELECT COUNT(*)-->
+<!--                FROM friend f-->
+<!--                WHERE (f.sender_id = m.id OR f.receiver_id = m.id)-->
+<!--                  AND f.is_accept = true-->
+<!--            ) AS my_friends,-->
+<!--            m.point-->
+<!--        FROM-->
+<!--            member m-->
+<!--        WHERE-->
+<!--            m.id = #{memberId}-->
+<!--    </select>-->
+
+
+
+<!--&lt;!&ndash; 위시리스트, 내맛집, 내리뷰 개수 &ndash;&gt;-->
+<!--    <select id="wishlistCnt" resultType="com.lec.spring.member.domain.MyPage">-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM wish_list w WHERE member_id = #{memberId}-->
+<!--    </select>-->
+
+<!--    <select id="myMatzipCnt" resultType="com.lec.spring.member.domain.MyPage">-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM my_matzip WHERE member_id = #{memberId}-->
+<!--    </select>-->
+
+<!--    <select id="myReviewCnt" resultType="com.lec.spring.member.domain.MyPage">-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM my_review WHERE member_id = #{memberId}-->
+<!--    </select>-->
+
+
+
+<!--    &lt;!&ndash; 위시, 내맛집, 내리뷰 미리보기 &ndash;&gt;-->
+<!--    <select id="wishContents" resultType="com.lec.spring.member.domain.MyPage">-->
+<!--        SELECT mz.name, mz.img_url-->
+<!--        FROM wish_list w, matzip mz-->
+<!--        WHERE w.matzip_id = mz.id and w.member_id = #{memberId}-->
+<!--    </select>-->
+
+<!--    <select id="myMatzipContents" resultType="com.lec.spring.member.domain.MyPage">-->
+<!--        SELECT mz.name, mz.img_url-->
+<!--        FROM my_matzip mm, matzip mz-->
+<!--        WHERE mm.matzip_id = mz.id and mm.member_id = #{memberId}-->
+<!--    </select>-->
+
+<!--    <select id="myReviewContents" resultType="com.lec.spring.member.domain.MyPage">-->
+<!--        SELECT mr.member_id, mr.star_rating, mz.name, mr.content-->
+<!--        FROM my_review mr, matzip mz-->
+<!--        WHERE mr.matzip_id = mz.id and mr.member_id = #{memberId}-->
+<!--    </select>-->
 
 
 
