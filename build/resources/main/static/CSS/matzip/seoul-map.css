@@ -1,0 +1,32 @@
+.map-container {
+    position: relative;
+    width: 800px;
+    margin: 0 auto;
+}
+
+#seoul-map {
+    width: 800px;
+    height: 800px;
+}
+
+#seoul-map path {
+    fill: #C8C8C8;
+    transition: fill 0.3s ease;
+    cursor: pointer;
+}
+
+#seoul-map path:hover {
+    fill: #4A90E2;
+}
+
+#tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    pointer-events: none;
+    display: none;
+    z-index: 1000;
+}

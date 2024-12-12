@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.lec.spring.matzip.repository.ReviewRepositoryTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-12-12T02:24:28" hostname="hwang-yeeun-ui-MacBookAir.local" time="0.563">
+  <properties/>
+  <testcase name="testSaveReview()" classname="com.lec.spring.matzip.repository.ReviewRepositoryTest" time="0.563">
+    <failure message="org.springframework.jdbc.BadSqlGrammarException: &#10;### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'provider' in 'field list'&#10;### The error may exist in file [/Users/le_sol.sol/Documents/matzipWithYou/build/resources/main/mapper/member/MemberRepository.xml]&#10;### The error may involve defaultParameterMap&#10;### The error occurred while setting parameters&#10;### SQL: SELECT id         &quot;id&quot;              , username   &quot;username&quot;              , password   &quot;password&quot;              , email      &quot;email&quot;              , point      &quot;point&quot;              , nickname   &quot;nickname&quot;              , name       &quot;name&quot;              , provider   &quot;provider&quot;              , providerId &quot;providerId&quot;         FROM member         WHERE 1 = 1               AND id = ?&#10;### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'provider' in 'field list'&#10;; bad SQL grammar []" type="org.springframework.jdbc.BadSqlGrammarException">org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: java.sql.SQLSyntaxErrorException: Unknown column 'provider' in 'field list'
+### The error may exist in file [/Users/le_sol.sol/Documents/matzipWithYou/build/resources/main/mapper/member/MemberRepository.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT id         &quot;id&quot;              , username   &quot;username&quot;              , password   &quot;password&quot;              , email      &quot;email&quot;              , point      &quot;point&quot;              , nickname   &quot;nickname&quot;              , name       &quot;name&quot;              , provider   &quot;provider&quot;              , providerId &quot;providerId&quot;         FROM member         WHERE 1 = 1               AND id = ?
+### Cause: java.sql.SQLSyntaxErrorException: Unknown column 'provider' in 'field list'
+; bad SQL grammar []
+	at app//org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:246)
+	at app//org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:107)
+	at app//org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:92)
+	at app//org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:439)
+	at app/jdk.proxy3/jdk.proxy3.$Proxy79.selectOne(Unknown Source)
+	at app//org.mybatis.spring.SqlSessionTemplate.selectOne(SqlSessionTemplate.java:160)
+	at app//org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:87)
+	at app//org.apache.ibatis.binding.MapperProxy$PlainMethodInvoker.invoke(MapperProxy.java:141)
+	at app//org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:86)
+	at app/jdk.proxy3/jdk.proxy3.$Proxy80.findById(Unknown Source)
+	at app//com.lec.spring.matzip.repository.ReviewRepositoryTest.testSaveReview(ReviewRepositoryTest.java:64)
+	at java.base@17.0.12/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base@17.0.12/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base@17.0.12/java.util.ArrayList.forEach(ArrayList.java:1511)
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'provider' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.execute(ClientPreparedStatement.java:354)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.execute(HikariProxyPreparedStatement.java)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:65)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:80)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:65)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:336)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:158)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:110)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:90)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:154)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:147)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:142)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectOne(DefaultSqlSession.java:75)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:425)
+	... 10 more
+</failure>
+  </testcase>
+  <system-out><![CDATA[11:24:26.958 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lec.spring.matzip.repository.ReviewRepositoryTest]: ReviewRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:24:27.010 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lec.spring.MatzipWithYouApplication for test class com.lec.spring.matzip.repository.ReviewRepositoryTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.6)
+
+2024-12-12T11:24:27.177+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.ReviewRepositoryTest  : Starting ReviewRepositoryTest using Java 17.0.12 with PID 54849 (started by le_fox.sol in /Users/le_sol.sol/Documents/matzipWithYou)
+2024-12-12T11:24:27.178+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.ReviewRepositoryTest  : The following 1 profile is active: "dev"
+2024-12-12T11:24:27.189+09:00 DEBUG 54849 --- [MatzipWithYou] [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@40368a46
+2024-12-12T11:24:27.491+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-12-12T11:24:27.492+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-12-12T11:24:27.507+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2024-12-12T11:24:27.566+09:00  WARN 54849 --- [MatzipWithYou] [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.lec.spring]' package. Please check your configuration.
+2024-12-12T11:24:28.021+09:00 TRACE 54849 --- [MatzipWithYou] [    Test worker] eGlobalAuthenticationAutowiredConfigurer : Eagerly initializing {securityConfig=com.lec.spring.config.SecurityConfig$$SpringCGLIB$$0@4f8900b0}
+2024-12-12T11:24:28.023+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name principalDetailService
+2024-12-12T11:24:28.081+09:00 DEBUG 54849 --- [MatzipWithYou] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 43 mappings in 'requestMappingHandlerMapping'
+2024-12-12T11:24:28.126+09:00 DEBUG 54849 --- [MatzipWithYou] [    Test worker] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-12-12T11:24:28.152+09:00 DEBUG 54849 --- [MatzipWithYou] [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, OAuth2AuthorizationRequestRedirectFilter, OAuth2LoginAuthenticationFilter, UsernamePasswordAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2024-12-12T11:24:28.214+09:00 DEBUG 54849 --- [MatzipWithYou] [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-12-12T11:24:28.227+09:00 DEBUG 54849 --- [MatzipWithYou] [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-12-12T11:24:28.297+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] c.l.s.m.repository.ReviewRepositoryTest  : Started ReviewRepositoryTest in 1.228 seconds (process running for 1.672)
+2024-12-12T11:24:28.680+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-12-12T11:24:28.777+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@f10927f
+2024-12-12T11:24:28.778+09:00  INFO 54849 --- [MatzipWithYou] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

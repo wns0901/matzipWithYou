@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.member.repository.FriendRepository">
+    <sql id="SELECT_BASE">
+        SELECT sender_id "sender_id"
+             , receiver_id "receiver_id"
+             , intimacy "intimacy"
+             , is_accept "is_accept"
+             , regdate "regdate"
+        FROM friend
+        WHERE 1 = 1
+    </sql>
+
+    <!-- 친구 요청 보내기 -->
+    <insert id="sendFriendRequest" parameterType="com.lec.spring.member.domain.Friend" flushCache="true">
+        INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept)
+        VALUES (#{senderId}, #{receiverId}, #{intimacy}, #{isAccept})
+    </insert>
+
+    <!-- 친구 신청 보낼 때 이미 보낸/받은 신청은 아닌지 확인 -->
+    <select id="isAlreadyFriend" parameterType="com.lec.spring.member.domain.Friend" resultType="boolean">
+        SELECT count(*) FROM friend f
+        WHERE (sender_id = #{senderId} and receiver_id = #{receiverId})
+           or (sender_id = #{receiverId} and receiver_id = #{senderId})
+    </select>
+
+    <!-- 보낸 요청과 받은 요청 중 대기 중인 목록 -->
+    <select id="findPendingRequests" resultType="com.lec.spring.member.domain.Friend">
+        SELECT * FROM friend f
+                          JOIN member m ON (f.sender_id = m.id OR f.receiver_id = m.id)
+        WHERE m.id = #{id}
+          AND f.is_accept = false
+    </select>
+
+    <!-- 친구 요청 수락-->
+    <update id="acceptFriendRequest" parameterType="com.lec.spring.member.domain.Friend" flushCache="true">
+        UPDATE friend
+        SET is_accept = #{isAccept}
+        WHERE receiver_id = #{receiverId} and sender_id = #{senderId}
+    </update>
+
+
+
+    <!-- 친구 요청 거절 / 삭제 -->
+    <delete id="rejectFriendRequest" parameterType="com.lec.spring.member.domain.Friend" flushCache="true">
+        DELETE FROM friend
+        WHERE receiver_id = #{receiverId} and sender_id = #{senderId}
+    </delete>
+
+    <!-- 수락된 친구 목록 조회 -->
+    <select id="findFriendsWithDetailsDTO" resultType="com.lec.spring.member.domain.Friend" parameterType="long">
+        SELECT sender_id senderId, receiver_id receiverId, intimacy, is_accept isAccept, regdate FROM friend
+        WHERE receiver_id = #{memberId}  or sender_id = #{memberId}
+            AND is_accept is true;
+
+
+    </select>
+
+    <!-- 친밀도 불러오기 -->
+    <update id="updateIntimacy" flushCache="true" >
+        UPDATE friend
+        SET intimacy = #{intimacy}
+        WHERE is_accept = TRUE
+          AND ((sender_id = #{senderId} AND receiver_id = #{receiverId})
+            OR (receiver_id = #{senderId} AND sender_id = #{receiverId}))
+    </update>
+
+
+
+
+
+
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+        <!--    #                 m.nickname AS nickname,-->
+        <!--    #                 f.intimacy AS intimacy,-->
+        <!--    #                 COUNT(CASE WHEN mm.visibility = 'PUBLIC' THEN 1 END) AS public_count,-->
+        <!--    #                 COUNT(CASE WHEN mm.visibility = 'HIDDEN' THEN 1 END) AS hidden_count,-->
+        <!--    #                 pi.filename AS profile_img-->
+        <!--    #             FROM friend f-->
+        <!--    #                      JOIN member m-->
+        <!--    #                           ON (f.sender_id = m.id OR f.receiver_id = m.id)-->
+        <!--    #                      LEFT JOIN my_matzip mm-->
+        <!--    #                                ON mm.member_id = m.id-->
+        <!--    #                      LEFT JOIN profile_img pi-->
+        <!--    #                                ON pi.member_id = m.id-->
+        <!--    #             WHERE-->
+        <!--    #                 (f.sender_id = #{memberId} OR f.receiver_id = #{memberId})-->
+        <!--    #               AND f.is_accept = TRUE-->
+        <!--    #             GROUP BY m.id;-->
+
+
+

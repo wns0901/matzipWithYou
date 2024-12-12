@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.matzip.repository.FoodKindRepository">
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.matzip.domain.FoodKind" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO food_kind (kindname)
+        VALUES (#{kindName})
+    </insert>
+
+    <select id="findByKindName" resultType="com.lec.spring.matzip.domain.FoodKind">
+        SELECT id, kindname, regdate FROM food_kind WHERE kindname = #{kindName}
+    </select>
+
+    <select id="findAll" resultType="com.lec.spring.matzip.domain.FoodKind">
+        SELECT id, kindname, regdate FROM food_kind
+    </select>
+
+    <delete id="deleteById">
+        DELETE FROM food_kind WHERE id = #{id}
+    </delete>
+</mapper>
