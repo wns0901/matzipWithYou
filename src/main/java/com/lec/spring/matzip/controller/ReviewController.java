@@ -53,8 +53,9 @@ public class ReviewController {
         int saved = reviewService.addReview(reviewDTO, model);
 
         if (saved > 0) {
-            String isHidden = (String) model.getAttribute("isHidden");
+            String foodKind = (String) model.getAttribute("foodKind");
             List<ReviewTag> reviewTags = (List<ReviewTag>) model.getAttribute("reviewTags");
+            String isHidden = (String) model.getAttribute("isHidden");
             List<Member> hiddenMatzipMemberIds = (List<Member>) model.getAttribute("members");
             Integer rewardReviewPoint = (Integer) model.getAttribute("rewardReviewPoint");
             Integer rewardReviewIntimacy = (Integer) model.getAttribute("rewardReviewIntimacy");
@@ -72,6 +73,10 @@ public class ReviewController {
 
             if (reviewTags != null && !reviewTags.isEmpty()) {
                 redirectAttributes.addFlashAttribute("reviewTags", reviewTags);
+            }
+
+            if (foodKind != null) {
+                redirectAttributes.addFlashAttribute("foodKind", foodKind);
             }
 
             return "redirect:/review/list";

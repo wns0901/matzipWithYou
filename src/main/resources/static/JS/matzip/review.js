@@ -8,26 +8,39 @@ document.querySelectorAll('.star').forEach(($star) => {
     });
 })
 
-const mysql = require('mysql');
-const express = require('express');
-const app = express();
-const port = 8080;
+document.addEventListener('DOMContentLoaded', () => {
+    const foodKindContainer = document.querySelector('.select-foodKind');
 
-const db = mysql.createConnection({
-    host: 'localhost'
-    user: 'root',
-    password: 'password',
-    database: 'matzip_with_you_db'
-})
+    fetch('review/')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(foodKind => {
+                const button = document.createElement('input');
+                button.type = 'button';
+                button.value = foodKind.kind_name;
+                button.setAttribute('data-kind-id', matzip)
+            })
+        })
 
-db.connect(err => {
-    if(err) {
-        console.error('Database connection failed', err.stack);
-        return;
+    async function loadTags() {
+        try {
+            const response = await fetch('http://localhost:8080/review/');
+            if (!response.ok) {
+                throw new Error(`Failed to fetch tags: ${response.statusText}`);
+            }
+            const tags = await response.json();
+
+            const tagsContainer = document.querySelector('.tag-box');
+            tags.forEach(tag => {
+                const tagButton = document.createElement('input');
+                tagButton.type = 'button';
+                tagButton.value = tag.name;
+                tagButton.classList.add('tag');
+                tagsContainer.appendChild(tagButton);
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
-    console.log('Connected to database.');
+    loadTags();
 });
-
-app.get('/review', (req, res) => {
-    db.query('SELECT id, tagname FROM tag', (err, results))
-})

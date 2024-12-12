@@ -84,6 +84,16 @@ class ReviewRepositoryTest {
     }
 
     @Test
+    public void testAddFoodKind() {
+        FoodKindRepository foodKindRepository = sqlSession.getMapper(FoodKindRepository.class);
+        String kindName = "일식";
+
+        FoodKind foodtag = foodKindRepository.findByKindName(kindName);
+
+        assertEquals(kindName, foodtag.getKindName());
+    }
+
+    @Test
     public void testAddReviewTag() {
         TagRepository tagRepository = sqlSession.getMapper(TagRepository.class);
         ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);

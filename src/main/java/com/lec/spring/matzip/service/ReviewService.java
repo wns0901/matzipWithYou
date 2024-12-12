@@ -14,6 +14,8 @@ public interface ReviewService {
 
     int addReview(ReviewDTO reviewDTO, Model model);
 
+    FoodKind addFoodKind(String kindName);
+
     List<ReviewTag> addReviewTags(Long id, List<Long> tagIds);
 
     List<Member> hiddenMatzipMemberIds(ReviewDTO reviewDTO);
