@@ -2,11 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>비밀번호 재설정</title>
+    <title>비밀번호 재설정 | MatzipWithYou</title>
+    <style>
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', Roboto, Helvetica, sans-serif;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff7327;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
-<h2> Matzipwitwou</h2>
-<p>비밀번호 재설정을 위해 아래 링크를 클릭하세요:</p>
-<a th:href="${resetLink}">비밀번호 재설정 링크</a>
+<div class="email-container">
+    <h2>비밀번호 재설정 안내</h2>
+    <br>
+    <p>안녕하세요, MatzipWithYou입니다.</p>
+    <p>비밀번호 재설정을 위해 아래 버튼을 클릭해주세요.</p>
+    <a th:href="${resetLink}" class="button">비밀번호 재설정하기</a>
+    <p>본 메일은 발신전용입니다. 궁금하신 점이 있으시다면 고객센터로 문의해주세요.</p>
+</div>
 </body>
 </html>
