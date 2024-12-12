@@ -1,4 +1,4 @@
-(# PULL GUYS
+S(# PULL GUYS
 ## member
  - 이동희
  - 이유나
