@@ -1,10 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+    <link rel="stylesheet" th:href="@{/CSS/member/login.css}">
 </head>
 <body>
+<div class="container">
+    <img class="logo" src="/IMG/logo.png" alt="LOGO">
 
+    <form th:action="@{/member/login}" method="POST">
+        <h1>로그인</h1>
+
+
+        <div class="social-buttons">
+            <a class="social-button" th:href="@{/oauth2/authorization/kakao}">
+                <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+                     alt="Kakao" class="social-icon">
+                카카오로 계속하기
+            </a>
+            <a class="social-button" th:href="@{/oauth2/authorization/google}">
+                <img src="/IMG/google.png"
+                     alt="Google" class="social-icon">
+                구글로 계속하기
+            </a>
+            <a class="social-button" th:href="@{/oauth2/authorization/naver}">
+                <img src="/IMG/naver.png"
+                     alt="Naver" class="social-icon">
+                네이버로 계속하기
+            </a>
+        </div>
+
+        <div class="divider">
+            <span>또는</span>
+        </div>
+
+        <div class="form-group">
+            <label for="username">아이디</label>
+            <input type="text" class="form-control" name="username" id="username"
+                   placeholder="로그인 ID" th:value="${username}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" class="form-control" name="password" id="password"
+                   placeholder="비밀번호" required>
+        </div>
+
+        <div>
+            <div class="text-danger" th:text="${error}"></div>
+            <div class="text-danger" th:text="${errorMessage}"></div>
+        </div>
+
+
+        <a th:href="@{'/member/request-reset'}">비밀번호를 잊어버리셨나요?</a>
+
+
+
+
+        <button class="btn-submit" type="submit">로그인</button>
+
+        <p class="signup-prompt">
+            계정이 없으신가요?
+            <a th:href="@{/member/register}">회원가입</a>
+        </p>
+    </form>
+
+    <div class="banner">
+        <p>
+            계속 진행함으로써 Pull Guys의
+            <a href="https://splice.com/privacy_policy" target="_blank">개인정보처리방침</a>
+            에 동의하게 됩니다.
+        </p>
+    </div>
+</div>
+<script th:src="@{/JS/member/login.js}"></script>
 </body>
 </html>
