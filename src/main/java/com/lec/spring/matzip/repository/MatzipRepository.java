@@ -5,7 +5,7 @@ import com.lec.spring.matzip.domain.Matzip;
 import java.util.List;
 
 public interface MatzipRepository {
-    int save(Matzip matzip);
+    boolean save(Matzip matzip);
 
     List<Matzip> findAll();
 
@@ -14,4 +14,8 @@ public interface MatzipRepository {
     Matzip findById(Long id);
 
     int deleteById(Long id);
+    // 지윤...
+   List<String> listTagName(Long id);
+
+   List<String> listKindName(Long id);
 }

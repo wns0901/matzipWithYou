@@ -19,8 +19,8 @@
             img_url AS 'imgUrl',
             gu,
             kakao_map_url AS 'kakaoMapUrl',
-            name,
-            regdate
+            name
+           -- regdate (regdate)있으면 detail에서 오류나길래 주석처리했음다(지윤)
         FROM matzip
         WHERE 1=1
     </sql>
@@ -43,4 +43,22 @@
     <delete id="deleteById">
         DELETE FROM matzip WHERE id = #{id}
     </delete>
+
+<!--It's me.. (hjy)..-->
+    <select id="listTagName" >
+        SELECT t.tagname
+        FROM tag t
+                 JOIN matzip_tag mt ON t.id = mt.tag_id
+                 JOIN my_matzip mm ON mt.my_matzip_id = mm.id
+        WHERE mm.matzip_id = #{matzipId}
+    </select>
+
+    <select id="listKindName" resultType="String">
+        SELECT f.kindname
+        FROM food_kind f
+                 JOIN matzip m ON m.kind_id = f.id
+        WHERE m.kind_id = #{kindId}
+            LIMIT 1
+    </select>
+
 </mapper>

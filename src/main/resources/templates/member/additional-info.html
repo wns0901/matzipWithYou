@@ -22,7 +22,7 @@
             <input type="text" id="name" name="name"
                    class="form-control"
                    th:value="${member?.name}"
-                   placeholder="이름을 입력하세요"
+                   placeholder="성명"
                    required>
         </div>
 
@@ -30,7 +30,7 @@
             <label for="nickname">닉네임</label>
             <input type="text" id="nickname" name="nickname"
                    class="form-control"
-                   placeholder="닉네임을 입력하세요"
+                   placeholder="닉네임"
                    required>
         </div>
 
@@ -39,7 +39,7 @@
             <input type="email" id="email" name="email"
                    class="form-control"
                    th:value="${member?.provider == 'kakao' ? '' : member?.email}"
-                   placeholder="이메일을 입력하세요"
+                   placeholder="email@example.com"
                    required>
         </div>
 
@@ -47,7 +47,7 @@
             <label for="referrerNickname">추천인 닉네임 (선택사항)</label>
             <input type="text" id="referrerNickname" name="referrerNickname"
                    class="form-control"
-                   placeholder="추천인 닉네임을 입력하세요">
+                   placeholder="추천인 닉네임">
         </div>
 
         <button type="submit" class="btn-primary">저장</button>
