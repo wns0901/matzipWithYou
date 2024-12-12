@@ -41,7 +41,7 @@ public class ReviewController {
             , Model model
             , RedirectAttributes redirectAttributes
     ) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             List<FieldError> errorList = bindingResult.getFieldErrors();
             for (FieldError error : errorList) {
                 redirectAttributes.addFlashAttribute("error_" + error.getField(), error.getDefaultMessage());
@@ -75,13 +75,15 @@ public class ReviewController {
             }
 
             return "redirect:/review/list";
-        }else {
+        } else {
             redirectAttributes.addFlashAttribute("saveError", "리뷰작성에 실패했습니다.");
             return "redirect:/review/write";
         }
     }
 
-//    @PostMapping("/delete/{id}")
-//    public String deleteOk(ReviewDTO reviewDTO, Model model) {
-//        model.addAttribute("");
+    @PostMapping("/delete")
+    public String deleteOk(Long id, Model model) {
+        model.addAttribute("result", reviewService.deleteReview(id));
+        return "review/deleteOk";
     }
+}

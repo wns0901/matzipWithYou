@@ -42,7 +42,7 @@
           AND matzip_id = #{matzipId}
     </select>
 
-    <delete id="deleteById" flushCache="true">
+    <delete id="deleteById" flushCache="true" parameterType="com.lec.spring.matzip.domain.Review">
         DELETE FROM my_review WHERE id = #{id}
     </delete>
 </mapper>

@@ -142,14 +142,14 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public int deleteReview(ReviewDTO reviewDTO) {
+    public int deleteReview(Long id) {
         int result = 0;
 
-        Review review = reviewRepository.findById(reviewDTO.getId());
+        Review review = reviewRepository.findById(id);
         if (review == null) {
             throw new IllegalArgumentException("삭제하려는 리뷰를 찾을 수 없습니다.");
         } else {
-            result = reviewRepository.deleteById(reviewDTO.getId());
+            result = reviewRepository.deleteById(id);
         }
 
         return result;

@@ -22,5 +22,5 @@ public interface ReviewService {
 
     int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy ,int rewardIntimacy);
 
-    int deleteReview(ReviewDTO reviewDTO);
+    int deleteReview(Long id);
 }
