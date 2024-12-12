@@ -29,12 +29,19 @@ class  MyMatzipRepositoryTest {
 
     @Test void testSeoul() {
         MyMatzipRepository myMatzipRepository = sqlSession.getMapper(MyMatzipRepository.class);
-        List<SeoulMapDBDataDTO> result = myMatzipRepository.findSeoulMapData(1L);
-
-        result.forEach(System.out::println);
+        System.out.println("#".repeat(20) + "test" + "#".repeat(20));
+        myMatzipRepository.findSeoulMapData(1L).forEach(System.out::println);
+        System.out.println("#".repeat(20) + "test" + "#".repeat(20));
     }
 
     @Test void testSeoulService() {
         myMatzipService.findSeoulMapDataById(1L);
+    }
+
+    @Test void testGuData() {
+        MyMatzipRepository myMatzipRepository = sqlSession.getMapper(MyMatzipRepository.class);
+        System.out.println("#".repeat(20) + "test" + "#".repeat(20));
+        myMatzipRepository.findGuMapData(1L, "강남구").forEach(System.out::println);
+        System.out.println("#".repeat(20) + "test" + "#".repeat(20));
     }
 }

@@ -67,7 +67,7 @@
         FROM (
                  SELECT IF(receiver_id = #{id}, sender_id, receiver_id) AS memberId
                  FROM friend
-                 WHERE receiver_id = #{id} OR sender_id = #{id}
+                 WHERE (receiver_id = #{id} OR sender_id = #{id}) AND is_accept = 1
              ) f
                  JOIN my_matzip mmz ON f.memberId = mmz.member_id AND mmz.visibility != 'PRIVATE'
                  JOIN member m ON f.memberId = m.id
@@ -88,5 +88,52 @@
 
     <select id="listCntByMemberId" resultType="int">
         SELECT count(*) FROM my_matzip WHERE member_id = #{id}
+    </select>
+
+    <resultMap id="MatzipListDataDTO" type="com.lec.spring.matzip.domain.DTO.MatzipListDataDTO">
+        <result column="name" property="name"/>
+        <result column="address" property="address"/>
+        <result column="imgUrl" property="imgUrl"/>
+        <result column="lat" property="lat"/>
+        <result column="lng" property="lng"/>
+        <result column="regdate" property="regdate"/>
+        <result column="visibility" property="visibility"/>
+    </resultMap>
+    
+    <resultMap id="FriendDataWithMatzipDTO" type="com.lec.spring.matzip.domain.DTO.FriendDataWithMatzipDTO">
+        <result column="memberId" property="memberId"/>
+        <result column="nickname" property="nickname" />
+        <result column="profileImg" property="profileImg" />
+<!--        <collection column="matzipList" property="matzipList" javaType="list" resultMap="MatzipListDataDTO"/>-->
+        <result column="matzipList" property="matzipList" typeHandler="com.lec.spring.config.typeHandler.MatzipListDataHandler" />
+    </resultMap>
+
+    <select id="findGuMapData" resultMap="FriendDataWithMatzipDTO">
+        SELECT
+            m.id AS memberId,
+            m.nickname AS nickname,
+            p.filename AS profileImg,
+            json_arrayagg(
+                json_object(
+                    'name', mz.name,
+                    'address', mz.address,
+                    'imgUrl', mz.img_url,
+                    'lat', mz.lat,
+                    'lng', mz.lng,
+                    'regdate', mmz.regdate,
+                    'visibility', mmz.visibility
+                )
+            ) AS matzipList
+        FROM (
+                  SELECT IF(receiver_id = #{id}, sender_id, receiver_id) AS memberId
+                  FROM friend
+                  WHERE (receiver_id = #{id} OR sender_id = #{id}) AND is_accept = 1
+              ) f
+        JOIN member m ON m.id = f.memberId
+        JOIN profile_img p ON m.id = p.id
+        JOIN my_matzip mmz ON m.id = mmz.member_id AND mmz.visibility IN('PUBLIC', 'HIDDEN')
+        JOIN matzip mz ON mmz.matzip_id = mz.id AND mz.gu = #{gu}
+        GROUP BY m.id, m.nickname, p.filename, mmz.regdate
+        ORDER BY mmz.regdate
     </select>
 </mapper>
