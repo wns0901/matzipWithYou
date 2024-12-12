@@ -1,16 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>비밀번호 변경 실패</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
-    <h2>비밀번호 변경 실팽</h2>
-    <p>실패는 성공의 어머니.///</p>
-    <a href="/login" class="btn btn-primary" >로그인</a>
-</div>
+<h2>비밀번호 변경 실패</h2>
+<p>비밀번호 변경에 실패했습니다. 다시 시도해주세요.</p>
+<a th:href="@{/member/login}">로그인 페이지로 돌아가기</a>
 </body>
 </html>
