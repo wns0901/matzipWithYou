@@ -223,3 +223,44 @@ label {
         margin-top: 80px;
     }
 }
+
+a[href*='request-reset'] {
+    display: block;
+    text-align: right;
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: 14px;
+    margin: 8px 0 24px;
+    transition: color 0.2s;
+}
+
+a[href*='request-reset']:hover {
+    text-decoration: underline;
+    color: #e66520;
+}
+
+.form-group {
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.text-danger {
+    color: var(--error-color);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: var(--button-font-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 0;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
