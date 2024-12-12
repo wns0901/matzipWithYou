@@ -43,21 +43,15 @@
                 <input type="password" class="form-control" id="re_password" name="re_password"
                        placeholder="비밀번호 재입력">
             </div>
-        <form action="/member/verify-email" method="post">
-            <div  class="form-group">
+
+            <div class="form-group">
                 <label for="email">이메일</label>
                 <div class="email-input-container">
                     <input type="email" class="form-control with-button" id="email" name="email"
                            placeholder="email@example.com" th:value="${email}">
-                    <button type="submit" class="email-verify-button" >인증하기</button>
-
-                    <div class="form-group">
-                        <label for="verificationCode">인증 코드</label>
-                        <input type="text" class="form-control" id="verificationCode" name="verificationCode" placeholder="인증 코드를 입력하세요" required>
-                    </div>
+                    <button type="button" class="email-verify-button">인증하기</button>
                 </div>
             </div>
-        </form>
 
             <div class="form-group">
                 <label for="referrerNickname">추천인 닉네임 (선택사항)</label>

@@ -118,12 +118,14 @@ public class MemberController {
     public void register() {
     }
 
+    //email 인증 구현하기
     @PostMapping("/register")
     public String registerOk(@Valid Member member
             , BindingResult bindingResult
             , @RequestParam(required = false) String referrerNickname
             , Model model
             , RedirectAttributes redirectAttributes
+                             ,EmailMessage emailMessage
     ) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("username", member.getUsername());
@@ -152,7 +154,43 @@ public class MemberController {
         int cnt = memberService.registerWithReferral(member, referrerNickname);
         model.addAttribute("result", cnt);
 
-        return "member/registerOk";
+        // email 인증
+        // 이메일 인증 전송
+        try {
+            emailMessage.setSubject("이메일 인증");
+            String result = memberService.authorizationEmail(emailMessage);
+            if ("success".equals(result)) {
+                model.addAttribute("email", member.getEmail());
+                model.addAttribute("message", "이메일 인증 링크가 전송되었습니다.");
+                System.out.println("email이 보내졌나요" + member.getEmail());
+                System.out.println(result);
+                return "이메일 인증 안내 페이지"; // 인증을 위한 안내 페이지
+            } else {
+                model.addAttribute("error", "이메일 전송 중 오류가 발생했습니다.");
+                return "이메일 오류";
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "이메일 전송 중 오류가 발생했습니다.");
+            return "이메일 오류";
+        }
+
+
+    }
+
+    @PostMapping("/verify-email")
+    public String verifyEmail(@RequestParam String email,
+                              @RequestParam String verificationCode,
+                              Model model) {
+        // 인증 코드 검증
+        boolean isVerified = memberService.verifyAuthorizationCode(verificationCode, email);
+
+        if (isVerified) {
+            model.addAttribute("message", "이메일 인증이 완료되었습니다.");
+            return "이메일 인증 성공";
+        } else {
+            model.addAttribute("message", "잘못된 인증 코드입니다.");
+            return "이메일 인증 실패";
+        }
     }
 
 
