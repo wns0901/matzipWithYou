@@ -29,6 +29,15 @@ public interface UserMatzipTagStatusRepository {
     //kindId 조회
     List<UserMatzipTagStatus> listKindName(Long myMatzipId);
 
+
+    //wholeHiddenList(my_matzip에서 hidden인 맛집 불러오기)
+    List<UserMatzipTagStatus> listWholeHiddenList();
+
+    List<UserMatzipTagStatus> finddeleteDuplicateMyMatzipId ();
+
+    List<UserMatzipTagStatus> userMatzipTagStatus();
+
+
 } // end HintPurchaseRepository
 
 

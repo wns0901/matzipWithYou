@@ -43,26 +43,77 @@
       and user.my_matzip_id = #{myMatzipId}
     </select>
 
-    <!--히든맛집 list 불러오기-->
+    <!--user_matzip_tag_status에 있는 히든맛집 my_matzip_id 불러오기-->
     <select id="listHiddenMatzipTagIds" resultType="com.lec.spring.matzip.domain.UserMatzipTagStatus">
-        SELECT my_matzip_id AS myMatzipId
+        SELECT my_matzip_id AS 'myMatzipId'
         FROM user_matzip_tag_status
          WHERE my_matzip_id IN (
              SELECT matzip_id as myMatzipId FROM my_matzip WHERE visibility = 'HIDDEN'
         )
     </select>
 
-    <!--kindName 조회-->
-    <select id="listKindName">
-        select f.kindName
-        from food_kind f join user_matzip_tag_status u
-        on
+<!--my_matzip에서 visblity가 hidden인 맛집 불러오기-->
+    <select id="listWholeHiddenList" >
+        SELECT m.id AS 'myMatzipId',
+                m.matzip_id AS 'matzipId',
+                m.member_id AS 'memberId',
+                m.visibility AS 'visibility',
+                f.kindname AS 'kindName',
+                mt.tag_id AS 'tagId',
+                t.tagname AS 'tagName'
+        FROM my_matzip m
+                 LEFT JOIN matzip mz ON m.matzip_id = mz.id
+                 LEFT JOIN food_kind f ON mz.kind_id = f.id
+                 LEFT JOIN matzip_tag mt ON m.id = mt.my_matzip_id
+                 LEFT JOIN tag t ON mt.tag_id = t.id
+        WHERE m.visibility = 'HIDDEN'
     </select>
+<!--user_matzip_tag_status와 중복-->
+    <select id="finddeleteDuplicateMyMatzipId">
+        SELECT DISTINCT
+            m.matzip_id AS 'matzipId',
+                m.member_id AS 'memberId',
+                m.visibility AS 'visibility',
+                f.kindname AS 'kindName',
+                mt.tag_id AS 'tagId',
+                t.tagname AS 'tagName'
+        FROM my_matzip m
+                 LEFT JOIN matzip mz ON m.matzip_id = mz.id
+                 LEFT JOIN food_kind f ON mz.kind_id = f.id
+                 LEFT JOIN matzip_tag mt ON m.id = mt.my_matzip_id
+                 LEFT JOIN tag t ON mt.tag_id = t.id
+                 JOIN user_matzip_tag_status ut
+                      ON m.id = ut.my_matzip_id
+                          AND mt.tag_id = ut.tag_id
+                          AND m.member_id = ut.member_id
+        WHERE m.visibility = 'HIDDEN';
+    </select>
+
+<!-- userMatzipTagStatus -->
+    <select id="userMatzipTagStatus">
+        select member_id as 'memberId', my_matzip_id as 'myMatzipId' , tag_id as 'tagId'
+        from user_matzip_tag_status
+    </select>
+
+
+    <!--kindName 조회-->
+    <select id="listKindName" >
+        SELECT f.kindname as'kindName'
+        FROM user_matzip_tag_status user
+                 JOIN my_matzip mm ON user.my_matzip_id = mm.id
+                 JOIN matzip mz ON mm.matzip_id = mz.id
+                 JOIN food_kind f ON mz.kind_id = f.id
+        WHERE user.member_id = #{memberId};  -- 필요에 따라 회원 ID를 조건으로 추가
+
+    </select>
+
+
+
 
 
     <!-- 저장-->
     <insert id="tagSave" flushCache="true" parameterType="com.lec.spring.matzip.domain.UserMatzipTagStatus" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
-        INSERT INTO user_matzip_tag_status (user.member_id, user.my_matzip_id, user.tag_id)
+        INSERT INTO user_matzip_tag_status (member_id, my_matzip_id, tag_id)
         VALUES (#{memberId}, #{myMatzipId}, #{tagId})
     </insert>
 

@@ -16,6 +16,12 @@ public class UserMatzipTagStatus {
         //kind id
         private String kindName;
 
+        //wholeHiddenList
+        private Long matzipId;
+        private String visibility;
+        private Long id;
+
+
 }// end hintPurchase
 
 
