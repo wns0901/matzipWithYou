@@ -16,15 +16,12 @@ import java.util.List;
 public class FriendController {
 
     private final FriendService friendService;
-    private final MemberServiceImpl memberServiceImpl;
 
-    public FriendController(FriendService friendService, MemberServiceImpl memberServiceImpl) {
+    public FriendController(FriendService friendService) {
         this.friendService = friendService;
-        this.memberServiceImpl = memberServiceImpl;
     }
 
 
-    // 팝업으로 뜨는 애들은 비동기. 제이슨 보내줘야함
     // 친구 요청 보내기 / 비동기 팝업
     @ResponseBody
     @PostMapping("")
@@ -81,9 +78,8 @@ public class FriendController {
     }
 
 
-    // 친밀도
+    // 친밀도 업데이트
 //    friendRepository.updateIntimacy(member.getId(), friend.getIntimacy());
-
 
 }
 

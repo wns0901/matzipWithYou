@@ -16,5 +16,4 @@ public class Friend {
     private Integer intimacy;
     private Boolean isAccept;
     private LocalDateTime regdate;
-
 }
