@@ -22,8 +22,5 @@ public interface FriendService {
     // 친구 요청 대기중
     List<Friend> getPendingRequests(Long memberId);
 
-    // 친밀도 업데이트
-    int updateIntimacy(Friend friend, Integer intimacy);
-
 }
 

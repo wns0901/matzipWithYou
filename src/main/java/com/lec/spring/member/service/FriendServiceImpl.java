@@ -68,13 +68,6 @@ public class FriendServiceImpl implements FriendService {
     }
 
 
-    // 친밀도 업데이트
-    @Override
-    public int updateIntimacy(Friend friend, Integer intimacy) {
-//        return friendRepository.updateIntimacy(member.getId(), friend.getIntimacy());
-        return 0;
-    }
-
 
 
 }
