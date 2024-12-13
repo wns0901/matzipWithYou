@@ -17,6 +17,7 @@ public class PrincipalDetailService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
 
+
     public PrincipalDetailService(SqlSession sqlsession){
         this.memberRepository = sqlsession.getMapper(MemberRepository.class);
         this.authorityRepository = sqlsession.getMapper(AuthorityRepository.class);
