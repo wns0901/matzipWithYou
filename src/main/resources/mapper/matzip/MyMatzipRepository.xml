@@ -104,7 +104,6 @@
         <result column="memberId" property="memberId"/>
         <result column="nickname" property="nickname" />
         <result column="profileImg" property="profileImg" />
-<!--        <collection column="matzipList" property="matzipList" javaType="list" resultMap="MatzipListDataDTO"/>-->
         <result column="matzipList" property="matzipList" typeHandler="com.lec.spring.config.typeHandler.MatzipListDataHandler" />
     </resultMap>
 
@@ -120,7 +119,7 @@
                     'imgUrl', mz.img_url,
                     'lat', mz.lat,
                     'lng', mz.lng,
-                    'regdate', mmz.regdate,
+                    'regdate', DATE_FORMAT(mmz.regdate, '%Y-%m-%d'),
                     'visibility', mmz.visibility
                 )
             ) AS matzipList
