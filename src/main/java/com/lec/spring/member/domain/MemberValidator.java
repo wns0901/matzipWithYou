@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 @Component
+@ControllerAdvice
 public class MemberValidator implements Validator {
     MemberService memberService;
 
@@ -16,12 +18,11 @@ public class MemberValidator implements Validator {
         this.memberService = memberService;
     }
 
+
+
     @Override
     public boolean supports(Class<?> clazz) {
-        System.out.println("supports(" + clazz.getName() + ")");
-        // ↓ 검증할 객체의 클래스 타입인지 확인
         boolean result = Member.class.isAssignableFrom(clazz);
-        System.out.println(result);
         return result;
     }
 
@@ -62,6 +63,9 @@ public class MemberValidator implements Validator {
             errors.rejectValue("email", "email은 필수입니다");
         } else if(!email.matches(emailPattern)){
             errors.rejectValue("email", "유효하지 않은 이메일 형식입니다");
+        } else if (memberService.isExistEmail(email)) {
+            errors.rejectValue("email", "이미존재하는 이메일입니다");
+            
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "name은 필수입니다");
@@ -70,6 +74,8 @@ public class MemberValidator implements Validator {
         if(!member.getPassword().equals(member.getRe_password())){
             errors.rejectValue("re_password", "비밀번호 확인란을 다시 입력해주세요");
         }
+
     }
 
 }
+

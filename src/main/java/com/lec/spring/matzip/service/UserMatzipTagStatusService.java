@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 public interface UserMatzipTagStatusService {
 
+
    // 저장
    void tagSave(UserMatzipTagStatus userMatzipTagStatus);
 
@@ -23,7 +24,19 @@ public interface UserMatzipTagStatusService {
    //히든태그 조회
    List<Long> listHiddenMatzipTagIds(Long myMatzipId);
 
+   //kindName 조회
+   String listKindName(Long myMatzipId);
 
+//중복삭제
+   List<UserMatzipTagStatus> finddeleteDuplicateMyMatzipId();
+
+   //wholeHiddenList 조회
+   List<UserMatzipTagStatus> listWholeHiddenList();
+
+   // 중복된 내용 삭제
+   List<UserMatzipTagStatus> deleteDuplicateMyMatzipId();
+
+   List<UserMatzipTagStatus> userMatzipTagStatus();
 
 
 }

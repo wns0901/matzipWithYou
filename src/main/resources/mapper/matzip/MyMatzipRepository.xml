@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.matzip.repository.MyMatzipRepository">
+
+
+<!--    <resultMap id="mapMyMatzip" type="com.lec.spring.matzip.domain.MyMatzip">-->
+<!--        <result column="id"  property="id" />-->
+<!--        <result column="memberId" property="memberId"/>-->
+<!--        <result column="matzipId" property="matzipId"/>-->
+<!--        <result column="regdate" property="regdate"/>-->
+<!--        <result column="visibility" property="visibility"/>-->
+<!--        <result column="content" property="content"/>-->
+<!--        <result column="starRating" property="starRating"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="mapMatzipDTO" type="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">-->
+<!--        <result column="imgUrl" property="imgUrl"/>-->
+<!--        <result column="name" property="name"/>-->
+<!--        <result column="kindName" property="kindName"/>-->
+<!--        <result column="tagNames" property="tagNames" />-->
+<!--        <collection property="myMatzip" resultMap="mapMyMatzip"/>-->
+<!--    </resultMap>-->
+
+
+    <resultMap id="mapMatzipDTO" type="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
+        <result column="id" property="id" />
+        <result column="imgUrl" property="imgUrl"/>
+        <result column="name" property="name"/>
+        <result column="kindName" property="kindName"/>
+        <result column="memberId" property="memberId"/>
+        <result column="matzipId" property="matzipId"/>
+        <result column="regdate" property="regdate"/>
+        <result column="visibility" property="visibility"/>
+        <result column="content" property="content"/>
+        <result column="starRating" property="starRating"/>
+        <result column="tagList" property="tagList" typeHandler="com.lec.spring.config.typeHandler.TagListHandler"/>
+    </resultMap>
+
+
+    <!--1. 기본 select문에 이미지, 가게이름 맛집 테이블에서 가져오기
+    검색하는 BASE SQL문 잘 만들고  나머지 메소드문은 orderby로 정렬시키면 된다. -->
+    <select id = "findAll" resultType="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
+        SELECT
+            mymz.id AS id,
+            mymz.member_id AS memberId,
+            mymz.matzip_id AS matzipId,
+            mymz.regdate AS regdate,
+            mymz.visibility AS visibility,
+            mymz.content AS content,
+            mymz.star_rating AS starRating,
+            mz.name AS name,
+            mz.img_url AS imgUrl,
+            k.kindname AS kindName,
+            json_arrayagg(json_object('id', t.id, 'tagName', t.tagname)) AS tagList
+        FROM my_matzip mymz
+                 JOIN matzip mz ON mymz.matzip_id = mz.id
+                 JOIN food_kind k ON mz.kind_id = k.id
+                 JOIN matzip_tag mt ON mymz.id = mt.my_matzip_id
+                 JOIN tag t ON mt.tag_id = t.id
+        WHERE mymz.member_id = #{id}
+        GROUP BY 1,2,3
+        ORDER BY 4 DESC;
+    </select>
+
+    <resultMap id="seoulDBDataDTO" type="com.lec.spring.matzip.domain.DTO.SeoulMapDBDataDTO">
+        <result column="friendId" property="friendId"/>
+        <result column="nickname" property="nickname"/>
+        <result column="profileImg" property="profileImg" />
+        <result column="publicGu" property="publicGu" typeHandler="com.lec.spring.config.typeHandler.StringListHandler"/>
+        <result column="hiddenGu" property="hiddenGu" typeHandler="com.lec.spring.config.typeHandler.StringListHandler"/>
+    </resultMap>
+
+    <select id="findSeoulMapData" resultMap="seoulDBDataDTO">
+        SELECT
+            f.memberId AS friendId,
+            m.nickname AS nickname,
+            p.filename AS profileImg,
+            JSON_ARRAYAGG(
+                    IF(mmz.visibility = 'PUBLIC', mz.gu, NULL)
+            ) AS publicGu,
+            JSON_ARRAYAGG(
+                    IF(mmz.visibility = 'HIDDEN', mz.gu, NULL)
+            ) AS hiddenGu
+        FROM (
+                 SELECT IF(receiver_id = #{id}, sender_id, receiver_id) AS memberId
+                 FROM friend
+                 WHERE receiver_id = #{id} OR sender_id = #{id}
+             ) f
+                 JOIN my_matzip mmz ON f.memberId = mmz.member_id AND mmz.visibility != 'PRIVATE'
+                 JOIN member m ON f.memberId = m.id
+                 JOIN profile_img p ON f.memberId = p.member_id
+                 JOIN matzip mz ON mmz.matzip_id = mz.id
+        GROUP BY f.memberId, m.nickname, p.filename;
+    </select>
+
+    <update id="updateMyMatzipVisibility" flushCache="true" parameterType="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
+        UPDATE my_matzip
+        SET visibility = #{visibility}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteMyMatzip" flushCache="true" parameterType="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
+        DELETE FROM my_matzip WHERE id = #{id}
+    </delete>
+
+    <select id="listCntByMemberId" resultType="int">
+        SELECT count(*) FROM my_matzip WHERE member_id = #{id}
+    </select>
+</mapper>

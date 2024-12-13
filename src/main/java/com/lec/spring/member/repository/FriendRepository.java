@@ -24,12 +24,13 @@ public interface FriendRepository{
     // 친구 요청 거절 & 친삭
     int rejectFriendRequest(Friend friend);
 
-
     // 친구 요청 보내기
     int sendFriendRequest(Friend friend);
 
+    // 친구 요청 DB에 저장
+    int save(Friend friend);
 
-//    // 친밀도 업데이트
-//    int updateIntimacy(Friend friend);
+    // 친밀도 업데이트
+    int updateIntimacy(Friend friend, Integer intimacy);
 
 }

@@ -30,7 +30,7 @@ CREATE TABLE food_kind
 (
     id       INT         NOT NULL AUTO_INCREMENT COMMENT '음식 종류 일련번호',
     kindname VARCHAR(30) NOT NULL COMMENT '종류',
-    regdate  DATETIME    NULL     DEFAULT now() COMMENT '등록일',
+    regdate  DATETIME    NULL DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (id)
 ) COMMENT '음식 종류';
 
@@ -41,9 +41,9 @@ CREATE TABLE friend
 (
     sender_id   INT      NOT NULL COMMENT '요청 보낸 회원 일련번호',
     receiver_id INT      NOT NULL COMMENT '요청 받은 회원 일련번호',
-    intimacy    INT      NULL     DEFAULT 0 COMMENT '친밀도',
-    is_accept   BOOLEAN  NULL     DEFAULT false COMMENT '수락여부',
-    regdate     DATETIME NULL     DEFAULT now() COMMENT '등록일',
+    intimacy    INT      NULL DEFAULT 0 COMMENT '친밀도',
+    is_accept   BOOLEAN  NULL DEFAULT false COMMENT '수락여부',
+    regdate     DATETIME NULL DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (sender_id, receiver_id)
 ) COMMENT '친구';
 
@@ -59,26 +59,26 @@ CREATE TABLE matzip
     kakao_map_url TEXT        NOT NULL COMMENT '카카오맵 상세페이지 url',
     name          VARCHAR(50) NOT NULL COMMENT '가게 이름',
     regdate       DATETIME    NULL DEFAULT now() COMMENT '등록일',
-        PRIMARY KEY (id)
+    PRIMARY KEY (id)
 ) COMMENT '맛집';
 
 CREATE TABLE matzip_tag
 (
-    tag_id       INT NOT NULL COMMENT '태그 일련번호',
-    my_matzip_id INT NOT NULL COMMENT '나의 맛집 일련번호',
-    regdate  DATETIME    NULL     DEFAULT now() COMMENT '등록일',
+    tag_id       INT      NOT NULL COMMENT '태그 일련번호',
+    my_matzip_id INT      NOT NULL COMMENT '나의 맛집 일련번호',
+    regdate      DATETIME NULL DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (tag_id, my_matzip_id)
 ) COMMENT '나의 맛집태그';
 
 CREATE TABLE member
 (
-    id       INT         NOT NULL AUTO_INCREMENT COMMENT '회원 일련번호',
-    username VARCHAR(20) NOT NULL COMMENT '아이디 (8~20)',
+    id       INT          NOT NULL AUTO_INCREMENT COMMENT '회원 일련번호',
+    username VARCHAR(100) NOT NULL COMMENT '아이디 (8~20)',
     password VARCHAR(100) NOT NULL COMMENT '비밀번호(8~16)',
-    email    VARCHAR(35) NOT NULL COMMENT '이메일',
-    point    INT         NULL     DEFAULT 0 COMMENT '포인트',
-    nickname VARCHAR(20) NOT NULL COMMENT '닉네임',
-    name     VARCHAR(20) NOT NULL COMMENT '이름',
+    email    VARCHAR(100) NOT NULL COMMENT '이메일',
+    point    INT          NULL DEFAULT 0 COMMENT '포인트',
+    nickname VARCHAR(100) NOT NULL COMMENT '닉네임',
+    name     VARCHAR(20)  NOT NULL COMMENT '이름',
     PRIMARY KEY (id)
 ) COMMENT '회원';
 
@@ -97,13 +97,13 @@ CREATE TABLE member_authorities
 
 CREATE TABLE my_matzip
 (
-    id          INT                         NOT NULL AUTO_INCREMENT COMMENT '나의 맛집 일련번호',
-    matzip_id   INT                         NOT NULL COMMENT '맛집 일련번호',
-    member_id   INT                         NOT NULL COMMENT '회원 일련번호',
-    regdate     DATETIME                    NULL     DEFAULT now() COMMENT '등록일',
-    visibility  ENUM('PRIVATE','PUBLIC','HIDDEN') NULL     DEFAULT 'PUBLIC' COMMENT '공개여부',
-    content     TEXT                        NOT NULL COMMENT '리뷰',
-    star_rating INT                         NULL     DEFAULT 1 COMMENT '리뷰 점수',
+    id          INT                                NOT NULL AUTO_INCREMENT COMMENT '나의 맛집 일련번호',
+    matzip_id   INT                                NOT NULL COMMENT '맛집 일련번호',
+    member_id   INT                                NOT NULL COMMENT '회원 일련번호',
+    regdate     DATETIME                           NULL DEFAULT now() COMMENT '등록일',
+    visibility  ENUM ('PRIVATE','PUBLIC','HIDDEN') NULL DEFAULT 'PUBLIC' COMMENT '공개여부',
+    content     TEXT                               NOT NULL COMMENT '리뷰',
+    star_rating INT                                NULL DEFAULT 1 COMMENT '리뷰 점수',
     PRIMARY KEY (id)
 ) COMMENT '나의 맛집';
 
@@ -113,8 +113,8 @@ CREATE TABLE my_review
     matzip_id   INT      NOT NULL COMMENT '맛집 일련번호',
     member_id   INT      NOT NULL COMMENT '회원 일련번호',
     content     TEXT     NOT NULL COMMENT '리뷰',
-    regdate     DATETIME NULL     DEFAULT now() COMMENT '등록일',
-    star_rating INT      NULL     DEFAULT 1 COMMENT '리뷰 점수',
+    regdate     DATETIME NULL DEFAULT now() COMMENT '등록일',
+    star_rating INT      NULL DEFAULT 1 COMMENT '리뷰 점수',
     PRIMARY KEY (id)
 ) COMMENT '나의 리뷰';
 
@@ -129,9 +129,9 @@ CREATE TABLE profile_img
 
 CREATE TABLE review_tag
 (
-    tag_id       INT NOT NULL COMMENT '태그 일련번호',
-    my_review_id INT NOT NULL COMMENT '나의 리뷰 일련번호',
-    regdate  DATETIME    NULL     DEFAULT now() COMMENT '등록일',
+    tag_id       INT      NOT NULL COMMENT '태그 일련번호',
+    my_review_id INT      NOT NULL COMMENT '나의 리뷰 일련번호',
+    regdate      DATETIME NULL DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (tag_id, my_review_id)
 ) COMMENT '나의 리뷰 태크';
 
@@ -139,7 +139,7 @@ CREATE TABLE tag
 (
     id      INT         NOT NULL AUTO_INCREMENT COMMENT '태그 일련번호',
     tagname VARCHAR(30) NOT NULL COMMENT '태그',
-    regdate DATETIME    NULL     DEFAULT now() COMMENT '등록일',
+    regdate DATETIME    NULL DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (id)
 ) COMMENT '태그';
 
@@ -151,7 +151,7 @@ CREATE TABLE user_matzip_tag_status
     member_id    INT      NOT NULL COMMENT '회원 일련번호',
     my_matzip_id INT      NOT NULL COMMENT '나의 맛집 일련번호',
     tag_id       INT      NOT NULL COMMENT '태그 일련번호',
-    regdate      DATETIME NULL     DEFAULT now() COMMENT '등록일',
+    regdate      DATETIME NULL DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (member_id, my_matzip_id, tag_id)
 ) COMMENT '맛집 태그와 회원 관계';
 
@@ -159,7 +159,7 @@ CREATE TABLE wish_list
 (
     member_id INT      NOT NULL COMMENT '회원 일련번호',
     matzip_id INT      NOT NULL COMMENT '맛집 일련번호',
-    regdate   DATETIME NULL     DEFAULT now() COMMENT '등록일',
+    regdate   DATETIME NULL DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (member_id, matzip_id)
 ) COMMENT '위시리스트';
 
