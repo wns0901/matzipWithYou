@@ -1,5 +1,5 @@
 body{
-    background-color:lightsalmon;
+    background-color:#FFB27E;
 }
 
 .container {
@@ -10,7 +10,7 @@ body{
 
 .friends-sidebar {
     width: 300px;
-    height: calc(100vh - 60px);
+    height: 400px;
     padding: 20px;
     background-color: #f8f9fa;
     border-radius: 10px;

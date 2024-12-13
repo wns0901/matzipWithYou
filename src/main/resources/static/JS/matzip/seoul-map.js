@@ -26,10 +26,75 @@ const districtNames = {
     'Jungnang-gu': '중랑구'
 };
 
+// Lock 위치 정의 (1400x1400 viewBox 기준)
+const lockPositions = {
+    'Gangnam-gu': { x: 950, y: 1020 },
+    'Gangdong-gu': { x: 1250, y: 780 },
+    'Gangbuk-gu': { x: 824, y: 385 },
+    'Gangseo-gu': { x: 250, y: 600 },
+    'Gwanak-gu': { x: 600, y: 1100 },
+    'Gwangjin-gu': { x: 950, y: 700 },
+    'Guro-gu': { x: 400, y: 900 },
+    'Geumcheon-gu': { x: 450, y: 1050 },
+    'Nowon-gu': { x: 1000, y: 300 },
+    'Dobong-gu': { x: 900, y: 200 },
+    'Dongdaemun-gu': { x: 900, y: 600 },
+    'Dongjak-gu': { x: 600, y: 980 },
+    'Mapo-gu': { x: 500, y: 650 },
+    'Seodaemun-gu': { x: 600, y: 550 },
+    'Seocho-gu': { x: 750, y: 1000 },
+    'Seongdong-gu': { x: 850, y: 650 },
+    'Seongbuk-gu': { x: 800, y: 450 },
+    'Songpa-gu': { x: 1000, y: 850 },
+    'Yangcheon-gu': { x: 350, y: 750 },
+    'Yeongdeungpo-gu': { x: 500, y: 800 },
+    'Yongsan-gu': { x: 700, y: 750 },
+    'Eunpyeong-gu': { x: 550, y: 400 },
+    'Jongno-gu': { x: 700, y: 500 },
+    'Jung-gu': { x: 750, y: 650 },
+    'Jungnang-gu': { x: 1000, y: 500 }
+};
+
 let currentData = serverData.toTalData;
+let selectedFriendId = null;
+
+// 색상 구간 정의
+const colorRanges = [
+    { threshold: 0, color: '#FFFFFF' },
+    { threshold: 0.01, color: '#FFE2BA' },
+    { threshold: 0.25, color: '#FF9345' },
+    { threshold: 0.50, color: '#FF7327' },
+    { threshold: 0.75, color: '#D25800' }
+];
+
+function getMaxCount(data) {
+    let maxCount = 0;
+    Object.keys(districtNames).forEach(engName => {
+        const korName = districtNames[engName];
+        const publicCount = data.publicGu[korName] || 0;
+        const hiddenCount = data.hiddenGu[korName] || 0;
+        const totalCount = publicCount + hiddenCount;
+        maxCount = Math.max(maxCount, totalCount);
+    });
+    return maxCount;
+}
+
+function getColorByPercentage(percentage) {
+    if (percentage > 0 && percentage <= 0.25) {
+        return '#FFE2BA';
+    }
+
+    for (let i = colorRanges.length - 1; i >= 0; i--) {
+        if (percentage > colorRanges[i].threshold) {
+            return colorRanges[i].color;
+        }
+    }
+    return colorRanges[0].color;
+}
 
 function updateMap(data) {
-    document.querySelectorAll('.district-count').forEach(el => el.remove());
+    document.querySelectorAll('.district-lock').forEach(el => el.remove());
+    const maxCount = getMaxCount(data);
 
     Object.keys(districtNames).forEach(engName => {
         const korName = districtNames[engName];
@@ -38,43 +103,36 @@ function updateMap(data) {
         if (path) {
             const publicCount = data.publicGu[korName] || 0;
             const hiddenCount = data.hiddenGu[korName] || 0;
+            const totalCount = publicCount + hiddenCount;
 
-            if (publicCount > 0 || hiddenCount > 0) {
-                // Center
-                const bbox = path.getBBox();
-                const centerX = bbox.x + bbox.width / 2;
-                const centerY = bbox.y + bbox.height / 2;
+            if (totalCount > 0) {
+                const percentage = maxCount > 0 ? totalCount / maxCount : 0;
+                const color = getColorByPercentage(percentage);
+                path.style.fill = color;
 
-                let textClass, textContent;
-
-                if (publicCount > 0 && hiddenCount > 0) {
-                    textClass = 'mixed';
-                    textContent = publicCount + hiddenCount;
-                } else if (hiddenCount > 0) {
-                    textClass = 'hidden';
-                    textContent = hiddenCount;
-                } else {
-                    textClass = 'public';
-                    textContent = publicCount;
+                // 히든 맛집이 있는 경우 LOCK 표시
+                if (hiddenCount > 0 && lockPositions[engName]) {
+                    addLockText(lockPositions[engName].x, lockPositions[engName].y);
                 }
-
-                addCountText(centerX, centerY, textContent, textClass);
+            } else {
+                path.style.fill = '#FFFFFF';
             }
         }
     });
 }
 
-function addCountText(x, y, count, className) {
+function addLockText(x, y) {
     const svg = document.getElementById('seoul-map');
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     text.setAttribute('x', x);
     text.setAttribute('y', y);
-    text.setAttribute('class', `district-count ${className}`);
+    text.setAttribute('class', 'district-lock');
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('dominant-baseline', 'middle');
-    text.setAttribute('font-size', '24');
+    text.setAttribute('font-size', '16');
     text.setAttribute('font-weight', 'bold');
-    text.textContent = count;
+    text.setAttribute('fill', '#FF0000');
+    text.textContent = 'LOCK';
     svg.appendChild(text);
 }
 
@@ -105,13 +163,20 @@ function hideTooltip() {
 function initializeFriendCards() {
     document.querySelectorAll('.friend-card').forEach(card => {
         card.addEventListener('click', () => {
-            // 선택 효과 처리
+            const friendId = parseInt(card.dataset.friendId);
+
+            if (selectedFriendId === friendId) {
+                card.classList.remove('selected');
+                selectedFriendId = null;
+                currentData = serverData.toTalData;
+                updateMap(currentData);
+                return;
+            }
+
             document.querySelectorAll('.friend-card').forEach(c =>
                 c.classList.remove('selected'));
             card.classList.add('selected');
-
-            // 데이터 업데이트
-            const friendId = parseInt(card.dataset.friendId);
+            selectedFriendId = friendId;
             showFriendData(friendId);
         });
     });
@@ -121,13 +186,14 @@ function showFriendData(friendId) {
     const friend = serverData.friendData.find(f => f.friendId === friendId);
     if (friend) {
         currentData = {
-            publicGu: friend.publicGu,
-            hiddenGu: friend.hiddenGu
+            publicGu: friend.publicGu || {},
+            hiddenGu: friend.hiddenGu || {}
         };
         updateMap(currentData);
     }
 }
 
+// DOM 로드 시 초기화
 document.addEventListener('DOMContentLoaded', () => {
     const paths = document.querySelectorAll('#seoul-map path');
     paths.forEach(path => {
@@ -136,6 +202,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     initializeFriendCards();
-
     updateMap(currentData);
 });
