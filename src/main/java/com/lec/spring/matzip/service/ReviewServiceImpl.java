@@ -55,12 +55,14 @@ public class ReviewServiceImpl implements ReviewService {
 
         int saved = reviewRepository.save(reviewDTO, model);
 
+        String content = addContent(reviewDTO.getId(), reviewDTO.getContent());
         FoodKind foodKind = addFoodKind(reviewDTO.getKindName());
         List<ReviewTag> addReviewTag = addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
         List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
         int rewardReviewPoint = rewardReviewPoint(reviewDTO, 100, 10);
         int rewardReviewIntimacy = rewardReviewIntimacy(reviewDTO, 100, 10);
 
+        model.addAttribute("content", content);
         model.addAttribute("foodKind", foodKind);
         model.addAttribute("reviewTags", addReviewTag);
         model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
@@ -74,12 +76,21 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public FoodKind addFoodKind(String kindName) {
         FoodKind foodKind = foodKindRepository.findByKindName(kindName);
-
         if (foodKind == null) {
             throw new IllegalArgumentException("음식 정보를 찾을 수 없습니다.");
         }
-
         return foodKind;
+    }
+
+    @Override
+    public String addContent(Long id, String content) {
+        Review review = reviewRepository.findById(id);
+        if (review != null) {
+            review.setContent(content);
+        } else {
+            return "Review not found";
+        }
+        return content;
     }
 
     @Override

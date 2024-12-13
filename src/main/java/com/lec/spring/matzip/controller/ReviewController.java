@@ -11,12 +11,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/review")
+@RequestMapping("/matzip")
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -25,18 +26,18 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/review/list")
     public void list(Model model) {
         List<Review> reviews = reviewService.getAllReviews();
         model.addAttribute("reviews", reviews);
     }
 
-    @GetMapping("/write")
-    public void write(Model model) {
+    @GetMapping("/review")
+    public void save(Model model) {
     }
 
-    @PostMapping("/write")
-    public String writeOk(@Valid ReviewDTO reviewDTO
+    @PostMapping("/review")
+    public String saveOk(@Valid ReviewDTO reviewDTO
             , BindingResult bindingResult
             , Model model
             , RedirectAttributes redirectAttributes
@@ -47,12 +48,13 @@ public class ReviewController {
                 redirectAttributes.addFlashAttribute("error_" + error.getField(), error.getDefaultMessage());
             }
 
-            return "redirect:/review/write";
+            return "redirect:/matzips/review";
         }
 
         int saved = reviewService.addReview(reviewDTO, model);
 
         if (saved > 0) {
+            String content = model.getAttribute("content").toString();
             String foodKind = (String) model.getAttribute("foodKind");
             List<ReviewTag> reviewTags = (List<ReviewTag>) model.getAttribute("reviewTags");
             String isHidden = (String) model.getAttribute("isHidden");
@@ -79,16 +81,20 @@ public class ReviewController {
                 redirectAttributes.addFlashAttribute("foodKind", foodKind);
             }
 
-            return "redirect:/review/list";
+            if (content != null) {
+                redirectAttributes.addFlashAttribute("content", content);
+            }
+
+            return "redirect:/matzips/review/list";
         } else {
             redirectAttributes.addFlashAttribute("saveError", "리뷰작성에 실패했습니다.");
-            return "redirect:/review/write";
+            return "redirect:/matzips/review";
         }
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/review/delete")
     public String deleteOk(Long id, Model model) {
         model.addAttribute("result", reviewService.deleteReview(id));
-        return "review/deleteOk";
+        return "/matzips/review/deleteOk";
     }
 }

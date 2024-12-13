@@ -14,6 +14,8 @@ public interface ReviewService {
 
     int addReview(ReviewDTO reviewDTO, Model model);
 
+    String addContent(Long id, String content);
+
     FoodKind addFoodKind(String kindName);
 
     List<ReviewTag> addReviewTags(Long id, List<Long> tagIds);
