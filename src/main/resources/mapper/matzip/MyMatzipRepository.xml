@@ -124,6 +124,7 @@
                     'address', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.address ELSE NULL END,
                     'imgUrl', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.img_url ELSE NULL END,
                     'regdate', CASE WHEN mmz.visibility = 'PUBLIC' THEN DATE_FORMAT(mmz.regdate, '%Y-%m-%d') ELSE NULL END
+
                 )
             ) AS matzipList
         FROM (

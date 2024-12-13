@@ -11,6 +11,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @SuperBuilder
 public class MatzipListDataDTO {
+
     private String visibility;
     private Long memberId;
     private Long myMatzipId;
@@ -33,6 +34,5 @@ public class MatzipListDataDTO {
     public int hashCode() {
         return super.hashCode();
     }
-
 
 }
