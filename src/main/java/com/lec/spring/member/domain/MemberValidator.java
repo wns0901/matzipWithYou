@@ -1,16 +1,12 @@
 package com.lec.spring.member.domain;
 
 import com.lec.spring.member.service.MemberService;
-import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.DataBinder;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.InitBinder;
 
 @Component
 @ControllerAdvice
@@ -26,10 +22,7 @@ public class MemberValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        System.out.println("supports(" + clazz.getName() + ")");
-        // ↓ 검증할 객체의 클래스 타입인지 확인
         boolean result = Member.class.isAssignableFrom(clazz);
-        System.out.println(result);
         return result;
     }
 
@@ -83,11 +76,6 @@ public class MemberValidator implements Validator {
         }
 
     }
-
-
-
-
-
 
 }
 

@@ -1,0 +1,73 @@
+:root {
+    --primary-color: #ff7327;
+    --button-font-color: #ffffff;
+    --secondary-button-border-color: #c8c9cc;
+    --secondary-button-text-color: #303236;
+    --link-color: #ff7327;
+    --title-font-color: #ff7327;
+    --font-default-color: #63656d;
+    --widget-background-color: #ffffff;
+    --box-border-color: #ffffff;
+    --input-text-color: #121214;
+    --input-border-color: #c8c9cc;
+    --input-background-color: #ffffff;
+    --error-color: #e81d01;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', Roboto, Helvetica, sans-serif;
+}
+
+body {
+    background-color: var(--widget-background-color);
+    color: var(--font-default-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+}
+
+.form-group{
+    /*상 - 하 - 좌 - 우*/
+    margin-top: 150px ;
+}
+
+.email-title{
+    color: var(--title-font-color);
+}
+
+#email-input{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    height: 50px;
+    margin: 10px auto;
+    padding: 0 20px;
+}
+
+#email{
+    color: var(--input-text-color);
+}
+
+.title{
+    color: var(--title-font-color);
+}
+
+#button-email-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: var(--button-font-color);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 24px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}

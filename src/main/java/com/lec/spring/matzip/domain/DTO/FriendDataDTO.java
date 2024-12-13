@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class FriendDataDTO extends ToTalDataDTO{
-    private Long firendId;
+    private Long friendId;
     private String nickname;
     private String profileImg;
 }

@@ -21,6 +21,12 @@ public interface MemberService {
 
     List<Member> findAll();
 
+    //이메일 인증구현
+    String authorizationEmail(EmailMessage emailMessage);
+
+    // 인증코드 확인
+    boolean verifyAuthorizationCode(String code, String email);
+
     //이메일이 화원db에 있는지 확인
     String sendEmail(EmailMessage emailMessage);
 

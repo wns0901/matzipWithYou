@@ -2,12 +2,13 @@ package com.lec.spring.member.repository;
 
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface FriendRepository{
+
     // 친구 신청시 이미 보낸 신청은 없나 확인용
     boolean isAlreadyFriend(Friend friend);
 
@@ -30,6 +31,6 @@ public interface FriendRepository{
     int save(Friend friend);
 
     // 친밀도 업데이트
-    int updateIntimacy(@Param("memberId") Long memberId, @Param("intimacy")Integer intimacy);
+    int updateIntimacy(Friend friend, Integer intimacy);
 
 }
