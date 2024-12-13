@@ -1,10 +1,9 @@
-package com.lec.spring.matzip.domain;
+package com.lec.spring.matzip.domain.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.lec.spring.matzip.domain.Matzip;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-
 
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -12,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-class MatzipDTO extends Matzip{
+public class MatzipDataDTO extends Matzip {
     @JsonProperty("road_address_name")
     private String address;
 
@@ -27,13 +26,4 @@ class MatzipDTO extends Matzip{
 
     @JsonProperty("place_url")
     private String kakaoMapUrl;
-}
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class KakaoPlaceDTO {
-    private MatzipDTO kakao;
-    private String kind;
 }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
+    <title>비밀번호 재설정 요청</title>
+    <link rel="stylesheet" th:href="@{/CSS/member/request-reset.css}">
+</head>
+<body>
+<img class="logo" src="/IMG/logo.png" alt="LOGO">
+<div class="container">
+    <h2 class="title" >비밀번호 재설정 요청</h2>
+    <form action="/member/request-reset" method="post" class="email-title">
+        <div class="form-group">
+            <label for="email" id="email" class="email-title">이메일 주소</label>
+            <br>
+            <input type="email" class="form-control" id="email-input" name="email" th:value="${email}" placeholder="이메일을 입력해주세요" required>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary" id="button-email-submit">비밀번호 재설정 링크 요청</button>
+    </form>
+=======
+    <title>비밀번호 재설정 요청 | MatzipWithYou</title>
+    <link rel="stylesheet" href="/css/member/resetPassword.css">
+</head>
+<body>
+<div class="main-container">
+    <img src="/IMG/logo.png" alt="Matzipwithyou" class="logo">
+    <div class="widget-container">
+        <h1>비밀번호 재설정</h1>
+        <form action="/member/request-reset" method="post">
+            <div class="form-group">
+                <label for="to">이메일 주소</label>
+                <div class="email-input-container">
+                    <input type="email"
+                           id="to"
+                           name="to"
+                           th:value="${emailMessage.to}"
+                           class="form-control with-button"
+                           required>
+                    <button type="submit" class="email-verify-button">인증메일 발송</button>
+                </div>
+                <div class="text-danger" th:if="${error}" th:text="${error}"></div>
+            </div>
+        </form>
+    </div>
+>>>>>>> f1534123c72d13b7f7a77fa2d17d5523274b18aa
+</div>
+</body>
+</html>

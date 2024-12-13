@@ -14,8 +14,8 @@
 
     <!-- 친구 요청 보내기 -->
     <insert id="sendFriendRequest" parameterType="com.lec.spring.member.domain.Friend" flushCache="true">
-        INSERT INTO friend(sender_id, receiver_id)
-        VALUES (#{senderId}, #{receiverId})
+        INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept)
+        VALUES (#{senderId}, #{receiverId}, #{intimacy}, #{isAccept})
     </insert>
 
     <!-- 친구 신청 보낼 때 이미 보낸/받은 신청은 아닌지 확인 -->
@@ -65,8 +65,6 @@
             (f.sender_id = #{memberId} AND f.receiver_id = #{targetId})
                 OR (f.receiver_id = #{memberId} AND f.sender_id = #{targetId})
             )
-    </update>
-
 
 
 

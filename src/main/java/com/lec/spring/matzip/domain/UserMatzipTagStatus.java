@@ -13,6 +13,14 @@ public class UserMatzipTagStatus {
         private Long tagId; // 태그 일련번호
         // Tag 에서 가져오기
         private String tagName;
+        //kind id
+        private String kindName;
+
+        //wholeHiddenList
+        private Long matzipId;
+        private String visibility;
+        private Long id;
+
 
 }// end hintPurchase
 
