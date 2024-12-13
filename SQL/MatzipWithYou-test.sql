@@ -13,7 +13,7 @@ WHERE m.visibility = 'HIDDEN';
 
 select m.id, m.matzip_id, m.member_id, m.visibility
 from my_matzip m
-where m.visibility = 'HIDDEN'
+where m.visibility = 'HIDDEN';
 
 SELECT m.id AS 'myMatzipId',
        m.matzip_id AS 'matzipId',
@@ -196,7 +196,5 @@ FROM my_matzip mymz
 
 WHERE mymz.member_id = 1
 GROUP BY 1,2,3
-ORDER BY 4 DESC;
-
 ORDER BY 4 DESC;
 
