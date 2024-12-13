@@ -139,4 +139,9 @@
         GROUP BY m.id, m.nickname, p.filename, mmz.regdate
         ORDER BY mmz.regdate
     </select>
+
+    <insert id="save" parameterType="com.lec.spring.matzip.domain.MyMatzip" flushCache="true" keyColumn="id" keyProperty="id">
+        INSERT INTO my_matzip (matzip_id, member_id, visibility, content, star_rating)
+        VALUES (#{matzipId}, #{memberId}, #{visibility}, #{content}, #{starRating})
+    </insert>
 </mapper>

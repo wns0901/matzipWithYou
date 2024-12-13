@@ -3,6 +3,7 @@ package com.lec.spring.matzip.repository;
 import com.lec.spring.matzip.domain.DTO.FriendDataWithMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.MyMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.SeoulMapSqlDataDTO;
+import com.lec.spring.matzip.domain.MyMatzip;
 
 
 import java.util.List;
@@ -11,6 +12,8 @@ public interface MyMatzipRepository {
     List<MyMatzipDTO> findAll(Long id);
 
     int listCntByMemberId(Long id);
+
+    boolean save(MyMatzip myMatzip);
 
     boolean updateMyMatzipVisibility(Long id, String visibility);
 

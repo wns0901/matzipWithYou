@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.DTO.*;
+import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.repository.MyMatzipRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,8 @@ public class MyMatzipServiceImpl implements MyMatzipService {
     }
 
     @Override
-    public ResponseEntity<Map<String, String>> updateMyMatzipVisibility(Long id, String visibility) {
-        if(myMatzipRepository.updateMyMatzipVisibility(id, visibility)) {
+    public ResponseEntity<Map<String, String>> updateMyMatzipVisibility(UpdateMyMatzipVisibility updateMyMatzipVisibility) {
+        if(myMatzipRepository.updateMyMatzipVisibility(updateMyMatzipVisibility.getMyMatzipId(), updateMyMatzipVisibility.getVisibility())) {
             return ResponseEntity.ok(Map.of("status", "SUCCESS"));
         } else {
             return ResponseEntity.ok(Map.of(
@@ -113,5 +114,10 @@ public class MyMatzipServiceImpl implements MyMatzipService {
                 .friendList(sqlResult)
                 .totalMatzipList(totalMatzipList)
                 .build();
+    }
+
+    @Override
+    public boolean saveMyMatzip(MyMatzip myMatzip) {
+        return myMatzipRepository.save(myMatzip);
     }
 }
