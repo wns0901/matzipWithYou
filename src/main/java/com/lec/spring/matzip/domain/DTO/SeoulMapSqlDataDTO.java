@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class SeoulMapSqlDataDTO {
-    private Long firendId;
+    private Long friendId;
     private String nickname;
     private String profileImg;
     private List<String> publicGu;
