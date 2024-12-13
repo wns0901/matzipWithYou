@@ -12,14 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class MyMatzipInfoDTO {
-    // 위시리스트
-    private Integer wishCnt;
-    private List<MyMatzipInfoDTO> wishPreview;
+    // 나의 맛집, 위시리스트 개수
+    private Integer count;
 
-    // 나의 맛집
-    private Integer myMatzipCnt;
-    private List<MyMatzipInfoDTO> matzipPreview;
+    // 미리보기 리스트
+    private List<MatzipInfoDTO> preview;
 
-    private String matzipName;
-    private String matzipImage;
 }

@@ -3,8 +3,6 @@
 
 <mapper namespace="com.lec.spring.member.repository.MyPageRepository">
 
-
-
     <!-- 닉네임 수정 -->
     <update id="updateNick" flushCache="true">
         UPDATE member
@@ -23,16 +21,13 @@
                   AND f.is_accept = true
             ) AS "friendCnt",
             m.point AS "point",
-            (SELECT filename FROM profile_img WHERE member_id = #{memberId}) AS "profileImage",
-            (SELECT COUNT(*) FROM wish_list WHERE member_id = #{memberId}) AS "wishCnt",
-            (SELECT COUNT(*) FROM my_matzip WHERE member_id = #{memberId}) AS "myMatzipCnt",
-            (SELECT COUNT(*) FROM my_review WHERE member_id = #{memberId}) AS "myReviewCnt"
+            (SELECT filename FROM profile_img WHERE member_id = #{memberId}) AS "profileImage"
         FROM member m
         WHERE m.id = #{memberId}
     </select>
 
     <!-- 위시리스트 미리보기 -->
-    <select id="getWishPreview" resultType="com.lec.spring.member.domain.MyMatzipInfoDTO">
+    <select id="getWishPreview" resultType="com.lec.spring.member.domain.MatzipInfoDTO">
         SELECT
             mz.name AS "matzipName",
             mz.img_url AS "matzipImage"
@@ -42,7 +37,7 @@
     </select>
 
     <!-- 내 맛집 미리보기 -->
-    <select id="getMyMatzipPreview" resultType="com.lec.spring.member.domain.MyMatzipInfoDTO">
+    <select id="getMyMatzipPreview" resultType="com.lec.spring.member.domain.MatzipInfoDTO">
         SELECT
             mz.name AS "matzipName",
             mz.img_url AS "matzipImage"
@@ -52,7 +47,7 @@
     </select>
 
     <!-- 내 리뷰 미리보기 -->
-    <select id="getMyReviewPreview" resultType="com.lec.spring.member.domain.MyReviewInfoDTO">
+    <select id="getMyReviewPreview" resultType="com.lec.spring.member.domain.ReviewInfoDTO">
         SELECT
             mz.name AS "matzipName",
             mz.img_url AS "matzipImage",
@@ -62,9 +57,6 @@
                  JOIN matzip mz ON mr.matzip_id = mz.id
         WHERE mr.member_id = #{memberId}
     </select>
-
-
-
 
 
 </mapper>
