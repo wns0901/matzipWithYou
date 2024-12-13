@@ -1,5 +1,6 @@
 package com.lec.spring.matzip.controller;
 
+import com.lec.spring.matzip.domain.DTO.DetailMapDataDTO;
 import com.lec.spring.matzip.domain.DTO.MatzipDTO;
 import com.lec.spring.matzip.domain.DTO.SeoulMapDataDTO;
 import com.lec.spring.matzip.domain.Matzip;
@@ -42,6 +43,13 @@ public class MatzipController {
         Matzip matzip = matzipService.getMatzipById(id, model);
         model.addAttribute("matzip", matzip);
         return "matzip/detail";
+    }
+
+    @GetMapping("/{memberId}/{gu}")
+    public String getGuMapData(@PathVariable String gu, @PathVariable Long memberId, Model model) {
+        DetailMapDataDTO result = myMatzipService.findGuMapDataById(memberId, gu);
+        model.addAttribute("data", result);
+        return "matzip/gu-detail-map";
     }
 
 }
