@@ -11,6 +11,7 @@ import com.lec.spring.member.repository.AuthorityRepository;
 import com.lec.spring.member.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -25,6 +26,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
 
+    @Autowired // Autowired 이슈 해결
     public PrincipalOauth2UserService(SqlSession sqlSession){
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
         this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
@@ -78,14 +80,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             authorityRepository.addAuthority(memberId, authId);
 
             if (cnt > 0) {
-                System.out.println("[OAuth2 인증 회원 가입 성공]");
                 member = memberRepository.findByUsername(username);
-            } else {
-                System.out.println("[OAuth2 인증 회원 가입 실패]");
             }
 
-        } else {
-            System.out.println("[OAuth2 인증.  이미 가입된 회원입니다]");
         }
 
         PrincipalDetails principalDetails = new PrincipalDetails(member, oAuth2User.getAttributes());

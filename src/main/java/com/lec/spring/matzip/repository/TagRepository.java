@@ -8,7 +8,7 @@ import java.util.List;
 public interface TagRepository {
     int save(Tag tag);
 
-    Tag findById(int id);
+    Tag findById(Long id);
 
     List<Tag> findByIds(List<Long> ids);
 

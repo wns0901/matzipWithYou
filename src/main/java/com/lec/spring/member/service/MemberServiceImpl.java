@@ -16,7 +16,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
@@ -131,6 +130,43 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findAll();
     }
 
+    //이메일 인증구현
+    @Override
+    public String authorizationEmail(EmailMessage emailMessage) {
+        String randomCode = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString();
+        String authorizationLink = "http://localhost:8080/member/authorizationEmail?uuid="+ uuid;
+        redisTemplate.opsForValue().set(uuid, randomCode, 3, TimeUnit.MINUTES);
+
+
+        Context context = new Context();
+        context.setVariable("authorizationLink", authorizationLink);
+        String emailContet = templateEngine.process("authorizationEmail-template", context);
+
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+            mimeMessageHelper.setTo(emailMessage.getTo());
+            mimeMessageHelper.setSubject(emailMessage.getSubject());
+            mimeMessageHelper.setText(emailContet, true);
+            mailSender.send(mimeMessage);
+
+            return "success";
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    // 인증 유효성
+    @Override
+    public boolean verifyAuthorizationCode(String code, String email) {
+        String savedEmail = (String) redisTemplate.opsForValue().get(code);
+        return savedEmail != null && savedEmail.equals(email);
+
+    }
+
 
     //이메일이 화원db에 있는지 확인
     @Override
@@ -146,7 +182,7 @@ public class MemberServiceImpl implements MemberService {
 
         Context context = new Context();
         context.setVariable("resetLink", resetLink);
-        String emailContet = templateEngine.process("email-template", context);
+        String emailContet = templateEngine.process("member/email-template", context);
 
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -182,6 +218,8 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByEmail(email);
         return member != null;
     }
+
+
 
     @Override
     public Member findByNickname(String nickname) {

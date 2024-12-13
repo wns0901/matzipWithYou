@@ -2,6 +2,7 @@ package com.lec.spring.member.repository;
 
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,11 +21,9 @@ public interface FriendRepository{
 
     // 친구 요청 수락
     int acceptFriendRequest(Friend friend);
-//    int update(Friend friend);
 
     // 친구 요청 거절 & 친삭
     int rejectFriendRequest(Friend friend);
-
 
     // 친구 요청 보내기
     int sendFriendRequest(Friend friend);
@@ -32,15 +31,7 @@ public interface FriendRepository{
     // 친구 요청 DB에 저장
     int save(Friend friend);
 
-//
-//    // 친구 삭제
-//    int delete(Friend friend);
-//    int deleteFriend(Friend friend);
-
-//    // 친밀도 조회
-//    int getIntimacy(Friend friend);
-//
-//    // 친밀도 업데이트
-//    int updateIntimacy(Friend friend);
+    // 친밀도 업데이트
+    int updateIntimacy(@Param("id") Long id, @Param("intimacy")Integer intimacy);
 
 }

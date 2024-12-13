@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>히든 맛집 목록</title>
+    <link rel="stylesheet" href="styles.css"> <!-- 스타일 시트 -->
+</head>
+<body>
+<h1>전체 히든 맛집 목록</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>myMatzipId</th>
+        <th>matzipId</th>
+        <th>memberId</th>
+        <th>visibility</th>
+        <th>kindName</th>
+        <th>tagId</th>
+        <th>tagName</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${tags}">
+        <td th:text="${item.myMatzipId}"></td>
+        <td th:text="${item.matzipId}"></td>
+        <td th:text="${item.memberId}"></td>
+        <td th:text="${item.visibility}"></td>
+        <td th:text="${item.kindName}"></td>
+        <td th:text="${item.tagId}"></td>
+        <td th:text="${item.tagName}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h1>userMatzipTagStatus</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>myMatzipId</th>
+        <th>memberId</th>
+        <th>TagId</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${userMatzipTagStatuses}">
+        <td th:text="${user.myMatzipId}"></td>
+        <td th:text="${user.memberId}"></td>
+        <td th:text="${user.tagId}"></td>
+
+    </tr>
+    </tbody>
+</table>
+
+<h1>중복된 히든 맛집 목록 : userMatzipTagStatus와의 중복 list</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>myMatzipId</th>
+        <th>matzipId</th>
+        <th>memberId</th>
+        <th>visibility</th>
+        <th>kindName</th>
+        <th>tagId</th>
+        <th>tagName</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="duo : ${duplicate}">
+        <td th:text="${duo.myMatzipId}"></td>
+        <td th:text="${duo.matzipId}"></td>
+        <td th:text="${duo.memberId}"></td>
+        <td th:text="${duo.visibility}"></td>
+        <td th:text="${duo.kindName}"></td>
+        <td th:text="${duo.tagId}"></td>
+        <td th:text="${duo.tagName}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+
+<h1>중복을 제거한 히든 맛집 목록 : userMatzipTagStatus와의 중복제거 list</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>myMatzipId</th>
+        <th>matzipId</th>
+        <th>memberId</th>
+        <th>visibility</th>
+        <th>kindName</th>
+        <th>tagId</th>
+        <th>tagName</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="del : ${deleteDuplicate}">
+        <td th:text="${del.myMatzipId}"></td>
+        <td th:text="${del.matzipId}"></td>
+        <td th:text="${del.memberId}"></td>
+        <td th:text="${del.visibility}"></td>
+        <td th:text="${del.kindName}"></td>
+        <td th:text="${del.tagId}"></td>
+        <td th:text="${del.tagName}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
