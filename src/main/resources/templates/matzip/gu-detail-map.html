@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script
-            type="text/javascript"
             th:src="${@environment.getProperty('app.kakaoMap.url')}"
     ></script>
-    <script th:inline="javascript">
-        console.log([[${data}]])
-    </script>
 </head>
 <body>
-<div id="map">
-
-</div>
+<h1>확인</h1>
+<div id="map" style="width:500px;height:400px;"></div>
 </body>
-<script>
-    const mapContainer = document.getElementById("map")
+<script th:inline="javascript">
+    const data = [[${data}]];
+    const centerLatLng = data.centerLatLng;
+    const mapContainer = document.getElementById("map");
+    const mapOption = {
+            center: new kakao.maps.LatLng(centerLatLng.lat, centerLatLng.lng),
+            level: 3
+        };
+
+    const map = new kakao.maps.Map(mapContainer, mapOption);
 </script>
 </html>
