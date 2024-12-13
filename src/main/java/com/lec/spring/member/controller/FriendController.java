@@ -3,7 +3,6 @@ package com.lec.spring.member.controller;
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.service.FriendService;
-import com.lec.spring.member.service.MemberServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -72,28 +71,12 @@ public class FriendController {
 
     // 내 친구 목록 가져오기
     @GetMapping("/list")
-    public ResponseEntity<List<Friend>> getFriendsWithDetailsDTO(@PathVariable Long memberId) {
-        List<Friend> friends = friendService.getFriendsWithDetailsDTO(memberId);
+    public ResponseEntity<List<FriendDetailsDTO>> getFriendsWithDetailsDTO(@PathVariable Long memberId) {
+        List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
         return ResponseEntity.ok(friends);
     }
 
 
-    // 친밀도 업데이트
-//    friendRepository.updateIntimacy(member.getId(), friend.getIntimacy());
 
 }
 
-
-// 친구요청 보내는 html 의 script 에 들어갈 JS
-// // Query Parameter 방식
-//async function sendFriendRequest(senderId, receiverId) {
-//    const response = await fetch(/api/friend/request?senderId=${senderId}&receiverId=${receiverId}, {
-//        method: 'POST',
-//    });
-//
-//    if (response.ok) {
-//        console.log('Friend request sent successfully');
-//    } else {
-//        console.error('Failed to send friend request');
-//    }
-//}

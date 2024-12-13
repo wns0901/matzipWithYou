@@ -13,7 +13,7 @@ public interface FriendRepository{
     boolean isAlreadyFriend(Friend friend);
 
     // 친구 목록 조회 (친구와 맛집 공개 상태 정보 포함)
-    List<Friend> findFriendsWithDetailsDTO(Long memberId);
+    List<FriendDetailsDTO> findFriendsWithDetailsDTO(Long memberId);
 
     // 대기 중인 요청 목록 조회
     List<Friend> findPendingRequests(Long memberId);
@@ -26,9 +26,6 @@ public interface FriendRepository{
 
     // 친구 요청 보내기
     int sendFriendRequest(Friend friend);
-
-    // 친구 요청 DB에 저장
-    int save(Friend friend);
 
     // 친밀도 업데이트
     int updateIntimacy(Friend friend, Integer intimacy);

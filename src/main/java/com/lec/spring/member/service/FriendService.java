@@ -17,11 +17,13 @@ public interface FriendService {
     int deleteFriend(Friend friend);
 
     // 친구 상세 정보
-    List<Friend> getFriendsWithDetailsDTO(Long memberId);
+    List<FriendDetailsDTO> getFriendsWithDetailsDTO(Long memberId);
 
     // 친구 요청 대기중
     List<Friend> getPendingRequests(Long memberId);
 
+    // 친밀도 업데이트
+    int updateIntimacy(Friend friend, Integer intimacy);
 
 }
 
