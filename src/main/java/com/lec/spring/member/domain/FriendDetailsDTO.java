@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class FriendDetailsDTO {
     private String nickname;
-    private int intimacy;
-    private int publicCount;
-    private int hiddenCount;
+    private String username;
+    private Integer intimacy;
+    private Integer publicCount;
+    private Integer hiddenCount;
     private String profileImg;
 }
