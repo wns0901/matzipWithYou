@@ -57,10 +57,9 @@ const lockPositions = {
 let currentData = serverData.toTalData;
 let selectedFriendId = null;
 
-// 색상 구간 정의
 const colorRanges = [
     { threshold: 0, color: '#FFFFFF' },
-    { threshold: 0.01, color: '#FFE2BA' },
+    { threshold: 0.0001, color: '#FFE2BA' },
     { threshold: 0.25, color: '#FF9345' },
     { threshold: 0.50, color: '#FF7327' },
     { threshold: 0.75, color: '#D25800' }
@@ -109,7 +108,6 @@ function updateMap(data) {
                 const color = getColorByPercentage(percentage);
                 path.style.fill = color;
 
-                // 히든 맛집이 있는 경우 LOCK 표시
                 if (hiddenCount > 0 && lockPositions[engName]) {
                     addLockText(lockPositions[engName].x, lockPositions[engName].y);
                 }
@@ -159,6 +157,22 @@ function hideTooltip() {
 }
 
 function initializeFriendCards() {
+    const hasFriends = serverData.friendData && serverData.friendData.length > 0;
+    const friendsSidebar = document.querySelector('.friends-sidebar');
+
+    if (!hasFriends) {
+        friendsSidebar.innerHTML = `
+            <div class="no-friends-message">
+                등록된 친구가 없습니다
+            </div>
+            <button class="add-friend-button" onclick="location.href='#'">
+                친구 등록하기
+            </button>
+            
+        `;
+        return;
+    }
+
     document.querySelectorAll('.friend-card').forEach(card => {
         card.addEventListener('click', () => {
             const friendId = parseInt(card.dataset.friendId);
