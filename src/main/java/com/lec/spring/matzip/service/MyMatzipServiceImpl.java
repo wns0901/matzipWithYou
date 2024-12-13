@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.DTO.*;
+import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.repository.MyMatzipRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,8 @@ public class MyMatzipServiceImpl implements MyMatzipService {
     }
 
     @Override
-    public ResponseEntity<Map<String, String>> updateMyMatzipVisibility(Long id, String visibility) {
-        if(myMatzipRepository.updateMyMatzipVisibility(id, visibility)) {
+    public ResponseEntity<Map<String, String>> updateMyMatzipVisibility(UpdateMyMatzipVisibility updateMyMatzipVisibility) {
+        if(myMatzipRepository.updateMyMatzipVisibility(updateMyMatzipVisibility.getMyMatzipId(), updateMyMatzipVisibility.getVisibility())) {
             return ResponseEntity.ok(Map.of("status", "SUCCESS"));
         } else {
             return ResponseEntity.ok(Map.of(
@@ -53,7 +54,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
     @Override
     public SeoulMapDataDTO findSeoulMapDataById(Long id) {
-        List<SeoulMapDBDataDTO> seoulMapDBDataDTOS = myMatzipRepository.findSeoulMapData(id);
+        List<SeoulMapSqlDataDTO> seoulMapDBDataDTOS = myMatzipRepository.findSeoulMapData(id);
         List<FriendDataDTO> friendDataDTOS = new ArrayList<>();
         Map<String, Integer> totalPublicGuMap = new HashMap<>();
         Map<String, Integer> totalHiddenGuMap = new HashMap<>();
@@ -92,5 +93,31 @@ public class MyMatzipServiceImpl implements MyMatzipService {
                         .hiddenGu(totalHiddenGuMap)
                         .build())
                 .build();
+    }
+
+    @Override
+    public DetailMapDataDTO findGuMapDataById(Long id, String gu) {
+        List<FriendDataWithMatzipDTO> sqlResult = myMatzipRepository.findGuMapData(id, gu);
+        List<TotalMatzipListDataDTO> totalMatzipList = new ArrayList<>();
+        sqlResult.forEach(data -> {
+            data.getMatzipList().forEach(matzip -> {
+                int index = totalMatzipList.indexOf(matzip);
+                if(index == -1) {
+                    totalMatzipList.add(new TotalMatzipListDataDTO(matzip));
+                } else {
+                    totalMatzipList.get(index).getMemberIds().add(matzip.getMemberId());
+                }
+            });
+        });
+
+        return DetailMapDataDTO.builder()
+                .friendList(sqlResult)
+                .totalMatzipList(totalMatzipList)
+                .build();
+    }
+
+    @Override
+    public boolean saveMyMatzip(MyMatzip myMatzip) {
+        return myMatzipRepository.save(myMatzip);
     }
 }

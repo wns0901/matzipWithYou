@@ -26,7 +26,7 @@ public class FriendController {
     @PostMapping("")
     public ResponseEntity<String> sendFriendRequest(
 
-          @RequestBody  Friend friend) {
+            @RequestBody  Friend friend) {
         int result = friendService.sendFriendRequest(friend);
         if (result > 0) {
             return ResponseEntity.ok("친구 신청에 성공했습니다.");

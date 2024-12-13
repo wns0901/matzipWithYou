@@ -4,6 +4,8 @@ package com.lec.spring.matzip.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.matzip.domain.DTO.FindingResultMyMatzipDTO;
+import com.lec.spring.matzip.domain.DTO.UpdateMyMatzipVisibility;
+import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.service.MyMatzipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,10 +38,16 @@ public class MyMatzipController {
         return "/myMatzip/list";
     }
 
-    @PatchMapping("/{myMatzipId}/visibility")
-    public ResponseEntity<Map<String,String>> updateMyMatzipVisibility(@RequestBody Long myMayzipId, @RequestBody String visibility) {
+    @PostMapping("")
+    public String save(@RequestBody MyMatzip myMatzip, Model model) {
+        model.addAttribute("result", myMatzipService.saveMyMatzip(myMatzip));
+        return "/matzip/myMatzipSaveOK";
+    }
 
-        return myMatzipService.updateMyMatzipVisibility(myMayzipId, visibility);
+    @PatchMapping("/{myMatzipId}")
+    public ResponseEntity<Map<String,String>> updateMyMatzipVisibility(@PathVariable Long myMatzipId, @RequestBody UpdateMyMatzipVisibility updateMyMatzipVisibility) {
+        updateMyMatzipVisibility.setMyMatzipId(myMatzipId);
+        return myMatzipService.updateMyMatzipVisibility(updateMyMatzipVisibility);
     }
 
     @DeleteMapping("/{myMatzipId}")

@@ -2,6 +2,7 @@ package com.lec.spring.member.repository;
 
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,6 +29,6 @@ public interface FriendRepository{
     int sendFriendRequest(Friend friend);
 
     // 친밀도 업데이트
-    int updateIntimacy(Friend friend, Integer intimacy);
+    int updateIntimacy(@Param("id") Long id, @Param("intimacy")Integer intimacy);
 
 }

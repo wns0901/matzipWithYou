@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/CSS/matzip/review.css}">
+    <script th:src="@{/JS/matzip/review.js}"></script>
+    <title>Review</title>
+</head>
+<body>
+    <form class="review-write-form">
+        <section class="star-rating">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </section>
+        <section class="select-foodKind">
+        </section>
+        <section>
+            <div class="tag-box">
+            </div>
+            <div>최소 3가지 이상 태그를 선택해주세요.</div>
+        </section>
+        <section class="write-box">
+        <textarea class="write-review" name="review-write" placeholder="리뷰를 작성해주세요" required></textarea>
+        </section>
+    </form>
+</body>
+</html>
