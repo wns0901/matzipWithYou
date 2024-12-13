@@ -25,6 +25,10 @@ ALTER TABLE matzip
     AUTO_INCREMENT = 1;
 
 DELETE
+FROM my_matzip;
+ALTER TABLE my_matzip AUTO_INCREMENT = 1;
+
+DELETE
 FROM food_kind;
 ALTER TABLE food_kind
     AUTO_INCREMENT = 1;
@@ -148,11 +152,13 @@ INSERT INTO my_matzip (matzip_id, member_id, visibility, content, star_rating)
 VALUES (1, 3, 'PRIVATE', '나만 알고 싶은 비공개 맛집', 5),
        (2, 2, 'PUBLIC', '누구에게나 알려주고 싶은 맛없는 맛집', 2),
        (5, 4, 'HIDDEN', '누군가 찾아줬으면 하는  맛집', 4),
-       (6, 1, 'HIDDEN', '힌트 구매해줬으면 히든맛집', 1),
+       (4, 1, 'HIDDEN', '힌트 구매해줬으면 히든맛집', 1),
        (4, 3, 'PUBLIC', '좋아요', 1),
        (3, 2, 'PRIVATE', '개인맛집', 5),
        (1, 4, 'HIDDEN', '히든맛집', 4),
-       (6, 1, 'PUBLIC', '공개맛집', 5)
+       (6, 1, 'PUBLIC', '공개맛집', 5),
+       (1, 1, 'HIDDEN', '테스트', 5),
+       (6, 3, 'PUBLIC', '테스트', 5)
 ;
 
 -- friend 테이블 샘플 데이터

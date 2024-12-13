@@ -13,5 +13,5 @@ import java.util.List;
 @Builder
 public class DetailMapDataDTO {
     private List<FriendDataWithMatzipDTO> friendList;
-    private List<MatzipListDataDTO> totalMatzipList;
+    private List<TotalMatzipListDataDTO> totalMatzipList;
 }

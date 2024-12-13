@@ -45,7 +45,7 @@
         ORDER BY 4 DESC;
     </select>
 
-    <resultMap id="seoulDBDataDTO" type="com.lec.spring.matzip.domain.DTO.SeoulMapDBDataDTO">
+    <resultMap id="seoulDBDataDTO" type="com.lec.spring.matzip.domain.DTO.SeoulMapSqlDataDTO">
         <result column="friendId" property="firendId"/>
         <result column="nickname" property="nickname"/>
         <result column="profileImg" property="profileImg" />
@@ -114,13 +114,16 @@
             p.filename AS profileImg,
             json_arrayagg(
                 json_object(
-                    'name', mz.name,
-                    'address', mz.address,
-                    'imgUrl', mz.img_url,
+                    'memberId', m.id,
+                    'myMatzipId', mmz.id,
+                    'matzipId', mz.id,
+                    'visibility', mmz.visibility,
                     'lat', mz.lat,
                     'lng', mz.lng,
-                    'regdate', DATE_FORMAT(mmz.regdate, '%Y-%m-%d'),
-                    'visibility', mmz.visibility
+                    'name', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.name ELSE NULL END,
+                    'address', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.address ELSE NULL END,
+                    'imgUrl', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.img_url ELSE NULL END,
+                    'regdate', CASE WHEN mmz.visibility = 'PUBLIC' THEN DATE_FORMAT(mmz.regdate, '%Y-%m-%d') ELSE NULL END
                 )
             ) AS matzipList
         FROM (

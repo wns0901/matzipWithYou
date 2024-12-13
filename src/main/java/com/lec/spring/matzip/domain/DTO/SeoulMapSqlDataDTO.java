@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SeoulMapDBDataDTO {
+public class SeoulMapSqlDataDTO {
     private Long firendId;
     private String nickname;
     private String profileImg;

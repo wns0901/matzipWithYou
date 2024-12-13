@@ -26,7 +26,6 @@ public class MatzipListDataHandler extends BaseTypeHandler<List<MatzipListDataDT
 
     @Override
     public List<MatzipListDataDTO> getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        System.out.println("getNullableResult called with columnName: " + columnName);
         try {
             return objectMapper.readValue(rs.getString(columnName), objectMapper.getTypeFactory().constructCollectionType(List.class, MatzipListDataDTO.class));
         } catch (JsonProcessingException e) {

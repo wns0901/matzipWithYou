@@ -53,7 +53,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
     @Override
     public SeoulMapDataDTO findSeoulMapDataById(Long id) {
-        List<SeoulMapDBDataDTO> seoulMapDBDataDTOS = myMatzipRepository.findSeoulMapData(id);
+        List<SeoulMapSqlDataDTO> seoulMapDBDataDTOS = myMatzipRepository.findSeoulMapData(id);
         List<FriendDataDTO> friendDataDTOS = new ArrayList<>();
         Map<String, Integer> totalPublicGuMap = new HashMap<>();
         Map<String, Integer> totalHiddenGuMap = new HashMap<>();
@@ -91,6 +91,27 @@ public class MyMatzipServiceImpl implements MyMatzipService {
                         .publicGu(totalPublicGuMap)
                         .hiddenGu(totalHiddenGuMap)
                         .build())
+                .build();
+    }
+
+    @Override
+    public DetailMapDataDTO findGuMapDataById(Long id, String gu) {
+        List<FriendDataWithMatzipDTO> sqlResult = myMatzipRepository.findGuMapData(id, gu);
+        List<TotalMatzipListDataDTO> totalMatzipList = new ArrayList<>();
+        sqlResult.forEach(data -> {
+            data.getMatzipList().forEach(matzip -> {
+                int index = totalMatzipList.indexOf(matzip);
+                if(index == -1) {
+                    totalMatzipList.add(new TotalMatzipListDataDTO(matzip));
+                } else {
+                    totalMatzipList.get(index).getMemberIds().add(matzip.getMemberId());
+                }
+            });
+        });
+
+        return DetailMapDataDTO.builder()
+                .friendList(sqlResult)
+                .totalMatzipList(totalMatzipList)
                 .build();
     }
 }

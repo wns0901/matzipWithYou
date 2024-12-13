@@ -1,7 +1,8 @@
 package com.lec.spring.matzip.repository;
 
+import com.lec.spring.matzip.domain.DTO.FriendDataWithMatzipDTO;
+import com.lec.spring.matzip.domain.DTO.MatzipListDataDTO;
 import com.lec.spring.matzip.domain.DTO.MyMatzipDTO;
-import com.lec.spring.matzip.domain.DTO.SeoulMapDBDataDTO;
 import com.lec.spring.matzip.service.MyMatzipService;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
@@ -40,8 +41,14 @@ class  MyMatzipRepositoryTest {
 
     @Test void testGuData() {
         MyMatzipRepository myMatzipRepository = sqlSession.getMapper(MyMatzipRepository.class);
+        MatzipListDataDTO test = MatzipListDataDTO.builder()
+                .name("오늘런치뷔페")
+                .build();
+
         System.out.println("#".repeat(20) + "test" + "#".repeat(20));
-        myMatzipRepository.findGuMapData(1L, "강남구").forEach(System.out::println);
+        List<FriendDataWithMatzipDTO> result = myMatzipRepository.findGuMapData(1L, "강남구");
+        result.forEach(System.out::println);
+        System.out.println(result.get(0).getMatzipList().get(0).equals(test));
         System.out.println("#".repeat(20) + "test" + "#".repeat(20));
     }
 }

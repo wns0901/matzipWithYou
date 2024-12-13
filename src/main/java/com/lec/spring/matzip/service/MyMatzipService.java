@@ -1,6 +1,8 @@
 package com.lec.spring.matzip.service;
 
+import com.lec.spring.matzip.domain.DTO.DetailMapDataDTO;
 import com.lec.spring.matzip.domain.DTO.FindingResultMyMatzipDTO;
+import com.lec.spring.matzip.domain.DTO.FriendDataWithMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.SeoulMapDataDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -15,4 +17,6 @@ public interface MyMatzipService {
     ResponseEntity<Map<String, String>> deleteMyMatzip (Long id);
 
     SeoulMapDataDTO findSeoulMapDataById(Long id);
+
+    DetailMapDataDTO findGuMapDataById(Long id, String gu);
 }
