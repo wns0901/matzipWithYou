@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.DTO.*;
+import com.lec.spring.matzip.domain.GuCenterLatLng;
 import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.repository.MyMatzipRepository;
 import org.apache.ibatis.session.SqlSession;
@@ -113,6 +114,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
         return DetailMapDataDTO.builder()
                 .friendList(sqlResult)
                 .totalMatzipList(totalMatzipList)
+                .centerLatLng(new GuCenterLatLng().getGuCenterMap().get(gu))
                 .build();
     }
 
