@@ -45,11 +45,16 @@ class ReviewRepositoryTest {
         ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);
         MemberRepository memberRepository = sqlSession.getMapper(MemberRepository.class);
         MatzipRepository matzipRepository = sqlSession.getMapper(MatzipRepository.class);
+        List<Long> memberIds = List.of(2L, 3L, 4L);
+        List<Long> tagIds = List.of(1L, 2L, 3L);
 
         ReviewDTO reviewDTO = ReviewDTO.builder()
                 .matzipId(6L)
                 .memberId(2L)
+                .memberIds(memberIds)
                 .content("좋은 맛집입니다")
+                .tagIds(tagIds)
+                .kindName("일식")
                 .starRating(5)
                 .regdate(LocalDateTime.now())
                 .build();
@@ -67,11 +72,13 @@ class ReviewRepositoryTest {
         int saved = reviewRepository.save(reviewDTO, model);
         assertEquals(1, saved);
 
+        FoodKind foodKind = reviewServiceImpl.addFoodKind(reviewDTO.getKindName());
         List<ReviewTag> addReviewTag = reviewServiceImpl.addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
         List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
         int rewardReviewPoint = reviewServiceImpl.rewardReviewPoint(reviewDTO, 100, 10);
         int rewardReviewIntimacy = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, 100, 10);
 
+        model.addAttribute("foodKind", foodKind);
         model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
         model.addAttribute("reviewTags", addReviewTag);
         model.addAttribute("members", hiddenMatzipMemberIds);
