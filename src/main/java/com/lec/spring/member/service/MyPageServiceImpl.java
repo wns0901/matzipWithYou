@@ -1,6 +1,7 @@
 package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.*;
+import com.lec.spring.member.repository.MemberRepository;
 import com.lec.spring.member.repository.MyPageRepository;
 import lombok.Data;
 import org.apache.ibatis.session.SqlSession;
@@ -21,8 +22,33 @@ public class MyPageServiceImpl implements MyPageService {
 
     // 닉네임 변경
     @Override
-    public int updateNick(UpdateNickDTO updateNickDTO) {
-        return myPageRepository.updateNick(updateNickDTO.getNewNickname());
+    public int updateNick(Long memberId, UpdateNickDTO updateNickDTO) {
+        String newNickname = updateNickDTO.getNewNickname();
+
+        // 1. 닉네임 형식 검증 (20자 이하, 숫자/영어/한글만 허용)
+        if (!newNickname.matches("^[a-zA-Z0-9가-힣\\s]{1,20}$")) {
+            throw new IllegalArgumentException("닉네임은 20자 이하, 숫자, 영어, 한글만 허용됩니다.");
+        }
+
+        // 2. 닉네임 중복 확인
+        boolean nicknameExists = myPageRepository.existsByNickname(newNickname);
+        if (nicknameExists) {
+            throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
+        }
+
+        // 3. 현재 포인트 확인
+        int currentPoint = myPageRepository.getCurrentPoint(memberId);
+        if (currentPoint < 5000) {
+            throw new IllegalArgumentException("포인트가 부족합니다. 현재 소지 포인트: " + currentPoint);
+        }
+
+        // 포인트 차감 및 닉네임 업데이트
+        int rowsUpdated = myPageRepository.updateNicknameAndDeductPoints(memberId, newNickname, 5000);
+        if (rowsUpdated <= 0) {
+            throw new RuntimeException("닉네임 변경에 실패했습니다.");
+        }
+
+        return rowsUpdated;
     }
 
 
