@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <!--    <script th:src="${@environment.getProperty('app.kakaoMap.url')}"></script>-->
+    <script type="text/javascript" th:src="${@environment.getProperty('app.kakaoMap.url')}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/matzip/gu-detail-map.css}">
     <script th:inline="javascript">
-        const data = [[${data}]];
+        const data = /*[[${data}]]*/ {};
+        const hiddenImgUrl = /*[[@{/IMG/matzip/hidden_matzip.png}]]*/ 'hiddenImg';
     </script>
 </head>
 <body>
@@ -28,23 +29,24 @@
         </button>
     </div>
     <div class="matzip_container">
-        <div class="matzip_wrap">
-            <div class="matzip_card" th:each="matzip: ${data.getTotalMatzipList()}"
-                 th:data-matzip-id="${matzip.getMatzipId()}"
-                 th:if="${matzip.getVisibility()} == 'PUBLIC'">
-                <img class="matzip_img" th:src="${matzip.getImgUrl()}">
-                <div class="matzip_name" th:text="${matzip.getName()}"></div>
-
-            </div>
-            <div class="matzip_card" th:each="matzip: ${data.getTotalMatzipList()}"
-                 th:data-matzip-id="${matzip.getMatzipId()}"
-                 th:unless="${matzip.getVisibility()} == 'PUBLIC'">
-                <img class="hidden_img" th:src="@{/IMG/matzip/hidden_matzip.png}">
-            </div>
+        <div id="matzip_wrap">
+            <!--            <div class="matzip_card" th:each="matzip: ${data.getTotalMatzipList()}"-->
+            <!--                 th:data-matzip-id="${matzip.getMatzipId()}"-->
+            <!--                 th:if="${matzip.getVisibility()} == 'PUBLIC'">-->
+            <!--                <img class="matzip_img" th:src="${matzip.getImgUrl()}">-->
+            <!--                <div class="matzip_name" th:text="${matzip.getName()}"></div>-->
+            <!--                <button th:if="${data.getWishList().contains(matzip.getMatzipId())}">누름</button>-->
+            <!--                <button th:unless="${data.getWishList().contains(matzip.getMatzipId())}">안 누름</button>-->
+            <!--            </div>-->
+            <!--            <div class="matzip_card" th:each="matzip: ${data.getTotalMatzipList()}"-->
+            <!--                 th:data-matzip-id="${matzip.getMatzipId()}"-->
+            <!--                 th:unless="${matzip.getVisibility()} == 'PUBLIC'">-->
+            <!--                <img class="hidden_img" th:src="@{/IMG/matzip/hidden_matzip.png}">-->
+            <!--            </div>-->
         </div>
         <button id="add_btn"> + 맛집 리스트 추가하기</button>
     </div>
 </div>
 </body>
-<script th:src="@{/JS/matzip/gu-detail-map.js}"></script>
+<script type="text/javascript" th:src="@{/JS/matzip/gu-detail-map.js}" th:inline="javascript"></script>
 </html>

@@ -9,7 +9,6 @@
     left: 0;
     width: 23vw;
     z-index: 1;
-    outline: 3px green solid;
     height: 80%;
     margin-left: 4%;
     margin-top: 8vh;
@@ -55,7 +54,6 @@
 }
 
 #friend_list {
-    outline: red 2px solid;
     width: 97%;
     height: 8.4vh;
     margin-left: auto;
@@ -93,13 +91,12 @@
     font-size: 18px;
 }
 
-.matzip_wrap {
+#matzip_wrap {
     overflow-y: auto;
     width: 84.4%;
     margin-left: auto;
     margin-right: auto;
     max-height: 90%;
-    outline: red 2px solid;
 }
 
 .matzip_container {
@@ -113,7 +110,6 @@
     background-color: white;
     width: 100%;
     height: 89%;
-    outline: 2px solid cyan;
 }
 
 .hidden_img {
@@ -134,5 +130,7 @@
     margin-top: 3%;
 }
 
-.empty {
+.infowindow {
+    padding: 5px;
+    z-index: 1;
 }

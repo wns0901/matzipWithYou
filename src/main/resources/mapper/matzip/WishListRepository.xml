@@ -25,7 +25,7 @@
     </delete>
 
     <select id="getWishListByMemberId" resultType="com.lec.spring.matzip.domain.WishList">
-        SELECT member_id, matzip_id
+        SELECT member_id AS memberid, matzip_id AS matzipid
         FROM wish_list
         WHERE member_id = #{id}
     </select>
