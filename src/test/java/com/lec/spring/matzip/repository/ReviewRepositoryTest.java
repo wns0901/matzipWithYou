@@ -3,6 +3,7 @@ package com.lec.spring.matzip.repository;
 import com.lec.spring.matzip.domain.*;
 import com.lec.spring.matzip.service.ReviewServiceImpl;
 import com.lec.spring.member.domain.Friend;
+import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
@@ -182,12 +183,12 @@ class ReviewRepositoryTest {
 
         int newIntimacy = 0;
 
-        List<Friend> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getId());
+        List<FriendDetailsDTO> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getId());
         if (friends == null) {
             throw new IllegalArgumentException("Friend not found");
         }
 
-        for(Friend friend : friends) {
+        for(FriendDetailsDTO friend : friends) {
             friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
             friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
             newIntimacy = friend.getIntimacy();

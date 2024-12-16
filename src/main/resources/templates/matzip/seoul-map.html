@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>서울 지도</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/matzip/seoul-map.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/matzip/seoul-map.css}">
+
 </head>
 <body>
+<th:block th:insert="~{common/header::header}"></th:block>
 <div class="container">
     <div class="friends-sidebar">
         <h2>친구 리스트</h2>
@@ -14,12 +17,21 @@
             <div th:each="friend : ${data.friendData}"
                  class="friend-card"
                  th:data-friend-id="${friend.friendId}">
-                <img th:src="@{'/images/profile/default-profile.png'}"
+                <img th:if="${friend.profileImg != null}"
+                     th:src="@{'/upload/' + ${friend.profileImg}}"
+                     th:alt="${friend.nickname}"
+                     onerror="this.src='/IMG/defaultProfileImg.png'"
+                     class="friend-image">
+                <img th:unless="${friend.profileImg != null}"
+                     th:src="@{'/IMG/defaultProfileImg.png'}"
                      th:alt="${friend.nickname}"
                      class="friend-image">
                 <div class="friend-nickname" th:text="${friend.nickname}">친구 이름</div>
             </div>
         </div>
+        <button class="add-friend-button" onclick="location.href='/friend/add'">
+            친구 등록하기
+        </button>
     </div>
 
     <div class="map-container">
@@ -111,6 +123,7 @@
     /*<![CDATA[*/
     const serverData = /*[[${data}]]*/ {};
     /*]]>*/
+    console.log(serverData)
 </script>
 <script type="text/javascript" th:src="@{/js/matzip/seoul-map.js}"></script>
 </body>

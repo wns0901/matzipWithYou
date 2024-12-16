@@ -26,10 +26,9 @@ const districtNames = {
     'Jungnang-gu': '중랑구'
 };
 
-// Lock 위치 정의 (1400x1400 viewBox 기준)
 const lockPositions = {
     'Gangnam-gu': { x: 950, y: 1020 },
-    'Gangdong-gu': { x: 1250, y: 780 },
+    'Gangdong-gu': { x: 1220, y: 770 },
     'Gangbuk-gu': { x: 824, y: 385 },
     'Gangseo-gu': { x: 200, y: 720 },
     'Gwanak-gu': { x: 600, y: 1100 },
@@ -38,12 +37,12 @@ const lockPositions = {
     'Geumcheon-gu': { x: 450, y: 1050 },
     'Nowon-gu': { x: 1000, y: 300 },
     'Dobong-gu': { x: 885, y: 275 },
-    'Dongdaemun-gu': { x: 955, y: 640 },
-    'Dongjak-gu': { x: 600, y: 980 },
+    'Dongdaemun-gu': { x: 945, y: 620 },
+    'Dongjak-gu': { x: 600, y: 965 },
     'Mapo-gu': { x: 490, y: 735 },
-    'Seodaemun-gu': { x: 580, y: 650 },
+    'Seodaemun-gu': { x: 570, y: 630 },
     'Seocho-gu': { x: 810, y: 1100 },
-    'Seongdong-gu': { x: 900, y: 780 },
+    'Seongdong-gu': { x: 895, y: 755 },
     'Seongbuk-gu': { x: 800, y: 450 },
     'Songpa-gu': { x: 1000, y: 850 },
     'Yangcheon-gu': { x: 350, y: 750 },
@@ -58,10 +57,9 @@ const lockPositions = {
 let currentData = serverData.toTalData;
 let selectedFriendId = null;
 
-// 색상 구간 정의
 const colorRanges = [
     { threshold: 0, color: '#FFFFFF' },
-    { threshold: 0.01, color: '#FFE2BA' },
+    { threshold: 0.0001, color: '#FFE2BA' },
     { threshold: 0.25, color: '#FF9345' },
     { threshold: 0.50, color: '#FF7327' },
     { threshold: 0.75, color: '#D25800' }
@@ -110,7 +108,6 @@ function updateMap(data) {
                 const color = getColorByPercentage(percentage);
                 path.style.fill = color;
 
-                // 히든 맛집이 있는 경우 LOCK 표시
                 if (hiddenCount > 0 && lockPositions[engName]) {
                     addLockText(lockPositions[engName].x, lockPositions[engName].y);
                 }
@@ -123,17 +120,16 @@ function updateMap(data) {
 
 function addLockText(x, y) {
     const svg = document.getElementById('seoul-map');
-    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.setAttribute('x', x);
-    text.setAttribute('y', y);
-    text.setAttribute('class', 'district-lock');
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('dominant-baseline', 'middle');
-    text.setAttribute('font-size', '16');
-    text.setAttribute('font-weight', 'bold');
-    text.setAttribute('fill', '#FF0000');
-    text.textContent = 'LOCK';
-    svg.appendChild(text);
+    const image = document.createElementNS("http://www.w3.org/2000/svg", "image");
+
+    image.setAttribute('x', x - 10);
+    image.setAttribute('y', y - 10);
+    image.setAttribute('width', '50');
+    image.setAttribute('height', '50');
+    image.setAttribute('href', '/IMG/lock.png');
+    image.setAttribute('class', 'district-lock');
+
+    svg.appendChild(image);
 }
 
 function showTooltip(e, districtId) {
@@ -161,6 +157,22 @@ function hideTooltip() {
 }
 
 function initializeFriendCards() {
+    const hasFriends = serverData.friendData && serverData.friendData.length > 0;
+    const friendsSidebar = document.querySelector('.friends-sidebar');
+
+    if (!hasFriends) {
+        friendsSidebar.innerHTML = `
+            <div class="no-friends-message">
+                등록된 친구가 없습니다
+            </div>
+            <button class="add-friend-button" onclick="location.href='#'">
+                + 친구 등록하기
+            </button>
+            
+        `;
+        return;
+    }
+
     document.querySelectorAll('.friend-card').forEach(card => {
         card.addEventListener('click', () => {
             const friendId = parseInt(card.dataset.friendId);
@@ -204,3 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeFriendCards();
     updateMap(currentData);
 });
+
+
+
+

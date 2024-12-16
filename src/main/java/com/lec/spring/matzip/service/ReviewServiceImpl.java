@@ -5,12 +5,11 @@ import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MatzipRepository;
 import com.lec.spring.matzip.repository.ReviewRepository;
 import com.lec.spring.matzip.repository.TagRepository;
-import com.lec.spring.member.domain.Friend;
+import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -168,7 +167,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy, int rewardIntimacy) {
-        List<Friend> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getId());
+        List<FriendDetailsDTO> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getId());
         if (friends == null) {
             throw new IllegalArgumentException("Friend not found");
         }
@@ -178,7 +177,7 @@ public class ReviewServiceImpl implements ReviewService {
         int resultIntimacy = !hiddenMatzipMemberIds.isEmpty() ? rewardHiddenIntimacy : rewardIntimacy;
         int newIntimacy = 0;
 
-        for(Friend friend : friends) {
+        for(FriendDetailsDTO friend : friends) {
             friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
             friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
             newIntimacy = friend.getIntimacy();
