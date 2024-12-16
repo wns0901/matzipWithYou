@@ -93,7 +93,7 @@ function getDivItem(place, wishList) {
     if (place.visibility === 'PUBLIC') {
         const matzipImg = document.createElement('img');
         const matzipName = document.createElement('div');
-        const wishListBtn = document.createElement('div');
+        const wishListBtn = document.createElement('input');
 
         matzipImg.className = 'matzip_img';
         matzipImg.src = place.imgUrl;
@@ -101,10 +101,12 @@ function getDivItem(place, wishList) {
         matzipName.className = 'matzip_name';
         matzipName.textContent = place.name;
 
+        wishListBtn.className = 'wish_heart';
+        wishListBtn.type = 'button'
         if (wishList.includes(place.matzipId)) {
-            wishListBtn.textContent = '누름';
+            wishListBtn.style.backgroundImage = 'url(' +fillHeartImgUrl + ')';
         } else {
-            wishListBtn.textContent = '안 누름';
+            wishListBtn.style.backgroundImage = 'url(' + emptyHeartImgUrl + ')';
         }
 
         card.appendChild(matzipImg);

@@ -9,8 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/matzip/gu-detail-map.css}">
     <script th:inline="javascript">
-        const data = /*[[${data}]]*/ {};
-        const hiddenImgUrl = /*[[@{/IMG/matzip/hidden_matzip.png}]]*/ 'hiddenImg';
+        const data = /*[[${data}]]*/ {},
+            hiddenImgUrl = /*[[@{/IMG/matzip/hidden_matzip.png}]]*/ 'hiddenImg',
+            emptyHeartImgUrl = /*[[@{/IMG/matzip/empty_heart.png}]]*/ 'emptyHeart',
+            fillHeartImgUrl = /*[[@{/IMG/matzip/fill_heart.png}]]*/ 'fillHeart'
+        ;
     </script>
 </head>
 <body>
