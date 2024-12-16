@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>인증 이메일</title>
+</head>
+<body>
+<div class="container">
+    <h3 th:text="'안녕하세요, ' + ${to} + '님!'"></h3>
+    <h3>요청하신 인증 번호입니다:</h3>
+    <h1 th:text="${number}"></h1>
+    <h3>감사합니다.</h3>
+</div>
+</body>
+</html>
