@@ -7,8 +7,10 @@ import com.lec.spring.config.oauth.provider.NaverUserInfo;
 import com.lec.spring.config.oauth.provider.OAuth2UserInfo;
 import com.lec.spring.member.domain.Authority;
 import com.lec.spring.member.domain.Member;
+import com.lec.spring.member.domain.ProfileImg;
 import com.lec.spring.member.repository.AuthorityRepository;
 import com.lec.spring.member.repository.MemberRepository;
+import com.lec.spring.member.repository.ProfileImgRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,10 +26,12 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
+    private final ProfileImgRepository profileImgRepository;
 
     public PrincipalOauth2UserService(SqlSession sqlSession){
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
         this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
+        this.profileImgRepository = sqlSession.getMapper(ProfileImgRepository.class);
     }
 
     @Value("${app.oauth2.password}")
@@ -38,8 +42,22 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
+        System.out.println("""
+                [loadUser():]
+                %s
+                %s
+                %s
+                %s
+                """.formatted(userRequest.getClientRegistration()
+                , userRequest.getClientRegistration().getRegistrationId()
+                , userRequest.getAccessToken().getTokenValue()
+                , oAuth2User.getAttributes())
+        );
+
         String provider = userRequest.getClientRegistration().getRegistrationId();
 
+
+        
         OAuth2UserInfo oAuth2UserInfo = switch (provider.toLowerCase()){
             case "kakao" -> new KakaoUserInfo(oAuth2User.getAttributes());
             case "google" -> new GoogleUserInfo(oAuth2User.getAttributes());
@@ -72,6 +90,19 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .build();
 
             int cnt = memberRepository.save(newMember);
+
+            String profileImageUrl = oAuth2UserInfo.getProfileImageUrl();
+            if (profileImageUrl != null) {
+                ProfileImg profileImg = ProfileImg.builder()
+                        .memberId(newMember.getId())
+                        .sourcename(username + "_" + provider + "_profile")
+                        .filename(profileImageUrl)
+                        .isImage(true)
+                        .build();
+
+                profileImgRepository.save(profileImg);
+            }
+
             Authority auth = authorityRepository.findByName("ROLE_MEMBER");
             Long memberId = newMember.getId();
             Long authId = auth.getId();

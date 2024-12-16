@@ -204,3 +204,59 @@ FROM my_matzip mymz
 WHERE mymz.member_id = 1
 GROUP BY 1,2,3
 ORDER BY 4 DESC;
+
+
+-- my_matzip에 추가
+INSERT INTO my_matzip (matzip_id, member_id, visibility, content, star_rating)
+VALUES (15, 5, 'PUBLIC', '분위기도 좋고 안주도 맛있어요! 친구들과 오기 좋은 곳입니다.', 5);
+
+-- 방금 추가된 my_matzip의 id를 사용해서 matzip_tag 추가
+INSERT INTO matzip_tag (tag_id, my_matzip_id)
+VALUES (8, (SELECT id FROM my_matzip WHERE member_id = 5 AND matzip_id = 15)),  -- 분위기좋다
+       (12, (SELECT id FROM my_matzip WHERE member_id = 5 AND matzip_id = 15)), -- 친구와 함께
+       (4, (SELECT id FROM my_matzip WHERE member_id = 5 AND matzip_id = 15));  -- 맛있다
+
+-- my_review에 추가
+INSERT INTO my_review (member_id, matzip_id, content, star_rating)
+VALUES (5, 15, '분위기가 정말 좋고 안주가 맛있어요. 특히 안주가 양이 많아서 좋았습니다!', 5);
+
+-- 방금 추가된 review의 id를 사용해서 review_tag 추가
+INSERT INTO review_tag (my_review_id, tag_id)
+VALUES ((SELECT id FROM my_review WHERE member_id = 5 AND matzip_id = 15), 8),  -- 분위기좋다
+       ((SELECT id FROM my_review WHERE member_id = 5 AND matzip_id = 15), 12), -- 친구와 함께
+       ((SELECT id FROM my_review WHERE member_id = 5 AND matzip_id = 15), 7);  -- 양많다
+
+INSERT INTO wish_list (member_id, matzip_id)
+VALUES (5, 15);
+
+INSERT INTO user_matzip_tag_status (member_id, my_matzip_id, tag_id)
+VALUES (5, (SELECT id FROM my_matzip WHERE member_id = 5 AND matzip_id = 15), 8);
+
+SELECT * FROM my_matzip WHERE member_id = 5;
+
+SELECT * FROM friend
+WHERE (sender_id = 5 AND receiver_id = 6)
+   OR (sender_id = 6 AND receiver_id = 5);
+
+SELECT * FROM wish_list WHERE member_id = 5;
+
+-- 5번과 6번의 양방향 친구관계 재설정
+INSERT INTO friend (sender_id, receiver_id, intimacy, is_accept)
+VALUES (5, 6, 10, true);
+
+
+-- my_matzip 재설정 (기존 데이터 있다면 삭제 후)
+DELETE FROM my_matzip WHERE member_id = 5;
+INSERT INTO my_matzip (matzip_id, member_id, visibility, content, star_rating)
+VALUES (15, 5, 'PUBLIC', '분위기도 좋고 안주도 맛있어요! 친구들과 오기 좋은 곳입니다.', 5);
+
+-- 관련 태그 추가
+INSERT INTO matzip_tag (tag_id, my_matzip_id)
+SELECT 8, id FROM my_matzip WHERE member_id = 5 AND matzip_id = 15;
+
+SELECT * FROM my_matzip WHERE member_id = 5;
+SELECT * FROM friend WHERE sender_id = 5 OR receiver_id = 5;
+SELECT * FROM matzip WHERE id = 15;
+SELECT * FROM matzip_tag mt
+                  JOIN my_matzip mm ON mt.my_matzip_id = mm.id
+WHERE mm.member_id = 5;
