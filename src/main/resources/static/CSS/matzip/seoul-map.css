@@ -9,10 +9,10 @@ body {
 }
 
 .friends-sidebar {
-    width: 370px;
-    height: 500px;
-    padding: 20px;
-    margin-top: 50px;
+    width: 320px;
+    height: 400px;
+    padding: 15px;
+    margin-top: 30px;
     background-color: #f8f9fa;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -39,8 +39,8 @@ body {
 .friend-card {
     background: white;
     border-radius: 12px;
-    padding: 15px;
-    height: 140px;
+    padding: 12px;
+    height: 110px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -61,8 +61,8 @@ body {
 }
 
 .friend-image {
-    width: 70px;
-    height: 70px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 10px;
@@ -156,8 +156,8 @@ body {
     }
 
     .friends-sidebar {
-        width: 370px;
-        height: 500px;
+        width: 320px;
+        height: 400px;
         margin-top: 30px;
     }
 
