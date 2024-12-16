@@ -10,5 +10,7 @@ public interface WishListRepository {
 
     List<WishListDTO> getByMemberId(long id);
 
+    List<WishList> getWishListByMemberId(long id);
+
     boolean delete(WishList wishList);
 }
