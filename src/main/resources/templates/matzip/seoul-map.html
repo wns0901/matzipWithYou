@@ -20,6 +20,7 @@
                 <img th:if="${friend.profileImg != null}"
                      th:src="@{'/upload/' + ${friend.profileImg}}"
                      th:alt="${friend.nickname}"
+                     onerror="this.src='/IMG/defaultProfileImg.png'"
                      class="friend-image">
                 <img th:unless="${friend.profileImg != null}"
                      th:src="@{'/IMG/defaultProfileImg.png'}"

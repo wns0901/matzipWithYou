@@ -13,7 +13,7 @@ body {
     height: 400px;
     padding: 15px;
     margin-top: 30px;
-    background-color: #f8f9fa;
+    background-color: white;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
@@ -88,7 +88,7 @@ body {
     background-color: #FF7327;
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 15px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
