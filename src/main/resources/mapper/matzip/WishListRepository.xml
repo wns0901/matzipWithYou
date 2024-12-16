@@ -4,22 +4,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lec.spring.matzip.repository.WishListRepository">
     <insert id="save" parameterType="com.lec.spring.matzip.domain.WishList" flushCache="true">
-        INSERT INTO wish_list (member_id, matzip_id) VALUES (#{memberId}, #{matzipId})
+        INSERT INTO wish_list (member_id, matzip_id)
+        VALUES (#{memberId}, #{matzipId})
     </insert>
 
     <select id="getByMemberId" resultType="com.lec.spring.matzip.domain.DTO.WishListDTO">
-        SELECT
-            mz.id AS id,
-            mz.name AS name,
-            mz.img_url AS imgUrl
+        SELECT mz.id      AS id,
+               mz.name    AS name,
+               mz.img_url AS imgurl
         FROM wish_list wl
-        JOIN matzip mz ON wl.matzip_id = mz.id
+                 JOIN matzip mz ON wl.matzip_id = mz.id
         WHERE member_id = #{memberId}
     </select>
 
     <delete id="delete" flushCache="true" parameterType="com.lec.spring.matzip.domain.WishList">
-        DELETE FROM wish_list
-               WHERE member_id = #{memberId}
-                 AND matzip_id = #{matzipId}
+        DELETE
+        FROM wish_list
+        WHERE member_id = #{memberId}
+          AND matzip_id = #{matzipId}
     </delete>
+
+    <select id="getWishListByMemberId" resultType="com.lec.spring.matzip.domain.WishList">
+        SELECT member_id, matzip_id
+        FROM wish_list
+        WHERE member_id = #{id}
+    </select>
 </mapper>

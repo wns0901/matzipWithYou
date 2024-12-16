@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.domain.DTO;
 
 import com.lec.spring.matzip.domain.LatLng;
+import com.lec.spring.matzip.domain.WishList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +16,6 @@ import java.util.List;
 public class DetailMapDataDTO {
     private List<FriendDataWithMatzipDTO> friendList;
     private List<TotalMatzipListDataDTO> totalMatzipList;
+    private List<WishList> wishList;
     private LatLng centerLatLng;
 }

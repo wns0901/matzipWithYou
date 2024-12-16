@@ -3,7 +3,9 @@ package com.lec.spring.matzip.service;
 import com.lec.spring.matzip.domain.DTO.*;
 import com.lec.spring.matzip.domain.GuCenterLatLng;
 import com.lec.spring.matzip.domain.MyMatzip;
+import com.lec.spring.matzip.domain.WishList;
 import com.lec.spring.matzip.repository.MyMatzipRepository;
+import com.lec.spring.matzip.repository.WishListRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,11 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
 
     private final MyMatzipRepository myMatzipRepository;
+    private final WishListRepository wishListRepository;
 
     public MyMatzipServiceImpl(SqlSession sqlSession) {
         this.myMatzipRepository = sqlSession.getMapper(MyMatzipRepository.class);
+        this.wishListRepository = sqlSession.getMapper(WishListRepository.class);
     }
 
 
@@ -31,24 +35,24 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
     @Override
     public ResponseEntity<Map<String, String>> updateMyMatzipVisibility(UpdateMyMatzipVisibility updateMyMatzipVisibility) {
-        if(myMatzipRepository.updateMyMatzipVisibility(updateMyMatzipVisibility.getMyMatzipId(), updateMyMatzipVisibility.getVisibility())) {
+        if (myMatzipRepository.updateMyMatzipVisibility(updateMyMatzipVisibility.getMyMatzipId(), updateMyMatzipVisibility.getVisibility())) {
             return ResponseEntity.ok(Map.of("status", "SUCCESS"));
         } else {
             return ResponseEntity.ok(Map.of(
                     "status", "FAIL",
-                    "msg","수정에 실패했습니다."
-                    ));
+                    "msg", "수정에 실패했습니다."
+            ));
         }
     }
 
     @Override
     public ResponseEntity<Map<String, String>> deleteMyMatzip(Long id) {
-        if(myMatzipRepository.deleteMyMatzip(id)) {
+        if (myMatzipRepository.deleteMyMatzip(id)) {
             return ResponseEntity.ok(Map.of("status", "SUCCESS"));
         } else {
             return ResponseEntity.ok(Map.of(
                     "status", "FAIL",
-                    "msg","삭제에 실패했습니다."
+                    "msg", "삭제에 실패했습니다."
             ));
         }
     }
@@ -79,12 +83,12 @@ public class MyMatzipServiceImpl implements MyMatzipService {
             });
 
             friendDataDTOS.add(FriendDataDTO.builder()
-                            .friendId(data.getFriendId())
-                            .nickname(data.getNickname())
-                            .profileImg(data.getProfileImg())
-                            .publicGu(publicGuMap)
-                            .hiddenGu(hiddenGuMap)
-                            .build());
+                    .friendId(data.getFriendId())
+                    .nickname(data.getNickname())
+                    .profileImg(data.getProfileImg())
+                    .publicGu(publicGuMap)
+                    .hiddenGu(hiddenGuMap)
+                    .build());
         });
 
         return SeoulMapDataDTO.builder()
@@ -103,7 +107,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
         sqlResult.forEach(data -> {
             data.getMatzipList().forEach(matzip -> {
                 int index = totalMatzipList.indexOf(matzip);
-                if(index == -1) {
+                if (index == -1) {
                     totalMatzipList.add(new TotalMatzipListDataDTO(matzip));
                 } else {
                     totalMatzipList.get(index).getMemberIds().add(matzip.getMemberId());
@@ -111,10 +115,13 @@ public class MyMatzipServiceImpl implements MyMatzipService {
             });
         });
 
+        List<WishList> wishList = wishListRepository.getWishListByMemberId(id);
+
         return DetailMapDataDTO.builder()
                 .friendList(sqlResult)
                 .totalMatzipList(totalMatzipList)
                 .centerLatLng(new GuCenterLatLng().getGuCenterMap().get(gu))
+                .wishList(wishList)
                 .build();
     }
 
