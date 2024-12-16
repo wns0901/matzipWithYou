@@ -1,9 +1,7 @@
 package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.*;
-import com.lec.spring.member.repository.MemberRepository;
 import com.lec.spring.member.repository.MyPageRepository;
-import lombok.Data;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
