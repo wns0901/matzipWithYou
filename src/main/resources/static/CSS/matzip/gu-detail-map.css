@@ -1,0 +1,138 @@
+#map {
+    width: 100vw;
+    height: 100vh;
+}
+
+#menu_wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 23vw;
+    z-index: 1;
+    outline: 3px green solid;
+    height: 80%;
+    margin-left: 4%;
+    margin-top: 8vh;
+    flex-direction: column;
+}
+
+.bg_white {
+    background: #fff;
+}
+
+#right {
+    float: right;
+    margin-left: 0;
+}
+
+#left {
+    float: left;
+}
+
+.friend_btn {
+    background: none;
+    border: none;
+}
+
+.friend_btn_img {
+    margin-top: 1vh;
+    width: 6.3vh;
+    height: 6.3vh;
+}
+
+.profile_img {
+    width: 100%;
+    height: 100%;
+}
+
+.friend_card {
+    box-sizing: border-box;
+    float: left;
+    width: 8.3vh;
+    height: 8.3vh;
+    border-radius: 60px;
+    border: 4px solid #FF7327;
+}
+
+#friend_list {
+    outline: red 2px solid;
+    width: 97%;
+    height: 8.4vh;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-around
+}
+
+.matzip_card {
+    width: 100%;
+    background-color: #EDEDED;
+    border-radius: 15px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.matzip_img {
+    position: relative;
+    display: block;
+    float: left;
+    width: 23.6%;
+    height: 79.6%;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 4%;
+    border-radius: 9px;
+}
+
+.matzip_name {
+    margin-top: 4%;
+    margin-left: 4%;
+    float: left;
+    font-family: "Noto Sans KR", serif;
+    font-size: 18px;
+}
+
+.matzip_wrap {
+    overflow-y: auto;
+    width: 84.4%;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 90%;
+    outline: red 2px solid;
+}
+
+.matzip_container {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    border-left: 3px solid #E4E4E4;
+    border-right: 3px solid #E4E4E4;
+    border-top: 3px solid #E4E4E4;
+    background-color: white;
+    width: 100%;
+    height: 89%;
+    outline: 2px solid cyan;
+}
+
+.hidden_img {
+    width: 100%;
+    height: 100%;
+}
+
+#add_btn {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FF7327;
+    border-radius: 56px;
+    width: 75%;
+    height: 5vh;
+    border: none;
+    display: block;
+    margin-top: 3%;
+}
+
+.empty {
+}

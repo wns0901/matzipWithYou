@@ -3,23 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script
-            th:src="${@environment.getProperty('app.kakaoMap.url')}"
-    ></script>
+    <!--    <script th:src="${@environment.getProperty('app.kakaoMap.url')}"></script>-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/matzip/gu-detail-map.css}">
+    <script th:inline="javascript">
+        const data = [[${data}]];
+    </script>
 </head>
 <body>
-<h1>확인</h1>
-<div id="map" style="width:500px;height:400px;"></div>
-</body>
-<script th:inline="javascript">
-    const data = [[${data}]];
-    const centerLatLng = data.centerLatLng;
-    const mapContainer = document.getElementById("map");
-    const mapOption = {
-            center: new kakao.maps.LatLng(centerLatLng.lat, centerLatLng.lng),
-            level: 3
-        };
+<img id="test">
+<div id="map"></div>
+<div id="menu_wrap">
+    <div id="friend_list">
+        <button id="left" class="friend_btn">
+            <img class="friend_btn_img" th:src="@{/IMG/matzip/friend-btn-left.png}">
+        </button>
+        <div class="friend_card" th:each="friend : ${data.getFriendList()}">
+            <img class="profile_img" th:src="'@{/IMG/profile/}' + ${friend.getProfileImg()}">
+        </div>
+        <button id="right" class="friend_btn">
+            <img class="friend_btn_img" th:src="@{/IMG/matzip/friend-btn-right.png}">
+        </button>
+    </div>
+    <div class="matzip_container">
+        <div class="matzip_wrap">
+            <div class="matzip_card" th:each="matzip: ${data.getTotalMatzipList()}"
+                 th:data-matzip-id="${matzip.getMatzipId()}"
+                 th:if="${matzip.getVisibility()} == 'PUBLIC'">
+                <img class="matzip_img" th:src="${matzip.getImgUrl()}">
+                <div class="matzip_name" th:text="${matzip.getName()}"></div>
 
-    const map = new kakao.maps.Map(mapContainer, mapOption);
-</script>
+            </div>
+            <div class="matzip_card" th:each="matzip: ${data.getTotalMatzipList()}"
+                 th:data-matzip-id="${matzip.getMatzipId()}"
+                 th:unless="${matzip.getVisibility()} == 'PUBLIC'">
+                <img class="hidden_img" th:src="@{/IMG/matzip/hidden_matzip.png}">
+            </div>
+        </div>
+        <button id="add_btn"> + 맛집 리스트 추가하기</button>
+    </div>
+</div>
+</body>
+<script th:src="@{/JS/matzip/gu-detail-map.js}"></script>
 </html>
