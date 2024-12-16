@@ -46,7 +46,8 @@ public class SecurityConfig {
                                 "/member/register",
                                 "/member/additional-info",
                                 "/member/password-recovery",
-                                "/member/password-recovery/**"
+                                "/member/password-recovery/**",
+                                "/matzip/reviews/**"
                         ).permitAll()
 
                         .requestMatchers(
@@ -56,7 +57,7 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 "/matzip/*/visibility",
-                                "/matzip/reviews/**",
+//                                "/matzip/reviews/**",
                                 "/matzip/hint-tags/**",
                                 "/matzip/wish-list/**",
                                 "/member/*/friends/**",

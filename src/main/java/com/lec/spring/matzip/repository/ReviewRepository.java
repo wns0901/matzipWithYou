@@ -15,7 +15,7 @@ public interface ReviewRepository {
 
     int save(ReviewDTO reviewDTO, Model model);
 
-    int saveReviewTags(List<ReviewTag> reviewTags);
+    int saveReviewTags(List<ReviewTagDTO> reviewTags);
 
     List<Long> checkHiddenMatzip(Long matzipId, Long memberId);
 

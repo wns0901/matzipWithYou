@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -52,25 +53,36 @@ public class ReviewServiceImpl implements ReviewService {
         if (matzip == null) {
             throw new IllegalArgumentException("음식점 정보를 찾을 수 없습니다");
         }
+        int saved =reviewRepository.save(reviewDTO, model);
 
-        int saved = reviewRepository.save(reviewDTO, model);
+        updateRelatedEntities(reviewDTO, model);
+        return saved;
+    }
 
+    private void updateRelatedEntities(ReviewDTO reviewDTO, Model model) {
         String content = addContent(reviewDTO.getId(), reviewDTO.getContent());
+        List<String> foodKinds = getFoodKinds();
         FoodKind foodKind = addFoodKind(reviewDTO.getKindName());
-        List<ReviewTag> addReviewTag = addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
+        List<ReviewTagDTO> addReviewTag = addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
         List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
         int rewardReviewPoint = rewardReviewPoint(reviewDTO, 100, 10);
         int rewardReviewIntimacy = rewardReviewIntimacy(reviewDTO, 100, 10);
 
         model.addAttribute("content", content);
+        model.addAttribute("foodKinds", foodKinds);
         model.addAttribute("foodKind", foodKind);
         model.addAttribute("reviewTags", addReviewTag);
         model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
         model.addAttribute("members", hiddenMatzipMemberIds);
         model.addAttribute("rewardReviewPoint", rewardReviewPoint);
         model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
+    }
 
-        return saved;
+    @Override
+    public List<String> getFoodKinds() {
+        return foodKindRepository.findAll().stream()
+                .map(FoodKind::getKindName)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -94,20 +106,28 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewTag> addReviewTags(Long id, List<Long> tagIds) {
+    public List<ReviewTagDTO> getTags() {
+       return tagRepository.findAll().stream()
+               .map(tag -> new ReviewTagDTO(tag.getId(), tag.getTagName()))
+               .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReviewTagDTO> addReviewTags(Long id, List<Long> tagIds) {
         List<Tag> tags = tagRepository.findByIds(tagIds);
 
         if (tags == null || tags.isEmpty()) {
             throw new IllegalArgumentException("태그 정보를 찾을 수 없습니다.");
         }
 
-        List<ReviewTag> reviewTags = tags.stream()
-                .map(tag -> ReviewTag.builder()
+        List<ReviewTagDTO> reviewTags = tags.stream()
+                .map(tag -> ReviewTagDTO.builder()
                         .tagId(tag.getId())
+                        .tagName(tag.getTagName())
                         .reviewId(id)
                         .regdate(LocalDateTime.now())
                         .build())
-                .toList();
+                .collect(Collectors.toList());
 
         reviewRepository.saveReviewTags(reviewTags);
 

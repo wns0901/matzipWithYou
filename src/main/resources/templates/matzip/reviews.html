@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/CSS/matzip/reviews.css}">
+    <script th:src="@{/JS/matzip/reviews.js}"></script>
+    <title>Review</title>
+</head>
+<body>
+    <form th:action="@{/matzip/review}" method="post" class="review-write-form">
+        <div class="section-container">
+
+            <section>
+                <div class="star-rating-container">
+                    <div class="star-rating">
+                        <div class="star" data-value="1"></div>
+                        <div class="star" data-value="2"></div>
+                        <div class="star" data-value="3"></div>
+                        <div class="star" data-value="4"></div>
+                        <div class="star" data-value="5"></div>
+                    </div>
+                    <div class="star-rating-text">평점 <span class="rating-value">1</span>점</div>
+                </div>
+                <div class="food-kind-container">
+                    <div class="food-kind-text">식사종류</div>
+                    <div class="select-foodKind"></div>
+                    <input type="hidden" name="foodKind" required/>
+                </div>
+                <div class="tags-container">
+                    <div class="tag-container"></div>
+                    <div>최소 3가지 이상 태그를 선택해주세요.</div>
+                </div>
+            </section>
+
+            <div class="right-container">
+
+                <section class="review-section">
+                    <div class="write-box">
+                    <textarea class="write-review" name="review-write" placeholder="리뷰를 작성해주세요" required></textarea>
+                    </div>
+                </section>
+
+                <section class="register-section">
+                    <div class="register-matzip">
+                        <span>내 맛집 등록</span>
+                        <div class="register-btn">
+                            <input type="button" data-name="registerOk" value="등록"/>
+                            <input type="button" data-name="Unregister" value="미등록"/>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="visibility-section">
+                    <div class="matzip-visibility">
+                        <span>맛집 공개 설정</span>
+                        <div class="visibility-btn">
+                            <input type="button" data-name="PUBLIC" value="공개"/>
+                            <input type="button" data-name="HIDDEN" value="히든"/>
+                            <input type="button" data-name="PRIVATE" value="비공개"/>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+        <section class="submit-section">
+            <button class="submit-button">완료</button>
+        </section>
+    </form>
+</body>
+</html>

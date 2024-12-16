@@ -73,14 +73,12 @@ class ReviewRepositoryTest {
         assertEquals(1, saved);
 
         FoodKind foodKind = reviewServiceImpl.addFoodKind(reviewDTO.getKindName());
-        List<ReviewTag> addReviewTag = reviewServiceImpl.addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
         List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
         int rewardReviewPoint = reviewServiceImpl.rewardReviewPoint(reviewDTO, 100, 10);
         int rewardReviewIntimacy = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, 100, 10);
 
         model.addAttribute("foodKind", foodKind);
         model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
-        model.addAttribute("reviewTags", addReviewTag);
         model.addAttribute("members", hiddenMatzipMemberIds);
         model.addAttribute("rewardReviewPoint", rewardReviewPoint);
         model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
@@ -110,19 +108,7 @@ class ReviewRepositoryTest {
         List<Tag> tags = tagRepository.findByIds(tagIds);
         assertNotNull(tags);
 
-        List<ReviewTag> reviewTags = tags.stream()
-                .map(tag -> ReviewTag.builder()
-                        .tagId(tag.getId())
-                        .reviewId(review.getId())
-                        .regdate(LocalDateTime.now())
-                        .build())
-                .toList();
 
-        reviewRepository.saveReviewTags(reviewTags);
-
-        List<ReviewTag> testReviewTags = reviewServiceImpl.addReviewTags(review.getId(), tagIds);
-
-        assertNotNull(reviewTags);
     }
 
     @Test

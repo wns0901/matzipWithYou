@@ -16,9 +16,13 @@ public interface ReviewService {
 
     String addContent(Long id, String content);
 
+    List<String> getFoodKinds();
+
     FoodKind addFoodKind(String kindName);
 
-    List<ReviewTag> addReviewTags(Long id, List<Long> tagIds);
+    List<ReviewTagDTO> getTags();
+
+    List<ReviewTagDTO> addReviewTags(Long id, List<Long> tagIds);
 
     List<Member> hiddenMatzipMemberIds(ReviewDTO reviewDTO);
 
