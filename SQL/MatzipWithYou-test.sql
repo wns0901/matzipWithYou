@@ -7,6 +7,13 @@ FROM member;
 select *
 from friend;
 
+select *
+from my_matzip;
+
+select *
+from profile_img;
+
+
 SELECT m.id, m.matzip_id, m.member_id, m.visibility
 FROM my_matzip m
 WHERE m.visibility = 'HIDDEN';
@@ -197,4 +204,3 @@ FROM my_matzip mymz
 WHERE mymz.member_id = 1
 GROUP BY 1,2,3
 ORDER BY 4 DESC;
-

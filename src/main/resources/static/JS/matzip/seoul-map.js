@@ -166,7 +166,7 @@ function initializeFriendCards() {
                 등록된 친구가 없습니다
             </div>
             <button class="add-friend-button" onclick="location.href='#'">
-                친구 등록하기
+                + 친구 등록하기
             </button>
             
         `;

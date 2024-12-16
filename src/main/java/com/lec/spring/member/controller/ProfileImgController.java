@@ -17,13 +17,16 @@ import java.util.UUID;
 public class ProfileImgController {
 
     private final ProfileImgService profileImgService;
-
-    // 이미지가 저장될 물리적인 경로
-    private final String uploadDir = "upload/profile";
+    private final String uploadDir = "upload";
+    private final String DEFAULT_PROFILE_IMG = "defaultProfileImg.png";
 
     @Autowired
     public ProfileImgController(ProfileImgService profileImgService) {
+
         this.profileImgService = profileImgService;
+
+        File defaultImg = new File(uploadDir + File.separator + DEFAULT_PROFILE_IMG);
+
     }
 
     // 프로필 이미지 업로드 페이지

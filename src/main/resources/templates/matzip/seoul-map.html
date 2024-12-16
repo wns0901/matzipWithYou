@@ -17,7 +17,12 @@
             <div th:each="friend : ${data.friendData}"
                  class="friend-card"
                  th:data-friend-id="${friend.friendId}">
-                <img th:src="@{friend.profileImg}"
+                <img th:if="${friend.profileImg != null}"
+                     th:src="@{'/upload/' + ${friend.profileImg}}"
+                     th:alt="${friend.nickname}"
+                     class="friend-image">
+                <img th:unless="${friend.profileImg != null}"
+                     th:src="@{'/IMG/defaultProfileImg.png'}"
                      th:alt="${friend.nickname}"
                      class="friend-image">
                 <div class="friend-nickname" th:text="${friend.nickname}">친구 이름</div>
@@ -117,6 +122,7 @@
     /*<![CDATA[*/
     const serverData = /*[[${data}]]*/ {};
     /*]]>*/
+    console.log(serverData)
 </script>
 <script type="text/javascript" th:src="@{/js/matzip/seoul-map.js}"></script>
 </body>

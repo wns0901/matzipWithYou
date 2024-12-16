@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfileImgServiceImpl implements ProfileImgService {
 
+    private static final String DEFAULT_PROFILE_IMG = "defaultProfileImg.png";
     private ProfileImgRepository profileImgRepository;
 
     @Autowired
@@ -31,13 +32,42 @@ public class ProfileImgServiceImpl implements ProfileImgService {
         return profileImgRepository.deleteById(id) > 0;
     }
 
+//    @Override
+//    public ProfileImg getProfileImg(Long id) {
+//
+//        return profileImgRepository.findById(id);
+//    }
+//
+//    @Override
+//    public ProfileImg getMemberProfileImg(Long memberId) {
+//
+//        return profileImgRepository.findByMemberId(memberId);
+//    }
+
     @Override
     public ProfileImg getProfileImg(Long id) {
-        return profileImgRepository.findById(id);
+        ProfileImg profileImg = profileImgRepository.findById(id);
+        if (profileImg == null) {
+            return ProfileImg.builder()
+                    .sourcename(DEFAULT_PROFILE_IMG)
+                    .filename(DEFAULT_PROFILE_IMG)
+                    .isImage(true)
+                    .build();
+        }
+        return profileImg;
     }
 
     @Override
     public ProfileImg getMemberProfileImg(Long memberId) {
-        return profileImgRepository.findByMemberId(memberId);
+        ProfileImg profileImg = profileImgRepository.findByMemberId(memberId);
+        if (profileImg == null) {
+            return ProfileImg.builder()
+                    .memberId(memberId)
+                    .sourcename(DEFAULT_PROFILE_IMG)
+                    .filename(DEFAULT_PROFILE_IMG)
+                    .isImage(true)
+                    .build();
+        }
+        return profileImg;
     }
 }
