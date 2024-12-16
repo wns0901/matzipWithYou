@@ -1,7 +1,10 @@
 package com.lec.spring.member.repository;
 
 import com.lec.spring.member.domain.ProfileImg;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+@Mapper
 public interface ProfileImgRepository {
     // 프로필 이미지 저장
     int save(ProfileImg profileImg);
