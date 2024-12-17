@@ -62,9 +62,19 @@ function updateTable(type, data) {
             break;
     }
 }
+function formatDate(dateArray) {
+    if (!Array.isArray(dateArray) || dateArray.length < 3) {
+        console.warn('Invalid date array:', dateArray);
+        return '';
+    }
 
-function formatDate(dateString) {
-    if (!dateString) return '';
-    const date = new Date(dateString);
+    const [year, month, day, hour = 0, minute = 0, second = 0] = dateArray;
+    const date = new Date(year, month - 1, day, hour, minute, second);
+
+    if (isNaN(date.getTime())) {
+        console.warn('Invalid date generated from array:', dateArray);
+        return '';
+    }
+
     return date.toLocaleDateString('ko-KR');
 }
