@@ -28,4 +28,9 @@ public class NaverUserInfo implements OAuth2UserInfo {
     public String getName() {
         return (String)attributes.get("name");
     }
+
+    @Override
+    public String getProfileImageUrl() {
+        return (String) attributes.get("profile_image");
+    }
 }

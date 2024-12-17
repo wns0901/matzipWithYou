@@ -9,11 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProfileImgServiceImpl implements ProfileImgService {
 
-    private ProfileImgRepository profileImgRepository;
+    private final ProfileImgRepository profileImgRepository;
+    private static final String DEFAULT_PROFILE_IMG = "defaultProfileImg.png";
 
     @Autowired
-    public ProfileImgServiceImpl(SqlSession sqlSession) {
-        profileImgRepository = sqlSession.getMapper(ProfileImgRepository.class);
+    public ProfileImgServiceImpl(ProfileImgRepository profileImgRepository) {
+        this.profileImgRepository = profileImgRepository;
     }
 
     @Override
@@ -23,12 +24,12 @@ public class ProfileImgServiceImpl implements ProfileImgService {
 
     @Override
     public boolean updateProfileImg(ProfileImg profileImg) {
-        return profileImgRepository.update(profileImg) > 0;
+        return 1 == profileImgRepository.update(profileImg);
     }
 
     @Override
     public boolean deleteProfileImg(Long id) {
-        return profileImgRepository.deleteById(id) > 0;
+        return 1 == profileImgRepository.deleteById(id);
     }
 
     @Override
@@ -38,6 +39,15 @@ public class ProfileImgServiceImpl implements ProfileImgService {
 
     @Override
     public ProfileImg getMemberProfileImg(Long memberId) {
-        return profileImgRepository.findByMemberId(memberId);
+        ProfileImg profileImg = profileImgRepository.findByMemberId(memberId);
+        if (profileImg == null) {
+            // 프로필 이미지가 없으면 기본 이미지 정보를 가진 ProfileImg 객체 반환
+            return ProfileImg.builder()
+                    .memberId(memberId)
+                    .sourcename(DEFAULT_PROFILE_IMG)
+                    .filename(DEFAULT_PROFILE_IMG)  // static/IMG 폴더의 이미지를 사용
+                    .build();
+        }
+        return profileImg;
     }
 }

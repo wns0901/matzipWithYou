@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -41,6 +42,10 @@ public class MatzipController {
     @GetMapping("/homework/{id}")
     public String getHomework(@PathVariable Long id, Model model) {
         Matzip matzip = matzipService.getMatzipById(id, model);
+        List<String> tagName = matzipService.listTagName(id);
+        List<String> kindName = matzipService.listKindName(id);
+        model.addAttribute("kindName", kindName);
+        model.addAttribute("tagName", tagName);
         model.addAttribute("matzip", matzip);
         return "matzip/detail";
     }

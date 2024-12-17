@@ -4,12 +4,17 @@ import com.lec.spring.member.domain.EmailMessage;
 import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.domain.MemberValidator;
+import com.lec.spring.member.service.EmailAuthService;
 import com.lec.spring.member.service.MemberService;
 
+import com.lec.spring.member.service.ValidationEmailService;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +24,12 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
@@ -29,10 +39,25 @@ public class MemberController {
     private MemberValidator validator;
     private WebDataBinder binder;
     private RedisTemplate redisTemplate;
+    private final EmailAuthService emailAuthService;
+    private final ValidationEmailService validationEmailService;
+    MemberValidator memberValidator;
 
     @Autowired
-    public MemberController(MemberService memberService) {
+    public void setMemberValidator(MemberValidator memberValidator) {
+        this.memberValidator = memberValidator;
+    }
+
+    @InitBinder("member")
+    public void initMemberBinder(WebDataBinder binder) {
+        binder.setValidator(memberValidator);
+    }
+
+    @Autowired
+    public MemberController(MemberService memberService, EmailAuthService emailAuthService, ValidationEmailService validationEmailService) {
         this.memberService = memberService;
+        this.emailAuthService = emailAuthService;
+        this.validationEmailService = validationEmailService;
         this.validator = new MemberValidator();
         this.binder = new WebDataBinder(new Object(), "member");
     }
@@ -153,45 +178,67 @@ public class MemberController {
 
         int cnt = memberService.registerWithReferral(member, referrerNickname);
         model.addAttribute("result", cnt);
+        return "member/login";
 
-        // email 인증
-        // 이메일 인증 전송
+
+    }
+    @GetMapping("/sendEmail")
+    @ResponseBody  // 이 어노테이션으로 JSON 형식 응답을 반환
+    public ResponseEntity<Map<String, String>> sendEmail(@RequestParam String email) {
+
+
+        Map<String, String> response = new HashMap<>();
+
+        // 이메일 형식 검증
+        String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        if (email == null || email.trim().isEmpty()) {
+            response.put("error", "이메일은 필수입니다.");
+            return ResponseEntity.badRequest().body(response);
+        } else if (!email.matches(emailPattern)) {
+            response.put("error", "유효하지 않은 이메일 형식입니다.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
         try {
-            emailMessage.setSubject("이메일 인증");
-            String result = memberService.authorizationEmail(emailMessage);
-            if ("success".equals(result)) {
-                model.addAttribute("email", member.getEmail());
-                model.addAttribute("message", "이메일 인증 링크가 전송되었습니다.");
-                System.out.println("email이 보내졌나요" + member.getEmail());
-                System.out.println(result);
-                return "이메일 인증 안내 페이지"; // 인증을 위한 안내 페이지
-            } else {
-                model.addAttribute("error", "이메일 전송 중 오류가 발생했습니다.");
-                return "이메일 오류";
-            }
+            EmailMessage emailMessage = new EmailMessage();
+            emailMessage.setTo(email);          // 수신자 이메일 설정
+            emailMessage.setSubject("이메일 인증");  // 이메일 제목 설정
+
+            memberService.createEmail(emailMessage);  // 이메일 발송
+            response.put("message", "인증 이메일이 전송되었습니다.");
+            System.out.println("response: " + response);
+            return ResponseEntity.ok(response);  // 성공시 JSON 응답
         } catch (Exception e) {
-            model.addAttribute("error", "이메일 전송 중 오류가 발생했습니다.");
-            return "이메일 오류";
+            e.printStackTrace();
+            response.put("error", "이메일 전송에 실패했습니다. 다시 시도해주세요.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 에러 시 JSON 응답
         }
-
 
     }
 
-    @PostMapping("/verify-email")
-    public String verifyEmail(@RequestParam String email,
-                              @RequestParam String verificationCode,
-                              Model model) {
-        // 인증 코드 검증
-        boolean isVerified = memberService.verifyAuthorizationCode(verificationCode, email);
+    @PostMapping("/verify-code")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> verifyAuthCode(@RequestParam String email, @RequestParam String code) {
+        // Redis
+        boolean isValid = validationEmailService.validateAuthCode(email, code);
+        System.out.println("########isValid: " + isValid);
 
-        if (isVerified) {
-            model.addAttribute("message", "이메일 인증이 완료되었습니다.");
-            return "이메일 인증 성공";
-        } else {
-            model.addAttribute("message", "잘못된 인증 코드입니다.");
-            return "이메일 인증 실패";
+        // 응답을 위한 Map 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", isValid);  // 인증 성공 여부 추가
+        System.out.println("########respose " + response);
+
+        if (isValid) {
+            emailAuthService.deleteAuthCode(email);
+            System.out.println("인증 성공하셨습니까 : " + isValid);
+
         }
+
+        return ResponseEntity.ok(response);  // JSON 응답 반환
     }
+
+
+
 
 
     @PostMapping("/loginError")
@@ -205,17 +252,7 @@ public class MemberController {
         return "common/rejectAuth";
     }
 
-    MemberValidator memberValidator;
 
-    @Autowired
-    public void setMemberValidator(MemberValidator memberValidator) {
-        this.memberValidator = memberValidator;
-    }
-
-    @InitBinder("member")
-    public void initMemberBinder(WebDataBinder binder) {
-        binder.setValidator(memberValidator);
-    }
 
     // 이메일 입력받는 창
     @GetMapping("/request-reset")

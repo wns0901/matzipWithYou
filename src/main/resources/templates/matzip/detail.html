@@ -3,79 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>detail</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/matzip/detail.css}">
     <style>
-        .starRating {
-            display: flex;
-        }
 
-        .star {
-            appearance: none;
-            padding: 1px;
-        }
-
-        .star::after {
-            content: '☆';
-            color: #ff8a5b;
-            font-size: 20px;
-        }
-
-        .star:hover::after {
-            content: '★';
-        }
-
-        .star:has(~ .star:hover)::after {
-            content: '★';
-        }
-
-        .star.active::after,
-        .star:has(~ .star.active)::after {
-            content: '★';
-        }
     </style>
 </head>
 <body>
-<img th:src="${matzip.imgUrl}" alt="가게 이미지">
+<div class="out-box">
+    <div class="img-box">
+<!-- 1. 가게 이미지-->
+<img th:src="${matzip.imgUrl}" alt="가게 이미지"  id="main-img">
+    <!--8. 즐겨찾기 아이콘-->
+        <label for="toggle-heart">
+            <input type="checkbox" id="toggle-heart" style="display: none;">
+            <img class="heart-icon icon" src="/IMG/heart.png" alt="Heart Icon">
+        </label>
+    </div>
 <br>
-<h2><a th:text="${matzip.name}" th:href="${matzip.kakaoMapUrl}"></a></h2>
+    <div class="text">
+<!--2. 가게명-->
+        <div id="title-line">
+<h2 class="matzip-title"><a th:text="${matzip.name}" th:href="${matzip.kakaoMapUrl}"></a></h2>
+        <!--4.음식종류 kindName-->
+        <div class="kindName" th:text="${kindName}" id="kindName">kindName</div>
+        </div>
+<!--3. 가게 주소-->
+        <div th:text="${matzip.address}" id="address"></div>
 
- <!--tags가 존재할 때 -->
-<div th:if="${tagName != null and !#lists.isEmpty(tagName)}">
-    <table>
-        <tbody>
-        <!-- 태그 반복 출력 -->
-        <tr th:each="tag : ${tagName}">
-            <td th:text="${tag}"></td> <!-- 태그 이름, null 체크 -->
-        </tr>
-        </tbody>
-    </table>
+
+
+        <!-- 5. 별점 -->
+        <div class="starRating">
+            <input type="radio" class="star" name="rating" value="1" id="star1">
+            <label for="star1"></label>
+            <input type="radio" class="star" name="rating" value="2" id="star2">
+            <label for="star2"></label>
+            <input type="radio" class="star" name="rating" value="3" id="star3">
+            <label for="star3"></label>
+            <input type="radio" class="star" name="rating" value="4" id="star4">
+            <label for="star4"></label>
+            <input type="radio" class="star" name="rating" value="5" id="star5">
+            <label for="star5"></label>
+        </div>
+
+
+        <div id="reivew-tag-line">
+<!--6. 태그-->
+    <!--tags가 존재할 때 -->
+    <div th:if="${tagName != null and !#lists.isEmpty(tagName)}">
+        <table class="tagName table">
+            <tbody>
+            <!-- 태그 반복 출력 -->
+            <tr class="tagName" th:each="tag : ${tagName}">
+                <td th:text="${tag}" class="tag">#tag</td> <!-- 태그 이름, null 체크 -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+        <!--7. 리뷰아이콘-->
+        <a><img class="icon reivew" src="/IMG/reivew-icon.png"></a>
+        </div>
+
+
+    </div>
+
 </div>
 
-<div th:text="${kindName}" id="kindName"></div>
-<div th:text="${matzip.address}" id="address">kindId:</div>
-
-<div class="starRating">
-    <input type="radio" class="star" name="rating" value="1">
-    <input type="radio" class="star" name="rating" value="2">
-    <input type="radio" class="star" name="rating" value="3">
-    <input type="radio" class="star" name="rating" value="4">
-    <input type="radio" class="star" name="rating" value="5">
-</div>
-
-<button>리뷰 작성</button>
-<button>위시리스트</button>
-
-<script>
-    document.querySelectorAll('.star').forEach(($star) => {
-        $star.addEventListener('click', ({ target }) => {
-            // 모든 .star에서 .active 삭제
-            document.querySelectorAll('.star').forEach(($star) => {
-                $star.classList.remove('active');
-            });
-
-            // 클릭한 .star에 .active 추가
-            target.classList.add('active');
-        });
-    });
-</script>
+<script type="text/javascript" th:src="@{/js/matzip/detail.js}"></script>
 </body>
 </html>

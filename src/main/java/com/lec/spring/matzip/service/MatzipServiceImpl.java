@@ -2,6 +2,7 @@ package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.FoodKind;
 import com.lec.spring.matzip.domain.Matzip;
+import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MatzipRepository;
 import org.apache.ibatis.session.SqlSession;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -70,7 +72,23 @@ public class MatzipServiceImpl implements MatzipService {
 
     @Override
     public Matzip getMatzipById(Long id, Model model) {
-
         return matzipRepository.findById(id);
     }
+
+    @Override
+
+    public List<String> listTagName(Long id) {
+        return matzipRepository.listTagName(id);
+    }
+
+    @Override
+    public List<String> listKindName(Long id) {
+       return matzipRepository.listKindName(id);
+    }
+
+
+    public List<Matzip> getAllMatzips() {
+        return matzipRepository.findAll();
+    }
 }
+
