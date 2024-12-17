@@ -85,7 +85,7 @@ public class MatzipServiceImpl implements MatzipService {
     public List<String> listKindName(Long id) {
        return matzipRepository.listKindName(id);
     }
-} // end MatzipServiceImple
+
 
     public List<Matzip> getAllMatzips() {
         return matzipRepository.findAll();
