@@ -77,6 +77,7 @@ function updateTable(type, data) {
 }
 
 function deleteItem(type, id) {
+
     if (confirm('정말 삭제하시겠습니까?')) {
         fetch(`/admin/api/${type}/${id}`, {
             method: 'DELETE'
