@@ -49,7 +49,8 @@ public class SecurityConfig {
                                 "/member/register",
                                 "/member/additional-info",
                                 "/member/password-recovery",
-                                "/member/password-recovery/**"
+                                "/member/password-recovery/**",
+                                "/matzip/hintForm"
                         ).permitAll()
 
                         .requestMatchers(

@@ -12,31 +12,24 @@ public interface UserMatzipTagStatusService {
    // 저장
    void tagSave(UserMatzipTagStatus userMatzipTagStatus);
 
-   // 단일 태그 조회
-   UserMatzipTagStatus findTagByMemberIdAndMatzipId(Long memberId, Long myMatzipId);
-
-   // 새로운 다중 태그 (회원별 태그) 조회
-   List<UserMatzipTagStatus> findTagsAndMatzipIdByMember(Long memberId);
-
-   // 가게별 다중 태그 조회
-   List<UserMatzipTagStatus> findMemberAndTagByMatzipId(Long myMatzipId);
-
-   //히든태그 조회
-   List<Long> listHiddenMatzipTagIds(Long myMatzipId);
-
-   //kindName 조회
-   String listKindName(Long myMatzipId);
-
-//중복삭제
-   List<UserMatzipTagStatus> finddeleteDuplicateMyMatzipId();
+   List<UserMatzipTagStatus> userMatzipTagStatus();
 
    //wholeHiddenList 조회
-   List<UserMatzipTagStatus> listWholeHiddenList();
+   List<UserMatzipTagStatus> listWholeHiddenListByMyMatzipId(Long myMatzipId);
+   //중복 찾기
+   List<UserMatzipTagStatus> findDuplicateMyMatzipId(Long myMatzipID);
 
    // 중복된 내용 삭제
-   List<UserMatzipTagStatus> deleteDuplicateMyMatzipId();
+   List<UserMatzipTagStatus> deleteDuplicateByMyMatzipId(Long myMatzipID);
 
-   List<UserMatzipTagStatus> userMatzipTagStatus();
+   // hintmanagement
+   List<UserMatzipTagStatus> hintByMyMatzipId(Long myMatzipID);
+
+   void hintTagSave(Long memberId, Long myMatzipId, Long tagId);
+
+   List<UserMatzipTagStatus> shuffleTagNames(List<UserMatzipTagStatus> tagNames) ;
+
+
 
 
 }
