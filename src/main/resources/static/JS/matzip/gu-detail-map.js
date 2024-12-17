@@ -11,10 +11,13 @@ const centerLatLng = data.centerLatLng,
     overlay = new kakao.maps.CustomOverlay(),
 
     markers = [],
-    closeBtn = document.getElementById('close_btn'),
+    closeBtn = document.getElementById('close_detail_btn'),
     detailInfo = document.getElementById('detail-info'),
     searchBtn = document.getElementById('search_btn'),
-    searchSelectBtn = document.getElementById('search_select_btn')
+    searchSelectBtn = document.getElementById('search_select_btn'),
+    addBtn = document.getElementById('add_btn'),
+    closeSearchBtn = document.getElementById('close_search_btn'),
+    searchWindow = document.getElementById('search_window')
 ;
 
 let searchResultList;
@@ -25,6 +28,9 @@ displayPlaces(totalList)
 
 searchBtn.addEventListener('click', searchPlaces);
 searchSelectBtn.addEventListener('click', postMatzipData);
+addBtn.addEventListener('click', () => searchWindow.classList.remove('hidden'));
+closeSearchBtn.addEventListener('click', () => searchWindow.className += ' hidden');
+closeBtn.addEventListener('click', () => detailInfo.className += ' hidden')
 
 function displayPlaces(places) {
     const matzipWrap = document.getElementById('matzip_wrap'),
@@ -179,7 +185,6 @@ function cardClickedEvent() {
         }
 
         closeBtn.addEventListener('click', function closerBtnEvent() {
-            detailInfo.className += ' hidden';
             card.classList.remove('selected');
             closeBtn.removeEventListener('click', closerBtnEvent)
         })
@@ -302,17 +307,19 @@ function postMatzipData() {
         body = JSON.stringify({data})
     ;
 
-    console.log(body)
     fetch(url, {method, headers, body})
         .then(res => res.json())
         .then(res => {
             if (res.status !== 'SUCCESS') {
                 alert('맛집 불어오기 실패')
-                console.log(res)
                 return;
             }
 
             const searchWindow = document.getElementById('search_window');
             searchWindow.className += ' hidden'
+            console.log(res.data)
+            fillDataIntoCard(res.data);
+            detailInfo.classList.remove('hidden')
+
         })
 }

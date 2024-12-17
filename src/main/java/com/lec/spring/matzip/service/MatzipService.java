@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface MatzipService {
-    ResponseEntity<Map<String, String>> saveMatzip(Matzip matzip);
+    ResponseEntity<Map<String, Object>> saveMatzip(Matzip matzip);
 
     String getImgUrlFromKakao(String kakaoPageUrl);
 

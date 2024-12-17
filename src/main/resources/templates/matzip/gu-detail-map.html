@@ -43,14 +43,15 @@
     <span id="matzip_address">주소</span>
     <div id="star_rating"></div>
     <div id="tags_wrap"></div>
-    <button id="close_btn">X</button>
+    <button id="close_detail_btn">X</button>
     <button id="write_review_btn">리뷰작성</button>
 </div>
-<div id="search_window">
+<div id="search_window" class="hidden">
     <input type="text" placeholder="맛집을 검색하세요" id="keyword">
     <button id="search_btn">검색</button>
     <div id="result_list"></div>
     <button id="search_select_btn">선택</button>
+    <button id="close_search_btn">X</button>
 </div>
 </body>
 <script type="text/javascript" th:src="@{/JS/matzip/gu-detail-map.js}" th:inline="javascript"></script>

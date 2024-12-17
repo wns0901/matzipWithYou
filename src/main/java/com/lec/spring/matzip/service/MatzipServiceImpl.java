@@ -31,7 +31,15 @@ public class MatzipServiceImpl implements MatzipService {
 
     @Override
     @Transactional
-    public ResponseEntity<Map<String, String>> saveMatzip(Matzip matzip) {
+    public ResponseEntity<Map<String, Object>> saveMatzip(Matzip matzip) {
+        Matzip duplicateCheck = matzipRepository.findByName(matzip.getName());
+        if (duplicateCheck != null) {
+            return ResponseEntity.ok(Map.of(
+                    "status", "SUCCESS",
+                    "data", duplicateCheck
+            ));
+        }
+
         String kakaoImgUrl = getImgUrlFromKakao(matzip.getKakaoMapUrl());
 
         matzip.setImgUrl(kakaoImgUrl);
@@ -43,7 +51,8 @@ public class MatzipServiceImpl implements MatzipService {
 
         if (result) {
             return ResponseEntity.ok(Map.of(
-                    "status", "SUCCESS"
+                    "status", "SUCCESS",
+                    "data", matzip
             ));
         } else {
             return ResponseEntity.ok(Map.of(
