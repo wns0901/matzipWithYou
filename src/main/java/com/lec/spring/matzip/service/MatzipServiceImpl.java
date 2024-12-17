@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.DTO.DetailMatzipDTO;
+import com.lec.spring.matzip.domain.DTO.MatzipDTO;
 import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MatzipRepository;
@@ -34,6 +35,8 @@ public class MatzipServiceImpl implements MatzipService {
     public ResponseEntity<Map<String, Object>> saveMatzip(Matzip matzip) {
         Matzip duplicateCheck = matzipRepository.findByName(matzip.getName());
         if (duplicateCheck != null) {
+            System.out.println("#".repeat(30));
+            System.out.println(duplicateCheck);
             return ResponseEntity.ok(Map.of(
                     "status", "SUCCESS",
                     "data", duplicateCheck
@@ -48,7 +51,7 @@ public class MatzipServiceImpl implements MatzipService {
         matzip.setGu(gu);
 
         boolean result = matzipRepository.save(matzip);
-
+        matzip = new Matzip((MatzipDTO) matzip);
         if (result) {
             return ResponseEntity.ok(Map.of(
                     "status", "SUCCESS",

@@ -65,10 +65,10 @@
 
 .matzip_card {
     position: relative;
+    aspect-ratio: 3.36/1;
     width: 95%;
     background-color: #EDEDED;
     border-radius: 15px;
-    height: 100px;
     margin: 0 auto 10px;
 }
 

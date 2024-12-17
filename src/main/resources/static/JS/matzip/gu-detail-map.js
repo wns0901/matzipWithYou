@@ -29,7 +29,13 @@ displayPlaces(totalList)
 searchBtn.addEventListener('click', searchPlaces);
 searchSelectBtn.addEventListener('click', postMatzipData);
 addBtn.addEventListener('click', () => searchWindow.classList.remove('hidden'));
-closeSearchBtn.addEventListener('click', () => searchWindow.className += ' hidden');
+closeSearchBtn.addEventListener('click', () => {
+    searchWindow.className += ' hidden'
+    Array.from(searchWindow.childNodes).forEach(node => {
+        if (node.id === 'keyword') node.value = '';
+        else if (node.id === 'result_list') node.innerHTML = '';
+    })
+});
 closeBtn.addEventListener('click', () => detailInfo.className += ' hidden')
 
 function displayPlaces(places) {
@@ -123,11 +129,16 @@ function getDivItem(place, wishList) {
         matzipName.textContent = place.name;
 
         wishListBtn.className = 'wish_heart';
-        wishListBtn.type = 'button'
+        wishListBtn.type = 'button';
+        wishListBtn.dataset.matzipId = place.matzipId;
+        wishListBtn.onclick = updateWishListEvent;
+        // TODO
         if (wishList.includes(place.matzipId)) {
             wishListBtn.style.backgroundImage = 'url(' + fillHeartImgUrl + ')';
+            wishListBtn.dataset.status = 'fill';
         } else {
             wishListBtn.style.backgroundImage = 'url(' + emptyHeartImgUrl + ')';
+            wishListBtn.dataset.status = 'empty';
         }
 
         card.appendChild(matzipImg);
@@ -304,7 +315,7 @@ function postMatzipData() {
         headers = {
             'Content-Type': 'application/json'
         },
-        body = JSON.stringify({data})
+        body = JSON.stringify(data)
     ;
 
     fetch(url, {method, headers, body})
@@ -320,6 +331,39 @@ function postMatzipData() {
             console.log(res.data)
             fillDataIntoCard(res.data);
             detailInfo.classList.remove('hidden')
-
+            searchWindow.childNodes[0].value = '';
+            searchWindow.childNodes[2].innerHTML = '';
         })
+}
+
+function updateWishListEvent(e) {
+    e.stopPropagation();
+
+    const item = e.currentTarget,
+        isFilled = item.dataset.status === 'fill',
+        matzipId = Number (item.dataset.matzipId),
+        memberId = data.memberId,
+        imgUrl = isFilled ? emptyHeartImgUrl : fillHeartImgUrl,
+
+        method = isFilled ? 'DELETE' : 'POST',
+        url = '/matzips/wish-list/' + memberId + (isFilled ? '/' + matzipId : ''),
+        headers = {'Content-Type': 'application/json'},
+        body = JSON.stringify({matzipId}),
+        option = isFilled ? {method, headers} : {method, headers, body}
+        ;
+
+    fetch(url, option)
+        .then(res => res.json())
+        .then(res => {
+            if(res.status !== 'SUCCESS') {
+                alert('위시리스트 업데이트 실패')
+                return;
+            }
+
+            item.style.backgroundImage = 'url(' + imgUrl + ')';
+            item.dataset.status = isFilled ? 'empty' : 'fill';
+        })
+
+
+
 }

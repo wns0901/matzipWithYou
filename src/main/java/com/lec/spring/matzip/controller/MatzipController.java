@@ -30,7 +30,7 @@ public class MatzipController {
     @ResponseBody
     @PostMapping("")
     public ResponseEntity<Map<String, Object>> saveMatZip(@RequestBody MatzipDTO matzipDTO) {
-        return matzipService.saveMatzip((Matzip) matzipDTO.getData());
+        return matzipService.saveMatzip((Matzip) matzipDTO);
     }
 
     @GetMapping("/{memberId}")
