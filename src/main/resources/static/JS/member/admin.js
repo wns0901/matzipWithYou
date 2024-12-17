@@ -28,6 +28,7 @@ function loadData(type) {
         });
 }
 
+// updateTable 함수 수정
 function updateTable(type, data) {
     const tbody = document.getElementById(`${type}List`);
     switch (type) {
@@ -39,6 +40,7 @@ function updateTable(type, data) {
                     <td>${item.address}</td>
                     <td>${item.kindId}</td>
                     <td>${formatDate(item.regdate)}</td>
+                    <td><button class="delete-btn" data-id="${item.id}" data-type="matzips">삭제</button></td>
                 </tr>
             `).join('');
             break;
@@ -48,6 +50,7 @@ function updateTable(type, data) {
                     <td>${item.id}</td>
                     <td>${item.tagName}</td>
                     <td>${formatDate(item.regdate)}</td>
+                    <td><button class="delete-btn" data-id="${item.id}" data-type="tags">삭제</button></td>
                 </tr>
             `).join('');
             break;
@@ -57,14 +60,60 @@ function updateTable(type, data) {
                     <td>${item.id}</td>
                     <td>${item.kindName}</td>
                     <td>${formatDate(item.regdate)}</td>
+                    <td><button class="delete-btn" data-id="${item.id}" data-type="foodkinds">삭제</button></td>
                 </tr>
             `).join('');
             break;
     }
+
+    // 삭제 버튼 이벤트 리스너 추가
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const type = this.dataset.type;
+            deleteItem(type, id);
+        });
+    });
 }
 
-function formatDate(dateString) {
-    if (!dateString) return '';
-    const date = new Date(dateString);
+function deleteItem(type, id) {
+    if (confirm('정말 삭제하시겠습니까?')) {
+        fetch(`/admin/api/${type}/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => response.text())
+            .then(result => {
+                if (result === '삭제 성공') {
+                    alert('삭제되었습니다.');
+                    if (type === 'members') {
+                        window.location.reload();
+                    } else {
+                        loadData(type);
+                    }
+                } else {
+                    alert(result);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('삭제 중 오류가 발생했습니다.');
+            });
+    }
+}
+function formatDate(dateArray) {
+    if (!Array.isArray(dateArray) || dateArray.length < 3) {
+        console.warn('Invalid date array:', dateArray);
+        return '';
+    }
+
+    const [year, month, day, hour = 0, minute = 0, second = 0] = dateArray;
+    const date = new Date(year, month - 1, day, hour, minute, second);
+
+    if (isNaN(date.getTime())) {
+        console.warn('Invalid date:', dateArray);
+        return '';
+    }
+
     return date.toLocaleDateString('ko-KR');
 }
+

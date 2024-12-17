@@ -57,7 +57,7 @@ public class SecurityConfig {
                                 "/matzips/food-kinds/**",
                                 "/matzips/tags/**",
                                 "/admin/**",
-                                "/members/{id}"
+                                "/member/{id}"
                         ).hasRole("ADMIN")
 
                         .requestMatchers(
@@ -75,6 +75,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/matzips/**",
                                 "/member/**",
+                                "/members/{id}",
                                 "/member/*/friends",
                                 "/matzips/reviews",
                                 "/matzips/hints/**",

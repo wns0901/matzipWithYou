@@ -22,6 +22,9 @@ public interface MemberService {
 
     List<Member> findAll();
 
+    int deleteById(Long id);
+
+    Member findById(Long id);
 
 
     // 인증코드 확인

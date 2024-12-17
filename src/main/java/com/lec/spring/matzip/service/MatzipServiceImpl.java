@@ -90,5 +90,10 @@ public class MatzipServiceImpl implements MatzipService {
     public List<Matzip> getAllMatzips() {
         return matzipRepository.findAll();
     }
+
+    @Override
+    public int deleteById(Long id) {
+        return matzipRepository.deleteById(id);
+    }
 }
 
