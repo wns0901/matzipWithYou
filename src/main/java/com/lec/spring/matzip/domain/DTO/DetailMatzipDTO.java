@@ -23,8 +23,6 @@ public class DetailMatzipDTO extends Matzip {
     @JsonIgnore
     private Long kindId;
     @JsonIgnore
-    private String imgUrl;
-    @JsonIgnore
     private String tagName;
     @JsonIgnore
     private Double lat;

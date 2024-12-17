@@ -12,9 +12,9 @@ const map = new kakao.maps.Map(mapContainer, mapOption);
 
 const overlay = new kakao.maps.CustomOverlay();
 
-console.log(data)
-
 const totalList = data.totalMatzipList;
+
+console.log(data)
 
 displayPlaces(totalList)
 
@@ -47,6 +47,8 @@ function displayPlaces(places) {
             item.onmouseover = function () {
                 displayInfowindow(title, position);
             };
+
+            item.onclick = cardClickedEvent();
 
             item.onmouseout = function () {
                 overlay.setMap(null);
@@ -81,7 +83,6 @@ function addCircle(center) {
         fillColor: '#FF7327',
         fillOpacity: 0.5
     })
-    console.log(circle);
     circle.setMap(map);
     markers.push(circle)
     return circle;
@@ -89,8 +90,9 @@ function addCircle(center) {
 
 function getDivItem(place, wishList) {
     const card = document.createElement('div');
-
     card.className = 'matzip_card';
+    card.dataset.memberId = place.memberIds[0];
+    card.dataset.matzipId = place.matzipId;
 
     if (place.visibility === 'PUBLIC') {
         const matzipImg = document.createElement('img');
@@ -149,6 +151,44 @@ function displayInfowindow(title, position) {
     overlay.setMap(map);
 }
 
-async function getMatzipDetail(matzipId) {
-    const result = await fetch().then(res => res.json())
+async function getMatzipDetail(matzipId, friendId) {
+    const url = '/matzips/detail/' + matzipId + '?friendId=' + friendId;
+    return await fetch(url).then(res => res.json())
+}
+
+function cardClickedEvent() {
+    return async function (e) {
+        const card = e.currentTarget;
+        const memberId = Number(card.dataset.memberId);
+        const matzipId = Number(card.dataset.matzipId);
+
+        const result = await getMatzipDetail(matzipId, memberId);
+
+        const detailInfo = document.getElementById('detail-info');
+        console.log(result)
+        Array.from(detailInfo.childNodes).forEach(node => {
+            switch (node.id) {
+                case 'matzip_img':
+                    node.src = result.imgUrl;
+                    break;
+                case 'matzip_name':
+                    node.textContent = result.name;
+                    break;
+                case 'matzip_address':
+                    node.textContent = result.address;
+                    break;
+                case 'star_rating':
+                    node.textContent = result.starRating;
+                    break;
+                case 'tags_wrap':
+                    node.textContent = result.tagList;
+                    break;
+                case 'write_review_btn':
+                    node.textContent = result.id;
+                    break;
+                default:
+                    break;
+            }
+        })
+    }
 }
