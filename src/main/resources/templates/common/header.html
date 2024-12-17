@@ -30,7 +30,7 @@
                     </button>
 
                     <div id="userDropdown" class="dropdown-content">
-                        <a th:href="@{/member/myPage}">마이페이지</a>
+                        <a th:href="@{/members/{memberId}}">마이페이지</a>
                         <form th:action="@{/member/logout}" method="POST">
                             <button type="submit">로그아웃</button>
                         </form>
