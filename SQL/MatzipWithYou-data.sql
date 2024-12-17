@@ -25,6 +25,10 @@ ALTER TABLE matzip
     AUTO_INCREMENT = 1;
 
 DELETE
+FROM my_matzip;
+ALTER TABLE my_matzip AUTO_INCREMENT = 1;
+
+DELETE
 FROM food_kind;
 ALTER TABLE food_kind
     AUTO_INCREMENT = 1;
@@ -127,11 +131,7 @@ VALUES ('치킨공식', 2, '서울 강남구 역삼로17길 64 역삼동A4스페
         '강남구', 'https://place.map.kakao.com/1696571508'),
        ('쇼토 압구정본점', 7, '서울 강남구 압구정로18길 14-6 1층', '37.52384822235571', '127.02430786508214',
         '//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flocalfiy%2F4D8398A52D7446B78C0CAB2326DAC7D6',
-        '강남구', 'https://place.map.kakao.com/1745920539'),
-        ('양푼이 김치찌개',2,'서울특별시 동작구 흑석동 흑석로13마길 65-3','37.507610', '126.959073',
-       '//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2FF2826B4071874EFEBF1A363CD4C0C7EA'
-       ,'동작구','https://place.map.kakao.com/948039588');
-
+        '강남구', 'https://place.map.kakao.com/1745920539');
 
 -- wish_list 테이블 샘플 데이터
 INSERT INTO wish_list (member_id, matzip_id)
@@ -153,12 +153,13 @@ INSERT INTO my_matzip (matzip_id, member_id, visibility, content, star_rating)
 VALUES (1, 3, 'PRIVATE', '나만 알고 싶은 비공개 맛집', 5),
        (2, 2, 'PUBLIC', '누구에게나 알려주고 싶은 맛없는 맛집', 2),
        (5, 4, 'HIDDEN', '누군가 찾아줬으면 하는  맛집', 4),
-       (6, 1, 'HIDDEN', '힌트 구매해줬으면 히든맛집', 1),
+       (4, 1, 'HIDDEN', '힌트 구매해줬으면 히든맛집', 1),
        (4, 3, 'PUBLIC', '좋아요', 1),
        (3, 2, 'PRIVATE', '개인맛집', 5),
        (1, 4, 'HIDDEN', '히든맛집', 4),
        (6, 1, 'PUBLIC', '공개맛집', 5),
-       (7,4,'HIDDEN','현지윤의 비밀맛집',5)
+       (1, 1, 'HIDDEN', '테스트', 5),
+       (6, 3, 'PUBLIC', '테스트', 5)
 ;
 
 -- friend 테이블 샘플 데이터
@@ -206,9 +207,7 @@ VALUES (1, 3, '분위기 좋고 음식이 정말 맛있어요!', '2024-01-15 12:
 
        (4, 1, '가성비 최고', '2024-02-15 12:10:00', 5),
        (4, 2, '분위기 좋은 레스토랑', '2024-03-25 20:30:00', 4),
-       (4,7,'굿굿','2024-01-05',5),
        (4, 5, '실망스러운 경험', '2024-01-05 19:00:00', 2);
-
 
 -- review_tag
 INSERT INTO review_tag (my_review_id, tag_id)
@@ -236,11 +235,7 @@ VALUES (1, 1),
        (6, 15),
        (6, 7),
        (6, 3),
-       (6, 9),
-       (7,6),
-       (7,8),
-       (7,2),
-       (7,7);
+       (6, 9);
 
 insert into matzip_tag (tag_id, my_matzip_id)
 values (1, 1),
@@ -272,7 +267,6 @@ values (1, 1),
        (1,7),
        (2,7),
        (3,7),
-       (4,7),
 
        (1,8),
        (2,8),

@@ -19,8 +19,8 @@
             img_url AS 'imgUrl',
             gu,
             kakao_map_url AS 'kakaoMapUrl',
-            name
-           -- regdate (regdate)있으면 detail에서 오류나길래 주석처리했음다(지윤)
+            name,
+            regdate
         FROM matzip
         WHERE 1=1
     </sql>

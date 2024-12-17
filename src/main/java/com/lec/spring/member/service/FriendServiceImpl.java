@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -55,9 +54,9 @@ public class FriendServiceImpl implements FriendService {
     }
 
 
-    // 친구 목록 가져오기
+    // 친구 목록(상세정보) 가져오기
     @Override
-    public List<Friend> getFriendsWithDetailsDTO(Long memberId) {
+    public List<FriendDetailsDTO> getFriendsWithDetailsDTO(Long memberId) {
         return friendRepository.findFriendsWithDetailsDTO(memberId);
     }
 
@@ -69,8 +68,6 @@ public class FriendServiceImpl implements FriendService {
     }
 
 
-//    private Long getUserId(FriendDetails friendDetails) {
-//        Member member = memberServiceImpl.getId(memberId)
-//    } 로그인 유저의 iD 가져오기
+
 
 }
