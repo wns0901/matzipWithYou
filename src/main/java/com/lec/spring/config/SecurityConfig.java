@@ -53,7 +53,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/matzips/food-kinds/**",
                                 "/matzips/tags/**",
-                                "/admin/**"
+                                "/admin/**",
+                                "/members/{id}"
                         ).hasRole("ADMIN")
 
                         .requestMatchers(
@@ -78,6 +79,7 @@ public class SecurityConfig {
                                 "/matzips/matzipsDetail/**"
                         ).authenticated()
                         .anyRequest().permitAll()
+
                 )
                 .formLogin(form -> form
                         .loginPage("/member/login")
