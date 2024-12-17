@@ -15,5 +15,10 @@ public interface MatzipService {
 
     Matzip getMatzipById(Long id, Model model);
 
+    List<String> listTagName(Long id);
+
+    List<String> listKindName(Long id);
+
     List<Matzip> getAllMatzips();
+
 }
