@@ -8,5 +8,7 @@ import java.util.List;
 @Service
 public interface TagService {
     List<Tag> getAllTags();
+
+    int deleteById(Long id);
 }
 

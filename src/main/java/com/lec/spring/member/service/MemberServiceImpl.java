@@ -183,6 +183,15 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findAll();
     }
 
+    @Override
+    public int deleteById(Long id) {
+        return memberRepository.deleteById(id);
+    }
+
+    @Override
+    public Member findById(Long id) {
+        return memberRepository.findById(id);
+    }
 
 
     // 인증 유효성
