@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface FoodKindService {
     List<FoodKind> getAllFoodKinds();
+
+    int deleteById(Long id);
 }

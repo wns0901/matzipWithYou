@@ -1,8 +1,6 @@
 package com.lec.spring.matzip.controller;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lec.spring.matzip.domain.DTO.FindingResultMyMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.UpdateMyMatzipVisibility;
 import com.lec.spring.matzip.domain.MyMatzip;

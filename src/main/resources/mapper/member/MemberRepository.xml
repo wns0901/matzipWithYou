@@ -21,7 +21,8 @@
     <insert id="save" flushCache="true" parameterType="com.lec.spring.member.domain.Member"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO member(username, password, email, point, nickname, name, provider, providerId)
-        VALUES(#{username}, #{password}, #{email}, COALESCE(#{point}, 0), #{nickname}, #{name}, #{provider}, #{providerId})
+        VALUES (#{username}, #{password}, #{email}, COALESCE(#{point}, 0), #{nickname}, #{name}, #{provider},
+                #{providerId})
     </insert>
 
 
@@ -44,7 +45,17 @@
     </update>
 
     <delete id="deleteById">
-        DELETE FROM member WHERE id = #{id}
+        DELETE m, ma, pi, f, mm, mr, mt, wl, umts
+        FROM member m
+        LEFT JOIN member_authorities ma ON m.id = ma.member_id
+        LEFT JOIN profile_img pi ON m.id = pi.member_id
+        LEFT JOIN friend f ON m.id = f.sender_id OR m.id = f.receiver_id
+        LEFT JOIN my_matzip mm ON m.id = mm.member_id
+        LEFT JOIN my_review mr ON m.id = mr.member_id
+        LEFT JOIN matzip_tag mt ON mm.id = mt.my_matzip_id
+        LEFT JOIN wish_list wl ON m.id = wl.member_id
+        LEFT JOIN user_matzip_tag_status umts ON m.id = umts.member_id
+        WHERE m.id =#{id}
     </delete>
 
     <select id="findAll" resultType="com.lec.spring.member.domain.Member">
@@ -86,22 +97,24 @@
         WHERE id = #{id}
     </update>
 
-<!--비밀번호 재설정-->
-<!--이메일 찾기-->
+    <!--비밀번호 재설정-->
+    <!--이메일 찾기-->
     <select id="selectEmail">
         select id, email
         from member
-        where email =#{email}
+        where email = #{email}
     </select>
-<!--비밀번호 업데이트하기-->
+    <!--비밀번호 업데이트하기-->
     <update id="updatePassword">
         update member
         set password = #{newPassword}
         where id = #{id}
     </update>
-<!--이메일로 아이디 찾기-->
-    <select id="findMemberIdByEmail" >
-        select id from member where email = #{email}
+    <!--이메일로 아이디 찾기-->
+    <select id="findMemberIdByEmail">
+        select id
+        from member
+        where email = #{email}
     </select>
 
     <select id="findReferrer" resultType="com.lec.spring.member.domain.Member">
