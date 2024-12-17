@@ -1,6 +1,9 @@
 package com.lec.spring.matzip.domain.DTO;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
@@ -9,5 +12,4 @@ import lombok.*;
 @Builder
 public class MatzipDTO {
     private MatzipDataDTO data;
-    private String kind;
 }

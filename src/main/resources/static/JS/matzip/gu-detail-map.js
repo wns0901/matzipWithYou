@@ -1,22 +1,30 @@
-const centerLatLng = data.centerLatLng;
-const mapContainer = document.getElementById("map");
-const mapOption = {
-    center: new kakao.maps.LatLng(centerLatLng.lat, centerLatLng.lng - 0.02),
-    level: 6
-};
-const markers = [];
+const centerLatLng = data.centerLatLng,
+    totalList = data.totalMatzipList,
 
-const ps = new kakao.maps.services.Places();
+    mapContainer = document.getElementById("map"),
+    mapOption = {
+        center: new kakao.maps.LatLng(centerLatLng.lat, centerLatLng.lng - 0.02),
+        level: 6
+    },
+    ps = new kakao.maps.services.Places(),
+    map = new kakao.maps.Map(mapContainer, mapOption),
+    overlay = new kakao.maps.CustomOverlay(),
 
-const map = new kakao.maps.Map(mapContainer, mapOption);
+    markers = [],
+    closeBtn = document.getElementById('close_btn'),
+    detailInfo = document.getElementById('detail-info'),
+    searchBtn = document.getElementById('search_btn'),
+    searchSelectBtn = document.getElementById('search_select_btn')
+;
 
-const overlay = new kakao.maps.CustomOverlay();
-
-const totalList = data.totalMatzipList;
+let searchResultList;
 
 console.log(data)
 
 displayPlaces(totalList)
+
+searchBtn.addEventListener('click', searchPlaces);
+searchSelectBtn.addEventListener('click', postMatzipData);
 
 function displayPlaces(places) {
     const matzipWrap = document.getElementById('matzip_wrap'),
@@ -37,10 +45,12 @@ function displayPlaces(places) {
             if (title) {
                 kakao.maps.event.addListener(marker, 'mouseover', function () {
                     displayInfowindow(title, position);
+                    item.className += ' selected'
                 });
 
                 kakao.maps.event.addListener(marker, 'mouseout', function () {
                     overlay.setMap(null);
+                    item.classList.remove('selected')
                 });
             }
 
@@ -93,6 +103,7 @@ function getDivItem(place, wishList) {
     card.className = 'matzip_card';
     card.dataset.memberId = place.memberIds[0];
     card.dataset.matzipId = place.matzipId;
+    card.dataset.visibility = place.visibility;
 
     if (place.visibility === 'PUBLIC') {
         const matzipImg = document.createElement('img');
@@ -158,37 +169,150 @@ async function getMatzipDetail(matzipId, friendId) {
 
 function cardClickedEvent() {
     return async function (e) {
-        const card = e.currentTarget;
-        const memberId = Number(card.dataset.memberId);
-        const matzipId = Number(card.dataset.matzipId);
+        const card = e.currentTarget,
+            cardList = document.getElementsByClassName('matzip_card');
 
-        const result = await getMatzipDetail(matzipId, memberId);
+        if (card.dataset.visibility === 'HIDDEN') {
+            for (const card of cardList) card.classList.remove('selected');
+            detailInfo.className += ' hidden';
+            return;
+        }
 
-        const detailInfo = document.getElementById('detail-info');
-        console.log(result)
-        Array.from(detailInfo.childNodes).forEach(node => {
-            switch (node.id) {
-                case 'matzip_img':
-                    node.src = result.imgUrl;
-                    break;
-                case 'matzip_name':
-                    node.textContent = result.name;
-                    break;
-                case 'matzip_address':
-                    node.textContent = result.address;
-                    break;
-                case 'star_rating':
-                    node.textContent = result.starRating;
-                    break;
-                case 'tags_wrap':
-                    node.textContent = result.tagList;
-                    break;
-                case 'write_review_btn':
-                    node.textContent = result.id;
-                    break;
-                default:
-                    break;
-            }
+        closeBtn.addEventListener('click', function closerBtnEvent() {
+            detailInfo.className += ' hidden';
+            card.classList.remove('selected');
+            closeBtn.removeEventListener('click', closerBtnEvent)
         })
+
+        if (card.classList.contains('selected')) {
+            card.classList.remove('selected');
+            detailInfo.className += ' hidden';
+        } else {
+            const memberId = Number(card.dataset.memberId);
+            const matzipId = Number(card.dataset.matzipId);
+
+            const result = await getMatzipDetail(matzipId, memberId);
+            for (const card of cardList) card.classList.remove('selected');
+            card.className += ' selected';
+            detailInfo.classList.remove('hidden')
+
+            fillDataIntoCard(result);
+        }
+
     }
+}
+
+function fillDataIntoCard(result) {
+    Array.from(detailInfo.childNodes).forEach(node => {
+        switch (node.id) {
+            case 'matzip_img':
+                node.src = result.imgUrl;
+                break;
+            case 'matzip_name':
+                node.textContent = result.name;
+                break;
+            case 'matzip_address':
+                node.textContent = result.address;
+                break;
+            case 'star_rating':
+                node.textContent = result.starRating;
+                break;
+            case 'tags_wrap':
+                node.textContent = result.tagList;
+                break;
+            case 'write_review_btn':
+                node.textContent = result.id;
+                break;
+            default:
+                break;
+        }
+    })
+}
+
+function searchPlaces() {
+    const keyword = document.getElementById('keyword').value;
+
+    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        alert('키워드를 입력해주세요!');
+        return false;
+    }
+
+    ps.keywordSearch((data.gu + ' ' + keyword), placesSearchCB);
+}
+
+function placesSearchCB(result, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+        makeResultCards(result);
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        alert('검색 결과가 존재하지 않습니다.');
+        return;
+    } else if (status === kakao.maps.services.Status.ERROR) {
+        alert('검색 결과 중 오류가 발생했습니다.');
+        return;
+    }
+}
+
+function makeResultCards(result) {
+    const searchWrap = document.getElementById('result_list'),
+        fragment = document.createDocumentFragment()
+    ;
+    searchResultList = result;
+    for (let i = 0; i < result.length; i++) {
+        const e = result[i],
+            searchCard = document.createElement('div'),
+            name = document.createElement('span'),
+            address = document.createElement('span')
+        ;
+
+        searchCard.className = 'search_card';
+        name.className = 'search_name';
+        address.className = 'search_address';
+
+        searchCard.dataset.searchIndex = i;
+
+        name.textContent = e['place_name'];
+        address.textContent = e['road_address_name'];
+
+        searchCard.appendChild(name);
+        searchCard.appendChild(address);
+
+        searchCard.onclick = (e) => {
+            const card = e.currentTarget,
+                selectedList = document.getElementsByClassName('selected');
+            for (const e of selectedList) e.classList.remove('selected');
+            card.className += ' selected';
+        }
+
+        fragment.appendChild(searchCard);
+    }
+    searchWrap.appendChild(fragment);
+}
+
+function postMatzipData() {
+    const selectedItem = document.getElementsByClassName('selected');
+    if (!selectedItem[0]) return;
+
+    const selectedIndex = Number(selectedItem[0].dataset.searchIndex),
+        data = searchResultList[selectedIndex],
+        url = '/matzips',
+        method = 'POST',
+        headers = {
+            'Content-Type': 'application/json'
+        },
+        body = JSON.stringify({data})
+    ;
+
+    console.log(body)
+    fetch(url, {method, headers, body})
+        .then(res => res.json())
+        .then(res => {
+            if (res.status !== 'SUCCESS') {
+                alert('맛집 불어오기 실패')
+                console.log(res)
+                return;
+            }
+
+            const searchWindow = document.getElementById('search_window');
+            searchWindow.className += ' hidden'
+        })
 }

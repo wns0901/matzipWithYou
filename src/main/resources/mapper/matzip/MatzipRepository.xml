@@ -6,8 +6,8 @@
 <mapper namespace="com.lec.spring.matzip.repository.MatzipRepository">
     <insert id="save" flushCache="true" parameterType="com.lec.spring.matzip.domain.Matzip" useGeneratedKeys="true"
             keyProperty="id" keyColumn="id">
-        INSERT INTO matzip (kind_id, address, lat, lng, img_url, gu, kakao_map_url, name)
-        VALUES (#{kindId}, #{address}, #{lat}, #{lng}, #{imgUrl}, #{gu}, #{kakaoMapUrl}, #{name})
+        INSERT INTO matzip (address, lat, lng, img_url, gu, kakao_map_url, name)
+        VALUES (#{address}, #{lat}, #{lng}, #{imgUrl}, #{gu}, #{kakaoMapUrl}, #{name})
     </insert>
 
     <sql id="SELECT_BASE">

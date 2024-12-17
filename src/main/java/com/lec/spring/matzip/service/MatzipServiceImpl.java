@@ -1,7 +1,6 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.DTO.DetailMatzipDTO;
-import com.lec.spring.matzip.domain.FoodKind;
 import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MatzipRepository;
@@ -32,13 +31,10 @@ public class MatzipServiceImpl implements MatzipService {
 
     @Override
     @Transactional
-    public ResponseEntity<Map<String, String>> saveMatzip(Matzip matzip, String kind) {
+    public ResponseEntity<Map<String, String>> saveMatzip(Matzip matzip) {
         String kakaoImgUrl = getImgUrlFromKakao(matzip.getKakaoMapUrl());
 
-        FoodKind foodKind = foodKindRepository.findByKindName(kind);
-
         matzip.setImgUrl(kakaoImgUrl);
-        matzip.setKindId(foodKind.getId());
 
         String gu = matzip.getAddress().split(" ")[1];
         matzip.setGu(gu);
@@ -52,7 +48,7 @@ public class MatzipServiceImpl implements MatzipService {
         } else {
             return ResponseEntity.ok(Map.of(
                     "status", "FAIL",
-                    "msg", "맛집 저장에 실패했습니다."
+                    "msg", "음식점 로딩에 실패했습니다."
             ));
         }
     }

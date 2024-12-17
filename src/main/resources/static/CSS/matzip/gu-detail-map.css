@@ -171,3 +171,25 @@
     top: 0;
 }
 
+.hidden {
+    display: none;
+}
+
+#matzip_img {
+    width: 600px;
+    height: 200px;
+}
+
+#search_window {
+    width: 400px;
+    height: 600px;
+    background-color: white;
+    z-index: 1;
+    position: absolute;
+    right: 25%;
+    top: 5%;
+}
+
+.selected {
+    outline: 3px solid #FF7327;
+}
