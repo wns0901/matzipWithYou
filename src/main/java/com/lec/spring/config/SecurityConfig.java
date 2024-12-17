@@ -51,30 +51,31 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers(
-                                "/matzip/food-kinds/**",
-                                "/matzip/tags/**"
+                                "/matzips/food-kinds/**",
+                                "/matzips/tags/**",
+                                "/admin/**"
                         ).hasRole("ADMIN")
 
                         .requestMatchers(
-                                "/matzip/*/visibility",
-                                "/matzip/reviews/**",
-                                "/matzip/hint-tags/**",
-                                "/matzip/wish-list/**",
+                                "/matzips/*/visibility",
+                                "/matzips/reviews/**",
+                                "/matzips/hint-tags/**",
+                                "/matzips/wish-list/**",
                                 "/member/*/friends/**",
-                                "/member/*/matzip/**",
+                                "/member/*/matzips/**",
                                 "/member/*/nickname",
                                 "/member/*/profile-img",
                                 "/member/*/wish-list/**"
                         ).hasAnyRole("MEMBER", "ADMIN")
 
                         .requestMatchers(
-                                "/matzip/**",
+                                "/matzips/**",
                                 "/member/**",
                                 "/member/*/friends",
-                                "/matzip/reviews",
-                                "/matzip/hints/**",
+                                "/matzips/reviews",
+                                "/matzips/hints/**",
                                 "/member/additional-info",
-                                "/matzip/matzipDetail/**"
+                                "/matzips/matzipsDetail/**"
                         ).authenticated()
                         .anyRequest().permitAll()
                 )
