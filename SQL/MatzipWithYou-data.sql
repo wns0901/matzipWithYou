@@ -68,7 +68,8 @@ DELETE
 ALTER TABLE friend
     AUTO_INCREMENT = 1;
 
-
+DELETE FROM my_matzip;
+ALTER TABLE my_matzip AUTO_INCREMENT = 1;
 
 
 -- authority 테이블 더미 데이터

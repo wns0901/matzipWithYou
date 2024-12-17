@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -79,4 +80,23 @@ public class MatzipServiceImpl implements MatzipService {
     public ResponseEntity<DetailMatzipDTO> getDetailMatzip(Long matzipId, Long friendId) {
         return ResponseEntity.ok(matzipRepository.findDetailMatzipByMatzipIdWithFriendId(matzipId, friendId));
     }
-}
+
+    @Override
+
+    public List<String> listTagName(Long id) {
+        return matzipRepository.listTagName(id);
+    }
+
+    @Override
+    public List<String> listKindName(Long id) {
+        return matzipRepository.listKindName(id);
+    }
+
+    @Override
+    public List<Matzip> getAllMatzips() {
+        return matzipRepository.findAll();
+    }
+} // end MatzipServiceImple
+
+
+

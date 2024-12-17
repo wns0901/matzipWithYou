@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -83,11 +84,18 @@ public class UserMatzipTagStatusServiceImpl implements UserMatzipTagStatusServic
         // 중복된 맛집 리스트
         List<UserMatzipTagStatus> duplicateList = userMatzipTagStatusRepository.finddeleteDuplicateMyMatzipId();
 
-        // 중복 제거 로직
-        hiddenList.removeIf(duplicateList::contains);
+        // 디버깅: 리스트 내용 출력
+        System.out.println("Hidden List size(): " + hiddenList.size());
+        System.out.println("Hidden List: " + hiddenList);
+        System.out.println("Duplicate List size(): " + duplicateList.size());
+        System.out.println("Duplicate List: " + duplicateList);
 
-        System.out.println("result (after removing duplicates): " + hiddenList);
-        return hiddenList;
+        // 중복 제거 로직
+        List<UserMatzipTagStatus> resultList = new ArrayList<>(hiddenList);
+        resultList.removeAll(duplicateList);
+
+        System.out.println("****************result (after removing duplicates): " + resultList);
+        return resultList;
     }
 
     @Override

@@ -28,5 +28,16 @@ public class TestCode {
     @Test
     void test2() {
 
+
     }
+
+    @Test
+    public void testSendEmail() {
+        EmailMessage emailMessage = new EmailMessage();
+        emailMessage.setTo("cooconut0226@gmail.com");
+        emailMessage.setSubject("cooconut0226@gmail.com" );
+
+       memberService.createEmail(emailMessage);
+    }
+
 }
