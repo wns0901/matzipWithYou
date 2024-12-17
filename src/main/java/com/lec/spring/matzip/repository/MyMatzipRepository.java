@@ -1,7 +1,9 @@
 package com.lec.spring.matzip.repository;
 
+import com.lec.spring.matzip.domain.DTO.FriendDataWithMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.MyMatzipDTO;
-import com.lec.spring.matzip.domain.DTO.SeoulMapDBDataDTO;
+import com.lec.spring.matzip.domain.DTO.SeoulMapSqlDataDTO;
+import com.lec.spring.matzip.domain.MyMatzip;
 
 
 import java.util.List;
@@ -11,9 +13,13 @@ public interface MyMatzipRepository {
 
     int listCntByMemberId(Long id);
 
+    boolean save(MyMatzip myMatzip);
+
     boolean updateMyMatzipVisibility(Long id, String visibility);
 
     boolean deleteMyMatzip(Long id);
 
-    List<SeoulMapDBDataDTO> findSeoulMapData(Long id);
+    List<SeoulMapSqlDataDTO> findSeoulMapData(Long id);
+
+    List<FriendDataWithMatzipDTO> findGuMapData(Long id, String gu);
 }
