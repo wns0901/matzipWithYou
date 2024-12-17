@@ -1,16 +1,63 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <link th:href="@{/CSS/header.css}" rel="stylesheet"/>
-</head>
 <body>
-<!-- Navigation-->
-<nav>
+<th:block th:fragment="header">
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="/home">
+                    <img src="/IMG/logo.png" alt="Logo">
+                </a>
+            </div>
 
-</nav>
+            <div class="nav-buttons" sec:authorize="isAnonymous()">
+                <a th:href="@{/member/login}">로그인</a>
+                <a th:href="@{/member/signup}">회원가입</a>
+            </div>
 
+            <div class="nav-user" sec:authorize="isAuthenticated()"
+                 th:with="member=${#authentication.getPrincipal().getMember()}">
+                <div class="dropdown">
+                    <button onclick="toggleDropdown()" class="dropbtn" id="userMenuButton">
+                        <span sec:authorize="hasRole('ADMIN')">
+                            관리자 [[${member.nickname}]]님 환영합니다!
+                        </span>
+                        <span sec:authorize="hasRole('MEMBER') and !hasRole('ADMIN')">
+                            [[${member.nickname}]]님 환영합니다!
+                        </span>
+                    </button>
+
+                    <div id="userDropdown" class="dropdown-content">
+                        <a th:href="@{/member/myPage}">마이페이지</a>
+                        <form th:action="@{/member/logout}" method="POST">
+                            <button type="submit">로그아웃</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script th:inline="javascript">
+        function toggleDropdown() {
+            document.getElementById("userDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</th:block>
 </body>
+
 </html>

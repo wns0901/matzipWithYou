@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.Matzip;
+import com.lec.spring.matzip.domain.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
@@ -17,4 +18,7 @@ public interface MatzipService {
     List<String> listTagName(Long id);
 
     List<String> listKindName(Long id);
+
+    List<Matzip> getAllMatzips();
+
 }

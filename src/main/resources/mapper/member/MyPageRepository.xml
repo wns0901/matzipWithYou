@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.spring.member.repository.MyPageRepository">
+
+    <!-- 닉네임 수정 -->
+    <update id="updateNick" flushCache="true">
+        UPDATE member
+        SET nickname = #{newNickname}
+        WHERE id = #{memberId}
+    </update>
+
+    <!-- 나의 정보 -->
+    <select id="getMyPageInfo" resultType="com.lec.spring.member.domain.MyPage">
+        SELECT
+            m.nickname AS "nickname",
+            (
+                SELECT COUNT(*)
+                FROM friend f
+                WHERE (f.sender_id = #{memberId} OR f.receiver_id = #{memberId})
+                  AND f.is_accept = true
+            ) AS "friendCnt",
+            m.point AS "point",
+            (SELECT filename FROM profile_img WHERE member_id = #{memberId}) AS "profileImage"
+        FROM member m
+        WHERE m.id = #{memberId}
+    </select>
+
+    <!-- 위시리스트 미리보기 -->
+    <select id="getWishPreview" resultType="com.lec.spring.member.domain.MatzipInfoDTO">
+        SELECT
+            mz.name AS "matzipName",
+            mz.img_url AS "matzipImage"
+        FROM wish_list w
+                 JOIN matzip mz ON w.matzip_id = mz.id
+        WHERE w.member_id = #{memberId}
+    </select>
+
+    <!-- 내 맛집 미리보기 -->
+    <select id="getMyMatzipPreview" resultType="com.lec.spring.member.domain.MatzipInfoDTO">
+        SELECT
+            mz.name AS "matzipName",
+            mz.img_url AS "matzipImage"
+        FROM my_matzip mm
+                 JOIN matzip mz ON mm.matzip_id = mz.id
+        WHERE mm.member_id = #{memberId}
+    </select>
+
+    <!-- 내 리뷰 미리보기 -->
+    <select id="getMyReviewPreview" resultType="com.lec.spring.member.domain.ReviewInfoDTO">
+        SELECT
+            mz.name AS "matzipName",
+            mz.img_url AS "matzipImage",
+            mr.content AS "reviewContent",
+            mr.star_rating AS "starRating"
+        FROM my_review mr
+                 JOIN matzip mz ON mr.matzip_id = mz.id
+        WHERE mr.member_id = #{memberId}
+    </select>
+
+
+</mapper>

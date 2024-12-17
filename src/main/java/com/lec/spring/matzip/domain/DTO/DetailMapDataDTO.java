@@ -11,10 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SeoulMapDBDataDTO {
-    private Long friendId;
-    private String nickname;
-    private String profileImg;
-    private List<String> publicGu;
-    private List<String> hiddenGu;
+public class DetailMapDataDTO {
+    private List<FriendDataWithMatzipDTO> friendList;
+    private List<TotalMatzipListDataDTO> totalMatzipList;
 }

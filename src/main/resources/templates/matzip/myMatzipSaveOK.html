@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<script th:unless="${result}">
+    alert("나의 맛집 등록 실패");
+    history.back();
+</script>
+
+<script th:if="${result}" th:inline="javascript">
+    alert("나의 맛집 등록 성공")
+    location.href = "/matzip/myMatzipList"
+</script>
+</html>
