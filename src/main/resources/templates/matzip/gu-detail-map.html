@@ -12,7 +12,8 @@
         const data = /*[[${data}]]*/ {},
             hiddenImgUrl = /*[[@{/IMG/matzip/hidden_matzip.png}]]*/ 'hiddenImg',
             emptyHeartImgUrl = /*[[@{/IMG/matzip/empty_heart.png}]]*/ 'emptyHeart',
-            fillHeartImgUrl = /*[[@{/IMG/matzip/fill_heart.png}]]*/ 'fillHeart'
+            fillHeartImgUrl = /*[[@{/IMG/matzip/fill_heart.png}]]*/ 'fillHeart',
+            profileImgUrl = /*[[@{/IMG/}]]*/ 'url'
         ;
     </script>
 
@@ -24,9 +25,7 @@
         <button id="left" class="friend_btn">
             <img class="friend_btn_img" th:src="@{/IMG/matzip/friend-btn-left.png}">
         </button>
-        <div class="friend_card" th:each="friend : ${data.getFriendList()}">
-            <img class="profile_img" th:src="'@{/IMG/profile/}' + ${friend.getProfileImg()}">
-        </div>
+        <div id="friend_card_list"></div>
         <button id="right" class="friend_btn">
             <img class="friend_btn_img" th:src="@{/IMG/matzip/friend-btn-right.png}">
         </button>

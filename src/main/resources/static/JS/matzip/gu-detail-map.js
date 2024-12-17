@@ -1,5 +1,7 @@
 const centerLatLng = data.centerLatLng,
     totalList = data.totalMatzipList,
+    friendListLenght = data.friendList.length,
+    wishList = data.wishList,
 
     mapContainer = document.getElementById("map"),
     mapOption = {
@@ -17,14 +19,20 @@ const centerLatLng = data.centerLatLng,
     searchSelectBtn = document.getElementById('search_select_btn'),
     addBtn = document.getElementById('add_btn'),
     closeSearchBtn = document.getElementById('close_search_btn'),
-    searchWindow = document.getElementById('search_window')
+    searchWindow = document.getElementById('search_window'),
+    leftBtn = document.getElementById('left'),
+    rightBtn = document.getElementById('right')
 ;
 
-let searchResultList;
+let searchResultList,
+    friendStart = 0,
+    friendEnd = 2
+;
 
-console.log(data)
+console.log(data);
 
-displayPlaces(totalList)
+displayPlaces(totalList);
+displayFriendProfile();
 
 searchBtn.addEventListener('click', searchPlaces);
 searchSelectBtn.addEventListener('click', postMatzipData);
@@ -36,9 +44,11 @@ closeSearchBtn.addEventListener('click', () => {
         else if (node.id === 'result_list') node.innerHTML = '';
     })
 });
-closeBtn.addEventListener('click', () => detailInfo.className += ' hidden')
+closeBtn.addEventListener('click', () => detailInfo.className += ' hidden');
+leftBtn.addEventListener('click', moveLeftFriendListEvent);
+rightBtn.addEventListener('click', moveRightFriendListEvent);
 
-function displayPlaces(places) {
+function displayPlaces(places, isFriendList = false) {
     const matzipWrap = document.getElementById('matzip_wrap'),
         bounds = new kakao.maps.LatLngBounds(),
         fragment = document.createDocumentFragment();
@@ -49,7 +59,7 @@ function displayPlaces(places) {
     places.forEach(place => {
         const placePosition = new kakao.maps.LatLng(place.lat, place.lng),
             marker = place.visibility === 'PUBLIC' ? addMakers(placePosition) : addCircle(placePosition),
-            item = getDivItem(place, data.wishList);
+            item = getDivItem(place, wishList);
 
         bounds.extend(placePosition);
 
@@ -82,7 +92,7 @@ function displayPlaces(places) {
 
     matzipWrap.appendChild(fragment);
 
-    map.setBounds(bounds);
+    if(!isFriendList) map.setBounds(bounds);
 }
 
 function addMakers(position) {
@@ -113,7 +123,7 @@ function addCircle(center) {
 function getDivItem(place, wishList) {
     const card = document.createElement('div');
     card.className = 'matzip_card';
-    card.dataset.memberId = place.memberIds[0];
+    card.dataset.memberId = place.memberIds ? place.memberIds[0] : place.memberId;
     card.dataset.matzipId = place.matzipId;
     card.dataset.visibility = place.visibility;
 
@@ -365,5 +375,85 @@ function updateWishListEvent(e) {
         })
 
 
+
+}
+
+function displayFriendProfile() {
+    const friendListData = data.friendList,
+        friendCardList = document.getElementById('friend_card_list'),
+        fragment = document.createDocumentFragment()
+    ;
+
+    friendCardList.innerHTML = '';
+
+    for(let i = friendStart; i <= friendEnd; i++) {
+        const fData = friendListData[i];
+
+        if(!fData) break;
+
+        const friendCard = document.createElement('div'),
+            profileImg = document.createElement('img'),
+            overlay = document.createElement('div')
+        ;
+
+        friendCard.className = 'friend_card';
+        friendCard.dataset.index = i;
+        friendCard.onclick = friendClickEvent;
+
+        profileImg.className = 'profile_img';
+        // profileImg.src = profileImgUrl + fData.profileImg;
+        profileImg.src = profileImgUrl + 'defaultProfileImg.png';
+
+        overlay.className = 'overlay' + (fData.isSelected ? '' : ' hidden');
+
+        friendCard.appendChild(profileImg);
+        friendCard.appendChild(overlay);
+
+        fragment.appendChild(friendCard);
+    }
+    friendCardList.appendChild(fragment);
+}
+
+function moveLeftFriendListEvent(e) {
+    if(friendStart === 0) return;
+
+    friendStart -= 3;
+    friendEnd -= 3;
+
+    displayFriendProfile();
+}
+
+function moveRightFriendListEvent(e) {
+    if((friendListLenght- (friendEnd + 3)) < -1) return;
+
+    friendStart += 3;
+    friendEnd +=3;
+
+    displayFriendProfile();
+}
+
+function friendClickEvent(e) {
+    const item = e.currentTarget,
+
+        overlay = item.querySelector('.overlay'),
+        overlayList = document.getElementsByClassName('overlay'),
+
+        index = item.dataset.index,
+        friendData = data.friendList[index],
+        friendMatzipList = friendData.matzipList;
+
+    if(!overlay.classList.contains('hidden')) {
+        overlay.className += ' hidden';
+        delete friendData.isSelected;
+        displayPlaces(totalList);
+        return;
+    }
+
+    for(const e of overlayList) e.className += ' hidden';
+
+    friendData.isSelected = true;
+
+    overlay.classList.remove('hidden');
+    displayPlaces(friendMatzipList, true);
 
 }

@@ -48,9 +48,12 @@
     box-sizing: border-box;
     float: left;
     aspect-ratio: 1/1;
-    height: 8vh;
+    height: 7.5vh;
     border-radius: 60px;
     border: 4px solid #FF7327;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
 }
 
 #friend_list {
@@ -61,6 +64,12 @@
     margin-bottom: 3%;
     display: flex;
     justify-content: space-around
+}
+
+#friend_card_list {
+    display: flex;
+    justify-content: space-around;
+    gap: 5px;
 }
 
 .matzip_card {
@@ -193,3 +202,16 @@
 .selected {
     outline: 3px solid #FF7327;
 }
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(166, 255, 0, 0.5); /* 반투명한 검정색 */
+    pointer-events: none; /* 오버레이가 클릭 이벤트를 무시하고 뒤의 요소에 영향을 주도록 설정 */
+}
+
