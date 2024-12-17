@@ -2,6 +2,7 @@ package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.EmailMessage;
 import com.lec.spring.member.domain.Member;
+import jakarta.mail.internet.MimeMessage;
 
 import java.util.List;
 
@@ -21,8 +22,7 @@ public interface MemberService {
 
     List<Member> findAll();
 
-    //이메일 인증구현
-    String authorizationEmail(EmailMessage emailMessage);
+
 
     // 인증코드 확인
     boolean verifyAuthorizationCode(String code, String email);
@@ -41,5 +41,15 @@ public interface MemberService {
     int updateAdditionalInfo(Long id, String name, String nickname, String email);
 
     void processReferral(Member member, Member referrer);
+
+    // 랜덤번호 생성
+    void createNumber();
+
+    //mail content
+    MimeMessage createEmail(EmailMessage emailMessage);
+
+
+
+
 
 }

@@ -42,6 +42,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
+                                "/member/sendEmail",
+                                "/member/verify-code",
                                 "/home",
                                 "/member/login",
                                 "/member/register",
