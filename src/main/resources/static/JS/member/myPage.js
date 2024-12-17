@@ -1,9 +1,32 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // 하트 버튼 토글 기능
+    const heartButtons = document.querySelectorAll('.heart-button');
+
+    function toggleHeart(element) {
+        element.classList.toggle('clicked');
+    }
+});
+
+
 document.addEventListener('DOMContentLoaded', function () {
-    const memberId = [[${memberId}]];
+    const memberId = window.location.pathname.split('/').pop();
 
     const updateNicknameForm = document.getElementById('updateNicknameForm');
     const messageContainer = document.getElementById('messageContainer');
     const myPageContainer = document.getElementById('myPageContainer');
+
+
+
+    // 기본 마이페이지
+    fetch(`/api/members/${memberId}/myPage`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // JSON 데이터 처리
+            // data.myPage를 사용하여 화면에 반영
+        })
+        .catch(error => console.error('Error:', error));
+
+
 
     updateNicknameForm.addEventListener('submit', function (event) {
         event.preventDefault(); // 기본 폼 동작 방지

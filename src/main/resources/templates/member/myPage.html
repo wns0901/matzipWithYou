@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Page</title>
     <link rel="stylesheet" th:href="@{/CSS/member/myPage.css}" type="text/css"/>
+    <script th:inline="javascript">
+        console.log(1);
+        console.log(/*[[${myPage}]]*/ '');
+    </script>
 </head>
 <body>
 
@@ -55,10 +59,13 @@
     <div class="content-section">
         <!-- 위시 리스트 -->
         <div class="section">
-            <div class="section-header">
-                <h2>❤️ 위시 리스트(42곳) 노토산스 볼드 24</h2>
-                <button class="view-all-button">전체보기 > 노토산스 미듐 12 6A6A6A</button>
-            </div>
+            <span class="section-header">
+            <img src="/IMG/heart-filled.svg" alt="heart-icon">
+                <h2> 위시 리스트(</h2>
+                    <h2 class="section-header" th:text="${myPage.wishInfo.count}"></h2>
+                <h2>곳)</h2>
+                <button class="view-all-button">전체보기 ></button>
+            </span>
             <div class="card-container" id="wishlist">
                 <!-- 카드 예시 -->
                 <div class="card">
@@ -73,10 +80,13 @@
 
         <!-- 나의 맛집 -->
         <div class="section">
-            <div class="section-header">
-                <h2>🍴 나의 맛집(86곳) 노토산스 볼드 24</h2>
+            <span class="section-header">
+            <img src="/IMG/spoon.png" alt="spoon-icon">
+                <h2> 나의 맛집(</h2>
+                    <h2 class="section-header" th:text="${myPage.matzipInfo.count}"></h2>
+                <h2>)</h2>
                 <button class="view-all-button">전체보기 ></button>
-            </div>
+            </span>
             <div class="card-container" id="mystores">
                 <!-- 카드 예시 -->
                 <div class="card">
@@ -91,14 +101,18 @@
 
         <!-- 나의 리뷰 -->
         <div class="section">
-            <div class="section-header">
-                <h2>💬 나의 리뷰(23개) 노토산스 볼드 24</h2>
+            <span class="section-header">
+            <img src="/IMG/review-icon.png" alt="review-icon">
+                <h2> 나의 리뷰(</h2>
+                    <h2 class="section-header" th:text="${myPage.reviewInfo.count}"></h2>
+                <h2>)</h2>
                 <button class="view-all-button">전체보기 ></button>
-            </div>
+            </span>
             <div class="review-container" id="myreviews">
-                <div class="review-card">
+                <div class="review-card review-list card:nth-child(n+4)">
                     <img src="DB 경로" alt="음식 이미지">
                     <div class="review-content">
+                        <p>★★★★☆ 평점 4점</p>
                         <p>가게이름 노토산스 볼드 10</p>
                         <p>가게에 대한 리뷰입니다. 노토산스 미디엄 10</p>
                     </div>

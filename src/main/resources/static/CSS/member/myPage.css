@@ -16,29 +16,7 @@
 
 
 
-/*.container {*/
-/*    width: 100vh;*/
-/*    height: 100vh;*/
-/*    background-color: #F5F5F5;*/
-/*}*/
-/*!* 전체 페이지 스타일 *!*/
-/*body {*/
-/*    margin: 0;*/
-/*    font-family: Arial, sans-serif;*/
-/*    background-color: #FFA375; !* 배경색 *!*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    height: 33vh;*/
-/*}*/
 
-/* 프로필 컨테이너 */
-/*.profile-container {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    gap: 20px;*/
-/*}*/
 /* 기본 스타일 */
 body {
     margin: 0;
@@ -52,29 +30,14 @@ body {
     min-height: 100vh;
 }
 
-/* 왼쪽 프로필 영역 */
-.profile-section {
-    background-color: #FFA375;
-    width: 33.33%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-}
-
-.profile-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* 가운데 정렬 */
-    position: relative; /
-    margin: 20px;
-}
 
 /* 오른쪽 콘텐츠 영역 */
 .content-section {
     background-color: #F5F5F5;
+    /*width: 1440px;*/
     width: 66.66%;
-    padding: 20px;
+    padding: 40px;
+    gap: 30px; /* 섹션 간 간격 */
 }
 
 /* 공통 섹션 스타일 */
@@ -83,17 +46,22 @@ body {
 }
 
 .section-header {
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    font-size: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
 }
 
 .view-all-button {
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: normal;
+    font-size: 12px;
     background: none;
     border: none;
-    color: #FF7A29;
+    color: #6a6a6a;
     cursor: pointer;
-    font-weight: bold;
 }
 
 /* 카드 컨테이너 */
@@ -106,14 +74,19 @@ body {
 .card {
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
     padding: 10px;
     text-align: center;
     cursor: pointer;
 }
-
+.card-info{
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: normal;
+    font-size: 15px;
+}
 .card img {
-    width: 100%;
+    width: 125px;
+    height: 130px;
     border-radius: 5px;
 }
 
@@ -130,8 +103,19 @@ body {
     background-image: url('/IMG/heart-filled.svg');
 }
 
+/* 하트 아이콘 토글 */
+.card .heart-icon {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.card .heart-icon.clicked {
+    color: #FF9F66; /* 주황색 하트 */
+}
+
 /* 리뷰 스타일 */
 .review-container {
+    width: calc(33.33% - 20px); /* 1/3의 영역만 차지 (간격 포함) */
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -145,12 +129,42 @@ body {
     border-radius: 10px;
 }
 
+.review-list .card:nth-child(n+4) {
+    display: none; /* 3개만 보이게 */
+}
 
 
+
+
+
+
+
+/* 왼쪽 프로필 주황색 배경 */
+.profile-section {
+    background-color: #FFA375;
+    /*width: 480px;*/
+    width: 33.33%;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.profile-content {
+    position: absolute;
+    top : 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 가운데 정렬 */
+    /*margin-top: 140px; !* 상단에서 140px 여백 추가 *!*/
+    /*gap: 20px; !* 각 컨텐츠 간격 *!*/
+    /*margin: 20px;*/
+}
 /* 프로필 이미지 및 오버레이 */
 .profile-image-wrapper {
 
-    display: flex;
+    display: inline-block;
     justify-content: center;
     position: relative;
     margin: 10px 0; /* 위아래 여백 */
@@ -193,8 +207,8 @@ body {
 .settings-button {
     margin: 10px 0; /* 상하 여백만 주기 */
     position: absolute;
-    /*top: 10px; !* 위 여백 *!*/
-    right: 3px; /* 오른쪽 여백 */
+    top: 10px; /* 위 여백 */
+    right: 0px; /* 오른쪽 여백 */
     background-color: #FF7A29;
     border: none;
     border-radius: 50%;
@@ -205,6 +219,7 @@ body {
     align-items: center;
     cursor: pointer;
     /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/
+    z-index: 10;
     margin-bottom: -20px; /* 프로필 이미지 바로 위로 밀어 올림 */
 }
 
@@ -213,11 +228,7 @@ body {
     height: 35px;
 }
 
-/*.profile-pic img {*/
-/*    width: 80px;*/
-/*    height: 80px;*/
-/*    border-radius: 50%;*/
-/*}*/
+
 
 
 /* edit */
@@ -234,8 +245,8 @@ body {
     background-color: #ff7a35; /* 주황색 배경 */
     border: none; /* 테두리 제거 */
     border-radius: 50%; /* 완전한 원형 */
-    width: 43px; /* 버튼 크기 */
-    height: 44px; /* 버튼 크기 */
+    width: 50px; /* 버튼 크기 */
+    height: 51px; /* 버튼 크기 */
     display: flex;
     align-items: center; /* 이미지 중앙 정렬 */
     justify-content: center; /* 이미지 중앙 정렬 */
@@ -246,8 +257,8 @@ body {
 
 /* 버튼 안의 이미지 스타일 */
 .edit-button img {
-    width: 40px; /* 아이콘 크기 */
-    height: 40px; /* 아이콘 크기 */
+    width: 50px; /* 아이콘 크기 */
+    height: 51px; /* 아이콘 크기 */
 }
 
 
@@ -277,6 +288,7 @@ body {
     overflow: hidden; /* 길면 숨김 */
     text-overflow: ellipsis; /* 텍스트가 넘칠 경우 말줄임표 */
     padding-right: 5px;
+    padding-top: 5px;
     text-align: center
 }
 
@@ -324,7 +336,7 @@ body {
     background-color: white;
     border-radius: 15px;
     padding: 15px 30px;
-    margin-top: 5px;
+    /*margin-top: 10px;*/
 }
 
 
