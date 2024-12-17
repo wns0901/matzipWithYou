@@ -9,43 +9,109 @@
 <body>
 
 
-
-<div class="container" id="profile">
-    <div class="containerProfile col-4">
-        <div class="profile-pic rounded-circle-wrapper">
-            <img class="rounded-circle img-fluid" src="프사 경로" alt="..." />
-        </div>
-
-        <div class="nickname-container">
-            <div class="nickname-text">닉네임 최대 10자12</div>
-            <button class="edit-button" onclick="updateNickname()">
-                <img src="/IMG/edit.svg" alt="Edit" />
-                <!-- 닉네임 변경 폼 -->
-<!--                <form th:action="@{/members/{memberId}/nickname}" method="PATCH">-->
-<!--                    <input type="text" id="newNickname" name="newNickname" required maxlength="20">-->
-<!--                    <button type="submit">확인</button>-->
-<!--                    <button type="취소버튼 만드러라">취소</button>-->
-                </form>
+<div class="container">
+    <!-- 왼쪽 주황색 프로필 영역 -->
+    <div class="profile-section">
+        <!-- 프로필 콘텐츠 -->
+        <div class="profile-content">
+            <!--  설정 버튼-->
+            <button class="settings-button">
+                <img src="/IMG/settings-icon.svg" alt="설정 아이콘" class="settings-icon">
             </button>
+            <!-- 프로필 이미지 영역 -->
+            <div class="profile-image-wrapper">
+                <img src="/IMG/profile-image.svg" alt="프로필 이미지" class="profile-image">
+                <div class="overlay">
+                    <img src="/IMG/camera.png" alt="카메라 아이콘" class="camera-icon">
+                </div>
+            </div>
+
+            <div class="nickname-container">
+                <div class="nickname-text" th:text="${myPage.nickname}"></div>
+                <button class="edit-button" onclick="updateNickname()">
+                    <img src="/IMG/edit.svg" alt="Edit"/>
+                    <!-- 닉네임 변경 폼 -->
+                    <!--                <form th:action="@{/members/{memberId}/nickname}" method="PATCH">-->
+                    <!--                    <input type="text" id="newNickname" name="newNickname" required maxlength="20">-->
+                    <!--                    <button type="submit">확인</button>-->
+                    <!--                    <button type="취소버튼 만드러라">취소</button>-->
+                    </form>
+                </button>
+            </div>
+            <!-- 친구 수 & 포인트 버튼 -->
+            <div class="info-buttons">
+                <div class="info-button">
+                    <span class="info-label friends" th:href="@{/members/{memberId}/friends}">친구 ></span>
+                    <span class="info-value" th:text="${myPage.friendCnt}"></span>
+                </div>
+                <div class="info-button">
+                    <span class="info-label">포인트 ></span>
+                    <span class="info-value" th:text="${myPage.point}"></span>
+                </div>
+            </div>
         </div>
-        <a class="friends" th:href="@{/members/{memberId}/friends}">친구:
-            <div th:text="${myPage.friendCnt}"></div>
-        </a>
-        <a class="points">포인트:
-            <div th:text="${myPage.point}"></div>
-        </a>
+    </div>
+    <!-- 오른쪽 콘텐츠 영역 -->
+    <div class="content-section">
+        <!-- 위시 리스트 -->
+        <div class="section">
+            <div class="section-header">
+                <h2>❤️ 위시 리스트(42곳) 노토산스 볼드 24</h2>
+                <button class="view-all-button">전체보기 > 노토산스 미듐 12 6A6A6A</button>
+            </div>
+            <div class="card-container" id="wishlist">
+                <!-- 카드 예시 -->
+                <div class="card">
+                    <img src="DB 경로" alt="음식 이미지">
+                    <div class="card-info">
+                        <p>가게이름 노토산스 미디엄 15</p>
+                    </div>
+                    <button class="heart-button"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 나의 맛집 -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🍴 나의 맛집(86곳) 노토산스 볼드 24</h2>
+                <button class="view-all-button">전체보기 ></button>
+            </div>
+            <div class="card-container" id="mystores">
+                <!-- 카드 예시 -->
+                <div class="card">
+                    <img src="DB 경로" alt="음식 이미지">
+                    <div class="card-info">
+                        <p>가게이름 노토산스 미디엄 15</p>
+                    </div>
+                    <button class="heart-button"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 나의 리뷰 -->
+        <div class="section">
+            <div class="section-header">
+                <h2>💬 나의 리뷰(23개) 노토산스 볼드 24</h2>
+                <button class="view-all-button">전체보기 ></button>
+            </div>
+            <div class="review-container" id="myreviews">
+                <div class="review-card">
+                    <img src="DB 경로" alt="음식 이미지">
+                    <div class="review-content">
+                        <p>가게이름 노토산스 볼드 10</p>
+                        <p>가게에 대한 리뷰입니다. 노토산스 미디엄 10</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
 
+
+
 </div>
-
-
-
-
-
-
-
 
 
 <!-- 성공/오류 메시지 -->
@@ -53,7 +119,7 @@
 <div th:if="${errorMessage}" style="color: red;" th:text="${errorMessage}"></div>
 
 
-<!--    <script th:src="@{/JS/member/myPage.js}" type="text/javascript"></script>-->
+    <script th:src="@{/JS/member/myPage.js}" type="text/javascript"></script>
 </body>
 </html>
 
