@@ -18,7 +18,7 @@ public class MemberValidator implements Validator {
     ValidationEmailService validationEmailService;
 
     @Autowired
-    public void setMemberService(MemberService memberService) {
+    public void setMemberService(MemberService memberService, EmailAuthService emailAuthService, ValidationEmailService validationEmailService) {
         this.memberService = memberService;
         this.emailAuthService = emailAuthService;
         this.validationEmailService = validationEmailService;
@@ -48,6 +48,7 @@ public class MemberValidator implements Validator {
 
         // password 검증 (8~16자)
         String password = member.getPassword();
+        System.out.println("##########password :   "+ password);
         if (password == null || password.trim().isEmpty()) {
             errors.rejectValue("password", "password는 필수입니다");
         } else if (password.length() < 8 || password.length() > 16) {
@@ -83,22 +84,7 @@ public class MemberValidator implements Validator {
 
 
 
-
-    // 인증번호 검증
-    String authCode = member.getAuthCode(); // Member 객체에서 인증번호를 가져온다고 가정
-        if (authCode == null || authCode.trim().isEmpty()) {
-        errors.rejectValue("authCode", "인증번호는 필수입니다");
-    } else {
-        String storedAuthCode = emailAuthService.getAuthCode(email); // 이메일을 통해 인증번호 가져오기
-        if (storedAuthCode == null) {
-            errors.rejectValue("authCode", "인증번호가 존재하지 않습니다");
-        } else if (!storedAuthCode.equals(authCode)) {
-            errors.rejectValue("authCode", "인증번호가 일치하지 않습니다");
-        }
-    }
 }
-
-
 
 
 

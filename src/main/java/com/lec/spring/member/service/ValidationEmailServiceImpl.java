@@ -1,5 +1,6 @@
 package com.lec.spring.member.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -7,6 +8,7 @@ public class ValidationEmailServiceImpl implements ValidationEmailService {
 
     private final EmailAuthService emailAuthService;
 
+    @Autowired
     public ValidationEmailServiceImpl(EmailAuthService emailAuthService) {
         this.emailAuthService = emailAuthService;
     }

@@ -1,76 +1,73 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM Content Loaded');
 
     const verifyButton = document.getElementById('verifyButton');
     const authButton = document.getElementById('authButton');
     const verificationCodeGroup = document.getElementById('verificationCodeGroup');
     const timerElement = document.getElementById('timer');
+    const form = document.querySelector('form');
+
     let timerInterval = null;
-    let verificationTimeout = 3 * 60 * 1000;  // 3분
+    const verificationTimeout = 3 * 60 * 1000; // 3분
     let isEmailVerified = false;
 
-    const form = document.querySelector('form');
-    console.log('Form found:', form);
-
-    if(form) {
-        form.addEventListener('submit', function(event) {
+    // 폼 제출 이벤트
+    if (form) {
+        form.addEventListener('submit', function (event) {
             console.log('Form submit triggered');
-            console.log('Email verified status:', isEmailVerified);
-
-            event.preventDefault();  // 항상 기본 동작을 막고
 
             if (!isEmailVerified) {
-                console.log('Email not verified, preventing form submission');
+                event.preventDefault();
                 alert('이메일 인증이 필요합니다.');
                 return;
             }
 
             console.log('Email verified, submitting form');
-            form.submit();  // 인증되었을 때만 수동으로 submit
+            form.submit(); // 인증 완료 시 폼 제출
         });
-        console.log('Submit event listener added');
     }
 
-    verifyButton.addEventListener('click', function(event) {
-        event.stopPropagation();
+    // 이메일 인증 요청
+    verifyButton.addEventListener('click', function (event) {
         event.preventDefault();
-        const email = document.getElementById('email').value;
+
+        const email = document.getElementById('email').value.trim();
 
         if (!email) {
             alert("이메일을 입력해주세요.");
             return;
         }
 
-        console.log('이메일 인증 요청');
+        console.log('이메일 인증 요청 시작');
 
-        fetch('/member/sendEmail?email=' + encodeURIComponent(email))
+        fetch(`/member/sendEmail?email=${encodeURIComponent(email)}`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
-                } else {
-                    throw new Error('서버에서 오류가 발생했습니다.');
                 }
+                return { error: '이메일을 형식에 맞게 입력해주세요' }; // 오류 메시지 반환
             })
             .then(data => {
                 if (data.message) {
                     alert(data.message);
-                    verificationCodeGroup.style.display = 'block';
-                    startTimer();
+                    verificationCodeGroup.style.display = 'block'; // 인증 코드 입력창 표시
+                    startTimer(); // 타이머 시작
                 } else if (data.error) {
                     alert(data.error);
                 }
             })
             .catch(error => {
-                alert('에러 발생: ' + error.message);
+                console.error('Error:', error);
+                alert('이메일을 형식에 맞게 입력해주세요');
             });
     });
 
-    authButton.addEventListener('click', function(event) {
+    // 인증 코드 확인 요청
+    authButton.addEventListener('click', function (event) {
         event.preventDefault();
-        event.stopPropagation();
 
-        const email = document.getElementById('email').value;
-        const code = document.getElementById('verificationCode').value;
+        const email = document.getElementById('email').value.trim();
+        const code = document.getElementById('verificationCode').value.trim();
 
         if (!email) {
             alert("이메일을 입력해주세요.");
@@ -82,9 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        console.log('인증 코드 확인');
+        console.log('인증 코드 확인 요청');
 
-        fetch('/member/verify-code?email=' + encodeURIComponent(email) + '&code=' + encodeURIComponent(code), {
+        fetch(`/member/verify-code?email=${encodeURIComponent(email)}&code=${encodeURIComponent(code)}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -92,34 +89,31 @@ document.addEventListener('DOMContentLoaded', function() {
         })
             .then(response => {
                 if (!response.ok) {
-                    alert('서버 응답이 올바르지 않습니다.');
-                    return Promise.reject('서버 응답이 올바르지 않습니다.');
+                    return { success: false, error: '서버 응답이 올바르지 않습니다.' }; // 오류 메시지 반환
                 }
                 return response.json();
             })
             .then(data => {
-                if (data && typeof data.success !== 'undefined') {
-                    if (data.success) {
-                        isEmailVerified = true;
-                        console.log('Email verification successful. Status set to:', isEmailVerified);
-                        alert("인증이 성공적으로 완료되었습니다.");
-                        document.getElementById('email').readOnly = true;
-                        document.getElementById('verificationCodeGroup').style.display='none';
-                        clearInterval(timerInterval);
-                    } else {
-                        alert("인증 코드가 잘못되었습니다. 다시 시도해주세요.");
-                    }
+                if (data.success) {
+                    isEmailVerified = true;
+                    alert("인증이 성공적으로 완료되었습니다.");
+                    document.getElementById('email').readOnly = true;
+                    verificationCodeGroup.style.display = 'none'; // 인증 코드 입력창 숨기기
+                    clearInterval(timerInterval); // 타이머 종료
+
                 } else {
-                    alert("서버 응답 형식이 올바르지 않습니다.");
+                    alert(data.error || "인증 코드가 올바르지 않습니다. 다시 시도해주세요.");
                 }
             })
             .catch(error => {
-                alert('에러 발생: ' + error);
+                console.error('Error:', error);
+                alert('인증 코드 확인 중 문제가 발생했습니다. 다시 시도해주세요.');
             });
     });
 
+    // 타이머 시작 함수
     function startTimer() {
-        clearInterval(timerInterval);
+        clearInterval(timerInterval); // 기존 타이머 초기화
         let remainingTime = verificationTimeout;
 
         timerInterval = setInterval(() => {
@@ -127,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (remainingTime <= 0) {
                 clearInterval(timerInterval);
                 timerElement.textContent = "인증 시간이 초과되었습니다.";
-                authButton.disabled = true;
+                authButton.disabled = true; // 인증 버튼 비활성화
             } else {
                 const minutes = Math.floor(remainingTime / 60000);
                 const seconds = Math.floor((remainingTime % 60000) / 1000);

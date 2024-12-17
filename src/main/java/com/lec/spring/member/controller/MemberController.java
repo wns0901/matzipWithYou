@@ -18,9 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -187,7 +185,20 @@ public class MemberController {
     @GetMapping("/sendEmail")
     @ResponseBody  // 이 어노테이션으로 JSON 형식 응답을 반환
     public ResponseEntity<Map<String, String>> sendEmail(@RequestParam String email) {
+
+
         Map<String, String> response = new HashMap<>();
+
+        // 이메일 형식 검증
+        String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        if (email == null || email.trim().isEmpty()) {
+            response.put("error", "이메일은 필수입니다.");
+            return ResponseEntity.badRequest().body(response);
+        } else if (!email.matches(emailPattern)) {
+            response.put("error", "유효하지 않은 이메일 형식입니다.");
+            return ResponseEntity.badRequest().body(response);
+        }
+
         try {
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.setTo(email);          // 수신자 이메일 설정
@@ -202,48 +213,29 @@ public class MemberController {
             response.put("error", "이메일 전송에 실패했습니다. 다시 시도해주세요.");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 에러 시 JSON 응답
         }
-//        폼 -> 페이지가 변경 / fetch -> 비동기 (페이지가 변하지 않음)
+
     }
 
     @PostMapping("/verify-code")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> verifyAuthCode(@RequestParam String email, @RequestParam String code) {
-        // 검증을 위한 객체 생성
-        Member member = new Member();
-        member.setEmail(email);
-        member.setAuthCode(code);
-
-        // 검증 수행
-        Errors errors = new BeanPropertyBindingResult(member, "member");
-        memberValidator.validate(member, errors);
-        System.out.println("######errors: " + errors.toString());
-
-        // 검증 실패 시 오류 반환
-        if (errors.hasErrors()) {
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("success", false);
-            errorResponse.put("errors", errors.getAllErrors());
-            return ResponseEntity.badRequest().body(errorResponse);  // 400 Bad Request
-        }
-
-        // Redis에서 인증 코드 유효성 검사 (validationEmailService 사용)
+        // Redis
         boolean isValid = validationEmailService.validateAuthCode(email, code);
-        System.out.println("#############isValid: " + isValid);
+        System.out.println("########isValid: " + isValid);
 
         // 응답을 위한 Map 생성
         Map<String, Object> response = new HashMap<>();
-        response.put("success", isValid);
+        response.put("success", isValid);  // 인증 성공 여부 추가
+        System.out.println("########respose " + response);
 
         if (isValid) {
-            emailAuthService.deleteAuthCode(email);  // 인증 성공 후 Redis에서 인증 코드 삭제
-            response.put("message", "인증 성공!");
-        } else {
-            response.put("message", "유효하지 않은 인증 코드입니다.");
+            emailAuthService.deleteAuthCode(email);
+            System.out.println("인증 성공하셨습니까 : " + isValid);
+
         }
 
-        return ResponseEntity.ok(response);  // 200 OK 응답 반환
+        return ResponseEntity.ok(response);  // JSON 응답 반환
     }
-
 
 
 
