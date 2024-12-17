@@ -109,6 +109,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
         sqlResult.forEach(data -> {
             data.getMatzipList().forEach(matzip -> {
+                if(matzip.getVisibility().equals("HIDDEN")) chachRandomLatLng(matzip);
                 int index = totalMatzipList.indexOf(matzip);
                 if (index == -1) {
                     totalMatzipList.add(new TotalMatzipListDataDTO(matzip));
@@ -125,7 +126,6 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
         });
 
-
         return DetailMapDataDTO.builder()
                 .memberId(id)
                 .gu(gu)
@@ -134,6 +134,27 @@ public class MyMatzipServiceImpl implements MyMatzipService {
                 .centerLatLng(new GuCenterLatLng().getGuCenterMap().get(gu))
                 .wishList(wishIdList)
                 .build();
+    }
+
+    private void chachRandomLatLng(MatzipListDataDTO matzip) {
+        double EARTH_RADIUS = 6371000;
+        double radius = 180;
+        double centerLat = matzip.getLat();
+        double centerLng = matzip.getLng();
+
+        Random random = new Random();
+
+        double distance = radius * Math.sqrt(random.nextDouble());
+        double angle = 2 * Math.PI * random.nextDouble();
+
+        double deltaLat = (distance / EARTH_RADIUS) * (180 / Math.PI);
+        double deltaLng = (distance / EARTH_RADIUS) * (180 / Math.PI);
+
+        double randomLat = centerLat + deltaLat * Math.sin(angle);
+        double randomLng = centerLng + deltaLng * Math.cos(angle);
+
+        matzip.setLat(randomLat);
+        matzip.setLng(randomLng);
     }
 
     @Override
