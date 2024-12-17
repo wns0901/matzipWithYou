@@ -74,6 +74,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/matzips/**",
                                 "/member/**",
+                                "/member/{id}",
                                 "/member/*/friends",
                                 "/matzips/reviews",
                                 "/matzips/hints/**",
