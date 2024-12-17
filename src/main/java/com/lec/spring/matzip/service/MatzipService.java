@@ -4,6 +4,7 @@ import com.lec.spring.matzip.domain.Matzip;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
+import java.util.List;
 import java.util.Map;
 
 public interface MatzipService {
@@ -12,4 +13,8 @@ public interface MatzipService {
     String getImgUrlFromKakao(String kakaoPageUrl);
 
     Matzip getMatzipById(Long id, Model model);
+
+    List<String> listTagName(Long id);
+
+    List<String> listKindName(Long id);
 }
