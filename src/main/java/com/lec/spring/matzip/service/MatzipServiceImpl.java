@@ -1,5 +1,6 @@
 package com.lec.spring.matzip.service;
 
+import com.lec.spring.matzip.domain.DTO.DetailMatzipDTO;
 import com.lec.spring.matzip.domain.FoodKind;
 import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.repository.FoodKindRepository;
@@ -45,12 +46,12 @@ public class MatzipServiceImpl implements MatzipService {
 
         if (result) {
             return ResponseEntity.ok(Map.of(
-                    "status","SUCCESS"
+                    "status", "SUCCESS"
             ));
         } else {
             return ResponseEntity.ok(Map.of(
-                    "status","FAIL",
-                    "msg","맛집 저장에 실패했습니다."
+                    "status", "FAIL",
+                    "msg", "맛집 저장에 실패했습니다."
             ));
         }
     }
@@ -72,5 +73,10 @@ public class MatzipServiceImpl implements MatzipService {
     public Matzip getMatzipById(Long id, Model model) {
 
         return matzipRepository.findById(id);
+    }
+
+    @Override
+    public ResponseEntity<DetailMatzipDTO> getDetailMatzip(Long matzipId, Long friendId) {
+        return ResponseEntity.ok(matzipRepository.findDetailMatzipByMatzipIdWithFriendId(matzipId, friendId));
     }
 }

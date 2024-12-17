@@ -7,7 +7,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 20vw;
+    width: 23vw;
     z-index: 1;
     height: 80%;
     margin-left: 4%;
@@ -65,23 +65,24 @@
 
 .matzip_card {
     position: relative;
-    width: 100%;
+    width: 95%;
     background-color: #EDEDED;
     border-radius: 15px;
     height: 100px;
-    margin-bottom: 10px;
+    margin: 0 auto 10px;
 }
 
 .wish_heart {
     position: absolute;
     border: none;
-    background: no-repeat;
     aspect-ratio: 1.23 / 1;
-    width: 6.7%;
-    background-size: cover;
+    width: 7.4%;
+    background-size: contain;
+    background-repeat: no-repeat;
     float: right;
     bottom: 15%;
-    right: 5%;
+    right: 5.5%;
+    z-index: 1;
 }
 
 .matzip_img {
@@ -102,20 +103,20 @@
     margin-left: 4%;
     float: left;
     font-family: "Noto Sans KR", serif;
+    font-weight: bold;
     font-size: 18px;
 }
 
 #matzip_wrap {
     overflow-y: auto;
-    width: 84.4%;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
     max-height: 90%;
 }
 
 .matzip_container {
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding: 7% 3% 5%;
     box-sizing: border-box;
     border-radius: 20px;
     border-left: 3px solid #E4E4E4;
@@ -148,10 +149,25 @@
 }
 
 .infowindow {
-    padding: 5px;
-    z-index: 1;
-    border-radius: 10px;
+    position: relative;
+    bottom: 62px;
+    display: block;
+    background: #50627F;
+    color: #fff;
     text-align: center;
-    font-size: large;
+    height: 20px;
+    line-height: 22px;
+    border-radius: 4px;
+    padding: 10px 10px;
+}
+
+#detail-info {
+    background-color: white;
+    width: 600px;
+    height: 435px;
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 

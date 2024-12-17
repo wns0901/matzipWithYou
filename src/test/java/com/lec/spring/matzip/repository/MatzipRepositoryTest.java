@@ -22,6 +22,7 @@ class MatzipRepositoryTest {
 
     @Autowired
     private MatzipService matzipService;
+
     @Test
     void test1() {
         MatzipDataDTO matzipDataDTO = MatzipDataDTO.builder()
@@ -43,5 +44,11 @@ class MatzipRepositoryTest {
         matzipService.saveMatzip(kakaoPlaceDTO.getData(), kakaoPlaceDTO.getKind());
 
         System.out.println(kakaoPlaceDTO.getData());
+    }
+
+    @Test
+    void test2() {
+        MatzipRepository matzipRepository = sqlSession.getMapper(MatzipRepository.class);
+        System.out.println(matzipRepository.findDetailMatzipByMatzipIdWithFriendId(4L, 3L));
     }
 }

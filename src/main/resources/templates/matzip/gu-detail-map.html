@@ -33,22 +33,17 @@
     </div>
     <div class="matzip_container">
         <div id="matzip_wrap">
-            <!--            <div class="matzip_card" th:each="matzip: ${data.getTotalMatzipList()}"-->
-            <!--                 th:data-matzip-id="${matzip.getMatzipId()}"-->
-            <!--                 th:if="${matzip.getVisibility()} == 'PUBLIC'">-->
-            <!--                <img class="matzip_img" th:src="${matzip.getImgUrl()}">-->
-            <!--                <div class="matzip_name" th:text="${matzip.getName()}"></div>-->
-            <!--                <button th:if="${data.getWishList().contains(matzip.getMatzipId())}">누름</button>-->
-            <!--                <button th:unless="${data.getWishList().contains(matzip.getMatzipId())}">안 누름</button>-->
-            <!--            </div>-->
-            <!--            <div class="matzip_card" th:each="matzip: ${data.getTotalMatzipList()}"-->
-            <!--                 th:data-matzip-id="${matzip.getMatzipId()}"-->
-            <!--                 th:unless="${matzip.getVisibility()} == 'PUBLIC'">-->
-            <!--                <img class="hidden_img" th:src="@{/IMG/matzip/hidden_matzip.png}">-->
-            <!--            </div>-->
         </div>
         <button id="add_btn"> + 맛집 리스트 추가하기</button>
     </div>
+</div>
+<div id="detail-info">
+    <img src="#">
+    <span id="matzip_name">가게 이름</span>
+    <span id="matzip_address">주소</span>
+    <div id="star_rating"></div>
+    <div id="tags_wrap"></div>
+    <button id="write_review_btn">리뷰작성</button>
 </div>
 </body>
 <script type="text/javascript" th:src="@{/JS/matzip/gu-detail-map.js}" th:inline="javascript"></script>

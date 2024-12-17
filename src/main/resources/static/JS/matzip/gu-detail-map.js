@@ -10,7 +10,7 @@ const ps = new kakao.maps.services.Places();
 
 const map = new kakao.maps.Map(mapContainer, mapOption);
 
-const infowindow = new kakao.maps.InfoWindow({zIndex: 1});
+const overlay = new kakao.maps.CustomOverlay();
 
 console.log(data)
 
@@ -33,23 +33,25 @@ function displayPlaces(places) {
 
         bounds.extend(placePosition);
 
-        (function (marker, title) {
-            kakao.maps.event.addListener(marker, 'mouseover', function () {
-                displayInfowindow(marker, title);
-            });
+        (function (marker, title, position) {
+            if (title) {
+                kakao.maps.event.addListener(marker, 'mouseover', function () {
+                    displayInfowindow(title, position);
+                });
 
-            kakao.maps.event.addListener(marker, 'mouseout', function () {
-                infowindow.close();
-            });
+                kakao.maps.event.addListener(marker, 'mouseout', function () {
+                    overlay.setMap(null);
+                });
+            }
 
             item.onmouseover = function () {
-                displayInfowindow(marker, title);
+                displayInfowindow(title, position);
             };
 
             item.onmouseout = function () {
-                infowindow.close();
+                overlay.setMap(null);
             };
-        })(marker, place.name);
+        })(marker, place.name, placePosition);
 
         fragment.appendChild(item);
     })
@@ -104,7 +106,7 @@ function getDivItem(place, wishList) {
         wishListBtn.className = 'wish_heart';
         wishListBtn.type = 'button'
         if (wishList.includes(place.matzipId)) {
-            wishListBtn.style.backgroundImage = 'url(' +fillHeartImgUrl + ')';
+            wishListBtn.style.backgroundImage = 'url(' + fillHeartImgUrl + ')';
         } else {
             wishListBtn.style.backgroundImage = 'url(' + emptyHeartImgUrl + ')';
         }
@@ -134,9 +136,19 @@ function removeAllChildNods(div) {
     }
 }
 
-function displayInfowindow(marker, title) {
-    if (!title) return;
-    const content = '<div class="infowindow">' + title + '</div>';
-    infowindow.setContent(content);
-    infowindow.open(map, marker);
+function displayInfowindow(title, position) {
+    let content;
+    if (!title) {
+        content = '<span class="infowindow">' + '히든!' + '</span>';
+    } else {
+        content = '<span class="infowindow">' + title + '</span>';
+    }
+    ;
+    overlay.setContent(content);
+    overlay.setPosition(position);
+    overlay.setMap(map);
+}
+
+async function getMatzipDetail(matzipId) {
+    const result = await fetch().then(res => res.json())
 }
