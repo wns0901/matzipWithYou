@@ -136,7 +136,7 @@ h2 {
 
 .username-link:hover {
     text-decoration: underline;
-    color: #e66520;  /* primary-color보다 살짝 어두운 색상 */
+    color: #e66520;
 }
 
 @media screen and (max-width: 768px) {
