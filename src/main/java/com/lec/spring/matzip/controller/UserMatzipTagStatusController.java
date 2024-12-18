@@ -1,14 +1,19 @@
 package com.lec.spring.matzip.controller;
 
+import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
+import com.lec.spring.matzip.repository.UserMatzipTagStatusRepository;
 import com.lec.spring.matzip.service.UserMatzipTagStatusService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/matzip")
@@ -19,10 +24,10 @@ public class UserMatzipTagStatusController {
     @Autowired
     public UserMatzipTagStatusController(UserMatzipTagStatusService userMatzipTagStatusService) {
         this.userMatzipTagStatusService = userMatzipTagStatusService;
+
     }
 
     @GetMapping("/new")
-
     public String showTagForm() {
         return "matzip/tagForm"; // tagForm.html로 이동
     }
@@ -35,80 +40,95 @@ public class UserMatzipTagStatusController {
     }
 
 
-    /*@RequestParam 없애니까 memberId 안되던거 해결됨*/
-    @GetMapping("/singleList")
-    @ResponseBody
-    public String singleListTags(Long memberId, Long myMatzipId, Model model) {
-        UserMatzipTagStatus source = userMatzipTagStatusService.findTagByMemberIdAndMatzipId(memberId, myMatzipId);
-        System.out.println("###############source = " + source);
-        model.addAttribute("tags", source );
-        return "matzip/singleTagList"; // tagList.html로 이동
-    }
 
+    //wholeHiddenListt
+    @GetMapping("/wholeHiddenListt/{myMatzipId}")
+    public String getWholeHiddenMatzipTagIds(@PathVariable Long myMatzipId, Model model) {
+        List<UserMatzipTagStatus> result = userMatzipTagStatusService.listWholeHiddenListByMyMatzipId(myMatzipId);
+        System.out.println("###############전체 히든 맛집 = " + result.size());
 
-    // 회원의 태그리스트 조회
-    @GetMapping("/list")
-    @ResponseBody
-    public String listTags(Long memberId, Model model) {
-        List<UserMatzipTagStatus> tags = userMatzipTagStatusService.findTagsAndMatzipIdByMember(memberId);
-        System.out.println("###############tags = " + tags );
-        model.addAttribute("tags", tags);
-        return "matzip/tagList"; // tagList.html로 이동
-    }
+        List<UserMatzipTagStatus> duplicate= userMatzipTagStatusService.findDuplicateMyMatzipId(myMatzipId);
+        System.out.println("#########중복 태그 반환 : " + duplicate.size());
 
-    //가게에 태그리스트 조회
-    @GetMapping("/matzipList")
-    @ResponseBody
-    public String getMembersAndTags( Long myMatzipId,  Model model) {
-        List<UserMatzipTagStatus> result = userMatzipTagStatusService.findMemberAndTagByMatzipId(myMatzipId);
-        System.out.println("###############result = " + result);
-        model.addAttribute("tags", result);
-        return "matzip/matzipTagList";
-    }
+        List<UserMatzipTagStatus> deleteDuplicate= userMatzipTagStatusService.deleteDuplicateByMyMatzipId(myMatzipId);
 
-    //히든 태그 조회
-    @GetMapping("/hiddenTags")
-    @ResponseBody
-    public List<Long> getHiddenMatzipTagIds(Long myMatzipId) {
-        System.out.println("HIDDEN 맛집 ID 요청: " + myMatzipId);
-        List<Long> hiddenTags = userMatzipTagStatusService.listHiddenMatzipTagIds(myMatzipId);
-        System.out.println("응답할 히든 태그 ID: " + hiddenTags);
-        return hiddenTags;
-    }
-
-    //kindName
-    @GetMapping("/kindName")
-    @ResponseBody
-    public String getKindName( Long myMatzipId, Model model) {
-        System.out.println("myMatzipId = " + myMatzipId);
-        String kindName = userMatzipTagStatusService.listKindName(myMatzipId);
-        System.out.println("###############kindName = " + kindName);
-        model.addAttribute("kindName", kindName);
-        return "matzip/kindName";
-    }
-    
-    //wholeHiddenList 
-    @GetMapping("/wholeHiddenList")
-    public String getWholeHiddenMatzipTagIds(Model model) {
-        List<UserMatzipTagStatus> result = userMatzipTagStatusService.listWholeHiddenList();
-        System.out.println("###############전체 히든 맛집 = " + result);
-
-       List<UserMatzipTagStatus> duplicate= userMatzipTagStatusService.finddeleteDuplicateMyMatzipId();
-        System.out.println("#########중복 반환" + duplicate);
-
-        List<UserMatzipTagStatus> deleteDuplicate= userMatzipTagStatusService.deleteDuplicateMyMatzipId();
-
-        System.out.println("########deleteDuplicate" + deleteDuplicate);
+        System.out.println("########삭제된 결과 : " + deleteDuplicate.size());
 
         List<UserMatzipTagStatus> userMatzipTagStatuses = userMatzipTagStatusService.userMatzipTagStatus();
-        System.out.println("########userMatzipTagStatuses = " + userMatzipTagStatuses);
+        System.out.println("########userMatzipTagStatuses = " + userMatzipTagStatuses.size());
 
         model.addAttribute("userMatzipTagStatuses", userMatzipTagStatuses);
         model.addAttribute("tags", result);
         model.addAttribute("duplicate", duplicate);
         model.addAttribute("deleteDuplicate", deleteDuplicate);
-        return "matzip/wholeHiddenList";
+        return "matzip/wholeHiddenListt";
     }
+
+
+    @GetMapping("/hint/{myMatzipId}")
+    public String showHintForm(@PathVariable Long myMatzipId, Model model) {
+        // 리스트 섞기
+        List<UserMatzipTagStatus> l = userMatzipTagStatusService.shuffleTagNames(myMatzipId);
+        System.out.println("######랜덤으로 돌린 후: " + l.size());
+
+        model.addAttribute("hints", l);
+        return "matzip/hintForm";
+    }
+
+
+    @PostMapping("/saveTag")
+    public ResponseEntity<String> saveTagStatus(@RequestBody UserMatzipTagStatus request) {
+        try {
+            userMatzipTagStatusService.hintTagSave(
+                    request.getMemberId(),
+                    request.getMyMatzipId(),
+                    request.getTagId());
+            return ResponseEntity.ok("힌트가 저장되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("힌트 저장에 실패했습니다: " + e.getMessage());
+        }}
+
+    @GetMapping("/tags/{myMatzipId}")
+    public ResponseEntity<Map<String, Object>> getTags(@PathVariable Long myMatzipId) {
+        Long memberId = userMatzipTagStatusService.getAuthenticatedMemberId(); // 로그인된 회원의 ID를 가져옴
+
+        List<UserMatzipTagStatus> purchasedTags = userMatzipTagStatusService.purchasedTag(memberId);
+
+        List<UserMatzipTagStatus> unpurchasedTags = userMatzipTagStatusService.unpurchasedTag(memberId);
+
+        List<Map<String, Object>> purchasedTagsList = purchasedTags.stream()
+                .filter(tag -> tag.getMyMatzipId().equals(myMatzipId))
+                .map(tag -> {
+                    Map<String, Object> tagMap = new HashMap<>();
+                    tagMap.put("tagId", tag.getTagId());
+                    tagMap.put("tagName", tag.getTagName());
+                    return tagMap;
+                })
+                .collect(Collectors.toList());
+
+
+        List<Map<String, Object>> unpurchasedTagsList = unpurchasedTags.stream()
+                .filter(tag -> tag.getMyMatzipId().equals(myMatzipId))
+                .map(tag -> {
+                    Map<String, Object> tagMap = new HashMap<>();
+                    tagMap.put("tagId", tag.getTagId());
+                    tagMap.put("tagName", tag.getTagName());
+                    return tagMap;
+                })
+                .collect(Collectors.toList());
+
+        // 응답 객체 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("myMatzipId", myMatzipId);
+        response.put("purchased", purchasedTagsList);
+        response.put("unpurchased", unpurchasedTagsList);
+
+        return ResponseEntity.ok(response);
+    }
+
+
+
+
 
 
 

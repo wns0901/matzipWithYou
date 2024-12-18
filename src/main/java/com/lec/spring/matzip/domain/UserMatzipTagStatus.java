@@ -23,21 +23,6 @@ public class UserMatzipTagStatus {
         private String visibility;
         private Long id;
 
-        @Override
-        public boolean equals(Object o) {
-                if (this == o) return true;
-                if (!(o instanceof UserMatzipTagStatus)) return false;
-                UserMatzipTagStatus that = (UserMatzipTagStatus) o;
-                return Objects.equals(myMatzipId, that.myMatzipId) &&// id를 기준으로 비교
-                Objects.equals(id, that.id)&&
-                        Objects.equals(tagId, that.tagId)
-                        ;
-        }
-
-        @Override
-        public int hashCode() {
-                return Objects.hash(myMatzipId, id, tagId); // id를 해시 코드로 사용
-        }
 
 
 }// end hintPurchase
