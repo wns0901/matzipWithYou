@@ -23,4 +23,6 @@ public interface MatzipService {
 
     List<Matzip> getAllMatzips();
 
+    int deleteById(Long id);
+
 }

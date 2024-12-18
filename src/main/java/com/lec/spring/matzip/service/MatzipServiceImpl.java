@@ -45,7 +45,10 @@ public class MatzipServiceImpl implements MatzipService {
 
         String kakaoImgUrl = getImgUrlFromKakao(matzip.getKakaoMapUrl());
 
+//        FoodKind foodKind = foodKindRepository.findByKindName(kind);
+
         matzip.setImgUrl(kakaoImgUrl);
+//        matzip.setKindId(foodKind.getId());
 
         String gu = matzip.getAddress().split(" ")[1];
         matzip.setGu(gu);
@@ -80,7 +83,6 @@ public class MatzipServiceImpl implements MatzipService {
 
     @Override
     public Matzip getMatzipById(Long id, Model model) {
-
         return matzipRepository.findById(id);
     }
 
@@ -100,11 +102,15 @@ public class MatzipServiceImpl implements MatzipService {
         return matzipRepository.listKindName(id);
     }
 
+
     @Override
     public List<Matzip> getAllMatzips() {
         return matzipRepository.findAll();
     }
-} // end MatzipServiceImple
 
-
+    @Override
+    public int deleteById(Long id) {
+        return matzipRepository.deleteById(id);
+    }
+}
 

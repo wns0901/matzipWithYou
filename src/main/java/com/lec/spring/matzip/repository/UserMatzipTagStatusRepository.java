@@ -1,5 +1,6 @@
 package com.lec.spring.matzip.repository;
 
+
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
 
 import java.util.List;
@@ -10,32 +11,20 @@ public interface UserMatzipTagStatusRepository {
 
     // 저장
     int tagSave(UserMatzipTagStatus userMatzipTagStatus);
-    //조회(id와 member를 참고하여 tag를 찾는다..)
-    Optional<UserMatzipTagStatus> findTagByIdAndMember(
-            Long memberId,
-            Long myMatzipId  );
-    //단일 태그 조회
-    UserMatzipTagStatus findTagByMemberIdAndMatzipId(Long memberId, Long myMatzipId);
-
-    // 유저 태그 조회
-    List<UserMatzipTagStatus> findTagsAndMatzipIdByMember(Long memberId);
-
-    //가게태그 조회
-    List<UserMatzipTagStatus> findMemberAndTagByMatzipId(Long myMatzipId);
-
-    //히든태그 조회
-    List<UserMatzipTagStatus> listHiddenMatzipTagIds(Long myMatzipId);
-
-    //kindId 조회
-    List<UserMatzipTagStatus> listKindName(Long myMatzipId);
-
-
-    //wholeHiddenList(my_matzip에서 hidden인 맛집 불러오기)
-    List<UserMatzipTagStatus> listWholeHiddenList();
-
-    List<UserMatzipTagStatus> finddeleteDuplicateMyMatzipId ();
+    // myMatzipId를 기준으로 hiddentag불러오기
+    List<UserMatzipTagStatus> listWholeHiddenListByMyMatzipId(Long myMatzipId);
+    // myMatzipId를 기준으로 중복된 태그 찾기
+    List<UserMatzipTagStatus> findDuplicateMyMatzipId(Long myMatzipId);
 
     List<UserMatzipTagStatus> userMatzipTagStatus();
+
+    List<UserMatzipTagStatus> userMatzipTagStatusByMemberID(Long memberId);
+
+
+    // memberID기준으로 member가 구매한 태그와 구매하지 않은 태그가져오기 (visiblity = "hidden")이여야함
+    List<UserMatzipTagStatus> listpurchasedTagByMemberId(Long memberId);
+
+    List<UserMatzipTagStatus> listUnpurchasedTagByMemberId(Long memberId);
 
 
 } // end HintPurchaseRepository

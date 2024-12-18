@@ -16,7 +16,14 @@ public interface MyPageRepository {
     List<MatzipInfoDTO> getMyMatzipPreview(Long memberId);
     List<ReviewInfoDTO> getMyReviewPreview(Long memberId);
 
-    // 닉네임 수정
-    int updateNick(String nickname);
+    // 닉네임 중복 확인
+    boolean existsByNickname(String newNickname);
+
+    // 현재 소지 포인트
+    int getCurrentPoint(Long memberId);
+
+    // 닉 업데이트 및 포인트 차감
+    int updateNicknameAndDeductPoints(Long memberId, String newNickname, int pointsToDeduct);
+
 
 }

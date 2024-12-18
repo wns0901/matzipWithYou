@@ -288,3 +288,13 @@ ALTER TABLE matzip_tag
             REFERENCES my_matzip (id)
             ON UPDATE RESTRICT
             ON DELETE CASCADE;
+
+ALTER TABLE matzip
+    DROP FOREIGN KEY FK_food_kind_TO_matzip;
+
+ALTER TABLE matzip
+    ADD CONSTRAINT FK_food_kind_TO_matzip
+        FOREIGN KEY (kind_id)
+            REFERENCES food_kind (id)
+            ON UPDATE RESTRICT
+            ON DELETE CASCADE;

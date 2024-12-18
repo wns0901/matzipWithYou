@@ -21,4 +21,10 @@ public class FoodKindServiceImpl implements FoodKindService {
     public List<FoodKind> getAllFoodKinds() {
         return foodKindRepository.findAll();
     }
+
+
+    @Override
+    public int deleteById(Long id) {
+        return foodKindRepository.deleteById(id);
+    }
 }
