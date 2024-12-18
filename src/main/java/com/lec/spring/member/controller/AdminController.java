@@ -74,59 +74,24 @@ public class AdminController {
         return foodKindService.getAllFoodKinds();
     }
 
-    @DeleteMapping("/api/members/{id}")
+    @DeleteMapping("/api/{type}/{id}")
     @ResponseBody
-    public ResponseEntity<String> deleteMember(@PathVariable Long id) {
+    public ResponseEntity<String> deleteItem(@PathVariable String type, @PathVariable Long id) {
         try {
-            int result = memberService.deleteById(id);
-            if (result > 0) {
-                return ResponseEntity.ok("삭제 성공");
-            }
-            return ResponseEntity.badRequest().body("삭제 실패");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("삭제 중 오류 발생");
-        }
-    }
+            int result = switch (type) {
+                case "members" -> memberService.deleteById(id);
+                case "matzips" -> matzipService.deleteById(id);
+                case "tags" -> tagService.deleteById(id);
+                case "foodkinds" -> foodKindService.deleteById(id);
+                default -> throw new IllegalArgumentException("Invalid type: " + type);
+            };
 
-    @DeleteMapping("/api/matzips/{id}")
-    @ResponseBody
-    public ResponseEntity<String> deleteMatzip(@PathVariable Long id) {
-        try {
-            int result = matzipService.deleteById(id);
             if (result > 0) {
                 return ResponseEntity.ok("삭제 성공");
             }
             return ResponseEntity.badRequest().body("삭제 실패");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("삭제 중 오류 발생");
-        }
-    }
-
-    @DeleteMapping("/api/tags/{id}")
-    @ResponseBody
-    public ResponseEntity<String> deleteTag(@PathVariable Long id) {
-        try {
-            int result = tagService.deleteById(id);
-            if (result > 0) {
-                return ResponseEntity.ok("삭제 성공");
-            }
-            return ResponseEntity.badRequest().body("삭제 실패");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("삭제 중 오류 발생");
-        }
-    }
-
-    @DeleteMapping("/api/foodkinds/{id}")
-    @ResponseBody
-    public ResponseEntity<String> deleteFoodKind(@PathVariable Long id) {
-        try {
-            int result = foodKindService.deleteById(id);
-            if (result > 0) {
-                return ResponseEntity.ok("삭제 성공");
-            }
-            return ResponseEntity.badRequest().body("삭제 실패");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("삭제 중 오류 발생");
+            return ResponseEntity.badRequest().body("삭제 중 오류 발생: " + e.getMessage());
         }
     }
 }

@@ -14,7 +14,21 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    attachDeleteListeners();
 });
+
+function attachDeleteListeners() {
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const type = this.dataset.type;
+            if (id && type) {
+                deleteItem(type, id);
+            }
+        });
+    });
+}
 
 function loadData(type) {
     fetch(`/admin/api/${type}`)
@@ -28,7 +42,6 @@ function loadData(type) {
         });
 }
 
-// updateTable 함수 수정
 function updateTable(type, data) {
     const tbody = document.getElementById(`${type}List`);
     switch (type) {
@@ -80,7 +93,10 @@ function deleteItem(type, id) {
 
     if (confirm('정말 삭제하시겠습니까?')) {
         fetch(`/admin/api/${type}/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Content-Type':'application/json'
+            }
         })
             .then(response => response.text())
             .then(result => {
