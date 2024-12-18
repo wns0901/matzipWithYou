@@ -28,6 +28,7 @@ public class MyPageController {
     ) {
         MyPage myPageInfo = myPageService.getFullMyPageInfo(memberId);
         model.addAttribute("myPage", myPageInfo);
+        model.addAttribute("memberId", memberId);
 
         return "member/myPage";
     }

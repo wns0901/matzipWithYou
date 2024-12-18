@@ -6,6 +6,7 @@ import com.lec.spring.member.service.FriendService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -74,6 +75,15 @@ public class FriendController {
     public ResponseEntity<List<FriendDetailsDTO>> getFriendsWithDetailsDTO(@PathVariable Long memberId) {
         List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
         return ResponseEntity.ok(friends);
+    }
+    @GetMapping("/view")
+    public String getFriendsList(
+            @PathVariable Long memberId,
+            Model model
+    ) {
+        List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
+        model.addAttribute("friends", friends);
+        return "member/friend/list";
     }
 
 
