@@ -1,6 +1,7 @@
 #map {
     width: 100vw;
     height: 100vh;
+    z-index: 1;
 }
 
 #menu_wrap {
@@ -9,7 +10,7 @@
     left: 0;
     width: 23vw;
     height: 80%;
-    z-index: 1;
+    z-index: 2;
     margin-left: 4%;
     margin-top: 8vh;
     flex-direction: column;
@@ -91,7 +92,7 @@
     float: right;
     bottom: 15%;
     right: 5.5%;
-    z-index: 1;
+    z-index: 2;
 }
 
 .matzip_img {
@@ -177,7 +178,7 @@
     position: absolute;
     top: 18.5%;
     left: 27.5%;
-    z-index: 1;
+    z-index: 2;
     width: 25%;
     height: 44%;
     border-radius: 17px;
@@ -214,7 +215,7 @@
     position: absolute;
     top: 18.5%;
     left: 27.5%;
-    z-index: 1;
+    z-index: 2;
     width: 25%;
     height: 44%;
     border-radius: 17px;
@@ -334,7 +335,7 @@
     width: 25vw;
     height: 80%;
     background-color: white;
-    z-index: 1;
+    z-index: 2;
     position: absolute;
     right: 33%;
     top: 10%;
@@ -440,3 +441,68 @@
     text-align: center;
 }
 
+#all_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+#hint_tags {
+    z-index: 4;
+}
+
+.hint_tag {
+    background-position: center;
+    background-size: cover;
+    width: 475px;
+    height: 136px;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    transform-origin: 10.7% 26.1%;
+    z-index: 4;
+}
+
+.hint_text {
+    display: block;
+    font-size: 40px;
+    margin-top: 47px;
+    margin-left: 132px;
+}
+
+#hint_tag1 {
+    background-image: url("/IMG/matzip/hint_btn1.png");
+    transform-origin: 11.1% 26.1%;
+    transform: rotate(80deg); /* -80도 회전 */
+    z-index: 9;
+}
+
+#hint_tag2 {
+    background-image: url("/IMG/matzip/hint_btn2.png");
+    transform: rotate(50deg); /* -50도 회전 */
+    z-index: 8;
+}
+
+#hint_tag3 {
+    background-image: url("/IMG/matzip/hint_btn3.png");
+    transform: rotate(20deg); /* -20도 회전 */
+    z-index: 7;
+}
+
+#hint_tag4 {
+    background-image: url("/IMG/matzip/hint_btn4.png");
+    transform: rotate(-10deg); /* 10도 회전 */
+    z-index: 6;
+}
+
+#hint_tag5 {
+    background-image: url("/IMG/matzip/hint_btn5.png");
+    transform: rotate(-40deg); /* 40도 회전 */
+    z-index: 5;
+}
