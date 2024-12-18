@@ -7,65 +7,78 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
+// 닉 변경 기능
 document.addEventListener('DOMContentLoaded', function () {
-    const memberId = window.location.pathname.split('/').pop();
+    const overlay = document.getElementById('overlay');
+    const editButton = document.getElementById('editButton');
+    const nicknamePopup = document.getElementById('nicknamePopup');
+    const cancelButton = document.getElementById('cancelButton');
+    const confirmButton = document.getElementById('confirmButton');
+    const errorMessage = document.getElementById('errorMessage');
+    const newNicknameInput = document.getElementById('newNickname');
 
-    const updateNicknameForm = document.getElementById('updateNicknameForm');
-    const messageContainer = document.getElementById('messageContainer');
-    const myPageContainer = document.getElementById('myPageContainer');
+    // 수정 버튼 클릭 시 팝업 열기
+    editButton.addEventListener('click', function () {
+        nicknamePopup.style.display = 'block';
+        errorMessage.textContent = ''; // 에러 메시지 초기화
+        overlay.style.display = 'block'; // 배경 레이어 보이기
 
+    });
 
+    // 취소 버튼 클릭 시 팝업 닫기
+    cancelButton.addEventListener('click', function () {
+        nicknamePopup.style.display = 'none';
+        overlay.style.display = 'none'; // 배경 레이어 숨기기
 
-    // 기본 마이페이지
-    fetch(`/api/members/${memberId}/myPage`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data); // JSON 데이터 처리
-            // data.myPage를 사용하여 화면에 반영
-        })
-        .catch(error => console.error('Error:', error));
+    });
 
+    // 확인 버튼 클릭 시 닉네임 검증
+    confirmButton.addEventListener('click', function () {
+        const newNickname = newNicknameInput.value.trim();
+        if (newNickname === '') {
+            errorMessage.textContent = '닉네임을 입력해주세요.';
+            return;
+        }
+        if (newNickname.length > 20) {
+            errorMessage.textContent = '닉네임은 최대 20자까지 입력 가능합니다.';
+            return;
+        }
 
-
-    updateNicknameForm.addEventListener('submit', function (event) {
-        event.preventDefault(); // 기본 폼 동작 방지
-
-        const newNickname = document.getElementById('newNickname').value;
-
-        // 닉네임 변경 요청
-        fetch(`/members/${memberId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ newNickname })
-        })
+        // 서버에서 로그인된 사용자 ID를 가져옴
+        fetch('/members')
             .then(response => response.json())
-            .then(data => {
-                // 응답 메시지를 표시
-                if (data.error) {
-                    messageContainer.innerText = `Error: ${data.error}`;
-                    messageContainer.style.color = 'red';
-                } else {
-                    messageContainer.innerText = data.message;
-                    messageContainer.style.color = 'green';
+            .then(memberId => {
+                const newNickname = document.getElementById('newNickname').value;
 
-                    // 마이페이지 정보 갱신
-                    if (data.myPage) {
-                        const { nickname, friendCnt, point, profileImage } = data.myPage;
-
-                        // 화면에 갱신된 정보 반영
-                        myPageContainer.innerHTML = `
-                            <p><strong>닉네임:</strong> ${nickname}</p>
-                            <p><strong>친구 수:</strong> ${friendCnt}</p>
-                            <p><strong>포인트:</strong> ${point}</p>
-                            <p><strong>프로필 이미지:</strong> <img src="${profileImage}" alt="프로필 이미지" width="100" /></p>
-                        `;
-                    }
-                }
+                // 서버로 닉네임 전송
+                fetch(`/members/${memberId}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ newNickname })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const errorMessage = document.getElementById('errorMessage');
+                        if (data.error) {
+                            errorMessage.textContent = data.error;
+                        } else {
+                            // 성공 시 팝업 닫기 및 닉네임 갱신
+                            document.querySelector('.nickname-text').textContent = newNickname;
+                            document.getElementById('nicknamePopup').style.display = 'none';
+                            document.getElementById('overlay').style.display = 'none';
+                        }
+                    })
+                    .catch(error => {
+                        errorMessage.textContent = '서버와의 통신 중 오류가 발생했습니다.';
+                        console.error('Error:', error);
+                    });
             })
             .catch(error => {
-                messageContainer.innerText = `Error: ${error}`;
-                messageContainer.style.color = 'red';
+                console.error('로그인 사용자 정보를 가져오는 중 오류 발생:', error);
             });
     });
 });
+
+
+
+
