@@ -248,11 +248,11 @@ async function cardClickedEvent(e) {
         card.classList.remove('selected');
         closeDetailEnvent();
     } else {
-        const memberId = JSON.parse(card.dataset.memberId)[0];
+        const memberIdData = JSON.parse(card.dataset.memberId);
+        const memberId = Array.isArray(memberIdData) ? memberIdData[0] : memberIdData;
         const matzipId = Number(card.dataset.matzipId);
 
         const result = await getMatzipDetail(matzipId, memberId);
-        console.log(selectedCard);
         if (selectedCard) selectedCard.classList.remove('selected');
         card.className += ' selected';
         detailInfo.classList.remove('hidden')
