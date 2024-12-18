@@ -287,9 +287,11 @@
     font-size: 12px;
     aspect-ratio: 3.5/1;
     align-items: center;
-    height: 1.5em;
+    height: 1.8em;
     margin-right: 5px;
-    padding-top: 0.5em;
+    margin-bottom: auto;
+    margin-top: auto;
+    padding: 0 5px;
 }
 
 #write_review_btn {
@@ -417,3 +419,24 @@
     font-size: 14px;
     color: #808080;
 }
+
+#hidden_detail_text1 {
+    font-family: "Noto Sans KR", serif;
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+}
+
+#hidden_detail_text2 {
+    font-family: "Noto Sans KR", serif;
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    top: 60%;
+    width: 100%;
+    text-align: center;
+}
+
