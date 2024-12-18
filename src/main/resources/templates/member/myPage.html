@@ -8,6 +8,11 @@
     <script th:inline="javascript">
         console.log(1);
         console.log(/*[[${myPage}]]*/ '');
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@100..900&display=swap"
+            rel="stylesheet"/>
     </script>
 </head>
 <body>
@@ -32,16 +37,32 @@
 
             <div class="nickname-container">
                 <div class="nickname-text" th:text="${myPage.nickname}"></div>
-                <button class="edit-button" onclick="updateNickname()">
+                        <!-- 닉네임 변경 팝업 -->
+                <button class="edit-button" id="editButton">
                     <img src="/IMG/edit.svg" alt="Edit"/>
-                    <!-- 닉네임 변경 폼 -->
-                    <!--                <form th:action="@{/members/{memberId}/nickname}" method="PATCH">-->
-                    <!--                    <input type="text" id="newNickname" name="newNickname" required maxlength="20">-->
-                    <!--                    <button type="submit">확인</button>-->
-                    <!--                    <button type="취소버튼 만드러라">취소</button>-->
-                    </form>
                 </button>
             </div>
+
+            <div class="nickname-popup" id="nicknamePopup" style="display: none;">
+                <input type="text" id="newNickname" maxlength="20" th:placeholder="${myPage.nickname}">
+                <div class="message align-message">
+                    <img src="/IMG/notice.png" alt="포인트 차감 설명" class="point-notice">
+                    <div class="message-text">
+                    닉네임 변경시에는 포인트가 5000pt가 차감됩니다.<br>
+                    정말 변경하시겠습니까?
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="confirm-button" id="confirmButton">확인</button>
+                    <button class="cancel-button" id="cancelButton">취소</button>
+                </div>
+                <div class="error-message" id="errorMessage"></div>
+            </div>
+            <!-- 페이드아웃 배경 -->
+            <div class="overlaybackground" id="overlay"></div>
+
+
+
             <!-- 친구 수 & 포인트 버튼 -->
             <div class="info-buttons">
                 <div class="info-button">
@@ -60,16 +81,16 @@
         <!-- 위시 리스트 -->
         <div class="section">
             <span class="section-header">
-            <img src="/IMG/heart-filled.svg" alt="heart-icon">
-                <h2> 위시 리스트(</h2>
-                    <h2 class="section-header" th:text="${myPage.wishInfo.count}"></h2>
-                <h2>곳)</h2>
+            <img class="icon" src="/IMG/heart-filled.svg" alt="heart-icon">
+                <h2 class="h2"> 위시 리스트(</h2>
+                    <h2 class="h2" th:text="${myPage.wishInfo.count}"></h2>
+                <h2 class="h2">곳)</h2>
                 <button class="view-all-button">전체보기 ></button>
             </span>
             <div class="card-container" id="wishlist">
                 <!-- 카드 예시 -->
                 <div class="card">
-                    <img src="DB 경로" alt="음식 이미지">
+<!--                    <img src="DB 경로" alt="음식 이미지">-->
                     <div class="card-info">
                         <p>가게이름 노토산스 미디엄 15</p>
                     </div>
@@ -81,20 +102,20 @@
         <!-- 나의 맛집 -->
         <div class="section">
             <span class="section-header">
-            <img src="/IMG/spoon.png" alt="spoon-icon">
-                <h2> 나의 맛집(</h2>
-                    <h2 class="section-header" th:text="${myPage.matzipInfo.count}"></h2>
-                <h2>)</h2>
+            <img class="icon" src="/IMG/Union.png" alt="spoon-icon">
+                <h2 class="h2"> 나의 맛집(</h2>
+                    <h2 class="h2" th:text="${myPage.matzipInfo.count}"></h2>
+                <h2 class="h2">곳)</h2>
                 <button class="view-all-button">전체보기 ></button>
             </span>
-            <div class="card-container" id="mystores">
+            <div class="card-container" id="mymatzip">
                 <!-- 카드 예시 -->
                 <div class="card">
-                    <img src="DB 경로" alt="음식 이미지">
+<!--                    <img src="DB 경로" alt="음식 이미지">-->
                     <div class="card-info">
                         <p>가게이름 노토산스 미디엄 15</p>
                     </div>
-                    <button class="heart-button"></button>
+<!--                    <button class="heart-button"></button>-->
                 </div>
             </div>
         </div>
@@ -102,15 +123,15 @@
         <!-- 나의 리뷰 -->
         <div class="section">
             <span class="section-header">
-            <img src="/IMG/review-icon.png" alt="review-icon">
-                <h2> 나의 리뷰(</h2>
-                    <h2 class="section-header" th:text="${myPage.reviewInfo.count}"></h2>
-                <h2>)</h2>
+            <img  class="icon" src="/IMG/review-icon.png" alt="review-icon">
+                <h2 class="h2"> 나의 리뷰(</h2>
+                    <h2 class="h2" th:text="${myPage.reviewInfo.count}"></h2>
+                <h2 class="h2">개)</h2>
                 <button class="view-all-button">전체보기 ></button>
             </span>
             <div class="review-container" id="myreviews">
                 <div class="review-card review-list card:nth-child(n+4)">
-                    <img src="DB 경로" alt="음식 이미지">
+<!--                    <img src="DB 경로" alt="음식 이미지">-->
                     <div class="review-content">
                         <p>★★★★☆ 평점 4점</p>
                         <p>가게이름 노토산스 볼드 10</p>
