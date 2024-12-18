@@ -44,37 +44,28 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // 서버에서 로그인된 사용자 ID를 가져옴
-        fetch('/members')
+        const memberId= parseInt(window.location.pathname.split('/').pop());
+        // 서버에 변경된 닉 전송
+        fetch(`/members/${memberId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ newNickname })
+        })
             .then(response => response.json())
-            .then(memberId => {
-                const newNickname = document.getElementById('newNickname').value;
-
-                // 서버로 닉네임 전송
-                fetch(`/members/${memberId}`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ newNickname })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        const errorMessage = document.getElementById('errorMessage');
-                        if (data.error) {
-                            errorMessage.textContent = data.error;
-                        } else {
-                            // 성공 시 팝업 닫기 및 닉네임 갱신
-                            document.querySelector('.nickname-text').textContent = newNickname;
-                            document.getElementById('nicknamePopup').style.display = 'none';
-                            document.getElementById('overlay').style.display = 'none';
-                        }
-                    })
-                    .catch(error => {
-                        errorMessage.textContent = '서버와의 통신 중 오류가 발생했습니다.';
-                        console.error('Error:', error);
-                    });
+            .then(data => {
+                const errorMessage = document.getElementById('errorMessage');
+                if (data.error) {
+                    errorMessage.textContent = data.error;
+                } else {
+                    // 성공 시 팝업 닫기 및 닉네임 갱신
+                    document.querySelector('.nickname-text').textContent = newNickname;
+                    document.getElementById('nicknamePopup').style.display = 'none';
+                    document.getElementById('overlay').style.display = 'none';
+                }
             })
             .catch(error => {
-                console.error('로그인 사용자 정보를 가져오는 중 오류 발생:', error);
+                errorMessage.textContent = '서버와의 통신 중 오류가 발생했습니다.';
+                console.error('Error:', error);
             });
     });
 });
