@@ -54,7 +54,8 @@
 
 <!--my_matzip에서 visblity가 hidden인 맛집 불러오기-->
     <select id="listWholeHiddenList" >
-        SELECT m.id AS 'myMatzipId',
+        SELECT distinct
+            m.id AS 'myMatzipId',
                 m.matzip_id AS 'matzipId',
                 m.member_id AS 'memberId',
                 m.visibility AS 'visibility',
@@ -67,6 +68,7 @@
                  LEFT JOIN matzip_tag mt ON m.id = mt.my_matzip_id
                  LEFT JOIN tag t ON mt.tag_id = t.id
         WHERE m.visibility = 'HIDDEN'
+        and   m.id = #{myMatzipId};
     </select>
 <!--user_matzip_tag_status와 중복-->
     <select id="finddeleteDuplicateMyMatzipId">
@@ -111,7 +113,7 @@
 <!--    -->
 
     <select id="findDuplicateMyMatzipId">
-        SELECT DISTINCT
+        SELECT
             m.id AS 'myMatzipId',
                 m.matzip_id AS 'matzipId',
                 m.member_id AS 'memberId',
@@ -146,10 +148,45 @@
                  LEFT JOIN food_kind f ON mz.kind_id = f.id
                  LEFT JOIN matzip_tag mt ON m.id = mt.my_matzip_id
                  LEFT JOIN tag t ON mt.tag_id = t.id
-                 JOIN user_matzip_tag_status ut -- JOIN 추가
-                      ON m.id = ut.my_matzip_id
         WHERE m.visibility = 'HIDDEN'
           AND m.id =#{myMatzipId}
+    </select>
+
+    <select id="listpurchasedTagByMemberId">
+        SELECT
+            ut.member_id AS 'memberId',
+                ut.my_matzip_id AS 'myMatzipId',
+                ut.tag_id AS 'tagId',
+                t.tagname AS 'tagName'
+        FROM
+            user_matzip_tag_status ut
+                JOIN
+            tag t ON ut.tag_id = t.id
+        WHERE
+            ut.member_id = #{memberId} -- 특정 회원 ID 조건
+
+    </select>
+
+    <select id="listUnpurchasedTagByMemberId">
+        SELECT
+            m.id AS 'myMatzipId',
+                mt.tag_id AS 'tagId',
+                t.tagname AS 'tagName'
+        FROM
+            my_matzip m
+                LEFT JOIN
+            matzip_tag mt ON m.id = mt.my_matzip_id
+                LEFT JOIN
+            tag t ON mt.tag_id = t.id
+        WHERE
+            m.visibility = 'HIDDEN'
+          AND mt.tag_id NOT IN (
+            SELECT ut.tag_id
+            FROM user_matzip_tag_status ut
+            WHERE ut.member_id = #{memberId}
+              AND ut.my_matzip_id = #{myMatzipId}
+        ) -- 이미 구매된 태그는 제외
+
     </select>
 
 
