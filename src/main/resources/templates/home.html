@@ -10,7 +10,13 @@
 <div class="container">
     <h1>HOME</h1>
 
-    <a class="btn" th:href="@{/matzips/{memberId}(memberId=${#authentication.principal.member.id})}">Start</a>
+    <a class="btn"
+       sec:authorize="isAuthenticated()"
+       th:href="@{/matzips/{memberId}(memberId=${#authentication.principal.member.id})}">Start</a>
+
+    <a class="btn"
+       sec:authorize="!isAuthenticated()"
+       th:href="@{/member/login}">Start</a>
 </div>
 </body>
 </html>
