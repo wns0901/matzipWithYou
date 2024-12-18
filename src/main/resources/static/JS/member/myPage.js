@@ -7,6 +7,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const friendButton = document.querySelector('.info-button .friends');
+    friendButton.addEventListener('click', function() {
+        // URL에서 현재 memberId 가져오기
+        const currentPath = window.location.pathname;
+        const memberId = currentPath.split('/')[2]; // /members/{memberId} 에서 memberId 추출
+
+        if (memberId) {
+            window.location.href = `/members/${memberId}/friends/view`;
+        } else {
+            console.error('memberId is missing');
+        }
+    });
+});
+
 // 닉 변경 기능
 document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('overlay');
