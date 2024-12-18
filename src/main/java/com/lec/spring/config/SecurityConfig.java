@@ -79,6 +79,7 @@ public class SecurityConfig {
                                 "/member/*/friends",
                                 "/matzips/reviews",
                                 "/matzips/hints/**",
+                                "/matzip/hint/**",
                                 "/member/additional-info",
                                 "/matzips/matzipsDetail/**"
                         ).authenticated()

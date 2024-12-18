@@ -5,13 +5,15 @@ import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
 import com.lec.spring.matzip.repository.UserMatzipTagStatusRepository;
 import com.lec.spring.matzip.service.UserMatzipTagStatusService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/matzip")
@@ -65,14 +67,14 @@ public class UserMatzipTagStatusController {
 
     @GetMapping("/hint/{myMatzipId}")
     public String showHintForm(@PathVariable Long myMatzipId, Model model) {
-        List<UserMatzipTagStatus> result = userMatzipTagStatusService.hintByMyMatzipId(myMatzipId);
-        System.out.println("#########랜덤 돌리기 전 : "+ result);
         // 리스트 섞기
-        result = userMatzipTagStatusService.shuffleTagNames(result);
-        System.out.println("######랜덤으로 돌린 후: " + result);
-        model.addAttribute("hints", result);
+        List<UserMatzipTagStatus> l = userMatzipTagStatusService.shuffleTagNames(myMatzipId);
+        System.out.println("######랜덤으로 돌린 후: " + l.size());
+
+        model.addAttribute("hints", l);
         return "matzip/hintForm";
     }
+
 
     @PostMapping("/saveTag")
     public ResponseEntity<String> saveTagStatus(@RequestBody UserMatzipTagStatus request) {
@@ -85,6 +87,47 @@ public class UserMatzipTagStatusController {
         } catch (Exception e) {
             return ResponseEntity.status(500).body("힌트 저장에 실패했습니다: " + e.getMessage());
         }}
+
+    @GetMapping("/tags/{myMatzipId}")
+    public ResponseEntity<Map<String, Object>> getTags(@PathVariable Long myMatzipId) {
+        Long memberId = userMatzipTagStatusService.getAuthenticatedMemberId(); // 로그인된 회원의 ID를 가져옴
+
+        List<UserMatzipTagStatus> purchasedTags = userMatzipTagStatusService.purchasedTag(memberId);
+
+        List<UserMatzipTagStatus> unpurchasedTags = userMatzipTagStatusService.unpurchasedTag(memberId);
+
+        List<Map<String, Object>> purchasedTagsList = purchasedTags.stream()
+                .filter(tag -> tag.getMyMatzipId().equals(myMatzipId))
+                .map(tag -> {
+                    Map<String, Object> tagMap = new HashMap<>();
+                    tagMap.put("tagId", tag.getTagId());
+                    tagMap.put("tagName", tag.getTagName());
+                    return tagMap;
+                })
+                .collect(Collectors.toList());
+
+
+        List<Map<String, Object>> unpurchasedTagsList = unpurchasedTags.stream()
+                .filter(tag -> tag.getMyMatzipId().equals(myMatzipId))
+                .map(tag -> {
+                    Map<String, Object> tagMap = new HashMap<>();
+                    tagMap.put("tagId", tag.getTagId());
+                    tagMap.put("tagName", tag.getTagName());
+                    return tagMap;
+                })
+                .collect(Collectors.toList());
+
+        // 응답 객체 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("myMatzipId", myMatzipId);
+        response.put("purchased", purchasedTagsList);
+        response.put("unpurchased", unpurchasedTagsList);
+
+        return ResponseEntity.ok(response);
+    }
+
+
+
 
 
 

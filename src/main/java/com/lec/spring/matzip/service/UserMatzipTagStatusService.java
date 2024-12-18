@@ -20,14 +20,22 @@ public interface UserMatzipTagStatusService {
    List<UserMatzipTagStatus> findDuplicateMyMatzipId(Long myMatzipID);
 
    // 중복된 내용 삭제
-   List<UserMatzipTagStatus> deleteDuplicateByMyMatzipId(Long myMatzipID);
+   List<UserMatzipTagStatus> deleteDuplicateByMyMatzipId(Long myMatzipId);
 
    // hintmanagement
-   List<UserMatzipTagStatus> hintByMyMatzipId(Long myMatzipID);
+   List<UserMatzipTagStatus> hintByMyMatzipId(Long myMatzipId);
 
    void hintTagSave(Long memberId, Long myMatzipId, Long tagId);
+   List<UserMatzipTagStatus> shuffleTagNames(Long myMatzipId); ;
 
-   List<UserMatzipTagStatus> shuffleTagNames(List<UserMatzipTagStatus> tagNames) ;
+
+
+
+   List<UserMatzipTagStatus> purchasedTag(Long memberId);
+
+   List<UserMatzipTagStatus> unpurchasedTag(Long memberId);
+
+   Long getAuthenticatedMemberId();
 
 
 

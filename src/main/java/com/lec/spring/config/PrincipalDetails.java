@@ -44,6 +44,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         return collect;
     }
 
+
     @Override
     public String getPassword() {
         return member.getPassword();
@@ -91,4 +92,6 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
                 && member.getProviderId() != null
                 && member.getNickname().contains("MATDORI_");
     }
+
+
 }
