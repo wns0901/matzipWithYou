@@ -26,7 +26,8 @@ ALTER TABLE matzip
 
 DELETE
 FROM my_matzip;
-ALTER TABLE my_matzip AUTO_INCREMENT = 1;
+ALTER TABLE my_matzip
+    AUTO_INCREMENT = 1;
 
 DELETE
 FROM food_kind;
@@ -64,12 +65,14 @@ ALTER TABLE tag
     AUTO_INCREMENT = 1;
 
 DELETE
-    FROM friend;
+FROM friend;
 ALTER TABLE friend
     AUTO_INCREMENT = 1;
 
-DELETE FROM my_matzip;
-ALTER TABLE my_matzip AUTO_INCREMENT = 1;
+DELETE
+FROM my_matzip;
+ALTER TABLE my_matzip
+    AUTO_INCREMENT = 1;
 
 
 -- authority 테이블 더미 데이터
@@ -78,12 +81,16 @@ VALUES ('ROLE_MEMBER'),
        ('ROLE_ADMIN');
 
 INSERT INTO member (username, password, email, point, nickname, name)
-VALUES
-    ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member1@email.com', 100, 'foodie1', '이동희'),
-    ('member_user2', '$2a$10$9eSoUc/.K3YyzQq5ZpOxnO01H0.oT8l.hlxgGDLS.mRBShESweioC', 'member2@email.com', 150, 'matzip2', '이유나'),
-    ('admin1_admin1', '$2a$10$csFKAeIbLoeMc.CdW0/AN.ydPVEZstCSLUf6L2st8ExYO4.JakF8.', 'admin@email.com', 500, 'admin_kim', '장준영'),
-    ('member_user3', '$2a$10$Qk.A1REypdS/s1YmvjmiIO2ES/6AfB45asIW7kM/7d3yLbOKp1zS2', 'member3@email.com', 80, 'gourmet3', '현지윤'),
-    ('member_user4', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member4@email.com', 300, 'test1', '테스트')
+VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member1@email.com', 100,
+        'foodie1', '이동희'),
+       ('member_user2', '$2a$10$9eSoUc/.K3YyzQq5ZpOxnO01H0.oT8l.hlxgGDLS.mRBShESweioC', 'member2@email.com', 150,
+        'matzip2', '이유나'),
+       ('admin1_admin1', '$2a$10$csFKAeIbLoeMc.CdW0/AN.ydPVEZstCSLUf6L2st8ExYO4.JakF8.', 'admin@email.com', 500,
+        'admin_kim', '장준영'),
+       ('member_user3', '$2a$10$Qk.A1REypdS/s1YmvjmiIO2ES/6AfB45asIW7kM/7d3yLbOKp1zS2', 'member3@email.com', 80,
+        'gourmet3', '현지윤'),
+       ('member_user4', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member4@email.com', 300,
+        'test1', '테스트')
 ;
 
 -- member_authorities 테이블 더미 데이터
@@ -101,7 +108,7 @@ VALUES (1, 'member1_profile.jpg', 'm1_123456789.jpg'),
        (2, 'member2_avatar.png', 'm2_987654321.png'),
        (3, 'admin_photo.jpg', 'ad_456789123.jpg'),
        (4, 'member3_pic.jpg', 'm3_147258369.jpg')
-       ;
+;
 
 -- food_kind 테이블 샘플 데이터
 INSERT INTO food_kind (kindname)
@@ -138,9 +145,8 @@ VALUES ('치킨공식', 2, '서울 강남구 역삼로17길 64 역삼동A4스페
 
 -- wish_list 테이블 샘플 데이터
 INSERT INTO wish_list (member_id, matzip_id)
-VALUES
-(1,1)
-     ,(1,2)
+VALUES (1, 1)
+     , (1, 2)
 
      , (2, 3)
      , (2, 6)
@@ -167,15 +173,15 @@ VALUES (1, 3, 'PRIVATE', '나만 알고 싶은 비공개 맛집', 5),
 ;
 
 -- friend 테이블 샘플 데이터
-INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept) VALUES
-     (1, 2, 200, TRUE),
-     (1, 3, 100, TRUE),
-     (1, 4, 0, FALSE),
-     (2, 4, 500, TRUE),
-     (2, 3, 300, TRUE),
-     (3, 4, 0, FALSE),
-     (2, 5, 10, TRUE)
-     ;
+INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept)
+VALUES (1, 2, 200, TRUE),
+       (1, 3, 100, TRUE),
+       (1, 4, 0, FALSE),
+       (2, 4, 500, TRUE),
+       (2, 3, 300, TRUE),
+       (3, 4, 0, FALSE),
+       (2, 5, 10, TRUE)
+;
 
 
 -- tag 데이터 생성
@@ -243,8 +249,8 @@ VALUES (1, 1),
        (6, 3),
        (6, 9);
 
-insert into matzip_tag (tag_id, my_matzip_id)
-values (1, 1),
+INSERT INTO matzip_tag (tag_id, my_matzip_id)
+VALUES (1, 1),
        (12, 1),
        (11, 1),
 
@@ -270,17 +276,21 @@ values (1, 1),
        (2, 6),
        (1, 6),
 
-       (1,7),
-       (2,7),
-       (3,7),
+       (1, 7),
+       (2, 7),
+       (3, 7),
 
-       (1,8),
-       (2,8),
-       (3,8)
-        ;
+       (1, 8),
+       (2, 8),
+       (3, 8),
+
+       (1, 11),
+       (2, 11),
+       (3, 11)
+;
 
 --  친구관계 && 히든
-insert into user_matzip_tag_status (member_id, my_matzip_id, tag_id)
-values (3, 2, 15),
+INSERT INTO user_matzip_tag_status (member_id, my_matzip_id, tag_id)
+VALUES (3, 2, 15),
        (4, 5, 7),
        (2, 4, 1);

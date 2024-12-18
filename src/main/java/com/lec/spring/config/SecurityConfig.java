@@ -50,6 +50,7 @@ public class SecurityConfig {
                                 "/member/additional-info",
                                 "/member/password-recovery",
                                 "/matzips/**",
+                                "/member/**",
                                 "/member/password-recovery/**"
                         ).permitAll()
 

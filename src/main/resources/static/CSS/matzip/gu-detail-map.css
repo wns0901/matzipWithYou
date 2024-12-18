@@ -8,8 +8,8 @@
     top: 0;
     left: 0;
     width: 23vw;
-    z-index: 1;
     height: 80%;
+    z-index: 1;
     margin-left: 4%;
     margin-top: 8vh;
     flex-direction: column;
@@ -122,6 +122,7 @@
     margin-left: auto;
     margin-right: auto;
     max-height: 90%;
+    padding-top: 5px;
 }
 
 .matzip_container {
@@ -152,8 +153,9 @@
     border: none;
     display: block;
     margin-top: 3%;
+    bottom: 2%;
     font-family: "Noto Sans KR", serif;
-    font-size: 20px;
+    font-size: 17px;
     color: white;
 }
 
@@ -172,12 +174,15 @@
 
 #detail-info {
     background-color: white;
-    width: 600px;
-    height: 435px;
-    z-index: 1;
     position: absolute;
-    right: 0;
-    top: 0;
+    top: 18.5%;
+    left: 27.5%;
+    z-index: 1;
+    width: 25%;
+    height: 44%;
+    border-radius: 17px;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .hidden {
@@ -187,16 +192,6 @@
 #matzip_img {
     width: 600px;
     height: 200px;
-}
-
-#search_window {
-    width: 400px;
-    height: 600px;
-    background-color: white;
-    z-index: 1;
-    position: absolute;
-    right: 25%;
-    top: 5%;
 }
 
 .selected {
@@ -215,3 +210,210 @@
     pointer-events: none; /* 오버레이가 클릭 이벤트를 무시하고 뒤의 요소에 영향을 주도록 설정 */
 }
 
+#hidden_detail {
+    position: absolute;
+    top: 18.5%;
+    left: 27.5%;
+    z-index: 1;
+    width: 25%;
+    height: 44%;
+    border-radius: 17px;
+    background-image: url('/IMG/matzip/hidden_detail.png');
+    background-position: center;
+    background-size: cover;
+}
+
+.close_btn {
+    background-image: url("/IMG/matzip/close_btn.png");
+    background-position: center;
+    background-size: cover;
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    top: 5%;
+    right: 4%;
+    width: 18px;
+    height: 18px;
+}
+
+.hidden_card {
+    background-image: url("/IMG/matzip/hidden_matzip.png");
+    background-position: center;
+    background-size: cover;
+}
+
+#matzip_detail_img {
+    width: 100%;
+    height: 45%;
+}
+
+.star {
+    aspect-ratio: 1/1;
+    width: 7%;
+}
+
+#text_box {
+}
+
+#star_rating_list {
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+    position: absolute;
+    bottom: 18.5%;
+}
+
+#content_container {
+    height: 65%;
+    padding: 2% 5%;
+}
+
+#kind_name {
+    float: right;
+}
+
+#tags_wrap {
+    position: absolute;
+    bottom: 7%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.tag {
+    background-color: #484848;
+    border-radius: 16px;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    aspect-ratio: 3.5/1;
+    align-items: center;
+    height: 1.5em;
+    margin-right: 5px;
+    padding-top: 0.5em;
+}
+
+#write_review_btn {
+    position: absolute;
+    bottom: 6.5%;
+    right: 5%;
+    background-image: url("/IMG/matzip/review_btn.png");
+    background-color: rgba(0, 0, 0, 0);
+    aspect-ratio: 0.95/1;
+    border: none;
+    width: 15%;
+    background-size: cover;
+    background-position: center;
+}
+
+#star_rating_list span {
+    color: #828282;
+    margin: auto 5px;
+}
+
+#matzip_name {
+    font-family: "Noto Sans KR", serif;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#matzip_address {
+    font-family: "Noto Sans KR", serif;
+    font-size: 15px;
+    color: #808080;
+}
+
+#kind_name {
+    font-family: "Noto Sans KR", serif;
+    font-size: 15px;
+    color: #828282;
+}
+
+#search_window {
+    width: 25vw;
+    height: 80%;
+    background-color: white;
+    z-index: 1;
+    position: absolute;
+    right: 33%;
+    top: 10%;
+    border-radius: 20px;
+}
+
+#keyword {
+    background-color: #D6D6D6;
+    border-radius: 15px;
+    width: 80%;
+    height: 5vh;
+    border: none;
+    display: block;
+    font-family: "Noto Sans KR", serif;
+    font-size: 18px;
+    position: absolute;
+    top: 8%;
+    left: 7.5%;
+    padding-left: 5%;
+}
+
+#close_search_btn {
+    top: 3%;
+}
+
+#search_btn {
+    background-position: center;
+    background-size: cover;
+    background-image: url("/IMG/matzip/search_btn.png");
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    position: absolute;
+    aspect-ratio: 1/1;
+    height: 3.5vh;
+    top: 9%;
+    right: 11%;
+}
+
+#search_select_btn {
+    text-align: center;
+    background-color: #FF7327;
+    border-radius: 56px;
+    width: 75%;
+    height: 5vh;
+    border: none;
+    display: block;
+    font-family: "Noto Sans KR", serif;
+    font-size: 20px;
+    color: white;
+    position: absolute;
+    bottom: 5%;
+    left: 12.5%;
+}
+
+#result_list {
+    width: 80%;
+    height: 68%;
+    overflow-y: scroll;
+    position: relative;
+    top: 17%;
+    margin: 0 auto;
+}
+
+.search_card {
+    aspect-ratio: 3.36/1;
+    width: 90%;
+    background-color: #EDEDED;
+    border-radius: 15px;
+    margin: 0 auto 10px;
+    padding-top: 7%;
+    padding-left: 6%;
+}
+
+.search_name {
+    font-family: "Noto Sans KR", serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.search_address {
+    font-family: "Noto Sans KR", serif;
+    font-size: 14px;
+    color: #808080;
+}

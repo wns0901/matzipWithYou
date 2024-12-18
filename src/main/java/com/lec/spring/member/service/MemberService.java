@@ -3,8 +3,10 @@ package com.lec.spring.member.service;
 import com.lec.spring.member.domain.EmailMessage;
 import com.lec.spring.member.domain.Member;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MemberService {
 
@@ -23,7 +25,6 @@ public interface MemberService {
     List<Member> findAll();
 
 
-
     // 인증코드 확인
     boolean verifyAuthorizationCode(String code, String email);
 
@@ -33,7 +34,7 @@ public interface MemberService {
     //비밀번호 업데이트하기
     boolean updatePassword(Long id, String newPassword);
 
-   //이메일이 존재하는지 확인
+    //이메일이 존재하는지 확인
     boolean isExistEmail(String email);
 
     int updateMember(Member member);
@@ -49,7 +50,7 @@ public interface MemberService {
     MimeMessage createEmail(EmailMessage emailMessage);
 
 
-
+    ResponseEntity<Map<String, List<String>>> findNicknameBymemberIds(List<Long> memberIds);
 
 
 }

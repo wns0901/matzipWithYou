@@ -37,20 +37,38 @@
     </div>
 </div>
 <div id="detail-info" class="hidden">
-    <img id="matzip_img" src="#">
-    <span id="matzip_name">가게 이름</span>
-    <span id="matzip_address">주소</span>
-    <div id="star_rating"></div>
-    <div id="tags_wrap"></div>
-    <button id="close_detail_btn">X</button>
-    <button id="write_review_btn">리뷰작성</button>
+    <img id="matzip_detail_img" src="#">
+
+    <div id="content_container">
+        <div id="text_box">
+            <span id="matzip_name">가게 이름</span>
+            <span id="kind_name">종류</span>
+            <br>
+            <span id="matzip_address">주소</span>
+        </div>
+
+        <div id="star_rating_list"></div>
+
+        <div id="tags_wrap"></div>
+
+        <button id="close_detail_btn" class="close_btn"></button>
+        <button id="write_review_btn"></button>
+    </div>
+
 </div>
+
+<div id="hidden_detail" class="hidden">
+    <p id="hidden_detail_text1"></p>
+    <p id="hidden_detail_text2"></p>
+    <button id="close_hidden_detail_btn" class="close_btn"></button>
+</div>
+
 <div id="search_window" class="hidden">
     <input type="text" placeholder="맛집을 검색하세요" id="keyword">
-    <button id="search_btn">검색</button>
+    <button id="search_btn"></button>
     <div id="result_list"></div>
     <button id="search_select_btn">선택</button>
-    <button id="close_search_btn">X</button>
+    <button id="close_search_btn" class="close_btn"></button>
 </div>
 </body>
 <script type="text/javascript" th:src="@{/JS/matzip/gu-detail-map.js}" th:inline="javascript"></script>
