@@ -3,12 +3,13 @@
 
 <mapper namespace="com.lec.spring.member.repository.MyPageRepository">
 
-    <!-- 닉네임 수정 -->
-    <update id="updateNick" flushCache="true">
+    <!-- 닉네임 업데이트 및 포인트 차감 -->
+    <update id="updateNicknameAndDeductPoints" flushCache="true">
         UPDATE member
-        SET nickname = #{newNickname}
+        SET nickname = #{newNickname}, point = point - #{pointsToDeduct}
         WHERE id = #{memberId}
     </update>
+
 
     <!-- 나의 정보 -->
     <select id="getMyPageInfo" resultType="com.lec.spring.member.domain.MyPage">
@@ -56,6 +57,20 @@
         FROM my_review mr
                  JOIN matzip mz ON mr.matzip_id = mz.id
         WHERE mr.member_id = #{memberId}
+    </select>
+
+    <!-- 닉네임 중복 확인 -->
+    <select id="existsByNickname" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM member
+        WHERE nickname = #{newNickname}
+    </select>
+
+<!--    현재 포인트 조회-->
+    <select id="getCurrentPoint" resultType="int">
+        SELECT point
+        FROM member
+        WHERE id = #{memberId}
     </select>
 
 
