@@ -1,14 +1,12 @@
 package com.lec.spring.member.controller;
 
-import com.lec.spring.member.domain.EmailMessage;
 import com.lec.spring.config.PrincipalDetails;
+import com.lec.spring.member.domain.EmailMessage;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.domain.MemberValidator;
 import com.lec.spring.member.service.EmailAuthService;
 import com.lec.spring.member.service.MemberService;
-
 import com.lec.spring.member.service.ValidationEmailService;
-import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,9 +22,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,7 +145,7 @@ public class MemberController {
             , @RequestParam(required = false) String referrerNickname
             , Model model
             , RedirectAttributes redirectAttributes
-                             ,EmailMessage emailMessage
+            , EmailMessage emailMessage
     ) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("username", member.getUsername());
@@ -182,6 +177,7 @@ public class MemberController {
 
 
     }
+
     @GetMapping("/sendEmail")
     @ResponseBody  // 이 어노테이션으로 JSON 형식 응답을 반환
     public ResponseEntity<Map<String, String>> sendEmail(@RequestParam String email) {
@@ -238,9 +234,6 @@ public class MemberController {
     }
 
 
-
-
-
     @PostMapping("/loginError")
     public String loginError() {
         return "member/login";
@@ -251,7 +244,6 @@ public class MemberController {
     public String rejectAuth() {
         return "common/rejectAuth";
     }
-
 
 
     // 이메일 입력받는 창
@@ -268,17 +260,17 @@ public class MemberController {
         String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
         // 유효성 검사
-        if(email == null || email.trim().isEmpty()) {
+        if (email == null || email.trim().isEmpty()) {
             model.addAttribute("error", "이메일은 필수입니다");
             return "member/request-reset";
         }
 
-        if(!email.matches(emailPattern)) {
+        if (!email.matches(emailPattern)) {
             model.addAttribute("error", "유효하지 않은 이메일 형식입니다");
             return "member/request-reset";
         }
 
-        if(!memberService.isExistEmail(email)) {
+        if (!memberService.isExistEmail(email)) {
             model.addAttribute("error", "존재하지 않는 이메일입니다");
             return "member/request-reset";
         }
@@ -313,6 +305,12 @@ public class MemberController {
     @GetMapping("/reset-success")
     public String resetSuccess() {
         return "member/reset-success";
+    }
+
+    @ResponseBody
+    @GetMapping("/nicknames")
+    public ResponseEntity<Map<String, List<String>>> nicknames(@RequestParam List<Long> memberId) {
+        return memberService.findNicknameBymemberIds(memberId);
     }
 
     @Qualifier("redisTemplate")

@@ -1,9 +1,7 @@
 package com.lec.spring.member.repository;
 
-import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.member.domain.Member;
 import org.apache.ibatis.annotations.Param;
-
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ public interface MemberRepository {
     Member findByNickname(String nickname);
 
     Member findByEmail(String email);
-  
+
     int updatePoint(@Param("id") Long id, @Param("point") Integer point);
 
     int updateAdditionalInfo(@Param("id") Long id,
@@ -36,6 +34,7 @@ public interface MemberRepository {
 
     int updatePassword(Long id, String newPassword);
 
+    List<String> findNicknameByMemberIds(List<Long> memberIds);
 
 }//end MemberRepository
 
