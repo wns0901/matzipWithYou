@@ -9,6 +9,6 @@ public interface MyPageService {
     MyPage getFullMyPageInfo(Long memberId);
 
     // 닉네임 변경
-    int updateNick(UpdateNickDTO updateNickDTO);
+    int updateNick(Long memberId, UpdateNickDTO updateNickDTO);
 
 }

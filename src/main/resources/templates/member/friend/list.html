@@ -1,20 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>친구목록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>친구 목록</title>
 </head>
-
-
-
-
 <body>
+<div class="friend-container">
+    <div class="friend-header">
+        <h1>친구 목록</h1>
+    </div>
 
-<!-- 친구 목록 -->
+    <div class="friend-list" th:if="${not #lists.isEmpty(friends)}">
+        <div th:each="friend : ${friends}" class="friend-item">
+            <!-- OAuth 프로필 이미지 (URL로 저장된 경우) -->
+            <img th:if="${friend.profileImg != null && friend.profileImg.startsWith('http')}"
+                 th:src="${friend.profileImg}"
+                 onerror="this.src='/IMG/defaultProfileImg.png'"
+                 alt="OAuth Profile"
+                 class="friend-profile">
 
+            <!-- 일반 업로드된 프로필 이미지 -->
+            <img th:if="${friend.profileImg != null && !friend.profileImg.startsWith('http')}"
+                 th:src="@{'/upload/' + ${friend.profileImg}}"
+                 onerror="this.src='/IMG/defaultProfileImg.png'"
+                 alt="Profile"
+                 class="friend-profile">
 
+            <!-- 기본 프로필 이미지 -->
+            <img th:if="${friend.profileImg == null}"
+                 th:src="@{'/IMG/defaultProfileImg.png'}"
+                 alt="Default Profile"
+                 class="friend-profile">
 
+            <div class="friend-info">
+                <div class="friend-nickname" th:text="${friend.nickname}">닉네임</div>
+                <div class="friend-username" th:text="${friend.username}">유저네임</div>
+            </div>
 
+            <div class="friend-actions">
+                <div class="friend-actions">
+                    <button class="btn btn-delete"
+                            th:data-friend-id="${friend.friendId}"
+                            th:data-is-sender="${memberId < friend.friendId}">
+                        삭제
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="no-friends" th:if="${#lists.isEmpty(friends)}">
+        <p>아직 등록된 친구가 없습니다.</p>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.btn-delete');
+        const memberId = /*[[${memberId}]]*/ null;
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const friendId = parseInt(this.getAttribute('data-friend-id'));
+                const isSender = this.getAttribute('data-is-sender') === 'true';
+
+                const senderId = isSender ? memberId : friendId;
+                const receiverId = isSender ? friendId : memberId;
+
+                deleteFriend(senderId, receiverId);
+            });
+        });
+    });
+
+    function deleteFriend(senderId, receiverId) {
+        if (confirm('정말 이 친구를 삭제하시겠습니까?')) {
+            fetch(`/members/${receiverId}/friends`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    senderId: senderId,
+                    receiverId: receiverId
+                })
+            })
+                .then(response => response.json())  // 응답 데이터를 JSON으로 파싱
+                .then(affectedRows => {
+                    if (affectedRows > 0) {
+                        // 실제로 삭제된 행이 있을 경우
+                        const friendElement = document.querySelector(`[data-friend-id="${senderId}"]`).closest('.friend-item');
+                        friendElement.remove();  // DOM에서 해당 친구 항목 제거
+
+                        // 친구가 하나도 없다면 '친구가 없습니다' 메시지 표시
+                        const remainingFriends = document.querySelectorAll('.friend-item');
+                        if (remainingFriends.length === 0) {
+                            const noFriendsMessage = document.createElement('div');
+                            noFriendsMessage.className = 'no-friends';
+                            noFriendsMessage.innerHTML = '<p>아직 등록된 친구가 없습니다.</p>';
+                            document.querySelector('.friend-list').replaceWith(noFriendsMessage);
+                        }
+                    } else {
+                        alert('친구 삭제에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('친구 삭제 중 오류가 발생했습니다.');
+                });
+        }
+    }
+</script>
 
 </body>
 </html>
