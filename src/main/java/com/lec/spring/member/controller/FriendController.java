@@ -14,20 +14,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/members/{memberId}/friends")
 public class FriendController {
-
     private final FriendService friendService;
 
     public FriendController(FriendService friendService) {
         this.friendService = friendService;
     }
 
-
-    // 친구 요청 보내기 / 비동기 팝업
+    // 친구 요청 보내기 (비동기)
     @ResponseBody
-    @PostMapping("")
-    public ResponseEntity<String> sendFriendRequest(
-
-            @RequestBody  Friend friend) {
+    @PostMapping("/request")
+    public ResponseEntity<String> sendFriendRequest(@RequestBody Friend friend) {
         int result = friendService.sendFriendRequest(friend);
         if (result > 0) {
             return ResponseEntity.ok("친구 신청에 성공했습니다.");
@@ -37,45 +33,55 @@ public class FriendController {
         }
     }
 
-    // 친구 요청 목록 가져오기 / 비동기 팝업
+    // 대기중인 친구 요청 목록 가져오기 (비동기)
     @ResponseBody
-    @GetMapping("")
+    @GetMapping("/pending")
     public ResponseEntity<List<Friend>> getPendingRequests(@PathVariable Long memberId) {
         List<Friend> pendingRequests = friendService.getPendingRequests(memberId);
         return ResponseEntity.ok(pendingRequests);
     }
 
-    // 요청 수락/거절 (update) / 비동기 팝업
+    // 친구 요청 수락 (비동기)
     @ResponseBody
-    @PatchMapping("")
-    public ResponseEntity<Integer> respondToRequest(
+    @PatchMapping("/accept")
+    public ResponseEntity<Integer> acceptFriendRequest(
             @RequestBody Friend friend,
             @PathVariable Long memberId
     ) {
         friend.setReceiverId(memberId);
-        int affectedRows = friendService.respondToRequest(friend);
+        int affectedRows = friendService.acceptFriendRequest(friend);
         return ResponseEntity.ok(affectedRows);
     }
 
-    // 친구 삭제
+    // 친구 요청 거절 (비동기)
     @ResponseBody
-    @DeleteMapping("")
-    public ResponseEntity<Integer> deleteFriend(
+    @PatchMapping("/reject")
+    public ResponseEntity<Integer> rejectFriendRequest(
             @RequestBody Friend friend,
             @PathVariable Long memberId
-    ){
+    ) {
         friend.setReceiverId(memberId);
-        int affectedRows = friendService.deleteFriend(friend);
+        int affectedRows = friendService.rejectFriendRequest(friend);
         return ResponseEntity.ok(affectedRows);
     }
 
+    // 친구 삭제 (비동기)
+    @ResponseBody
+    @DeleteMapping("/{friendId}")
+    public ResponseEntity<Integer> deleteFriend(@PathVariable Long friendId) {
+        int affectedRows = friendService.deleteFriend(friendId);
+        return ResponseEntity.ok(affectedRows);
+    }
 
-    // 내 친구 목록 가져오기
+    // 내 전체 친구 목록 가져오기 (비동기)
+    @ResponseBody
     @GetMapping("/list")
     public ResponseEntity<List<FriendDetailsDTO>> getFriendsWithDetailsDTO(@PathVariable Long memberId) {
         List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
         return ResponseEntity.ok(friends);
     }
+
+    // 친구 목록 페이지 보기
     @GetMapping("/view")
     public String getFriendsList(
             @PathVariable Long memberId,
@@ -83,10 +89,8 @@ public class FriendController {
     ) {
         List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
         model.addAttribute("friends", friends);
+        model.addAttribute("memberId", memberId);
         return "member/friend/list";
     }
-
-
-
 }
 

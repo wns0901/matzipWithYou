@@ -22,8 +22,11 @@ public interface FriendRepository{
     // 친구 요청 수락
     int acceptFriendRequest(Friend friend);
 
-    // 친구 요청 거절 & 친삭
+    // 친구 요청 거절
     int rejectFriendRequest(Friend friend);
+
+    // 친구 삭제
+    int deleteFriendById(Long friendId);
 
     // 친구 요청 보내기
     int sendFriendRequest(Friend friend);

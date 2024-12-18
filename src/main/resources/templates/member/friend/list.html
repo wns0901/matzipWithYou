@@ -40,13 +40,11 @@
             </div>
 
             <div class="friend-actions">
-                <div class="friend-actions">
-                    <button class="btn btn-delete"
-                            th:data-friend-id="${friend.friendId}"
-                            th:data-is-sender="${memberId < friend.friendId}">
-                        삭제
-                    </button>
-                </div>
+                <button class="btn btn-delete"
+                        th:data-sender-id="${friend.senderId}"
+                        th:data-receiver-id="${friend.receiverId}">
+                    삭제
+                </button>
             </div>
         </div>
     </div>
@@ -55,19 +53,15 @@
         <p>아직 등록된 친구가 없습니다.</p>
     </div>
 </div>
-<script>
+
+<script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function() {
         const deleteButtons = document.querySelectorAll('.btn-delete');
-        const memberId = /*[[${memberId}]]*/ null;
 
         deleteButtons.forEach(button => {
             button.addEventListener('click', function() {
-                const friendId = parseInt(this.getAttribute('data-friend-id'));
-                const isSender = this.getAttribute('data-is-sender') === 'true';
-
-                const senderId = isSender ? memberId : friendId;
-                const receiverId = isSender ? friendId : memberId;
-
+                const senderId = parseInt(this.getAttribute('data-sender-id'));
+                const receiverId = parseInt(this.getAttribute('data-receiver-id'));
                 deleteFriend(senderId, receiverId);
             });
         });
@@ -85,20 +79,23 @@
                     receiverId: receiverId
                 })
             })
-                .then(response => response.json())  // 응답 데이터를 JSON으로 파싱
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Failed to delete friend');
+                })
                 .then(affectedRows => {
                     if (affectedRows > 0) {
-                        // 실제로 삭제된 행이 있을 경우
-                        const friendElement = document.querySelector(`[data-friend-id="${senderId}"]`).closest('.friend-item');
-                        friendElement.remove();  // DOM에서 해당 친구 항목 제거
+                        // 성공적으로 삭제되면 UI에서 제거
+                        const friendElement = this.closest('.friend-item');
+                        friendElement.remove();
 
-                        // 친구가 하나도 없다면 '친구가 없습니다' 메시지 표시
+                        // 친구가 모두 삭제되었는지 확인
                         const remainingFriends = document.querySelectorAll('.friend-item');
                         if (remainingFriends.length === 0) {
-                            const noFriendsMessage = document.createElement('div');
-                            noFriendsMessage.className = 'no-friends';
-                            noFriendsMessage.innerHTML = '<p>아직 등록된 친구가 없습니다.</p>';
-                            document.querySelector('.friend-list').replaceWith(noFriendsMessage);
+                            const friendList = document.querySelector('.friend-list');
+                            friendList.innerHTML = '<div class="no-friends"><p>아직 등록된 친구가 없습니다.</p></div>';
                         }
                     } else {
                         alert('친구 삭제에 실패했습니다.');

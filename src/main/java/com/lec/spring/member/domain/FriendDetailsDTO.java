@@ -16,6 +16,4 @@ public class FriendDetailsDTO {
     private Integer publicCount;
     private Integer hiddenCount;
     private String profileImg;
-
-    private Long friendId;
 }

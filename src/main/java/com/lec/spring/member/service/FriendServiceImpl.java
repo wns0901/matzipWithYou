@@ -21,38 +21,30 @@ public class FriendServiceImpl implements FriendService {
     // 친구 요청 보내기
     @Override
     public int sendFriendRequest(Friend friend) {
-
-        // 중복 요청 확인
-        if (friendRepository.isAlreadyFriend(friend)) { // ?
+        if (friendRepository.isAlreadyFriend(friend)) {
             return 0;
         }
-        return friendRepository.sendFriendRequest(friend); // DB에 저장
+        return friendRepository.sendFriendRequest(friend);
     }
 
-    // 친구 요청 수락/거절
+    // 친구 요청 수락
     @Override
-    public int respondToRequest(Friend friend) {
-        int newFriend = friendRepository.acceptFriendRequest(friend);
-        if (newFriend == 0) {
-            return 0;
-        }
-        if (newFriend == 1) {
-            // 요청 수락
-            friend.setIsAccept(true);
-            return friendRepository.acceptFriendRequest(friend); // 업데이트된 행 수 반환
-        } else {
-            // 요청 거절
-            return friendRepository.rejectFriendRequest(friend); // 삭제된 행 수 반환
-        }
+    public int acceptFriendRequest(Friend friend) {
+        friend.setIsAccept(true);
+        return friendRepository.acceptFriendRequest(friend);
     }
 
-
-    // 친구 삭제
+    // 친구 요청 거절
     @Override
-    public int deleteFriend(Friend friend) {
+    public int rejectFriendRequest(Friend friend) {
         return friendRepository.rejectFriendRequest(friend);
     }
 
+    // 친구 삭제
+    @Override
+    public int deleteFriend(Long friendId) {
+        return friendRepository.deleteFriendById(friendId);
+    }
 
     // 친구 목록(상세정보) 가져오기
     @Override
@@ -60,14 +52,9 @@ public class FriendServiceImpl implements FriendService {
         return friendRepository.findFriendsWithDetailsDTO(memberId);
     }
 
-    // 대기 중인 친구 요청 조회...
+    // 대기 중인 친구 요청 조회
     @Override
     public List<Friend> getPendingRequests(Long memberId) {
-        // receiverId에 해당하고 isAccept 가 false 인 요청 조회
         return friendRepository.findPendingRequests(memberId);
     }
-
-
-
-
 }
