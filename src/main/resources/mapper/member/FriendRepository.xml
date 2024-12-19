@@ -16,16 +16,10 @@
         WHERE receiver_id = #{receiverId} and sender_id = #{senderId}
     </update>
 
-    <!-- 친구 요청 거절 -->
+    <!-- 친구 요청 거절 / 삭제 -->
     <delete id="rejectFriendRequest" parameterType="com.lec.spring.member.domain.Friend" flushCache="true">
-    DELETE FROM friend
-    WHERE receiver_id = #{receiverId} and sender_id = #{senderId}
-    </delete>
-
-    <!-- 친구 삭제 -->
-    <delete id="deleteFriendById">
         DELETE FROM friend
-        WHERE id = #{friendId}
+        WHERE receiver_id = #{receiverId} and sender_id = #{senderId}
     </delete>
 
     <!-- 친구 신청 보낼 때 이미 보낸/받은 신청은 아닌지 확인 -->

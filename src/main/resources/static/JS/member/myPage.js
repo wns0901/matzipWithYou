@@ -7,20 +7,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const friendButton = document.querySelector('.info-button .friends');
-    friendButton.addEventListener('click', function() {
-        // URL에서 현재 memberId 가져오기
-        const currentPath = window.location.pathname;
-        const memberId = currentPath.split('/')[2]; // /members/{memberId} 에서 memberId 추출
 
+// myPage.js
+document.addEventListener('DOMContentLoaded', function() {
+    const friendButton = document.querySelector('span.info-label.friends');
+    if (!friendButton) {
+        console.error('Friend button not found');
+        return;
+    }
+
+    friendButton.addEventListener('click', function() {
+        const memberId = this.dataset.memberId;
         if (memberId) {
-            window.location.href = `/members/${memberId}/friends/view`;
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/members/${memberId}/friends`;
+            document.body.appendChild(form);
+            form.submit();
         } else {
-            console.error('memberId is missing');
+            console.error('Member ID not found');
         }
     });
 });
+
 
 // 닉 변경 기능
 document.addEventListener('DOMContentLoaded', function () {
@@ -68,8 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 서버로 닉네임 전송
                 fetch(`/members/${memberId}`, {
                     method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ newNickname })
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({newNickname})
                 })
                     .then(response => response.json())
                     .then(data => {
