@@ -21,14 +21,14 @@
 <body>
 <div id="all_overlay" class="hidden"></div>
 <div id="purchasing_hint_info" class="hidden">
-    <img src="#">
+    <img th:src="@{/IMG/matzip/hint_info.png}">
     <span></span>
     <button id="purchase"><span>-500 pt</span></button>
     <button id="cancel"><span>취소</span></button>
 </div>
 <div id="hint_result" class="hidden">
-    <img src="#">
-    <span></span>
+    <img th:src="@{/IMG/matzip/hint_result.png}">
+    <span id="hint_result_text"></span>
     <button id="one_more"><span>한번 더 뽑기</span></button>
     <button id="stop"><span>그만하기</span></button>
 </div>
@@ -48,7 +48,22 @@
     <div id="hint_tag5" class="hint_tag hidden">
         <span class="hint_text">HINT</span>
     </div>
-    <img src="#">
+    <img id="hint_popup" th:src="@{/IMG/matzip/hint_popup.png}">
+    <div id="result_tag1" class="result_tag ">
+        <span class="result_text">HINT</span>
+    </div>
+    <div id="result_tag2" class="result_tag hidden">
+        <span class="result_text">HINT</span>
+    </div>
+    <div id="result_tag3" class="result_tag hidden">
+        <span class="result_text">HINT</span>
+    </div>
+    <div id="result_tag4" class="result_tag hidden">
+        <span class="result_text">HINT</span>
+    </div>
+    <div id="result_tag5" class="result_tag hidden">
+        <span class="result_text">HINT</span>
+    </div>
 </div>
 <div id="map"></div>
 <div id="menu_wrap">

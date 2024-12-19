@@ -137,30 +137,27 @@ async function getHintList(myMatzipId) {
 }
 
 async function purchasingHintEvent(e, myMatzipId, hintInfoWindow) {
+    console.log(myMatzipId);
     hintInfoWindow.classList.add('hidden');
     const hintTagWindow = document.querySelector('#hint_tags');
     hintTagWindow.classList.remove('hidden');
     const hintTagList = document.querySelectorAll('.hint_tag'),
+        resultTagList = document.querySelectorAll('.result_tag'),
         hintData = await getHintList(myMatzipId),
         openHint = hintData.purchased,
         unopenedHint = hintData.unpurchased,
         openHintCnt = openHint.length,
         unopenedHintCnt = unopenedHint.length;
 
+    console.log(hintData)
     oneMoreBtn.addEventListener('click', function oneMoreBtnEvent(event) {
         purchasingHintEvent(event, myMatzipId, hintInfoWindow);
         oneMoreBtn.removeEventListener('click', oneMoreBtnEvent);
     })
 
     hintTagList.forEach((e, i) => {
-        if (i < openHintCnt) {
-            e.innerHTML = '<span class="hint_text">' + openHint[i].tagName + '</span>';
-            e.classList.remove('hidden');
-            return;
-        }
-
-        if (i < openHintCnt + unopenedHintCnt) {
-            const tag = unopenedHint[i - openHintCnt];
+        if (i < unopenedHintCnt) {
+            const tag = unopenedHint[i];
             const hintData = {tag, hintTagWindow, hintTagList, myMatzipId, memberId: data.memberId}
             e.classList.remove('hidden');
             e.addEventListener('click', function openEvnet(event) {
@@ -168,6 +165,15 @@ async function purchasingHintEvent(e, myMatzipId, hintInfoWindow) {
                 e.removeEventListener('click', openEvnet);
             })
             return;
+        }
+    })
+
+    resultTagList.forEach((e, i) => {
+        if (i < openHintCnt) {
+            const tag = openHint[i];
+            const hintData = {tag, hintTagWindow, hintTagList, myMatzipId, memberId: data.memberId}
+            e.classList.remove('hidden');
+            e.querySelector('span').textContent = tag.tagName;
         }
     })
 
