@@ -137,60 +137,68 @@ async function getHintList(myMatzipId) {
 }
 
 async function purchasingHintEvent(e, myMatzipId, hintInfoWindow) {
-    console.log(myMatzipId);
     hintInfoWindow.classList.add('hidden');
     const hintTagWindow = document.querySelector('#hint_tags');
     hintTagWindow.classList.remove('hidden');
     const hintTagList = document.querySelectorAll('.hint_tag'),
         resultTagList = document.querySelectorAll('.result_tag'),
+        fragment = document.createDocumentFragment(),
         hintData = await getHintList(myMatzipId),
         openHint = hintData.purchased,
         unopenedHint = hintData.unpurchased,
-        openHintCnt = openHint.length,
-        unopenedHintCnt = unopenedHint.length;
+        isFinished = unopenedHint.length === 1;
 
-    console.log(hintData)
     oneMoreBtn.addEventListener('click', function oneMoreBtnEvent(event) {
+        document.querySelector('#hint_result').classList.add('hidden');
         purchasingHintEvent(event, myMatzipId, hintInfoWindow);
         oneMoreBtn.removeEventListener('click', oneMoreBtnEvent);
+    });
+
+    unopenedHint.forEach((tag, i) => {
+        const tagElement = document.createElement('div');
+        tagElement.className = 'hint_tag';
+        tagElement.id = 'hint_tag' + (i + 1);
+        tagElement.innerHTML = '<span class="hint_text">HINT</span>'
+
+        const reqData = {tag, hintTagWindow, hintTagList, myMatzipId, memberId: data.memberId};
+        tagElement.addEventListener('click', (event) => openingHintEvent(event, reqData, isFinished));
+
+        fragment.appendChild(tagElement);
+
     })
 
-    hintTagList.forEach((e, i) => {
-        if (i < unopenedHintCnt) {
-            const tag = unopenedHint[i];
-            const hintData = {tag, hintTagWindow, hintTagList, myMatzipId, memberId: data.memberId}
-            e.classList.remove('hidden');
-            e.addEventListener('click', function openEvnet(event) {
-                openingHintEvent(event, hintData);
-                e.removeEventListener('click', openEvnet);
-            })
-            return;
-        }
+
+    openHint.forEach((tag, i) => {
+        const tagElement = document.createElement('div');
+        tagElement.className = 'result_tag';
+        tagElement.id = 'result_tag' + (i + 1);
+        tagElement.innerHTML = '<span class="result_text">' + tag.tagName + '</span>'
+
+        fragment.appendChild(tagElement);
     })
 
-    resultTagList.forEach((e, i) => {
-        if (i < openHintCnt) {
-            const tag = openHint[i];
-            const hintData = {tag, hintTagWindow, hintTagList, myMatzipId, memberId: data.memberId}
-            e.classList.remove('hidden');
-            e.querySelector('span').textContent = tag.tagName;
-        }
-    })
-
+    hintTagWindow.appendChild(fragment);
 }
 
-async function openingHintEvent(e, {tag, hintTagWindow, hintTagList, memberId, myMatzipId}) {
+async function openingHintEvent(e, {tag, hintTagWindow, hintTagList, memberId, myMatzipId}, isFinished) {
+    hintTagWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png">';
+    e.stopPropagation();
     hintTagWindow.classList.add('hidden');
-    hintTagList.forEach(e => e.classList.add('hidden'));
     const hintResultWindow = document.querySelector('#hint_result');
+
+    if (isFinished) {
+        oneMoreBtn.classList.add('hidden');
+    } else {
+        oneMoreBtn.classList.remove('hidden');
+    }
     hintResultWindow.classList.remove('hidden');
     if (!(await saveHintStatus(tag.tagId, memberId, myMatzipId))) {
         alert('힌트 구매 실패');
         location.reload();
+        return;
     }
     const hintSpan = document.querySelector('#hint_result span');
     hintSpan.textContent = tag.tagName;
-
 }
 
 async function saveHintStatus(tagId, memberId, myMatzipId) {
@@ -200,7 +208,6 @@ async function saveHintStatus(tagId, memberId, myMatzipId) {
         url = '/matzip/saveTag';
 
     const result = await fetch(url, {method, headers, body});
-
     return result.status === 200;
 }
 

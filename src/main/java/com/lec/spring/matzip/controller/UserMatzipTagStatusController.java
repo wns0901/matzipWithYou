@@ -70,30 +70,56 @@ public class UserMatzipTagStatusController {
         // 리스트 섞기
         List<UserMatzipTagStatus> l = userMatzipTagStatusService.shuffleTagNames(myMatzipId);
         System.out.println("######랜덤으로 돌린 후: " + l.size());
-
+        Long memberId = userMatzipTagStatusService.getAuthenticatedMemberId(); // 로그인된 사용자 ID 가져오기
+        model.addAttribute("memberId", memberId);
         model.addAttribute("hints", l);
         return "matzip/hintForm";
     }
 
+    @GetMapping("/saveTag")
+    public String saveTagForm() {
+        return "matzip/tagForm";
+    }
 
     @PostMapping("/saveTag")
+    @ResponseBody
     public ResponseEntity<String> saveTagStatus(@RequestBody UserMatzipTagStatus request) {
         try {
+            // 포인트 차감 후, 성공 여부 확인
+            boolean isPointsDeducted = userMatzipTagStatusService.deductPointsForHint(
+                    request.getMemberId(),
+                    1 // 포인트 차감 수치 (예시로 1 사용)
+            );
+            System.out.println("포인트가 차감 되었습니까 ? : " + isPointsDeducted);
+
+            // 포인트 차감이 실패했을 경우
+            if (!isPointsDeducted) {
+                return ResponseEntity.status(400).body("포인트 차감에 실패했습니다. 포인트가 부족할 수 있습니다.");
+            }
+
+            // 힌트 저장 처리
             userMatzipTagStatusService.hintTagSave(
                     request.getMemberId(),
                     request.getMyMatzipId(),
-                    request.getTagId());
+                    request.getTagId(),
+                    1 // 포인트 차감 수치 (예시로 1 사용)
+            );
+
             return ResponseEntity.ok("힌트가 저장되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("힌트 저장에 실패했습니다: " + e.getMessage());
-        }}
+        }
+    }
+
 
     @GetMapping("/tags/{myMatzipId}")
     public ResponseEntity<Map<String, Object>> getTags(@PathVariable Long myMatzipId) {
         Long memberId = userMatzipTagStatusService.getAuthenticatedMemberId(); // 로그인된 회원의 ID를 가져옴
 
+        /// 구매된태그
         List<UserMatzipTagStatus> purchasedTags = userMatzipTagStatusService.purchasedTag(memberId);
 
+        // 미구매태그
         List<UserMatzipTagStatus> unpurchasedTags = userMatzipTagStatusService.unpurchasedTag(memberId);
 
         List<Map<String, Object>> purchasedTagsList = purchasedTags.stream()

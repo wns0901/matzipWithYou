@@ -541,7 +541,7 @@
     border: none;
 }
 
-#cancel, #stop {
+#cancel, #stop, #back {
     width: 180px;
     height: 60px;
     color: #D6D6D6;

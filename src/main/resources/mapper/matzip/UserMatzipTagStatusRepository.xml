@@ -92,11 +92,7 @@
         WHERE m.visibility = 'HIDDEN'
     </select>
 
-<!-- userMatzipTagStatus -->
-    <select id="userMatzipTagStatus">
-        select member_id as 'memberId', my_matzip_id as 'myMatzipId' , tag_id as 'tagId'
-        from user_matzip_tag_status
-    </select>
+
 
 
     <!--kindName 조회-->
@@ -209,8 +205,8 @@
 
 
     <select id="listWholeHiddenMatizpByMemberId">
-        SELECT m.member_id AS 'memberId',
-                m.id AS 'myMatzipId',
+        SELECT
+            m.id AS 'myMatzipId',
                 mt.tag_id AS 'tagId',
                 t.tagname AS 'tagName'
         FROM my_matzip m
@@ -218,17 +214,53 @@
                  LEFT JOIN matzip_tag mt ON m.id = mt.my_matzip_id
                  LEFT JOIN tag t ON mt.tag_id = t.id
         WHERE m.visibility = 'HIDDEN'
-          AND m.member_id = #{memberId}
+          AND NOT EXISTS (
+            SELECT 1
+            FROM user_matzip_tag_status umts
+            WHERE umts.my_matzip_id = m.id
+            and umts.tag_id = mt.tag_id
+        )
+
+    </select>
+
+    <!-- userMatzipTagStatus -->
+    <select id="userMatzipTagStatus">
+        select member_id as 'memberId', my_matzip_id as 'myMatzipId' , tag_id as 'tagId'
+        from user_matzip_tag_status
     </select>
 
 
 
 
-    <!-- 저장-->
-    <insert id="tagSave" flushCache="true" parameterType="com.lec.spring.matzip.domain.UserMatzipTagStatus" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
+<!--    &lt;!&ndash; 저장&ndash;&gt;-->
+<!--    <insert id="tagSave" flushCache="true" parameterType="com.lec.spring.matzip.domain.UserMatzipTagStatus" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >-->
+<!--        INSERT INTO user_matzip_tag_status (member_id, my_matzip_id, tag_id)-->
+<!--        VALUES (#{memberId}, #{myMatzipId}, #{tagId})-->
+<!--    </insert>-->
+
+    <update id="deductPointsForHint" flushCache="true">
+        UPDATE member
+        SET point = point - #{pointsToDeduct}
+        WHERE id = #{memberId}
+          AND point >= #{pointsToDeduct}
+    </update>
+
+
+
+    <insert id="tagSave" flushCache="true">
         INSERT INTO user_matzip_tag_status (member_id, my_matzip_id, tag_id)
         VALUES (#{memberId}, #{myMatzipId}, #{tagId})
     </insert>
+
+
+    <!--    현재 포인트 조회-->
+    <select id="getCurrentPoint" resultType="int">
+        SELECT point
+        FROM member
+        WHERE id = #{memberId}
+    </select>
+
+
 
 
 

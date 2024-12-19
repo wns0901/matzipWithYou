@@ -2,6 +2,7 @@ package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,7 +26,12 @@ public interface UserMatzipTagStatusService {
    // hintmanagement
    List<UserMatzipTagStatus> hintByMyMatzipId(Long myMatzipId);
 
-   void hintTagSave(Long memberId, Long myMatzipId, Long tagId);
+   boolean deductPointsForHint(Long memberId, int pointsToDeduct);
+
+
+//   @Transactional
+   void hintTagSave(Long memberId, Long myMatzipId, Long tagId, int pointsToDeduct);
+
    List<UserMatzipTagStatus> shuffleTagNames(Long myMatzipId); ;
 
 
