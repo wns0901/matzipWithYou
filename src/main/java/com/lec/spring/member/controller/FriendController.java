@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/members/{memberId}/friends")
@@ -39,7 +40,7 @@ public class FriendController {
 
     // 친구 요청 목록 가져오기 / 비동기 팝업
     @ResponseBody
-    @GetMapping("")
+    @GetMapping("/pending")
     public ResponseEntity<List<Friend>> getPendingRequests(@PathVariable Long memberId) {
         List<Friend> pendingRequests = friendService.getPendingRequests(memberId);
         return ResponseEntity.ok(pendingRequests);
@@ -70,23 +71,26 @@ public class FriendController {
     }
 
 
-    // 내 친구 목록 가져오기
-    @GetMapping("/list")
-    public ResponseEntity<List<FriendDetailsDTO>> getFriendsWithDetailsDTO(@PathVariable Long memberId) {
-        List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
-        return ResponseEntity.ok(friends);
+    @GetMapping("")
+    public String showFriendList(@PathVariable Long memberId, Model model) {
+        model.addAttribute("memberId", memberId);
+        return "member/friend/friend_list";
     }
-    @GetMapping("/view")
-    public String getFriendsList(
+
+    @PostMapping("/list")
+    @ResponseBody
+    public ResponseEntity<List<FriendDetailsDTO>> getFriendsList(
             @PathVariable Long memberId,
-            Model model
+            @RequestBody Map<String, Long> request  // JSON 요청 바디를 받기 위해 추가
     ) {
-        List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
-        model.addAttribute("friends", friends);
-        return "member/friend/list";
+        try {
+            List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
+            return ResponseEntity.ok(friends);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
 
 
 }
-

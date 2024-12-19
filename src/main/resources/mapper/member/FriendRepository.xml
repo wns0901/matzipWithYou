@@ -18,8 +18,8 @@
 
     <!-- 친구 요청 거절 / 삭제 -->
     <delete id="rejectFriendRequest" parameterType="com.lec.spring.member.domain.Friend" flushCache="true">
-    DELETE FROM friend
-    WHERE receiver_id = #{receiverId} and sender_id = #{senderId}
+        DELETE FROM friend
+        WHERE receiver_id = #{receiverId} and sender_id = #{senderId}
     </delete>
 
     <!-- 친구 신청 보낼 때 이미 보낸/받은 신청은 아닌지 확인 -->
