@@ -27,9 +27,12 @@
         }
     </style>
     <script th:inline="javascript">
-        const memberIds = /*[[${#authentication.principal.member.id}]]*/ ;
-        // 로그인한 사용자의 ID
-        console.log("memberIds : " + memberIds);
+        // const memberIds = /*[[${#authentication.principal.member.id}]]*/ ;
+        // // 로그인한 사용자의 ID
+        // console.log("memberIds : " + memberIds);
+
+        let memberId = /*[[${memberId}]]*/; // 모델에서 전달된 memberId 사용
+        console.log("memberId: " + memberId)
     </script>
     <script>
         function saveHint(tagId, myMatzipId, memberId) {
@@ -51,12 +54,15 @@
                             hintElement.remove(); // 힌트 요소 제거
                         }
                     } else {
-                        alert("힌트 저장에 실패했습니다.");
+                        response.text().then(text => {
+                            alert("힌트 저장에 실패했습니다: " + text);
+                        });
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
+
         }
 
     </script>
