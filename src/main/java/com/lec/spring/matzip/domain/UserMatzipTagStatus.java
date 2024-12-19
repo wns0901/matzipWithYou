@@ -22,7 +22,7 @@ public class UserMatzipTagStatus {
         private Long matzipId;
         private String visibility;
         private Long id;
-
+        private int point;
 
 
 }// end hintPurchase
