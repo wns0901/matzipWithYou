@@ -49,17 +49,19 @@ public class SecurityConfig {
                                 "/member/register",
                                 "/member/additional-info",
                                 "/member/password-recovery",
+                                "/matzips/**",
+                                "/member/**",
                                 "/member/password-recovery/**"
                         ).permitAll()
 
                         .requestMatchers(
                                 "/matzips/food-kinds/**",
                                 "/matzips/tags/**",
-                                "/admin/**",
-                                "/member/{id}"
+                                "/admin/**"
                         ).hasRole("ADMIN")
 
                         .requestMatchers(
+                                "/members/{id}",
                                 "/matzips/*/visibility",
                                 "/matzips/reviews/**",
                                 "/matzips/hint-tags/**",
@@ -74,7 +76,6 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/matzips/**",
                                 "/member/**",
-                                "/members/{id}",
                                 "/member/*/friends",
                                 "/matzips/reviews",
                                 "/matzips/hints/**",

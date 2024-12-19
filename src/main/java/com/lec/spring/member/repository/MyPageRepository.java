@@ -25,5 +25,10 @@ public interface MyPageRepository {
     // 닉 업데이트 및 포인트 차감
     int updateNicknameAndDeductPoints(Long memberId, String newNickname, int pointsToDeduct);
 
+    //힌트 구매시 포인트차감
+    int deductPoints(Long memberId, int pointsToDeduct);
+
+
+
 
 }

@@ -1,3 +1,4 @@
+
 package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.Friend;
@@ -23,4 +24,3 @@ public interface FriendService {
     List<Friend> getPendingRequests(Long memberId);
 
 }
-

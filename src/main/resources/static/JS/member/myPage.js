@@ -14,6 +14,31 @@ window.addEventListener('click', function(event) {
     }
 });
 
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.pathname.match(/^\/members\/\d+$/)) {
+        const friendButton = document.querySelector('.info-button .info-label.friends');
+        if (!friendButton) {
+            console.error('친구 버튼을 찾을 수 없습니다');
+            return;
+        }
+
+        friendButton.addEventListener('click', function() {
+            console.log(1)
+            const memberId = this.getAttribute('data-member-id');
+            if (!memberId) {
+                console.error('회원 ID를 찾을 수 없습니다');
+                return;
+            }
+
+            // URL 이동
+            window.location.href = `/members/${memberId}/friends`;
+        });
+    }
+});
+
+
 // 닉 변경 기능
 document.addEventListener('DOMContentLoaded', function () {
     const overlay = document.getElementById('overlay');
@@ -79,82 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
-// // 페이지 로드 시 실행
-// document.addEventListener("DOMContentLoaded", () => {
-//     const memberId = getMemberIdFromURL(); // URL에서 memberId 가져오는 함수
-//
-//     fetch(`/members/${memberId}`)
-//         .then(response => response.json())
-//         .then(data => {
-//             // 각 섹션에 데이터 채우기
-//             renderWishList(data.wishInfo.preview);
-//             renderMyMatzipList(data.matzipInfo.preview);
-//             renderMyReviewList(data.reviewInfo.preview);
-//         })
-//         .catch(error => console.error('데이터 가져오기 실패:', error));
-// });
-//
-// // URL에서 memberId 가져오는 함수
-// function getMemberIdFromURL() {
-//     const pathSegments = window.location.pathname.split('/');
-//     return pathSegments[pathSegments.length - 1]; // URL 맨 끝의 값
-// }
-//
-// // 위시 리스트 렌더링
-// function renderWishList(wishPreview) {
-//     const container = document.getElementById('wish-list-cards');
-//     // container.innerHTML = ''; // 기존 내용 초기화
-//
-//     wishPreview.forEach(wish => {
-//         const card = document.createElement('div');
-//         card.classList.add('card');
-//
-//         card.innerHTML = `
-//             <img src="${wish.matzipImage || '/default-image.png'}" class="matzipImage" alt="Wish Image">
-//             <div class="matzipName">${wish.matzipName}</div>
-//         `;
-//         container.appendChild(card);
-//     });
-// }
-//
-// // 나의 맛집 리스트 렌더링
-// function renderMyMatzipList(matzipPreview) {
-//     const container = document.getElementById('my-matzip-cards');
-//     // container.innerHTML = ''; // 기존 내용 초기화
-//
-//     matzipPreview.forEach(matzip => {
-//         const card = document.createElement('div');
-//         card.classList.add('card');
-//
-//         card.innerHTML = `
-//             <img src="${matzip.matzipImage || '/default-image.png'}" class="matzipImage" alt="Matzip Image">
-//             <div class="matzipName">${matzip.matzipName}</div>
-//         `;
-//         container.appendChild(card);
-//     });
-// }
-//
-// // 나의 리뷰 리스트 렌더링
-// function renderMyReviewList(reviewPreview) {
-//     const container = document.getElementById('review-container');
-//     // container.innerHTML = ''; // 기존 내용 초기화
-//
-//     reviewPreview.forEach(review => {
-//         const card = document.createElement('div');
-//         card.classList.add('review-card');
-//
-//         card.innerHTML = `
-//             <img src="${review.matzipImage || '/IMG/defaultStoreImgSMALL.png'}" class="matzipImage" alt="Review Image">
-//             <div class="starRating">${generateStarRating(review.rating)}</div>
-//             <div class="matzipName">${review.matzipName}</div>
-//             <div class="reviewContent">${review.reviewContent}</div>
-//         `;
-//         container.appendChild(card);
-//     });
-// }
-//
 
 // 페이지 로드 후 호출
 document.addEventListener("DOMContentLoaded", function () {

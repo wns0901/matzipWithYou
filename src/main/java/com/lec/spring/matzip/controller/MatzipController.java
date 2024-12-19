@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.controller;
 
 import com.lec.spring.matzip.domain.DTO.DetailMapDataDTO;
+import com.lec.spring.matzip.domain.DTO.DetailMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.MatzipDTO;
 import com.lec.spring.matzip.domain.DTO.SeoulMapDataDTO;
 import com.lec.spring.matzip.domain.Matzip;
@@ -28,8 +29,8 @@ public class MatzipController {
 
     @ResponseBody
     @PostMapping("")
-    public ResponseEntity<Map<String, String>> saveMatZip(@RequestBody MatzipDTO matzipDTO) {
-        return matzipService.saveMatzip((Matzip) matzipDTO.getData(), matzipDTO.getKind());
+    public ResponseEntity<Map<String, Object>> saveMatZip(@RequestBody MatzipDTO matzipDTO) {
+        return matzipService.saveMatzip((Matzip) matzipDTO);
     }
 
     @GetMapping("/{memberId}")
@@ -57,4 +58,9 @@ public class MatzipController {
         return "matzip/gu-detail-map";
     }
 
+    @ResponseBody
+    @GetMapping("/detail/{matzipId}")
+    public ResponseEntity<DetailMatzipDTO> detail(@PathVariable Long matzipId, @RequestParam Long friendId) {
+        return matzipService.getDetailMatzip(matzipId, friendId);
+    }
 }

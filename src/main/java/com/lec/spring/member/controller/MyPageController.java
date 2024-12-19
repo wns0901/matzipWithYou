@@ -51,6 +51,7 @@ public class MyPageController {
 
 
         model.addAttribute("myPage", myPageInfo);
+        model.addAttribute("memberId", memberId);
 
         return "member/myPage";
     }

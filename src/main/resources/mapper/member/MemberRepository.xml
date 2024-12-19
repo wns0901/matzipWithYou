@@ -13,7 +13,7 @@
              , nickname   "nickname"
              , name       "name"
              , provider   "provider"
-             , providerId "providerId"
+             , providerid "providerId"
         FROM member
         WHERE 1 = 1
     </sql>
@@ -45,17 +45,7 @@
     </update>
 
     <delete id="deleteById">
-        DELETE m, ma, pi, f, mm, mr, mt, wl, umts
-        FROM member m
-        LEFT JOIN member_authorities ma ON m.id = ma.member_id
-        LEFT JOIN profile_img pi ON m.id = pi.member_id
-        LEFT JOIN friend f ON m.id = f.sender_id OR m.id = f.receiver_id
-        LEFT JOIN my_matzip mm ON m.id = mm.member_id
-        LEFT JOIN my_review mr ON m.id = mr.member_id
-        LEFT JOIN matzip_tag mt ON mm.id = mt.my_matzip_id
-        LEFT JOIN wish_list wl ON m.id = wl.member_id
-        LEFT JOIN user_matzip_tag_status umts ON m.id = umts.member_id
-        WHERE m.id =#{id}
+        DELETE FROM member WHERE id = #{id}
     </delete>
 
     <select id="findAll" resultType="com.lec.spring.member.domain.Member">
@@ -97,14 +87,14 @@
         WHERE id = #{id}
     </update>
 
-    <!--비밀번호 재설정-->
-    <!--이메일 찾기-->
+<!--비밀번호 재설정-->
+<!--이메일 찾기-->
     <select id="selectEmail">
         select id, email
         from member
         where email = #{email}
     </select>
-    <!--비밀번호 업데이트하기-->
+<!--비밀번호 업데이트하기-->
     <update id="updatePassword">
         update member
         set password = #{newPassword}
@@ -123,4 +113,12 @@
         WHERE nickname = #{referrerNickname}
     </select>
 
+    <select id="findNicknameByMemberIds">
+        SELECT nickname
+        FROM member
+        WHERE id IN
+        <foreach collection="memberIds" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
 </mapper>
