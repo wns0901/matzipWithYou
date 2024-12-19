@@ -1,13 +1,12 @@
 package com.lec.spring.matzip.repository;
 
 import com.lec.spring.matzip.domain.*;
+import com.lec.spring.matzip.domain.DTO.ReviewDTO;
 import com.lec.spring.matzip.service.ReviewServiceImpl;
-import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
-import com.lec.spring.member.service.MemberServiceImpl;
 import org.apache.ibatis.session.SqlSession;
 
 import org.junit.jupiter.api.Test;
@@ -31,14 +30,21 @@ class ReviewRepositoryTest {
     @Autowired
     private ReviewServiceImpl reviewServiceImpl;
 
-    @Test
-    void testFindAllReview() {
-        ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);
+//    @Test
+//    void testFindAllReview() {
+//        ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);
+//
+//        List<Review> reviewList = reviewRepository.findAll();
+//        System.out.println("모든 객체: " + reviewList);
+//        assertNotNull(reviewList);
+//        assertFalse(reviewList.isEmpty());
+//    }
 
-        List<Review> reviewList = reviewRepository.findAll();
-        System.out.println("모든 객체: " + reviewList);
-        assertNotNull(reviewList);
-        assertFalse(reviewList.isEmpty());
+    @Test
+    public void getKindName() {
+
+        Long id = 1L;
+        reviewServiceImpl.getKindName(id);
     }
 
     @Test

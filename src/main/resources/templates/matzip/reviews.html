@@ -8,6 +8,15 @@
     <title>Review</title>
 </head>
 <body>
+    <header class="top-header">
+        <div class="logo">
+            <img src="/IMG/logo.png" alt="맛집이쥬">
+        </div>
+        <div class="user-info">
+            <span th:text="|user 님 환영합니다|"></span>
+        </div>
+    </header>
+
     <form th:action="@{/matzip/review}" method="post" class="review-write-form">
         <div class="section-container">
 

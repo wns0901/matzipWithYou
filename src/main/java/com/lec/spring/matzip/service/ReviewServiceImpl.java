@@ -1,6 +1,9 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.*;
+import com.lec.spring.matzip.domain.DTO.MatzipDataDTO;
+import com.lec.spring.matzip.domain.DTO.ReviewDTO;
+import com.lec.spring.matzip.domain.DTO.ReviewTagDTO;
 import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MatzipRepository;
 import com.lec.spring.matzip.repository.ReviewRepository;
@@ -9,6 +12,7 @@ import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -37,8 +41,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getAllReviews() {
-        return reviewRepository.findAll();
+    public List<Review> getAllReviews(Long memberId) {
+        List<Review> reviews = reviewRepository.findAll(memberId);
+        return reviews != null ? reviews : new ArrayList<>();
     }
 
     @Override
@@ -85,12 +90,38 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public String getKindName(Long id) {
+        Review review = reviewRepository.findById(id);
+        Matzip matzip = matzipRepository.findById(review.getMatzipId());
+        FoodKind foodKind = foodKindRepository.findByKindId(matzip.getKindId());
+        return foodKind.getKindName();
+    }
+
+    @Override
     public FoodKind addFoodKind(String kindName) {
         FoodKind foodKind = foodKindRepository.findByKindName(kindName);
         if (foodKind == null) {
             throw new IllegalArgumentException("음식 정보를 찾을 수 없습니다.");
         }
         return foodKind;
+    }
+
+    @Override
+    public String getMatzipName(Long matzipId) {
+        Matzip matzip = matzipRepository.findById(matzipId);
+        return matzip.getName();
+    }
+
+    @Override
+    public String getMatzipAddress(Long matzipId) {
+        Matzip matzip = matzipRepository.findById(matzipId);
+        return matzip.getAddress();
+    }
+
+    @Override
+    public String getKakaoImgURl(Long matzipId) {
+        Matzip matzip = matzipRepository.findById(matzipId);
+        return matzip.getImgUrl();
     }
 
     @Override
@@ -105,11 +136,36 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<ReviewTagDTO> getTags() {
+    public List<Tag> getTags() {
        return tagRepository.findAll().stream()
-               .map(tag -> new ReviewTagDTO(tag.getId(), tag.getTagName()))
+               .map(tag -> new Tag(tag.getId(), tag.getTagName(), tag.getRegdate()))
                .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ReviewTag> getReviewTags(Long id) {
+        return reviewRepository.getReviewTags(id).stream()
+                .map(reviewTag -> new ReviewTag(reviewTag.getRegdate(), reviewTag.getTagId(), reviewTag.getReviewId()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getReviewTagNames(Long id) {
+        List<ReviewTag> reviewTags = reviewRepository.getReviewTags(id)
+                .stream()
+                .map(reviewTag -> new ReviewTag(reviewTag.getRegdate(), reviewTag.getTagId(), reviewTag.getReviewId()))
+                .collect(Collectors.toList());
+
+        List<String> reviewTagNames = new ArrayList<>();
+
+        for (ReviewTag reviewTag : reviewTags) {
+            Tag tag = tagRepository.findById(reviewTag.getTagId());
+
+            reviewTagNames.add(tag.getTagName());
+        }
+        return reviewTagNames;
+    }
+
 
     @Override
     public List<ReviewTagDTO> addReviewTags(Long id, List<Long> tagIds) {

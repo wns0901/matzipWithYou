@@ -129,8 +129,8 @@ CREATE TABLE profile_img
 
 CREATE TABLE review_tag
 (
-    tag_id       INT      NOT NULL COMMENT '태그 일련번호',
     my_review_id INT      NOT NULL COMMENT '나의 리뷰 일련번호',
+    tag_id       INT      NOT NULL COMMENT '태그 일련번호',
     regdate      DATETIME NULL DEFAULT now() COMMENT '등록일',
     PRIMARY KEY (tag_id, my_review_id)
 ) COMMENT '나의 리뷰 태크';

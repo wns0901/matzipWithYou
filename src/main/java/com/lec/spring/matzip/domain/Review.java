@@ -15,4 +15,7 @@ public class Review {
     private String content;
     private LocalDateTime regdate;
     private int starRating;
+
+    private Long matzipId;
+    private Long memberId;
 }

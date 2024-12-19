@@ -1,7 +1,8 @@
 package com.lec.spring.matzip.repository;
 
 import com.lec.spring.matzip.domain.*;
-import com.lec.spring.member.domain.Member;
+import com.lec.spring.matzip.domain.DTO.ReviewDTO;
+import com.lec.spring.matzip.domain.DTO.ReviewTagDTO;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
@@ -9,9 +10,11 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository {
-    List<Review> findAll();
+    List<Review> findAll(Long memberId);
 
     Review findById(Long id);
+
+    List<ReviewTag> getReviewTags (Long id);
 
     int save(ReviewDTO reviewDTO, Model model);
 

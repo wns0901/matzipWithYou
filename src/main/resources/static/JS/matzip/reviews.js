@@ -208,13 +208,10 @@ function setupFoodKindTextHeight() {
         }
     }
 
-    // 초기 높이 조정
     adjustHeight();
 
-    // 윈도우 리사이즈 이벤트에 대한 높이 조정
     window.addEventListener('resize', adjustHeight);
 
-    // select-foodKind의 변화를 감지하여 높이 조정
     const selectFoodKind = document.querySelector('.select-foodKind');
     if (selectFoodKind) {
         const observer = new MutationObserver(adjustHeight);

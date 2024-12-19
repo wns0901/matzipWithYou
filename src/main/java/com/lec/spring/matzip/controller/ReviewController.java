@@ -1,11 +1,13 @@
 package com.lec.spring.matzip.controller;
 
 import com.lec.spring.matzip.domain.*;
-import com.lec.spring.matzip.repository.FoodKindRepository;
+import com.lec.spring.matzip.domain.DTO.ReviewDTO;
+import com.lec.spring.matzip.domain.DTO.ReviewTagDTO;
+import com.lec.spring.matzip.service.MatzipService;
 import com.lec.spring.matzip.service.ReviewService;
 import com.lec.spring.member.domain.Member;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +15,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/matzip")
@@ -25,10 +30,86 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/reviews/list")
-    public void list(Model model) {
-        List<Review> reviews = reviewService.getAllReviews();
-        model.addAttribute("reviews", reviews);
+    @GetMapping("/reviewList/{memberId}")
+    public String reviewListPage(@PathVariable Long memberId, Model model) {
+        model.addAttribute("memberId", memberId);
+        return "matzip/reviewList";
+    }
+
+    @GetMapping("/api/reviews/{memberId}")
+    @ResponseBody
+    public List<Map<String, Object>> getReviewsWithMatzipInfo(@PathVariable Long memberId) {
+        List<Review> reviews = reviewService.getAllReviews(memberId);
+        List<Map<String, Object>> reviewsWithMatzip = new ArrayList<>();
+
+        for (Review review : reviews) {
+            try {
+                Map<String, Object> reviewInfo = new HashMap<>();
+                Long matzipId = review.getMatzipId();
+
+                if (matzipId != null) {
+                    reviewInfo.put("id", review.getId());
+                    reviewInfo.put("content", review.getContent());
+                    reviewInfo.put("regdate", review.getRegdate());
+                    reviewInfo.put("starRating", review.getStarRating());
+
+                    reviewInfo.put("foodKind", reviewService.getKindName(review.getId()));
+                    reviewInfo.put("matzipName", reviewService.getMatzipName(matzipId));
+                    reviewInfo.put("matzipAddress", reviewService.getMatzipAddress(matzipId));
+                    reviewInfo.put("kakaoImgUrl", reviewService.getKakaoImgURl(matzipId));
+
+                    reviewsWithMatzip.add(reviewInfo);
+                }
+            } catch (Exception e) {
+                System.err.println("Error processing review ID: " + review.getId());
+                e.printStackTrace();
+            }
+        }
+
+        return reviewsWithMatzip;
+    }
+
+    @GetMapping("/api/reviews/{id}/detail")
+    @ResponseBody
+    public Map<String, Object> getReviewDetails(@PathVariable Long id) {
+        Map<String, Object> detailInfo = new HashMap<>();
+
+        try {
+            Review review = reviewService.findById(id);
+            if (review == null) {
+                throw new IllegalArgumentException("Review not found for id: " + id);
+            }
+
+            String kindName = reviewService.getKindName(id);
+            List<ReviewTag> reviewTags = reviewService.getReviewTags(id);
+            List<String> reviewTagName = reviewService.getReviewTagNames(id);
+
+            detailInfo.put("id", id);
+            detailInfo.put("content", review.getContent());
+            detailInfo.put("regdate", review.getRegdate());
+            detailInfo.put("starRating", review.getStarRating());
+            detailInfo.put("matzipId", review.getMatzipId());
+            detailInfo.put("memberId", review.getMemberId());
+
+            if (kindName != null) {
+                detailInfo.put("kindName", kindName);
+            }
+            if (reviewTags != null && !reviewTags.isEmpty()) {
+                detailInfo.put("reviewTags", reviewTags);
+            }
+
+            detailInfo.put("reviewTagName", reviewTagName);
+
+            System.out.println("Returning detail info for review ID: " + id);
+            System.out.println("Detail info: " + detailInfo);
+
+        } catch (Exception e) {
+            System.err.println("Error getting review details for id " + id + ": " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+
+        return detailInfo;
     }
 
     @GetMapping("/reviews")
@@ -45,7 +126,7 @@ public class ReviewController {
 
     @GetMapping("/reviews/tags")
     @ResponseBody
-    public List<ReviewTagDTO> getTags() {
+    public List<Tag> getTags() {
         return reviewService.getTags();
     }
 
@@ -118,7 +199,7 @@ public class ReviewController {
 }
 
 
-@PostMapping("/reviews/delete")
+@PostMapping("/reviews/delete/{id}")
     public String deleteOk(@RequestParam Long id
         , RedirectAttributes redirectAttributes
     ) {
@@ -137,13 +218,5 @@ public class ReviewController {
         return "redirect:/matzips/reviews/list";
     }
 }
-    @GetMapping("/reviews/{id}")
-    public String getReviewDetails(
-            @PathVariable Long id,
-            Model model
-    ) {
-        Review review = reviewService.findById(id);
-        model.addAttribute("review", review);
-        return "matzip/reviews/detail";
-    }
+
 }
