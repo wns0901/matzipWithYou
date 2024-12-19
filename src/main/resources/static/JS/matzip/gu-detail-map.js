@@ -23,7 +23,9 @@ const centerLatLng = data.centerLatLng,
     rightBtn = document.getElementById('right'),
     hiddenDetial = document.getElementById('hidden_detail'),
     closeHiddenDetailBtn = document.getElementById('close_hidden_detail_btn'),
-    inputKeyWord = document.getElementById('keyword')
+    inputKeyWord = document.getElementById('keyword'),
+    purchasingCancelBtn = document.querySelector('#cancel'),
+    hintResultColseBtn = document.querySelector('#stop')
 ;
 
 let searchResultList,
@@ -33,15 +35,14 @@ let searchResultList,
 ;
 
 console.log(data);
-
-displayPlaces(totalList);
+if (totalList[0]) displayPlaces(totalList);
 displayFriendProfile();
 
 searchBtn.addEventListener('click', searchPlaces);
 searchSelectBtn.addEventListener('click', postMatzipData);
 addBtn.addEventListener('click', () => searchWindow.classList.remove('hidden'));
 closeSearchBtn.addEventListener('click', () => {
-    searchWindow.className += ' hidden'
+    searchWindow.classList.add('hidden')
     Array.from(searchWindow.childNodes).forEach(node => {
         if (node.id === 'keyword') node.value = '';
         else if (node.id === 'result_list') node.innerHTML = '';
@@ -51,13 +52,14 @@ closeBtn.addEventListener('click', closeDetailEnvent);
 leftBtn.addEventListener('click', moveLeftFriendListEvent);
 rightBtn.addEventListener('click', moveRightFriendListEvent);
 closeHiddenDetailBtn.addEventListener('click', closeHiddenDetailEvent);
-inputKeyWord.addEventListener('keyup', enterSearchEnvet)
+inputKeyWord.addEventListener('keyup', enterSearchEnvet);
+purchasingCancelBtn.addEventListener('click', cancelBtnEvent);
+hintResultColseBtn.addEventListener('click', cancelBtnEvent);
 
 async function displayPlaces(places, isFriendList = false) {
     const matzipWrap = document.getElementById('matzip_wrap'),
         bounds = new kakao.maps.LatLngBounds(),
         fragment = document.createDocumentFragment();
-
     removeAllChildNods(matzipWrap);
     removeMarker();
 
@@ -81,7 +83,8 @@ async function displayPlaces(places, isFriendList = false) {
                 });
             } else {
                 kakao.maps.event.addListener(marker, 'click', function () {
-                    openHint
+                    const myMatzipIds = place.myMatzipIds ? place.myMatzipIds : [place.myMatzipId];
+                    clickHiddenEvent(place.myMatzipIds)
                 })
             }
 
@@ -96,7 +99,7 @@ async function displayPlaces(places, isFriendList = false) {
             };
         })(marker, place.name, placePosition);
 
-        marker.dataset.myMatzipId = place.fragment.appendChild(item);
+        fragment.appendChild(item);
     }
 
     matzipWrap.appendChild(fragment);
@@ -104,8 +107,98 @@ async function displayPlaces(places, isFriendList = false) {
     if (!isFriendList) map.setBounds(bounds);
 }
 
-function clickHiddenEvent(e) {
+function getMemberPoint(id) {
+    const url = '/member/' + id + '/points';
+    return fetch(url).then(res => res.json());
+}
 
+async function clickHiddenEvent(myMatzipIds) {
+    const point = (await getMemberPoint(data.memberId)).point;
+    myMatzipId = myMatzipIds[0];
+    const pointSpan = document.querySelector('#purchasing_hint_info span'),
+        hintInfoWindow = document.querySelector('#purchasing_hint_info'),
+        allOverlay = document.getElementById('all_overlay');
+
+    allOverlay.classList.remove('hidden');
+    hintInfoWindow.classList.remove('hidden');
+
+    pointSpan.textContent = '소지 포인트 ' + point + 'pt';
+
+    const purchaseBtn = document.querySelector('#purchase');
+    purchaseBtn.addEventListener('click', (e) => {
+        purchasingHintEvent(e, myMatzipId, hintInfoWindow)
+    });
+}
+
+async function getHintList(myMatzipId) {
+    const url = '/matzip/tags/' + myMatzipId;
+    return await fetch(url).then(res => res.json());
+}
+
+async function purchasingHintEvent(e, myMatzipId, hintInfoWindow) {
+    hintInfoWindow.classList.add('hidden');
+    const hintTagWindow = document.querySelector('#hint_tags');
+    hintTagWindow.classList.remove('hidden');
+    const hintTagList = document.querySelectorAll('.hint_tag'),
+        hintData = await getHintList(myMatzipId),
+        openHint = hintData.purchased,
+        unopenedHint = hintData.unpurchased,
+        openHintCnt = openHint.length,
+        unopenedHintCnt = unopenedHint.length;
+
+    hintTagList.forEach((e, i) => {
+        if (i < openHintCnt) {
+            e.innerHTML = '<span class="hint_text">' + openHint[i].tagName + '</span>';
+            e.classList.remove('hidden');
+            return;
+        }
+
+        if (i < openHintCnt + unopenedHintCnt) {
+            const tag = unopenedHint[i - openHintCnt];
+            const hintData = {tag, hintTagWindow, hintTagList, myMatzipId, memberId: data.memberId}
+            e.classList.remove('hidden');
+            e.addEventListener('click', function openEvnet(event) {
+                openingHintEvent(event, hintData);
+                e.removeEventListener('click', openEvnet);
+            })
+            return;
+        }
+    })
+
+}
+
+async function openingHintEvent(e, {tag, hintTagWindow, hintTagList, memberId, myMatzipId}) {
+    hintTagWindow.classList.add('hidden');
+    hintTagList.forEach(e => e.classList.add('hidden'));
+    const hintResultWindow = document.querySelector('#hint_result');
+    hintResultWindow.classList.remove('hidden');
+    if (!(await saveHintStatus(tag.tagId, memberId, myMatzipId))) {
+        alert('힌트 구매 실패');
+        location.reload();
+    }
+    const hintSpan = document.querySelector('#hint_result span');
+    hintSpan.textContent = tag.tagName;
+
+}
+
+async function saveHintStatus(tagId, memberId, myMatzipId) {
+    const method = 'POST',
+        headers = {'Content-Type': 'application/json'},
+        body = JSON.stringify({tagId, memberId, myMatzipId}),
+        url = '/matzip/saveTag';
+
+    const result = await fetch(url, {method, headers, body});
+    console.log(result);
+    return true;
+}
+
+function cancelBtnEvent(e) {
+    const allOverlay = document.getElementById('all_overlay');
+    allOverlay.classList.add('hidden');
+    const hintInfoWindow = document.querySelector('#purchasing_hint_info');
+    hintInfoWindow.classList.add('hidden');
+    const hintResultWindow = document.querySelector('#hint_result');
+    hintResultWindow.classList.add('hidden');
 }
 
 function addMakers(position) {
@@ -398,7 +491,7 @@ function postMatzipData() {
             }
 
             const searchWindow = document.getElementById('search_window');
-            searchWindow.className += ' hidden'
+            searchWindow.classList.add('hidden')
             dataIntoDetailCard(res.data)
             detailInfo.querySelector('#star_rating_list').innerHTML = '';
             detailInfo.querySelector('#tags_wrap').innerHTML = '';
@@ -510,12 +603,12 @@ function friendClickEvent(e) {
         friendMatzipList = friendData.matzipList;
 
     if (!overlay.classList.contains('hidden')) {
-        overlay.className += ' hidden';
+        overlay.classList.add('hidden');
         displayPlaces(totalList);
         return;
     }
 
-    for (const e of overlayList) e.className += ' hidden';
+    for (const e of overlayList) e.classList.add('hidden');
     friendList.forEach(f => {
         delete f.isSelected;
     })
@@ -559,7 +652,7 @@ function closeDetailEnvent(e) {
         reviewBtn = detailInfo.querySelector('#write_review_btn'),
         kindName = detailInfo.querySelector('#kind_name');
 
-    detailInfo.className += ' hidden';
+    detailInfo.classList.add('hidden');
 
     img.src = '#';
 
@@ -580,7 +673,7 @@ function closeHiddenDetailEvent(e) {
     const text1 = hiddenDetial.querySelector('#hidden_detail_text1'),
         text2 = hiddenDetial.querySelector('#hidden_detail_text2');
 
-    hiddenDetial.className += ' hidden';
+    hiddenDetial.classList.add('hidden');
 
     text1.textContent = '';
     text2.textContent = '';

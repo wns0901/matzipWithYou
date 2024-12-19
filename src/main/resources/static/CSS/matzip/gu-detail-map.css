@@ -506,3 +506,23 @@
     transform: rotate(-40deg); /* 40도 회전 */
     z-index: 5;
 }
+
+#purchasing_hint_info {
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    z-index: 4;
+}
+
+#hint_result {
+    background-color: white;
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    z-index: 4;
+}
