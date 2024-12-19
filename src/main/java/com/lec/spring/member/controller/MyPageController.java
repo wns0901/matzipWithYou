@@ -1,6 +1,8 @@
 package com.lec.spring.member.controller;
 
+import com.lec.spring.member.domain.MatzipInfoDTO;
 import com.lec.spring.member.domain.MyPage;
+import com.lec.spring.member.domain.ReviewInfoDTO;
 import com.lec.spring.member.domain.UpdateNickDTO;
 import com.lec.spring.member.service.MyPageService;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -33,6 +36,20 @@ public class MyPageController {
             , Model model
     ) {
         MyPage myPageInfo = myPageService.getFullMyPageInfo(memberId);
+
+        // 리뷰 데이터 제한
+        List<ReviewInfoDTO> reviewPreview = myPageInfo.getReviewInfo().getPreview();
+        myPageInfo.getReviewInfo().setPreview(reviewPreview.subList(0, Math.min(3, reviewPreview.size())));
+
+        // 위시리스트 데이터 제한
+        List<MatzipInfoDTO> wishPreview = myPageInfo.getWishInfo().getPreview();
+        myPageInfo.getWishInfo().setPreview(wishPreview.subList(0, Math.min(5, wishPreview.size())));
+
+        // 나의 맛집 데이터 제한
+        List<MatzipInfoDTO> matzipPreview = myPageInfo.getMatzipInfo().getPreview();
+        myPageInfo.getMatzipInfo().setPreview(matzipPreview.subList(0, Math.min(5, matzipPreview.size())));
+
+
         model.addAttribute("myPage", myPageInfo);
 
         return "member/myPage";

@@ -30,7 +30,6 @@ body {
     min-height: 100vh;
 }
 
-
 /* 오른쪽 콘텐츠 영역 */
 .content-section {
     background-color: #F5F5F5;
@@ -66,7 +65,7 @@ body {
 }
 
 /* 카드 컨테이너 */
-.card-container, .review-container {
+.card-container {
     /*display: flex;*/
     /*flex-wrap: nowrap; !* 한 줄로만 정렬 *!*/
     /*overflow-x: auto; !* 내용이 넘칠 경우 스크롤 *!*/
@@ -76,7 +75,7 @@ body {
     gap: 15px;
 }
 
-.card, .review-card {
+.card{
     /*flex: 0 0 auto; !* 카드의 크기가 변하지 않도록 고정 *!*/
     /*width: 180px; !* 카드의 너비 *!*/
     /*background-color: #fff;*/
@@ -96,11 +95,7 @@ body {
     font-weight: normal;
     font-size: 15px;
 }
-.card img {
-    width: 125px;
-    height: 130px;
-    border-radius: 5px;
-}
+
 
 /*.heart-button {*/
 /*    background-image: url('/IMG/heart-empty.png');*/
@@ -116,22 +111,16 @@ body {
 /*}*/
 
 /* 하트 아이콘 토글 */
-.card .heart-icon {
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
+/*.card .heart-icon {*/
+/*    cursor: pointer;*/
+/*    transition: color 0.3s ease;*/
+/*}*/
 
-.card .heart-icon.clicked {
-    color: #FF9F66; /* 주황색 하트 */
-}
+/*.card .heart-icon.clicked {*/
+/*    color: #FF9F66; !* 주황색 하트 *!*/
+/*}*/
 
-/* 리뷰 스타일 */
-.review-container {
-    width: calc(33.33% - 20px); /* 1/3의 영역만 차지 (간격 포함) */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+
 
 
 
@@ -233,13 +222,52 @@ body {
     align-items: center;
     cursor: pointer;
     /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/
-    z-index: 10;
+    z-index: 1000;
     margin-bottom: -20px; /* 프로필 이미지 바로 위로 밀어 올림 */
 }
 
 .settings-icon {
     width: 35px;
     height: 35px;
+}
+
+/* 설정버튼 */
+
+.settings-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    padding: 8px 0;
+    min-width: 200px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    display: none;
+    z-index: 1001;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 12px 16px;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
 }
 
 
@@ -315,7 +343,7 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.5); /* 반투명 어두운 배경 */
-    z-index: 1000;
+    z-index: 2000;
     display: none; /* 초기에는 보이지 않음 */
 }
 
@@ -328,7 +356,7 @@ body {
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1001; /* 배경 위에 표시 */
+    z-index: 2001; /* 배경 위에 표시 */
     width: 400px;
     text-align: center;
     padding: 20px;
@@ -463,6 +491,7 @@ body {
 
 /* DB 값 */
 .info-value {
+    /*transform: translateY(5px);*/
     font-family: RecipeKoreaOTF;
     font-size: 14px;
     font-weight: bold;
@@ -483,10 +512,30 @@ body {
     font-weight: bold;
     font-size: 15px;
 }
+
+.matzipImage {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.reviewImage{
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+}
+
+
 .matzipName{
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bold;
-    font-size: 10px;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.RmatzipName{
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 .reviewContent{
@@ -502,78 +551,61 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 브라우저 윈도우가 600 미만 mobile 이면 적용 */
-@media only screen and (max-width: 600px) {
-    div.a {display: none;}
-    .col-m-1 {width: 8.33%; }  /* 1칸 짜리 폭 */
-    .col-m-2 {width: 16.66%; }  /* 2칸 짜리 폭 */
-    .col-m-3 {width: 25%;}
-    .col-m-3h {height: 50%;}
-    .col-m-4 {width: 33.33%;}
-    .col-m-5 {width: 41.66%;}
-    .col-m-6 {width: 50%;}
-    .col-m-7 {width: 58.33%;}
-    .col-m-8 {width: 66.66%;}
-    .col-m-9 {width: 75%;}
-    .col-m-10 {width: 83.33%;}
-    .col-m-11 {width: 91.66%;}
-    .col-m-12 {width: 100%;}
+/* 리뷰 스타일 */
+.review-container {
+    /*width: calc(33.33% - 20px); !* 1/3의 영역만 차지 (간격 포함) *!*/
+    display: flex;
+    /*flex-direction: row;*/
+    flex-wrap: nowrap;
+    gap: 10px;
+}
+.review-card {
+    display: flex;
+    flex: 0 0 calc(33.33% - 43px); /* 카드 너비를 3등분 */
+    /*width: 330px;*/
+    /*height: 170px;*/
+    flex-wrap: nowrap;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 0px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 브라우저 윈도우가 600 이상 Tablet 이면 적용 */
-@media only screen and (min-width: 600px) {
-    .col-t-1 {width: 8.33%; }  /* 1칸 짜리 폭 */
-    .col-t-2 {width: 16.66%; }  /* 2칸 짜리 폭 */
-    .col-t-3 {width: 25%;}
-    .col-t-4 {width: 33.33%;}
-    .col-t-5 {width: 41.66%;}
-    .col-t-6 {width: 50%;}
-    .col-t-7 {width: 58.33%;}
-    .col-t-8 {width: 66.66%;}
-    .col-t-9 {width: 75%;}
-    .col-t-10 {width: 83.33%;}
-    .col-t-11 {width: 91.66%;}
-    .col-t-12 {width: 100%;}
-
-    .col-t-h3 {height: 30%; display: block;}
-    .col-t-h2 {height: 15%; display: block;}
-
+.reviewImage {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 10px;
 }
 
-/* 브라우저 윈도우가 768 이상 PC 이면 적용 */
-@media only screen and (min-width: 768px){
-    /* PC */
-    .col-1 {width: 8.33%; }  /* 1칸 짜리 폭 */
-    .col-2 {width: 16.66%; }  /* 2칸 짜리 폭 */
-    .col-3 {width: 25%;}
-    .col-4 {width: 33.33%;}
-    .col-5 {width: 41.66%;}
-    .col-6 {width: 50%;}
-    .col-7 {width: 58.33%;}
-    .col-8 {width: 66.66%;}
-    .col-9 {width: 75%;}
-    .col-10 {width: 83.33%;}
-    .col-11 {width: 91.66%;}
-    .col-12 {width: 100%;}
-
-    .col-h1 {height: 10%; display: block;}
-    .col-h3 {height: 30%; display: block;}
+.review-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px; /* 별점과 평점 텍스트 간격 */
+    flex: 1;
 }
+.rating-container {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+    margin-bottom: 3px;
+    gap: 5px; /* 별점과 평점 텍스트 간격 */
+}
+.starRating {
+    display: flex;
+    transform: translateY(-5px);
+    /*position: relative; !* 또는 absolute, fixed *!*/
+    /*top: -5px;*/
+}
+
+.ratingText {
+    font-size: 10px;
+    color: #6a6a6a; /* 텍스트 색상 */
+    transform: translateY(-5px);
+    /*position: relative; !* 또는 absolute, fixed *!*/
+    /*top: -5px;*/
+}
+
+

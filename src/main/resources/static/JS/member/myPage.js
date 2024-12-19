@@ -1,11 +1,18 @@
-// document.addEventListener('DOMContentLoaded', () => {
-//     // 하트 버튼 토글 기능
-//     const heartButtons = document.querySelectorAll('.heart-button');
-//
-//     function toggleHeart(element) {
-//         element.classList.toggle('clicked');
-//     }
-// });
+// 설정버튼 드롭다운
+document.querySelector('.settings-button').addEventListener('click', function() {
+    const dropdown = this.nextElementSibling;
+    dropdown.classList.toggle('show');
+});
+
+// 드롭다운 외부 클릭시 닫기
+window.addEventListener('click', function(event) {
+    if (!event.target.closest('.settings-container')) {
+        const dropdowns = document.querySelectorAll('.dropdown-menu');
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('show');
+        });
+    }
+});
 
 // 닉 변경 기능
 document.addEventListener('DOMContentLoaded', function () {
@@ -148,11 +155,32 @@ document.addEventListener('DOMContentLoaded', function () {
 //     });
 // }
 //
-// // 별점 생성 함수
-// function generateStarRating(rating) {
-//     let stars = '';
-//     for (let i = 1; i <= 5; i++) {
-//         stars += i <= rating ? '★' : '☆';
-//     }
-//     return `<span style="color: gold;">${stars}</span>`;
-// }
+
+// 페이지 로드 후 호출
+document.addEventListener("DOMContentLoaded", function () {
+    renderStarRating();
+});
+
+// 별점 렌더링 함수
+function renderStarRating() {
+    const reviewCards = document.querySelectorAll(".review-card .starRating");
+
+    reviewCards.forEach(starRatingElement => {
+        const ratingText = starRatingElement.closest(".review-card").querySelector(".ratingText"); // 수정: starRatingElement로부터 부모 탐색
+        const rating = parseInt(starRatingElement.getAttribute("data-rating"));
+        starRatingElement.innerHTML = ""; // 초기화
+
+        for (let i = 1; i <= 5; i++) {
+            const starImg = document.createElement("img");
+            starImg.src = i <= rating ? "/IMG/Star-Yellow.png" : "/IMG/Star-Gray.png";
+            starImg.alt = "star";
+            starImg.style.width = "16px";
+            starImg.style.height = "16px";
+            starImg.style.marginRight = "4px";
+            starRatingElement.appendChild(starImg);
+        }
+        // 평점 텍스트 추가
+        ratingText.textContent = `${rating}점`;
+    });
+}
+
