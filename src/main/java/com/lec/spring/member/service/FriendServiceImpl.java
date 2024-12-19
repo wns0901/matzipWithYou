@@ -74,9 +74,15 @@ public class FriendServiceImpl implements FriendService {
                     dto.setSenderId(friend.getSenderId());
                     dto.setReceiverId(friend.getReceiverId());
                     dto.setNickname(details.getNickname());
+                    dto.setUsername(details.getUsername());
+                    dto.setPublicCount(details.getPublicCount());
+                    dto.setHiddenCount(details.getHiddenCount());
                     dto.setIntimacy(friend.getIntimacy());
-                    dto.setProfileImg(details.getProfileImg());
+                    dto.setProfileImg(details.getProfileImg() != null ?
+                            "/upload/" + details.getProfileImg() :
+                            "/images/default-profile.png");
                     dto.setRegdate(friend.getRegdate());
+
 
                     return dto;
                 })

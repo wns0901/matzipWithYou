@@ -15,7 +15,10 @@ public class FriendRequestDTO {
     private Long senderId;
     private Long receiverId;
     private String nickname;
+    private String username;
     private Integer intimacy;
     private String profileImg;
+    private Integer publicCount;
+    private Integer hiddenCount;
     private LocalDateTime regdate;
 }

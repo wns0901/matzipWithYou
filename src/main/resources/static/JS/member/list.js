@@ -149,9 +149,9 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
     const memberId = getMemberIdFromUrl();
     try {
         const response = await fetch(`/members/${memberId}/friends/requests`);
-        console.log(response);
         const requests = await response.json();
-        console.log(requests);
+
+
 
 
         const container = document.getElementById('pendingRequests');
@@ -163,6 +163,7 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
         }
 
         requests.forEach(request => {
+            console.log(request)
             const card = document.createElement('div');
             card.className = 'friend-card';
             card.innerHTML = `
@@ -170,7 +171,7 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
                     <img src="${request.profileImg || '/IMG/defaultProfileImg.png'}" 
                          onerror="this.src='/IMG/defaultProfileImg.png'">
                     <span>${request.nickname}</span>
-                    <span>@${request.username}</span>
+                    <span>${request.username}</span>
                     <span>공개: ${request.publicCount}</span>
                     <span>비공개: ${request.hiddenCount}</span>
                 </div>
