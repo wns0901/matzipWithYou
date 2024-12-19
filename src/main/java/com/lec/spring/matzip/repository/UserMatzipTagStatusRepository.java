@@ -24,7 +24,8 @@ public interface UserMatzipTagStatusRepository {
     // memberID기준으로 member가 구매한 태그와 구매하지 않은 태그가져오기 (visiblity = "hidden")이여야함
     List<UserMatzipTagStatus> listpurchasedTagByMemberId(Long memberId);
 
-    List<UserMatzipTagStatus> listUnpurchasedTagByMemberId(Long memberId);
+    List <UserMatzipTagStatus> listWholeHiddenMatizpByMemberId(Long memberId);
+//    List<UserMatzipTagStatus> listUnpurchasedTagByMemberId(Long memberId);
 
 
 } // end HintPurchaseRepository
