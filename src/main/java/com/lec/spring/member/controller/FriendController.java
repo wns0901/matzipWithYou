@@ -50,10 +50,14 @@ public class FriendController {
     @ResponseBody
     @PatchMapping("")
     public ResponseEntity<Integer> respondToRequest(
-            @RequestBody Friend friend,
+            @RequestBody FriendRequestDTO requestDTO,
             @PathVariable Long memberId
     ) {
+        Friend friend = new Friend();
+        friend.setSenderId(requestDTO.getSenderId());
         friend.setReceiverId(memberId);
+        friend.setIsAccept(requestDTO.getIsAccept());
+
         int affectedRows = friendService.respondToRequest(friend);
         return ResponseEntity.ok(affectedRows);
     }

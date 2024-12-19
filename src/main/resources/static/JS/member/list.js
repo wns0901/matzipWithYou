@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const memberId = getMemberIdFromUrl();
     if (memberId) {
         loadFriendsList(memberId);
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 정렬 버튼에 이벤트 리스너 추가
     document.querySelectorAll('.btn-sort').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const sortType = this.dataset.sort;
             sortFriends(sortType);
         });
@@ -22,7 +22,7 @@ function getMemberIdFromUrl() {
 let friendsList = []; // 전역 변수로 친구 목록 저장
 
 function sortFriends(sortType) {
-    switch(sortType) {
+    switch (sortType) {
         case 'registration':
             // 등록순 (원본 배열 순서)
             updateFriendList(friendsList);
@@ -50,7 +50,7 @@ function loadFriendsList(memberId) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ memberId: memberId })
+        body: JSON.stringify({memberId: memberId})
     })
         .then(response => {
             if (!response.ok) throw new Error('네트워크 응답이 올바르지 않습니다');
@@ -152,8 +152,6 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
         const requests = await response.json();
 
 
-
-
         const container = document.getElementById('pendingRequests');
         container.innerHTML = '';
 
@@ -163,7 +161,6 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
         }
 
         requests.forEach(request => {
-            console.log(request)
             const card = document.createElement('div');
             card.className = 'friend-card';
             card.innerHTML = `
@@ -176,8 +173,8 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
                     <span>비공개: ${request.hiddenCount}</span>
                 </div>
                 <div>
-                    <button onclick="respondToRequest(${request.senderId}, 'ACCEPTED')">수락</button>
-                    <button onclick="respondToRequest(${request.senderId}, 'REJECTED')">거절</button>
+                    <button onclick="respondToRequest(${request.senderId}, true)">수락</button>
+                    <button onclick="respondToRequest(${request.senderId}, false)">거절</button>
                 </div>
             `;
             container.appendChild(card);
@@ -231,26 +228,41 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
     }, 300);
 });
 
-// 친구 요청 응답 처리
-async function respondToRequest(senderId, status) {
+async function respondToRequest(senderId, isAccept) {
     const memberId = getMemberIdFromUrl();
+
     try {
+        const requestData = {
+            senderId: senderId,
+            isAccept: isAccept
+        };
+        console.log('요청 데이터:', requestData);
+
         const response = await fetch(`/members/${memberId}/friends`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                senderId: senderId,
-                status: status
-            })
+            body: JSON.stringify(requestData)
         });
+        console.log(response)
 
-        if (response.ok) {
-            // 요청 목록 새로고침
-            document.querySelector('.btn-request').click();
-            // 친구 목록 새로고침
-            loadFriendsList(memberId);
+        const affectedRows = await response.json();  // 실제 DB에서 영향받은 행 수
+        console.log('영향받은 행 수:', affectedRows);
+        console.log('3. 새로고침 전 현재 친구 목록:', friendsList);
+
+        if (affectedRows > 0) {  // 실제로 DB 업데이트가 성공했을 때만
+            console.log("친구 요청 처리 성공");
+            const modal = document.getElementById('friendRequestModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+
+            await loadFriendsList(memberId);
+            console.log('4. 새로고침 후 새로운 친구 목록:', friendsList);
+        } else {
+            console.log("친구 요청 처리 실패");
+            // 실패 처리 로직 추가
         }
     } catch (error) {
         console.error('친구 요청 응답 실패:', error);
@@ -285,12 +297,12 @@ async function sendFriendRequest(receiverId) {
 
 // 모달 닫기 기능
 document.querySelectorAll('.close').forEach(closeBtn => {
-    closeBtn.addEventListener('click', function() {
+    closeBtn.addEventListener('click', function () {
         this.closest('.modal').style.display = 'none';
     });
 });
 
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target.classList.contains('modal')) {
         event.target.style.display = 'none';
     }

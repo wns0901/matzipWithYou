@@ -34,17 +34,12 @@ public class FriendServiceImpl implements FriendService {
     // 친구 요청 수락/거절
     @Override
     public int respondToRequest(Friend friend) {
-        int newFriend = friendRepository.acceptFriendRequest(friend);
-        if (newFriend == 0) {
-            return 0;
-        }
-        if (newFriend == 1) {
-            // 요청 수락
-            friend.setIsAccept(true);
-            return friendRepository.acceptFriendRequest(friend); // 업데이트된 행 수 반환
+        if (friend.getIsAccept()) {
+            // 요청 수락인 경우
+            return friendRepository.acceptFriendRequest(friend);
         } else {
-            // 요청 거절
-            return friendRepository.rejectFriendRequest(friend); // 삭제된 행 수 반환
+            // 요청 거절인 경우
+            return friendRepository.rejectFriendRequest(friend);
         }
     }
 
@@ -73,6 +68,7 @@ public class FriendServiceImpl implements FriendService {
 
                     dto.setSenderId(friend.getSenderId());
                     dto.setReceiverId(friend.getReceiverId());
+                    dto.setIsAccept(friend.getIsAccept());
                     dto.setNickname(details.getNickname());
                     dto.setUsername(details.getUsername());
                     dto.setPublicCount(details.getPublicCount());
@@ -88,8 +84,6 @@ public class FriendServiceImpl implements FriendService {
                 })
                 .collect(Collectors.toList());
     }
-
-
 
 
 }

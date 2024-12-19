@@ -9,12 +9,12 @@
         VALUES (#{senderId}, #{receiverId}, #{intimacy}, #{isAccept})
     </insert>
 
-    <!-- 친구 요청 수락-->
-    <update id="acceptFriendRequest" parameterType="com.lec.spring.member.domain.Friend" flushCache="true">
+    <!-- 친구 요청 수락 -->
+    <update id="acceptFriendRequest" parameterType="com.lec.spring.member.domain.Friend">
         UPDATE friend
-        SET is_accept = #{isAccept}
-        WHERE receiver_id = #{receiverId}
-          and sender_id = #{senderId}
+        SET is_accept = true
+        WHERE sender_id = #{senderId}
+          AND receiver_id = #{receiverId}
     </update>
 
     <!-- 친구 요청 거절 / 삭제 -->
