@@ -455,6 +455,12 @@
 
 #hint_tags {
     z-index: 4;
+    outline: 3px solid #FF7327;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
 }
 
 .hint_tag {
@@ -525,7 +531,7 @@
     height: 377px;
 }
 
-#purchase, #one_more {
+#purchase, #one_more, #back {
     width: 180px;
     height: 60px;
     color: #FF7327;
@@ -541,7 +547,7 @@
     border: none;
 }
 
-#cancel, #stop, #back {
+#cancel, #stop {
     width: 180px;
     height: 60px;
     color: #D6D6D6;
@@ -611,24 +617,24 @@
     height: 101px;
     position: absolute;
     right: 5%;
-    top: 15%;
+    top: 11%;
     z-index: 4;
 }
 
 #result_tag2 {
-    top: 28%;
+    top: 24%;
 }
 
 #result_tag3 {
-    top: 41%;
+    top: 37%;
 }
 
 #result_tag4 {
-    top: 54%;
+    top: 50%;
 }
 
 #result_tag5 {
-    top: 67%;
+    top: 63%;
 }
 
 .result_text {
@@ -642,4 +648,30 @@
     top: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
+}
+
+#back {
+    bottom: 15.5%;
+    right: 7%;
+    left: auto;
+}
+
+.fade_in_ready {
+    opacity: 0;
+}
+
+.fade_in {
+    opacity: 1;
+    transition: opacity 2s;
+}
+
+.fade_out {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+#detail_wish_list_btn {
+    top: 35%;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
 }

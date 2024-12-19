@@ -1,6 +1,7 @@
 const centerLatLng = data.centerLatLng,
     totalList = data.totalMatzipList,
     friendListLenght = data.friendList.length,
+    TIMEOUT = 1000,
 
     mapContainer = document.getElementById("map"),
     mapOption = {
@@ -26,7 +27,8 @@ const centerLatLng = data.centerLatLng,
     inputKeyWord = document.getElementById('keyword'),
     purchasingCancelBtn = document.querySelector('#cancel'),
     hintResultColseBtn = document.querySelector('#stop'),
-    oneMoreBtn = document.querySelector('#one_more')
+    oneMoreBtn = document.querySelector('#one_more'),
+    backBtn = document.querySelector('#back')
 ;
 
 let searchResultList,
@@ -56,6 +58,7 @@ closeHiddenDetailBtn.addEventListener('click', closeHiddenDetailEvent);
 inputKeyWord.addEventListener('keyup', enterSearchEnvet);
 purchasingCancelBtn.addEventListener('click', cancelBtnEvent);
 hintResultColseBtn.addEventListener('click', cancelBtnEvent);
+backBtn.addEventListener('click', cancelBtnEvent);
 
 async function displayPlaces(places, isFriendList = false) {
     const matzipWrap = document.getElementById('matzip_wrap'),
@@ -137,19 +140,31 @@ async function getHintList(myMatzipId) {
 }
 
 async function purchasingHintEvent(e, myMatzipId, hintInfoWindow) {
-    hintInfoWindow.classList.add('hidden');
+    hintInfoWindow.className = 'fade_out';
     const hintTagWindow = document.querySelector('#hint_tags');
-    hintTagWindow.classList.remove('hidden');
+    hintTagWindow.className = 'fade_in_ready';
+    setTimeout(() => {
+        hintInfoWindow.className = 'hidden';
+        document.querySelector('#hint_result').className = 'hidden'
+        hintTagWindow.className = 'fade_in';
+    }, TIMEOUT)
     const hintTagList = document.querySelectorAll('.hint_tag'),
-        resultTagList = document.querySelectorAll('.result_tag'),
+        hintPopup = document.querySelector('#hint_popup'),
         fragment = document.createDocumentFragment(),
         hintData = await getHintList(myMatzipId),
         openHint = hintData.purchased,
         unopenedHint = hintData.unpurchased,
         isFinished = unopenedHint.length === 1;
 
+    if(unopenedHint.length) {
+        hintPopup.classList.remove('hidden');
+    } else {
+        hintPopup.classList.add('hidden');
+    }
+
+
     oneMoreBtn.addEventListener('click', function oneMoreBtnEvent(event) {
-        document.querySelector('#hint_result').classList.add('hidden');
+        document.querySelector('#hint_result').className = 'fade_out';
         purchasingHintEvent(event, myMatzipId, hintInfoWindow);
         oneMoreBtn.removeEventListener('click', oneMoreBtnEvent);
     });
@@ -181,11 +196,17 @@ async function purchasingHintEvent(e, myMatzipId, hintInfoWindow) {
 }
 
 async function openingHintEvent(e, {tag, hintTagWindow, hintTagList, memberId, myMatzipId}, isFinished) {
-    hintTagWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png">';
-    e.stopPropagation();
-    hintTagWindow.classList.add('hidden');
-    const hintResultWindow = document.querySelector('#hint_result');
 
+    e.stopPropagation();
+    hintTagWindow.className = 'fade_out';
+    const hintResultWindow = document.querySelector('#hint_result');
+    hintResultWindow.className = 'fade_in_ready';
+    setTimeout(() => {
+        hintTagWindow.className = 'hidden';
+        hintTagWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png" class="hidden">';
+        hintTagWindow.appendChild(backBtn);
+        hintResultWindow.className = 'fade_in';
+    }, TIMEOUT)
     if (isFinished) {
         oneMoreBtn.classList.add('hidden');
     } else {
@@ -218,6 +239,10 @@ function cancelBtnEvent(e) {
     hintInfoWindow.classList.add('hidden');
     const hintResultWindow = document.querySelector('#hint_result');
     hintResultWindow.classList.add('hidden');
+    const hintTagsWindow = document.querySelector('#hint_tags');
+    hintInfoWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png" class="hidden">' +
+        '<button id="back"><span>돌아가기</span></button>';
+    hintTagsWindow.classList.add('hidden');
 }
 
 function addMakers(position) {
@@ -272,17 +297,7 @@ async function getDivItem(place, wishList) {
         matzipName.className = 'matzip_name';
         matzipName.textContent = place.name;
 
-        wishListBtn.className = 'wish_heart';
-        wishListBtn.type = 'button';
-        wishListBtn.dataset.matzipId = place.matzipId;
-        wishListBtn.onclick = updateWishListEvent;
-        if (wishList.includes(place.matzipId)) {
-            wishListBtn.style.backgroundImage = 'url(' + fillHeartImgUrl + ')';
-            wishListBtn.dataset.status = 'fill';
-        } else {
-            wishListBtn.style.backgroundImage = 'url(' + emptyHeartImgUrl + ')';
-            wishListBtn.dataset.status = 'empty';
-        }
+        makeWishListBtn(wishListBtn, place.matzipId);
 
         card.appendChild(matzipImg);
         card.appendChild(matzipName);
@@ -293,6 +308,23 @@ async function getDivItem(place, wishList) {
     }
 
     return card;
+}
+
+function makeWishListBtn(wishListBtn, matzipId, isSearch = false) {
+    wishListBtn.className = 'wish_heart';
+    wishListBtn.type = 'button';
+    wishListBtn.dataset.matzipId = matzipId;
+    wishListBtn.addEventListener('click', (e) => updateWishListEvent(e, isSearch));
+    if (wishList.includes(matzipId)) {
+        wishListBtn.style.backgroundImage = 'url(' + fillHeartImgUrl + ')';
+        wishListBtn.dataset.status = 'fill';
+    } else if(isSearch) {
+        wishListBtn.style.backgroundImage = 'url(/IMG/matzip/gray_heart.png)';
+        wishListBtn.dataset.status = 'empty';
+    } else {
+        wishListBtn.style.backgroundImage = 'url(' + emptyHeartImgUrl + ')';
+        wishListBtn.dataset.status = 'empty';
+    }
 }
 
 function removeMarker() {
@@ -400,14 +432,16 @@ function makeTagList(node, tagList) {
     node.appendChild(fragment);
 }
 
-function dataIntoDetailCard(result) {
+function dataIntoDetailCard(result, isSearch = false) {
     const img = detailInfo.querySelector('#matzip_detail_img'),
         name = detailInfo.querySelector('#matzip_name'),
         address = detailInfo.querySelector('#matzip_address'),
         starRating = detailInfo.querySelector('#star_rating_list'),
         tagList = detailInfo.querySelector('#tags_wrap'),
         reviewBtn = detailInfo.querySelector('#write_review_btn'),
-        kindName = detailInfo.querySelector('#kind_name');
+        kindName = detailInfo.querySelector('#kind_name'),
+        wishListBtn = detailInfo.querySelector('#detail_wish_list_btn')
+    ;
 
     img.src = result.imgUrl;
 
@@ -423,6 +457,12 @@ function dataIntoDetailCard(result) {
 
     makeStarList(starRating, result.starRating);
 
+    if (isSearch) {
+        makeWishListBtn(wishListBtn, result.id, isSearch);
+    } else {
+        wishListBtn.style.backgroundImage = null;
+        wishListBtn.dataset.status = null;
+    }
 }
 
 function searchPlaces() {
@@ -511,7 +551,7 @@ function postMatzipData() {
 
             const searchWindow = document.getElementById('search_window');
             searchWindow.classList.add('hidden')
-            dataIntoDetailCard(res.data)
+            dataIntoDetailCard(res.data, true);
             detailInfo.querySelector('#star_rating_list').innerHTML = '';
             detailInfo.querySelector('#tags_wrap').innerHTML = '';
             detailInfo.classList.remove('hidden')
@@ -520,14 +560,16 @@ function postMatzipData() {
         })
 }
 
-function updateWishListEvent(e) {
+function updateWishListEvent(e, isSearch = false) {
     e.stopPropagation();
 
     const item = e.currentTarget,
         isFilled = item.dataset.status === 'fill',
+        isEmpty = !isFilled
         matzipId = Number(item.dataset.matzipId),
         memberId = data.memberId,
-        imgUrl = isFilled ? emptyHeartImgUrl : fillHeartImgUrl,
+        searchImgUrl = '/IMG/matzip/gray_heart.png',
+        imgUrl = isEmpty ? fillHeartImgUrl : isSearch ? searchImgUrl : emptyHeartImgUrl,
 
         method = isFilled ? 'DELETE' : 'POST',
         url = '/matzips/wish-list/' + memberId + (isFilled ? '/' + matzipId : ''),
@@ -549,7 +591,6 @@ function updateWishListEvent(e) {
                 alert('위시리스트 업데이트 실패')
                 return;
             }
-
             item.style.backgroundImage = 'url(' + imgUrl + ')';
             item.dataset.status = isFilled ? 'empty' : 'fill';
         })
@@ -669,7 +710,8 @@ function closeDetailEnvent(e) {
         starRating = detailInfo.querySelector('#star_rating_list'),
         tagList = detailInfo.querySelector('#tags_wrap'),
         reviewBtn = detailInfo.querySelector('#write_review_btn'),
-        kindName = detailInfo.querySelector('#kind_name');
+        kindName = detailInfo.querySelector('#kind_name'),
+        wishListBtn = detailInfo.querySelector('#detail_wish_list_btn');
 
     detailInfo.classList.add('hidden');
 
@@ -686,6 +728,9 @@ function closeDetailEnvent(e) {
     tagList.innerHTML = '';
 
     starRating.innerHTML = '';
+
+    delete wishListBtn.style.backgroundImage;
+    delete wishListBtn.dataset.status;
 }
 
 function closeHiddenDetailEvent(e) {

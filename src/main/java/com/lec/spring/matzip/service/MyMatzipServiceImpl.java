@@ -105,7 +105,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
         List<FriendDataWithMatzipDTO> sqlResult = myMatzipRepository.findGuMapData(id, gu);
         List<TotalMatzipListDataDTO> totalMatzipList = new ArrayList<>();
         List<WishList> wishList = wishListRepository.getWishListByMemberId(id);
-        List<Long> wishIdList = new ArrayList<>();
+        List<Long> wishIdList = wishList.stream().map(WishList::getMatzipId).toList();
 
         sqlResult.forEach(data -> {
             data.getMatzipList().forEach(matzip -> {
@@ -116,12 +116,6 @@ public class MyMatzipServiceImpl implements MyMatzipService {
                 } else {
                     totalMatzipList.get(index).getMemberIds().add(matzip.getMemberId());
                     totalMatzipList.get(index).getMyMatzipIds().add(matzip.getMyMatzipId());
-                }
-
-                WishList eq = new WishList(id, matzip.getMatzipId(), null);
-
-                if (wishList.contains(eq)) {
-                    wishIdList.add(matzip.getMatzipId());
                 }
             });
 
