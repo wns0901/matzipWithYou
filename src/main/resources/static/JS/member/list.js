@@ -3,12 +3,45 @@ document.addEventListener('DOMContentLoaded', function() {
     if (memberId) {
         loadFriendsList(memberId);
     }
+
+    // 정렬 버튼에 이벤트 리스너 추가
+    document.querySelectorAll('.btn-sort').forEach(button => {
+        button.addEventListener('click', function() {
+            const sortType = this.dataset.sort;
+            sortFriends(sortType);
+        });
+    });
 });
 
 function getMemberIdFromUrl() {
     const pathParts = window.location.pathname.split('/');
     const memberIndex = pathParts.indexOf('members');
     return memberIndex !== -1 ? pathParts[memberIndex + 1] : null;
+}
+
+let friendsList = []; // 전역 변수로 친구 목록 저장
+
+function sortFriends(sortType) {
+    switch(sortType) {
+        case 'registration':
+            // 등록순 (원본 배열 순서)
+            updateFriendList(friendsList);
+            break;
+        case 'alphabet':
+            // 가나다순
+            const sortedByAlphabet = [...friendsList].sort((a, b) =>
+                a.nickname.localeCompare(b.nickname, 'ko')
+            );
+            updateFriendList(sortedByAlphabet);
+            break;
+        case 'intimacy':
+            // 친밀도순
+            const sortedByIntimacy = [...friendsList].sort((a, b) =>
+                b.intimacy - a.intimacy
+            );
+            updateFriendList(sortedByIntimacy);
+            break;
+    }
 }
 
 function loadFriendsList(memberId) {
@@ -24,7 +57,8 @@ function loadFriendsList(memberId) {
             return response.json();
         })
         .then(friends => {
-            updateFriendList(friends);
+            friendsList = friends; // 전역 변수에 저장
+            updateFriendList(friends); // 초기 표시는 등록순
         })
         .catch(error => {
             console.error('친구 목록 로딩 오류:', error);
@@ -48,8 +82,8 @@ function updateFriendList(friends) {
         return;
     }
 
-    // 친밀도 기준으로 내림차순 정렬
-    friends.sort((a, b) => b.intimacy - a.intimacy);
+    // TOP 3 섹션은 항상 친밀도 순으로 정렬
+    const top3Friends = [...friends].sort((a, b) => b.intimacy - a.intimacy).slice(0, 3);
 
     // 상위 3명을 위한 섹션 추가
     const top3Container = document.createElement('div');
@@ -57,7 +91,7 @@ function updateFriendList(friends) {
     top3Container.innerHTML = '<h3>친밀도 TOP 3</h3>';
 
     // 상위 3명 표시
-    friends.slice(0, 3).forEach((friend, index) => {
+    top3Friends.forEach((friend, index) => {
         const topFriendItem = document.createElement('div');
         topFriendItem.classList.add('top-friend-item');
 
@@ -69,7 +103,6 @@ function updateFriendList(friends) {
                      class="friend-profile-small"
                      onerror="this.src='/IMG/defaultProfileImg.png'">
                 <span class="friend-nickname">${friend.nickname}</span>
-                <span class="friend-intimacy">(친밀도: ${friend.intimacy})</span>
             </div>
         `;
         top3Container.appendChild(topFriendItem);
