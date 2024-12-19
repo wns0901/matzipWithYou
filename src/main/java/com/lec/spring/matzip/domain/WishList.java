@@ -15,4 +15,11 @@ public class WishList {
     private Long memberId;
     private Long matzipId;
     private LocalDateTime regdate;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WishList that)) return false;
+        return memberId.equals(that.memberId) && matzipId.equals(that.matzipId);
+    }
 }

@@ -1,101 +1,32 @@
 package com.lec.spring.matzip.service;
 
+
+import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
 import com.lec.spring.matzip.repository.TagRepository;
 import com.lec.spring.matzip.repository.UserMatzipTagStatusRepository;
+import com.lec.spring.member.repository.MyPageRepository;
+import com.lec.spring.member.service.MyPageService;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class UserMatzipTagStatusServiceImpl implements UserMatzipTagStatusService {
     private final UserMatzipTagStatusRepository userMatzipTagStatusRepository;
     private final TagRepository tagRepository;
 
+
     @Autowired
     public UserMatzipTagStatusServiceImpl(SqlSession sqlSession) {
         this.userMatzipTagStatusRepository = sqlSession.getMapper(UserMatzipTagStatusRepository.class);
         this.tagRepository = sqlSession.getMapper(TagRepository.class);
-    }
 
-    // 히든 맛집의 태그조회
-    @Override
-    public List<Long> listHiddenMatzipTagIds(Long myMatzipId) {
-        // myMatzipId에 해당하는 히든 맛집의 태그 상태를 조회합니다.
-        List<UserMatzipTagStatus> hiddenTags = userMatzipTagStatusRepository.listHiddenMatzipTagIds(myMatzipId);
-
-        // UserMatzipTagStatus 객체에서 ID만 추출하여 리스트로 변환
-        List<Long> tagIds = hiddenTags.stream()
-                .map(UserMatzipTagStatus::getTagId)
-                .collect(Collectors.toList());
-
-        //System.out.println("히든 맛집의 태그 ID: " + tagIds);
-
-        return tagIds;
-
-    }
-
-    @Override
-    public String listKindName(Long myMatzipId) {
-        String result = userMatzipTagStatusRepository.listKindName(myMatzipId).toString();
-        return result;
-
-    }
-
-    @Override
-    public List<UserMatzipTagStatus> finddeleteDuplicateMyMatzipId() {
-        List<UserMatzipTagStatus> duplicateId = userMatzipTagStatusRepository.finddeleteDuplicateMyMatzipId();
-        System.out.println("################duplicateId is " + duplicateId);
-        return duplicateId;
-    }
-
-
-
-
-    // 오픈된 태그(userMatzipTagStatus : 구매된 태그) 개수와
-    // 미공개된 태그(구매하지 않은 태그: 히든맛집인데 구매되지 않은 태그\]]])의 개수를 리턴해 주는 메소드
-    // (리턴타입 List(int)(index 0: open tag, index 1: close tag))
-    //1. 히든 맛집의 태그 리스트 불러오기
-    //(5,6,1) -> 히든 맛집
-//         태그 아이디 : (2,7,9), (5)번 맛집
-
-    //2. 제가 만든 메소드에 찾은 태드 id 보내주기 (list<long>
-    // 해당 맛집의 태그 중 매개변수로 전해준 제외한 태그드를 전해줌 return (2, 7)
-//        List<Tag> tags = tagRepository.findNonMatchingTags(List.of(7L), 5L); // 이미 구매한 태그 넣어주기
-
-
-    @Override
-    public List<UserMatzipTagStatus> listWholeHiddenList() {
-        List<UserMatzipTagStatus> result = userMatzipTagStatusRepository.listWholeHiddenList();
-        System.out.println("result:" + result);
-        return result;
-    }
-
-    @Override
-    public List<UserMatzipTagStatus> deleteDuplicateMyMatzipId() {
-        // 숨겨진 맛집 리스트
-        List<UserMatzipTagStatus> hiddenList = userMatzipTagStatusRepository.listWholeHiddenList();
-
-        // 중복된 맛집 리스트
-        List<UserMatzipTagStatus> duplicateList = userMatzipTagStatusRepository.finddeleteDuplicateMyMatzipId();
-
-        // 디버깅: 리스트 내용 출력
-        System.out.println("Hidden List size(): " + hiddenList.size());
-        System.out.println("Hidden List: " + hiddenList);
-        System.out.println("Duplicate List size(): " + duplicateList.size());
-        System.out.println("Duplicate List: " + duplicateList);
-
-        // 중복 제거 로직
-        List<UserMatzipTagStatus> resultList = new ArrayList<>(hiddenList);
-        resultList.removeAll(duplicateList);
-
-        System.out.println("****************result (after removing duplicates): " + resultList);
-        return resultList;
     }
 
     @Override
@@ -104,23 +35,159 @@ public class UserMatzipTagStatusServiceImpl implements UserMatzipTagStatusServic
     }
 
     @Override
+    public List<UserMatzipTagStatus> listWholeHiddenListByMyMatzipId(Long myMatzipId) {
+        List<UserMatzipTagStatus> result = userMatzipTagStatusRepository.listWholeHiddenListByMyMatzipId(myMatzipId);
+        System.out.println("#############listWholeHidden:" + result);
+        return result;
+    }
+
+    ////////////////////// my Matzip 기준 중복 찾고 제거하기
+    @Override
+    public List<UserMatzipTagStatus> findDuplicateMyMatzipId(Long myMatzipID) {
+        List<UserMatzipTagStatus> duplicateId = userMatzipTagStatusRepository.findDuplicateMyMatzipId(myMatzipID);
+        System.out.println("################중복된 id " + duplicateId.size());
+        return duplicateId;
+    }
+
+    @Override
+    public List<UserMatzipTagStatus> deleteDuplicateByMyMatzipId(Long myMatzipID) {
+        // 숨겨진 맛집 리스트
+        List<UserMatzipTagStatus> hiddenList = userMatzipTagStatusRepository.listWholeHiddenListByMyMatzipId(myMatzipID);
+
+        // 중복된 맛집 리스트
+        List<UserMatzipTagStatus> duplicateList = userMatzipTagStatusRepository.findDuplicateMyMatzipId(myMatzipID);
+
+
+        // 중복 제거 로직
+        List<UserMatzipTagStatus> resultList = new ArrayList<>(hiddenList);
+        resultList.removeAll(duplicateList);
+
+        System.out.println("****************중복 제거된 결과: " + resultList.size());
+        return resultList;
+    }
+
+    @Override
+    public List<UserMatzipTagStatus> hintByMyMatzipId(Long myMatzipId) {
+        // 숨겨진 맛집 리스트
+        List<UserMatzipTagStatus> hiddenList = userMatzipTagStatusRepository.listWholeHiddenListByMyMatzipId(myMatzipId);
+
+        // 중복된 맛집 리스트
+        List<UserMatzipTagStatus> duplicateList = userMatzipTagStatusRepository.findDuplicateMyMatzipId(myMatzipId);
+
+        // 중복 제거 로직
+        List<UserMatzipTagStatus> resultList = new ArrayList<>(hiddenList);
+        resultList.removeAll(duplicateList);
+
+      System.out.println("****************중복 제거된 결과: " + resultList.size());
+        return resultList;
+    }
+
+
+    public boolean deductPointsForHint(Long memberId, int pointsToDeduct) {
+        // 포인트 차감 쿼리 호출 (int 반환)
+        int rowsAffected = userMatzipTagStatusRepository.deductPointsForHint(memberId, pointsToDeduct);
+        // 차감된 행 수가 0이면 포인트가 부족하여 차감되지 않은 경우
+        return rowsAffected > 0;
+    }
+
+
+
+    @Override
+    @Transactional
+    public void hintTagSave(Long memberId, Long myMatzipId, Long tagId, int pointsToDeduct) {
+        // 현재 포인트 조회
+        int currentPoint = userMatzipTagStatusRepository.getCurrentPoint(memberId);
+        System.out.println("현재 포인트 : " + currentPoint);
+
+        // 포인트 차감 처리
+        boolean isPointsDeducted = deductPointsForHint(memberId, pointsToDeduct);
+
+        // 포인트 차감 성공 여부 확인
+        if (!isPointsDeducted) {
+            throw new IllegalStateException("포인트가 부족합니다.");
+        }
+
+        // 포인트 차감 후 업데이트된 포인트 확인
+        int updatedPoint = userMatzipTagStatusRepository.getCurrentPoint(memberId);
+        System.out.println("차감 후 포인트 : " + updatedPoint);
+
+        // 힌트 저장
+        UserMatzipTagStatus status = new UserMatzipTagStatus();
+        status.setMemberId(memberId);
+        status.setMyMatzipId(myMatzipId);
+        status.setTagId(tagId);
+
+        // 힌트 정보를 데이터베이스에 저장
+        userMatzipTagStatusRepository.tagSave(status);
+    }
+
+
+
+
+    @Override
+    public List<UserMatzipTagStatus> shuffleTagNames(Long myMatzipId) {
+        List<UserMatzipTagStatus> tagNames = hintByMyMatzipId(myMatzipId); // ID로 리스트 가져오기
+        Collections.shuffle(tagNames);  // 리스트 섞기
+        return tagNames;
+
+
+}
+
+
+
+
+    //구매된 태그(userMatzipTagStatus)에 등록된 태그
+    // 형식(tagId, tagName, myMatzipID)
+    @Override
+    public List<UserMatzipTagStatus> purchasedTag(Long memberId) {
+        return userMatzipTagStatusRepository.listpurchasedTagByMemberId(memberId);
+    }
+
+    // 힌트태그(구매 안된태그)
+    @Override
+    public List<UserMatzipTagStatus> unpurchasedTag(Long memberId) {
+        List<UserMatzipTagStatus> hidden = userMatzipTagStatusRepository.listWholeHiddenMatizpByMemberId();
+        System.out.println("hidden:" + hidden);
+        List<UserMatzipTagStatus> purchasedList = userMatzipTagStatusRepository.listpurchasedTagByMemberId(memberId);
+        System.out.println("purchasedList:" + purchasedList);
+        // 중복 제거 로직
+        List<UserMatzipTagStatus> resultList = new ArrayList<>(hidden);
+        resultList.removeAll(purchasedList);
+
+        System.out.println("****************중복 제거된 결과: " + resultList.size());
+
+        return resultList;
+    }
+
+    @Override
+    public Long getAuthenticatedMemberId() {
+        // 현재 인증된 사용자 정보 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // authentication이 null이 아니고, PrincipalDetails가 로그인된 사용자 정보인 경우
+        if (authentication != null && authentication.getPrincipal() instanceof PrincipalDetails) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+
+            // memberId 가져오기
+            Long memberId = principalDetails.getMember().getId();
+            System.out.println("##########memberId:" + memberId);
+            return memberId;
+        }
+
+        // 인증되지 않은 경우나 다른 예외 처리
+        throw new IllegalStateException("로그인된 사용자 정보가 없습니다.");
+    }
+
+
+
+    // 태그 저장
+    @Override
+    @Transactional
     public void tagSave(UserMatzipTagStatus userMatzipTagStatus) {
         userMatzipTagStatusRepository.tagSave(userMatzipTagStatus);
     }// end tagSave
 
-    public UserMatzipTagStatus findTagByMemberIdAndMatzipId(Long memberId, Long myMatzipId) {
-        return userMatzipTagStatusRepository.findTagByMemberIdAndMatzipId(memberId, myMatzipId);
-    }// end findTagByMemberIdAndMatzipId
 
-    @Override
-    public List<UserMatzipTagStatus> findTagsAndMatzipIdByMember(Long memberId) {
-        return userMatzipTagStatusRepository.findTagsAndMatzipIdByMember(memberId);
-    }// end findTAgsAndMatzipIdByMember
-
-    @Override
-    public List<UserMatzipTagStatus> findMemberAndTagByMatzipId(Long myMatzipId) {
-        return userMatzipTagStatusRepository.findMemberAndTagByMatzipId(myMatzipId);
-    }// end findMemberAndTagByMatzipId
 
 
 

@@ -261,6 +261,6 @@ SELECT * FROM matzip_tag mt
                   JOIN my_matzip mm ON mt.my_matzip_id = mm.id
 WHERE mm.member_id = 5;
 
-DELETE FROM friend
-WHERE (sender_id = 1 AND receiver_id = 2)
-   OR (sender_id = 2 AND receiver_id = 1);
+
+SELECT * FROM matzip WHERE gu = '광진구';
+
