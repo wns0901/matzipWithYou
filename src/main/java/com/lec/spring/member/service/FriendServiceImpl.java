@@ -2,12 +2,14 @@ package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
+import com.lec.spring.member.domain.FriendRequestDTO;
 import com.lec.spring.member.repository.FriendRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -60,11 +62,25 @@ public class FriendServiceImpl implements FriendService {
         return friendRepository.findFriendsWithDetailsDTO(memberId);
     }
 
-    // 대기 중인 친구 요청 조회...
     @Override
-    public List<Friend> getPendingRequests(Long memberId) {
-        // receiverId에 해당하고 isAccept 가 false 인 요청 조회
-        return friendRepository.findPendingRequests(memberId);
+    public List<FriendRequestDTO> getPendingRequests(Long memberId) {
+        List<Friend> pendingFriends = friendRepository.findPendingRequests(memberId);
+
+        return pendingFriends.stream()
+                .map(friend -> {
+                    FriendRequestDTO dto = new FriendRequestDTO();
+                    FriendDetailsDTO details = friend.getFriendDetails();
+
+                    dto.setSenderId(friend.getSenderId());
+                    dto.setReceiverId(friend.getReceiverId());
+                    dto.setNickname(details.getNickname());
+                    dto.setIntimacy(friend.getIntimacy());
+                    dto.setProfileImg(details.getProfileImg());
+                    dto.setRegdate(friend.getRegdate());
+
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
 

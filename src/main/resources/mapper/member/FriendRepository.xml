@@ -52,11 +52,40 @@
     </select>
 
 
-    <!-- 보낸&받은요청 중 대기상태인 목록 -->
-    <select id="findPendingRequests" resultType="com.lec.spring.member.domain.Friend">
-        SELECT * FROM friend f
-                          JOIN member m ON (f.sender_id = m.id OR f.receiver_id = m.id)
-        WHERE m.id = #{id}
+    <resultMap id="FriendWithDetailsMap" type="com.lec.spring.member.domain.Friend">
+        <id property="senderId" column="sender_id"/>
+        <result property="receiverId" column="receiver_id"/>
+        <result property="intimacy" column="intimacy"/>
+        <result property="isAccept" column="is_accept"/>
+        <result property="regdate" column="regdate"/>
+        <association property="friendDetails" javaType="com.lec.spring.member.domain.FriendDetailsDTO">
+            <id property="friendId" column="friendId"/>
+            <result property="nickname" column="nickname"/>
+            <result property="username" column="username"/>
+            <result property="profileImg" column="profileImg"/>
+        </association>
+    </resultMap>
+
+    <select id="findPendingRequests" resultMap="FriendWithDetailsMap">
+        SELECT
+            f.sender_id,
+            f.receiver_id,
+            f.intimacy,
+            f.is_accept,
+            f.regdate,
+            m.nickname,
+            m.username,
+            m.id as friendId,
+            p.filename as profileImg
+        FROM friend f
+                 JOIN member m ON (
+            CASE
+                WHEN f.sender_id = #{id} THEN f.receiver_id = m.id
+                WHEN f.receiver_id = #{id} THEN f.sender_id = m.id
+                END
+            )
+                 LEFT JOIN profile_img p ON m.id = p.member_id
+        WHERE (f.sender_id = #{id} OR f.receiver_id = #{id})
           AND f.is_accept = false
     </select>
 

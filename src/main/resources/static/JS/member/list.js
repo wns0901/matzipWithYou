@@ -137,3 +137,160 @@ function updateFriendList(friends) {
     container.appendChild(top3Container);
     container.appendChild(fullListContainer);
 }
+
+
+// 추가 구현
+// 모달 관련 함수들
+const requestModal = document.getElementById('friendRequestModal');
+const addModal = document.getElementById('addFriendModal');
+
+// 친구 요청 모달 열기
+document.querySelector('.btn-request').addEventListener('click', async () => {
+    const memberId = getMemberIdFromUrl();
+    try {
+        const response = await fetch(`/members/${memberId}/friends/requests`);
+        console.log(response);
+        const requests = await response.json();
+        console.log(requests);
+
+
+        const container = document.getElementById('pendingRequests');
+        container.innerHTML = '';
+
+        if (requests.length === 0) {
+            container.innerHTML = '<p>친구 요청을 한 사람이 없습니다.</p>';
+            return;
+        }
+
+        requests.forEach(request => {
+            const card = document.createElement('div');
+            card.className = 'friend-card';
+            card.innerHTML = `
+                <div>
+                    <img src="${request.profileImg || '/IMG/defaultProfileImg.png'}" 
+                         onerror="this.src='/IMG/defaultProfileImg.png'">
+                    <span>${request.nickname}</span>
+                    <span>@${request.username}</span>
+                    <span>공개: ${request.publicCount}</span>
+                    <span>비공개: ${request.hiddenCount}</span>
+                </div>
+                <div>
+                    <button onclick="respondToRequest(${request.senderId}, 'ACCEPTED')">수락</button>
+                    <button onclick="respondToRequest(${request.senderId}, 'REJECTED')">거절</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        requestModal.style.display = 'block';
+    } catch (error) {
+        console.error('친구 요청 목록 로딩 실패:', error);
+    }
+});
+
+// 친구 추가 모달 열기
+document.querySelector('.btn-add').addEventListener('click', () => {
+    addModal.style.display = 'block';
+});
+
+// 친구 검색 기능
+let searchTimeout;
+document.getElementById('searchInput').addEventListener('input', (e) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(async () => {
+        const searchTerm = e.target.value;
+        if (!searchTerm) return;
+
+        try {
+            const response = await fetch(`/api/members/search?term=${searchTerm}`);
+            const results = await response.json();
+
+            const container = document.getElementById('searchResults');
+            container.innerHTML = '';
+
+            results.forEach(user => {
+                const card = document.createElement('div');
+                card.className = 'friend-card';
+                card.innerHTML = `
+                    <div>
+                        <img src="${user.profileImg || '/IMG/defaultProfileImg.png'}"
+                             onerror="this.src='/IMG/defaultProfileImg.png'">
+                        <span>${user.nickname}</span>
+                        <span>@${user.username}</span>
+                        <span>공개: ${user.publicCount}</span>
+                        <span>비공개: ${user.hiddenCount}</span>
+                    </div>
+                    <button onclick="sendFriendRequest(${user.id})">친구 요청</button>
+                `;
+                container.appendChild(card);
+            });
+        } catch (error) {
+            console.error('사용자 검색 실패:', error);
+        }
+    }, 300);
+});
+
+// 친구 요청 응답 처리
+async function respondToRequest(senderId, status) {
+    const memberId = getMemberIdFromUrl();
+    try {
+        const response = await fetch(`/members/${memberId}/friends`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                senderId: senderId,
+                status: status
+            })
+        });
+
+        if (response.ok) {
+            // 요청 목록 새로고침
+            document.querySelector('.btn-request').click();
+            // 친구 목록 새로고침
+            loadFriendsList(memberId);
+        }
+    } catch (error) {
+        console.error('친구 요청 응답 실패:', error);
+    }
+}
+
+// 친구 요청 보내기
+async function sendFriendRequest(receiverId) {
+    const memberId = getMemberIdFromUrl();
+    try {
+        const response = await fetch(`/members/${memberId}/friends`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                receiverId: receiverId
+            })
+        });
+
+        if (response.ok) {
+            alert('친구 요청을 보냈습니다.');
+            addModal.style.display = 'none';
+        } else {
+            const errorMsg = await response.text();
+            alert(errorMsg);
+        }
+    } catch (error) {
+        console.error('친구 요청 실패:', error);
+    }
+}
+
+// 모달 닫기 기능
+document.querySelectorAll('.close').forEach(closeBtn => {
+    closeBtn.addEventListener('click', function() {
+        this.closest('.modal').style.display = 'none';
+    });
+});
+
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+    }
+};
