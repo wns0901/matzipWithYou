@@ -21,6 +21,12 @@ public class MyPageController {
     }
 
     // 닉네임 + 친구, 위시/내맛집/내리뷰 Count + 위시/내맛집/내리뷰 Preview
+//    @GetMapping("")
+//    @ResponseBody
+//    public MyPage getMyPageInfo(@PathVariable Long memberId) {
+//        return myPageService.getFullMyPageInfo(memberId);
+//    }
+
     @GetMapping("")
     public String getMyPageInfo(
             @PathVariable Long memberId
@@ -72,7 +78,7 @@ public class MyPageController {
                 response.put("message", "닉네임 변경에 실패했습니다.");
             }
 
-            // 갱신된 마이페이지 데이터 추가
+            // 변경된 마이페이지 정보 갱신
             MyPage updatedMyPage = myPageService.getFullMyPageInfo(memberId);
             response.put("myPage", updatedMyPage);
 

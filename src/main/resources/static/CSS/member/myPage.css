@@ -66,13 +66,24 @@ body {
 }
 
 /* 카드 컨테이너 */
-.card-container {
+.card-container, .review-container {
+    /*display: flex;*/
+    /*flex-wrap: nowrap; !* 한 줄로만 정렬 *!*/
+    /*overflow-x: auto; !* 내용이 넘칠 경우 스크롤 *!*/
+    /*gap: 20px; !* 카드 사이 간격 *!*/
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 15px;
 }
 
-.card {
+.card, .review-card {
+    /*flex: 0 0 auto; !* 카드의 크기가 변하지 않도록 고정 *!*/
+    /*width: 180px; !* 카드의 너비 *!*/
+    /*background-color: #fff;*/
+    /*border-radius: 8px;*/
+    /*box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);*/
+    /*text-align: center;*/
+    /*padding: 10px;*/
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
@@ -91,18 +102,18 @@ body {
     border-radius: 5px;
 }
 
-.heart-button {
-    background-image: url('/IMG/heart-empty.png');
-    background-size: cover;
-    width: 20px;
-    height: 20px;
-    border: none;
-    cursor: pointer;
-}
+/*.heart-button {*/
+/*    background-image: url('/IMG/heart-empty.png');*/
+/*    background-size: cover;*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*}*/
 
-.heart-button.active {
-    background-image: url('/IMG/heart-filled.svg');
-}
+/*.heart-button.active {*/
+/*    background-image: url('/IMG/heart-filled.svg');*/
+/*}*/
 
 /* 하트 아이콘 토글 */
 .card .heart-icon {
@@ -122,17 +133,19 @@ body {
     gap: 15px;
 }
 
-.review-card {
-    display: flex;
-    gap: 10px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-}
 
-.review-list .card:nth-child(n+4) {
-    display: none; /* 3개만 보이게 */
-}
+
+/*.review-card {*/
+/*    display: flex;*/
+/*    gap: 10px;*/
+/*    background-color: white;*/
+/*    padding: 10px;*/
+/*    border-radius: 10px;*/
+/*}*/
+
+/*.review-list .card:nth-child(n+4) {*/
+/*    display: none; !* 3개만 보이게 *!*/
+/*}*/
 
 
 
@@ -464,6 +477,22 @@ body {
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bold;
     font-size: 16px;
+}
+.h3{
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+}
+.matzipName{
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.reviewContent{
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: normal;
+    font-size: 10px;
 }
 
 .icon {

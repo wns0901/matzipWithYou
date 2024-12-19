@@ -37,7 +37,7 @@
 
             <div class="nickname-container">
                 <div class="nickname-text" th:text="${myPage.nickname}"></div>
-                        <!-- 닉네임 변경 팝업 -->
+                <!-- 닉네임 변경 팝업 -->
                 <button class="edit-button" id="editButton">
                     <img src="/IMG/edit.svg" alt="Edit"/>
                 </button>
@@ -48,8 +48,8 @@
                 <div class="message align-message">
                     <img src="/IMG/notice.png" alt="포인트 차감 설명" class="point-notice">
                     <div class="message-text">
-                    닉네임 변경시에는 포인트가 5000pt가 차감됩니다.<br>
-                    정말 변경하시겠습니까?
+                        닉네임 변경시에는 포인트가 5000pt가 차감됩니다.<br>
+                        정말 변경하시겠습니까?
                     </div>
                 </div>
                 <div class="button-group">
@@ -60,7 +60,6 @@
             </div>
             <!-- 페이드아웃 배경 -->
             <div class="overlaybackground" id="overlay"></div>
-
 
 
             <!-- 친구 수 & 포인트 버튼 -->
@@ -76,6 +75,12 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
     <!-- 오른쪽 콘텐츠 영역 -->
     <div class="content-section">
         <!-- 위시 리스트 -->
@@ -85,16 +90,14 @@
                 <h2 class="h2"> 위시 리스트(</h2>
                     <h2 class="h2" th:text="${myPage.wishInfo.count}"></h2>
                 <h2 class="h2">곳)</h2>
-                <button class="view-all-button">전체보기 ></button>
+                <button class="view-all-button" onclick="location.href='/members/wish-list/${memberId}'">전체보기 ></button>
             </span>
-            <div class="card-container" id="wishlist">
-                <!-- 카드 예시 -->
-                <div class="card">
-<!--                    <img src="DB 경로" alt="음식 이미지">-->
-                    <div class="card-info">
-                        <p>가게이름 노토산스 미디엄 15</p>
-                    </div>
-                    <button class="heart-button"></button>
+            <div class="card-container" id="wish-list-cards">
+<!--                <img src="${myPage.reviewPreview.matzipImage || '/IMG/defaultStoreImgSMALL.png'}" class="matzipImage" alt="Review Image">-->
+<!--                <div class="matzipName">${myPage.matzipPreview.matzipName}</div>-->
+                <div th:each="wish : ${myPage.wishInfo.preview}" class="card">
+                    <img th:src="${wish.matzipImage}" class="matzipImage" alt="Wish Image">
+                    <div class="matzipName" th:text="${wish.matzipName}">가게 이름</div>
                 </div>
             </div>
         </div>
@@ -104,18 +107,17 @@
             <span class="section-header">
             <img class="icon" src="/IMG/Union.png" alt="spoon-icon">
                 <h2 class="h2"> 나의 맛집(</h2>
-                    <h2 class="h2" th:text="${myPage.matzipInfo.count}"></h2>
+                <h2 class="h2" th:text="${myPage.matzipInfo.count}"></h2>
                 <h2 class="h2">곳)</h2>
-                <button class="view-all-button">전체보기 ></button>
+                <button class="view-all-button"
+                        onclick="location.href='/members/matzip-list/${memberId}'">전체보기 ></button>
             </span>
-            <div class="card-container" id="mymatzip">
-                <!-- 카드 예시 -->
-                <div class="card">
-<!--                    <img src="DB 경로" alt="음식 이미지">-->
-                    <div class="card-info">
-                        <p>가게이름 노토산스 미디엄 15</p>
-                    </div>
-<!--                    <button class="heart-button"></button>-->
+            <div class="card-container" id="my-matzip-cards">
+<!--                <img src="${myPage.reviewPreview.matzipImage || '/IMG/defaultStoreImgSMALL.png'}" class="matzipImage" alt="Review Image">-->
+<!--                <div class="matzipName">${myPage.matzipPreview.matzipName}</div>-->
+                <div th:each="matzip : ${myPage.matzipInfo.preview}" class="card">
+                    <img th:src="${matzip.matzipImage}" class="matzipImage" alt="Matzip Image">
+                    <div class="matzipName" th:text="${matzip.matzipName}">가게 이름</div>
                 </div>
             </div>
         </div>
@@ -123,38 +125,32 @@
         <!-- 나의 리뷰 -->
         <div class="section">
             <span class="section-header">
-            <img  class="icon" src="/IMG/review-icon.png" alt="review-icon">
+            <img class="icon" src="/IMG/review-icon.png" alt="review-icon">
                 <h2 class="h2"> 나의 리뷰(</h2>
                     <h2 class="h2" th:text="${myPage.reviewInfo.count}"></h2>
                 <h2 class="h2">개)</h2>
-                <button class="view-all-button">전체보기 ></button>
+                <button class="view-all-button"
+                        onclick="location.href='/members/review-list/${memberId}'">전체보기 ></button>
             </span>
-            <div class="review-container" id="myreviews">
-                <div class="review-card review-list card:nth-child(n+4)">
-<!--                    <img src="DB 경로" alt="음식 이미지">-->
-                    <div class="review-content">
-                        <p>★★★★☆ 평점 4점</p>
-                        <p>가게이름 노토산스 볼드 10</p>
-                        <p>가게에 대한 리뷰입니다. 노토산스 미디엄 10</p>
-                    </div>
+            <div class="review-container" id="review-container">
+<!--                <img src="${myPage.reviewPreview.matzipImage || '/IMG/defaultStoreImgSMALL.png'}" class="matzipImage" alt="Review Image">-->
+<!--                    <div class="starRating"></div>-->
+<!--                    <div class="matzipName">${myPage.reviewPreview.matzipName}</div>-->
+<!--                    <div class="reviewContent">${myPage.reviewPreview.reviewContent}</div>-->
+                <div th:each="review : ${myPage.reviewInfo.preview}" class="review-card">
+                    <img th:src="${review.matzipImage}" class="matzipImage" alt="Review Image">
+                    <div class="matzipName" th:text="${review.matzipName}">가게 이름</div>
+                    <div class="reviewContent" th:text="${review.reviewContent}">리뷰 내용</div>
                 </div>
             </div>
         </div>
     </div>
 
 
-
-
-
 </div>
 
 
-<!-- 성공/오류 메시지 -->
-<div th:if="${successMessage}" style="color: green;" th:text="${successMessage}"></div>
-<div th:if="${errorMessage}" style="color: red;" th:text="${errorMessage}"></div>
-
-
-    <script th:src="@{/JS/member/myPage.js}" type="text/javascript"></script>
+<script th:src="@{/JS/member/myPage.js}" type="text/javascript"></script>
 </body>
 </html>
 
