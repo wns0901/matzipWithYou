@@ -9,24 +9,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// myPage.js
 document.addEventListener('DOMContentLoaded', function() {
-    // 현재 페이지가 마이페이지일 때만 친구 버튼 이벤트 리스너 추가
-    if (window.location.pathname.includes('/myPage')) {
-        const friendButton = document.querySelector('span.info-label.friends');
+    if (window.location.pathname.match(/^\/members\/\d+$/)) {
+        const friendButton = document.querySelector('.info-button .info-label.friends');
         if (!friendButton) {
             console.error('친구 버튼을 찾을 수 없습니다');
             return;
         }
 
         friendButton.addEventListener('click', function() {
-            const memberId = this.dataset.memberId;
+            console.log(1)
+            const memberId = this.getAttribute('data-member-id');
             if (!memberId) {
                 console.error('회원 ID를 찾을 수 없습니다');
                 return;
             }
 
-            // 친구 목록 페이지로 이동
+            // URL 이동
             window.location.href = `/members/${memberId}/friends`;
         });
     }
@@ -104,7 +103,3 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
-
-
-
-

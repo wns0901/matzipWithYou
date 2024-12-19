@@ -6,13 +6,12 @@
     <title>My Page</title>
     <link rel="stylesheet" th:href="@{/CSS/member/myPage.css}" type="text/css"/>
     <script th:inline="javascript">
-        console.log(1);
         console.log(/*[[${myPage}]]*/ '');
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@100..900&display=swap"
-            rel="stylesheet"/>
+        // <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        // <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+        // <link
+        //     href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@100..900&display=swap"
+        //     rel="stylesheet"/>
     </script>
 </head>
 <body>
@@ -65,6 +64,7 @@
             <!-- 친구 수 & 포인트 버튼 -->
             <div class="info-buttons">
                 <div class="info-button">
+                    <!-- memberId를 올바르게 전달 -->
                     <span class="info-label friends" th:data-member-id="${memberId}">친구 ></span>
                     <span class="info-value" th:text="${myPage.friendCnt}"></span>
                 </div>
