@@ -109,12 +109,13 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
         sqlResult.forEach(data -> {
             data.getMatzipList().forEach(matzip -> {
-                if(matzip.getVisibility().equals("HIDDEN")) chachRandomLatLng(matzip);
+                if (matzip.getVisibility().equals("HIDDEN")) chachRandomLatLng(matzip);
                 int index = totalMatzipList.indexOf(matzip);
                 if (index == -1) {
                     totalMatzipList.add(new TotalMatzipListDataDTO(matzip));
                 } else {
                     totalMatzipList.get(index).getMemberIds().add(matzip.getMemberId());
+                    totalMatzipList.get(index).getMyMatzipIds().add(matzip.getMyMatzipId());
                 }
 
                 WishList eq = new WishList(id, matzip.getMatzipId(), null);

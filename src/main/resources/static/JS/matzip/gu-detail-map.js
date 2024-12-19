@@ -79,6 +79,10 @@ async function displayPlaces(places, isFriendList = false) {
                     overlay.setMap(null);
                     item.classList.remove('selected')
                 });
+            } else {
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    openHint
+                })
             }
 
             item.onmouseover = function () {
@@ -92,12 +96,16 @@ async function displayPlaces(places, isFriendList = false) {
             };
         })(marker, place.name, placePosition);
 
-        fragment.appendChild(item);
+        marker.dataset.myMatzipId = place.fragment.appendChild(item);
     }
 
     matzipWrap.appendChild(fragment);
 
     if (!isFriendList) map.setBounds(bounds);
+}
+
+function clickHiddenEvent(e) {
+
 }
 
 function addMakers(position) {
