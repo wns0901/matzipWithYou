@@ -11,9 +11,8 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,10 +20,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +31,7 @@ public class MemberServiceImpl implements MemberService {
 
     private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
     private static final int REFERRAL_INTIMACY = 10;
-   private final EmailAuthService emailAuthService;
+    private final EmailAuthService emailAuthService;
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
     private final FriendRepository friendRepository;
@@ -44,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
     private final RedisTemplate redisTemplate;
-    
+
 
     public MemberServiceImpl(EmailAuthService emailAuthService, SqlSession sqlSession, PasswordEncoder passwordEncoder, JavaMailSender mailSender, SpringTemplateEngine templateEngine, @Qualifier("redisTemplate") RedisTemplate redisTemplate) {
         this.emailAuthService = emailAuthService;
@@ -97,9 +92,10 @@ public class MemberServiceImpl implements MemberService {
 
     // email auth start
     private static int number;
+
     @Override
     public void createNumber() {
-        number = (int)(Math.random() * 90000)+100000;
+        number = (int) (Math.random() * 90000) + 100000;
 
     }
 
@@ -108,8 +104,7 @@ public class MemberServiceImpl implements MemberService {
         createNumber(); // 숫자 생성
 
         //인증번호 저장
-        emailAuthService.storeAuthCode(email.getTo(),String.valueOf(number));
-
+        emailAuthService.storeAuthCode(email.getTo(), String.valueOf(number));
 
 
         MimeMessage message = mailSender.createMimeMessage();
@@ -136,8 +131,12 @@ public class MemberServiceImpl implements MemberService {
 
         return message;
 
-}
+    }
 
+    @Override
+    public ResponseEntity<Map<String, List<String>>> findNicknameBymemberIds(List<Long> memberIds) {
+        return ResponseEntity.ok(Map.of("nickname", memberRepository.findNicknameByMemberIds(memberIds)));
+    }
 
 
     private void handleReferralProcess(Member member, Member referrer) {
@@ -193,7 +192,6 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findById(id);
     }
 
-
     // 인증 유효성
     @Override
     public boolean verifyAuthorizationCode(String code, String email) {
@@ -241,8 +239,8 @@ public class MemberServiceImpl implements MemberService {
         String encodedPassword = passwordEncoder.encode(newPassword);
         Map<String, String> updatelist = new HashMap<String, String>();
         updatelist.put(String.valueOf(id), "id");
-        updatelist.put("newPassword", encodedPassword );
-       int result = memberRepository.updatePassword(id, encodedPassword);
+        updatelist.put("newPassword", encodedPassword);
+        int result = memberRepository.updatePassword(id, encodedPassword);
 
 
         return false;
@@ -253,7 +251,6 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByEmail(email);
         return member != null;
     }
-
 
 
     @Override

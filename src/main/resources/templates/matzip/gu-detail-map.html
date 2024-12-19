@@ -1,13 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" th:src="${@environment.getProperty('app.kakaoMap.url')}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/matzip/gu-detail-map.css}">
     <script th:inline="javascript">
-        console.log([[${data}]])
+        const data = /*[[${data}]]*/ {},
+            hiddenImgUrl = /*[[@{/IMG/matzip/hidden_matzip.png}]]*/ 'hiddenImg',
+            emptyHeartImgUrl = /*[[@{/IMG/matzip/empty_heart.png}]]*/ 'emptyHeart',
+            fillHeartImgUrl = /*[[@{/IMG/matzip/fill_heart.png}]]*/ 'fillHeart',
+            profileImgUrl = /*[[@{/IMG/}]]*/ 'url'
+        ;
     </script>
+
 </head>
 <body>
+<div id="map"></div>
+<div id="menu_wrap">
+    <div id="friend_list">
+        <button id="left" class="friend_btn">
+            <img class="friend_btn_img" th:src="@{/IMG/matzip/friend-btn-left.png}">
+        </button>
+        <div id="friend_card_list"></div>
+        <button id="right" class="friend_btn">
+            <img class="friend_btn_img" th:src="@{/IMG/matzip/friend-btn-right.png}">
+        </button>
+    </div>
+    <div class="matzip_container">
+        <div id="matzip_wrap">
+        </div>
+        <button id="add_btn"> + 맛집 리스트 추가하기</button>
+    </div>
+</div>
+<div id="detail-info" class="hidden">
+    <img id="matzip_detail_img" src="#">
 
+    <div id="content_container">
+        <div id="text_box">
+            <span id="matzip_name">가게 이름</span>
+            <span id="kind_name">종류</span>
+            <br>
+            <span id="matzip_address">주소</span>
+        </div>
+
+        <div id="star_rating_list"></div>
+
+        <div id="tags_wrap"></div>
+
+        <button id="close_detail_btn" class="close_btn"></button>
+        <button id="write_review_btn"></button>
+    </div>
+
+</div>
+
+<div id="hidden_detail" class="hidden">
+    <p id="hidden_detail_text1"></p>
+    <p id="hidden_detail_text2"></p>
+    <button id="close_hidden_detail_btn" class="close_btn"></button>
+</div>
+
+<div id="search_window" class="hidden">
+    <input type="text" placeholder="맛집을 검색하세요" id="keyword">
+    <button id="search_btn"></button>
+    <div id="result_list"></div>
+    <button id="search_select_btn">선택</button>
+    <button id="close_search_btn" class="close_btn"></button>
+</div>
 </body>
+<script type="text/javascript" th:src="@{/JS/matzip/gu-detail-map.js}" th:inline="javascript"></script>
 </html>

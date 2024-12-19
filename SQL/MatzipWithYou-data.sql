@@ -60,9 +60,12 @@ ALTER TABLE tag
     AUTO_INCREMENT = 1;
 
 DELETE
-FROM friend;
+    FROM friend;
 ALTER TABLE friend
     AUTO_INCREMENT = 1;
+
+DELETE FROM my_matzip;
+ALTER TABLE my_matzip AUTO_INCREMENT = 1;
 
 
 -- authority 테이블 더미 데이터
@@ -78,7 +81,10 @@ VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5c
        ('admin1_admin1', '$2a$10$csFKAeIbLoeMc.CdW0/AN.ydPVEZstCSLUf6L2st8ExYO4.JakF8.', 'admin@email.com', 500,
         'admin_kim', '장준영'),
        ('member_user3', '$2a$10$Qk.A1REypdS/s1YmvjmiIO2ES/6AfB45asIW7kM/7d3yLbOKp1zS2', 'member3@email.com', 80,
-        'gourmet3', '현지윤');
+        'gourmet3', '현지윤'),
+       ('member_user4', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member4@email.com', 300,
+        'test1', '테스트')
+;
 
 -- member_authorities 테이블 더미 데이터
 INSERT INTO member_authorities (authorities_id, member_id)
@@ -94,7 +100,8 @@ INSERT INTO profile_img (member_id, sourcename, filename)
 VALUES (1, 'member1_profile.jpg', 'm1_123456789.jpg'),
        (2, 'member2_avatar.png', 'm2_987654321.png'),
        (3, 'admin_photo.jpg', 'ad_456789123.jpg'),
-       (4, 'member3_pic.jpg', 'm3_147258369.jpg');
+       (4, 'member3_pic.jpg', 'm3_147258369.jpg')
+;
 
 -- food_kind 테이블 샘플 데이터
 INSERT INTO food_kind (kindname)
@@ -311,7 +318,9 @@ VALUES (1, 3, 'PRIVATE', '나만 알고 싶은 비공개 맛집', 5),
        (4, 3, 'PUBLIC', '좋아요', 1),
        (3, 2, 'PRIVATE', '개인맛집', 5),
        (1, 4, 'HIDDEN', '히든맛집', 4),
-       (6, 1, 'PUBLIC', '공개맛집', 5),
+       (1, 1, 'HIDDEN', '테스트', 5),
+       (6, 3, 'PUBLIC', '테스트', 5),
+       (3, 5, 'PUBLIC', '리뷰 테스트', 4),
        (7, 4, 'HIDDEN', '현지윤의 비밀맛집', 5),
        (7, 1, 'PUBLIC', '양푼이 김치찌개 맛있어요!', 4),
        (8, 2, 'PRIVATE', '푸지미곱창 강추합니다', 5),
@@ -338,7 +347,6 @@ VALUES (1, 3, 'PRIVATE', '나만 알고 싶은 비공개 맛집', 5),
        (48, 3, 'HIDDEN', '일식 스시 맛집', 5)
 ;
 
-
 -- friend 테이블 샘플 데이터
 INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept)
 VALUES (1, 2, 200, TRUE),
@@ -346,7 +354,9 @@ VALUES (1, 2, 200, TRUE),
        (1, 4, 0, FALSE),
        (2, 4, 500, TRUE),
        (2, 3, 300, TRUE),
-       (3, 4, 0, FALSE);
+       (3, 4, 0, FALSE),
+       (2, 5, 10, TRUE)
+;
 
 
 -- tag 데이터 생성
@@ -521,9 +531,12 @@ values (1, 1),
        (3, 7),
        (4, 7),
 
-       (1, 8),
        (2, 8),
        (3, 8),
+
+       (1, 11),
+       (2, 11),
+       (3, 11),
 
        (4, 9),
        (8, 9),
@@ -531,7 +544,6 @@ values (1, 1),
        (9, 10),
        (3, 10),
 
-       (2, 11),
        (15, 11),
 
        (7, 12),

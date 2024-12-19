@@ -13,7 +13,7 @@
              , nickname   "nickname"
              , name       "name"
              , provider   "provider"
-             , providerId "providerId"
+             , providerid "providerId"
         FROM member
         WHERE 1 = 1
     </sql>
@@ -87,14 +87,14 @@
         WHERE id = #{id}
     </update>
 
-    <!--비밀번호 재설정-->
-    <!--이메일 찾기-->
+<!--비밀번호 재설정-->
+<!--이메일 찾기-->
     <select id="selectEmail">
         select id, email
         from member
         where email = #{email}
     </select>
-    <!--비밀번호 업데이트하기-->
+<!--비밀번호 업데이트하기-->
     <update id="updatePassword">
         update member
         set password = #{newPassword}
@@ -113,4 +113,12 @@
         WHERE nickname = #{referrerNickname}
     </select>
 
+    <select id="findNicknameByMemberIds">
+        SELECT nickname
+        FROM member
+        WHERE id IN
+        <foreach collection="memberIds" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
 </mapper>
