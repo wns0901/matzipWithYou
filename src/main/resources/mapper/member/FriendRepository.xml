@@ -84,15 +84,10 @@
                COUNT(CASE WHEN mm.visibility = 'PUBLIC' THEN 1 END) as public_count,
                COUNT(CASE WHEN mm.visibility = 'HIDDEN' THEN 1 END) as hidden_count
         FROM friend f
-                 JOIN member m ON (
-            CASE
-                WHEN f.sender_id = #{id} THEN f.receiver_id = m.id
-                WHEN f.receiver_id = #{id} THEN f.sender_id = m.id
-                END
-            )
+                 JOIN member m ON f.sender_id = m.id  -- 요청을 보낸 사람의 정보를 가져옴
                  LEFT JOIN profile_img p ON m.id = p.member_id
                  LEFT JOIN my_matzip mm ON m.id = mm.member_id
-        WHERE (f.sender_id = #{id} OR f.receiver_id = #{id})
+        WHERE f.receiver_id = #{id}  -- 내가 받은 요청만
           AND f.is_accept = false
         GROUP BY f.sender_id,
                  f.receiver_id,
