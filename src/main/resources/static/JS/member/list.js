@@ -1,9 +1,40 @@
-// list.js 수정
-// 먼저 함수들을 정의
+document.addEventListener('DOMContentLoaded', function() {
+    const memberId = getMemberIdFromUrl();
+    if (memberId) {
+        loadFriendsList(memberId);
+    }
+});
+
+function getMemberIdFromUrl() {
+    const pathParts = window.location.pathname.split('/');
+    const memberIndex = pathParts.indexOf('members');
+    return memberIndex !== -1 ? pathParts[memberIndex + 1] : null;
+}
+
+function loadFriendsList(memberId) {
+    fetch(`/members/${memberId}/friends/list`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ memberId: memberId })
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('네트워크 응답이 올바르지 않습니다');
+            return response.json();
+        })
+        .then(friends => {
+            updateFriendList(friends);
+        })
+        .catch(error => {
+            console.error('친구 목록 로딩 오류:', error);
+        });
+}
+
 function updateFriendList(friends) {
     const container = document.querySelector('#friends-container');
     if (!container) {
-        console.error('Friends container not found');
+        console.error('친구 목록 컨테이너를 찾을 수 없습니다');
         return;
     }
 
@@ -17,6 +48,39 @@ function updateFriendList(friends) {
         return;
     }
 
+    // 친밀도 기준으로 내림차순 정렬
+    friends.sort((a, b) => b.intimacy - a.intimacy);
+
+    // 상위 3명을 위한 섹션 추가
+    const top3Container = document.createElement('div');
+    top3Container.classList.add('top-3-friends');
+    top3Container.innerHTML = '<h3>친밀도 TOP 3</h3>';
+
+    // 상위 3명 표시
+    friends.slice(0, 3).forEach((friend, index) => {
+        const topFriendItem = document.createElement('div');
+        topFriendItem.classList.add('top-friend-item');
+
+        topFriendItem.innerHTML = `
+            <div class="rank">${index + 1}위</div>
+            <div class="friend-content">
+                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
+                     alt="${friend.nickname}님의 프로필"
+                     class="friend-profile-small"
+                     onerror="this.src='/IMG/defaultProfileImg.png'">
+                <span class="friend-nickname">${friend.nickname}</span>
+                <span class="friend-intimacy">(친밀도: ${friend.intimacy})</span>
+            </div>
+        `;
+        top3Container.appendChild(topFriendItem);
+    });
+
+    // 전체 친구 목록 섹션
+    const fullListContainer = document.createElement('div');
+    fullListContainer.classList.add('full-friend-list');
+    fullListContainer.innerHTML = '<h3>전체 친구 목록</h3>';
+
+    // 전체 친구 목록 표시
     friends.forEach(friend => {
         const friendItem = document.createElement('div');
         friendItem.classList.add('friend-item');
@@ -26,45 +90,17 @@ function updateFriendList(friends) {
                  alt="Profile"
                  class="friend-profile"
                  onerror="this.src='/IMG/defaultProfileImg.png'">
-            <p>Nickname: ${friend.nickname}</p>
-            <p>Public Count: ${friend.publicCount}</p>
-            <p>Hidden Count: ${friend.hiddenCount}</p>
-            <p>Intimacy: ${friend.intimacy}</p>
+            <p>닉네임: ${friend.nickname}</p>
+            <p>공개 맛집 수: ${friend.publicCount}</p>
+            <p>비공개 맛집 수: ${friend.hiddenCount}</p>
+            <p>친밀도: ${friend.intimacy}</p>
             <button class="btn btn-delete" data-friend-id="${friend.friendId}">삭제</button>
         `;
 
-        container.appendChild(friendItem);
+        fullListContainer.appendChild(friendItem);
     });
+
+    // 컨테이너에 추가
+    container.appendChild(top3Container);
+    container.appendChild(fullListContainer);
 }
-
-function getCurrentMemberId() {
-    const path = window.location.pathname;
-    const matches = path.match(/\/members\/(\d+)/);
-    return matches ? matches[1] : null;
-}
-
-// 그 다음 이벤트 리스너에서 함수 사용
-document.addEventListener('DOMContentLoaded', async function() {
-    const memberId = getCurrentMemberId();
-    if (!memberId) return;
-
-    try {
-        const response = await fetch(`/members/${memberId}/friends/list`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ memberId: memberId })
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const friends = await response.json();
-        updateFriendList(friends);
-    } catch (error) {
-        console.error('Error fetching friend list:', error);
-    }
-});

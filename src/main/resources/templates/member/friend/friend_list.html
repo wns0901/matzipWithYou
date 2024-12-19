@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +14,13 @@
     <div id="friends-container"></div>
 </div>
 
+<script th:inline="javascript">
+    // Get memberId from Thymeleaf
+    const memberId = /*[[${memberId}]]*/ null;
+</script>
+
 <script th:src="@{/JS/member/list.js}"></script>
 
-<script th:src="@{/JS/member/myPage.js}"></script>
+<!--<script th:src="@{/JS/member/mypage.js}"></script>-->
 </body>
 </html>

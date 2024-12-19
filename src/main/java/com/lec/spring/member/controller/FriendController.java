@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/members/{memberId}/friends")
@@ -76,10 +77,12 @@ public class FriendController {
         return "member/friend/friend_list";
     }
 
-    // 친구 목록 데이터를 반환하는 엔드포인트
     @PostMapping("/list")
     @ResponseBody
-    public ResponseEntity<List<FriendDetailsDTO>> getFriendsList(@PathVariable Long memberId) {
+    public ResponseEntity<List<FriendDetailsDTO>> getFriendsList(
+            @PathVariable Long memberId,
+            @RequestBody Map<String, Long> request  // JSON 요청 바디를 받기 위해 추가
+    ) {
         try {
             List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);
             return ResponseEntity.ok(friends);
