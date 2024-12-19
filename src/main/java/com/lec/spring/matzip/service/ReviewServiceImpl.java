@@ -1,8 +1,8 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.*;
-import com.lec.spring.matzip.domain.DTO.MatzipDataDTO;
 import com.lec.spring.matzip.domain.DTO.ReviewDTO;
+import com.lec.spring.matzip.domain.DTO.ReviewSubmitModalDTO;
 import com.lec.spring.matzip.domain.DTO.ReviewTagDTO;
 import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MatzipRepository;
@@ -12,6 +12,8 @@ import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
+import com.lec.spring.member.service.FriendService;
+import com.lec.spring.member.service.FriendServiceImpl;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import org.springframework.ui.Model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -240,6 +243,48 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         return newIntimacy;
+    }
+
+    @Override
+    public ReviewSubmitModalDTO reviewSubmitModal(ReviewDTO reviewDTO) {
+        // 히든 맛집으로 등록한 친구들 조회
+        List<Member> hiddenMatzipMembers = hiddenMatzipMemberIds(reviewDTO);
+
+        // 포인트 지급 처리
+        int rewardPoints = rewardReviewPoint(reviewDTO, 100, 10);
+
+        // 친밀도 증가 처리
+        int intimacyIncrease = rewardReviewIntimacy(reviewDTO, 100, 10);
+
+        // 친구 상세 정보 조회
+        List<FriendDetailsDTO> friendDetails = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getMemberId());
+
+        // 히든맛집 친구들의 상세 정보 필터링
+        List<FriendDetailsDTO> hiddenFriendProfiles = friendDetails.stream()
+                .filter(friend -> hiddenMatzipMembers.stream()
+                        .anyMatch(member -> member.getId().equals(friend.getFriendId())))
+                .map(friend -> FriendDetailsDTO.builder()
+                        .friendId(friend.getFriendId())
+                        .profileImg(friend.getProfileImg())
+                        .nickname(friend.getNickname())
+                        .username(friend.getUsername())
+                        .intimacy(friend.getIntimacy())
+                        .publicCount(friend.getPublicCount())
+                        .hiddenCount(friend.getHiddenCount())
+                        .build())
+                .collect(Collectors.toList());
+
+        FriendDetailsDTO topFriend = hiddenFriendProfiles.stream()
+                .max(Comparator.comparingInt(FriendDetailsDTO::getIntimacy))
+                .orElse(null);
+
+        return ReviewSubmitModalDTO.builder()
+                .hiddenFriends(hiddenFriendProfiles)
+                .topFriendName(topFriend != null ? topFriend.getNickname() : null)
+                .friendCount(hiddenFriendProfiles.isEmpty() ? 0 : hiddenFriendProfiles.size() - 1)
+                .intimacyIncrease(intimacyIncrease)
+                .rewardPoints(rewardPoints)
+                .build();
     }
 
 

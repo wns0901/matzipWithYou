@@ -1,13 +1,11 @@
 package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.*;
-import com.lec.spring.matzip.domain.DTO.MatzipDataDTO;
 import com.lec.spring.matzip.domain.DTO.ReviewDTO;
+import com.lec.spring.matzip.domain.DTO.ReviewSubmitModalDTO;
 import com.lec.spring.matzip.domain.DTO.ReviewTagDTO;
 import com.lec.spring.member.domain.Member;
-import org.springframework.data.repository.query.Param;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -46,6 +44,8 @@ public interface ReviewService {
     int rewardReviewPoint(ReviewDTO reviewDTO, int rewardHiddenPoint, int rewardPoint);
 
     int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy ,int rewardIntimacy);
+
+    ReviewSubmitModalDTO reviewSubmitModal(ReviewDTO reviewDTO);
 
     int deleteReview(Long id);
 }

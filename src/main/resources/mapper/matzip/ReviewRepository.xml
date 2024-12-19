@@ -8,7 +8,7 @@
     <select id="findAll" resultMap="ReviewResultMap">
         SELECT r.*, m.id as matzip_id, m.name as matzip_name, m.address as matzip_address
         FROM my_review r
-                 INNER JOIN matzip m ON r.matzip_id = m.id
+        INNER JOIN matzip m ON r.matzip_id = m.id
         WHERE r.member_id = #{memberId}
         ORDER BY r.regdate DESC
     </select>
@@ -32,7 +32,7 @@
         INSERT INTO my_review
             (matzip_id, member_id, content, regdate, star_rating)
         VALUES
-            (#{review.matzipId}, #{review.memberId}, #{review.content}, #{review.regdate}, #{review.starRating})
+            (#{matzipId}, #{memberId}, #{content}, #{regdate}, #{starRating})
     </insert>
 
     <insert id="saveReviewTags" parameterType="list">

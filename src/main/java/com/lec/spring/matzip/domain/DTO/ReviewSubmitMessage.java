@@ -9,5 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ReviewSubmitMessageDTO {
+public class ReviewSubmitMessage {
+    private String unlockMessage;
+    private String intimacyMessage;
+    private String pointMessage;
 }

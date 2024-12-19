@@ -112,38 +112,118 @@ async function loadTags() {
     }
 }
 
-function setupFormSubmission() {
+async function setupFormSubmission() {
     const form = document.querySelector('.review-write-form');
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();  // 기본 제출 동작 중지
+
+        // 필수 입력 검증
         const foodKind = document.querySelector('input[name="foodKind"]').value;
         if(!foodKind) {
             alert('음식 종류를 선택해주세요.');
-            e.preventDefault();
             return;
         }
 
         const selectedTags = document.querySelectorAll('.tag-btn.selected');
         if(selectedTags.length < 3) {
             alert('최소 3개 이상의 태그를 선택해주세요.');
-            e.preventDefault();
             return;
         }
 
         if(selectedTags.length > 5) {
             alert('최대 5개의 태그를 선택할 수 있습니다.');
-            e.preventDefault();
             return;
         }
 
         const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
-        const visibilityButton = document.querySelector('.visibility-btn input.active');
 
-        if (isRegistered && !visibilityButton) {
-            alert('맛집 공개 설정을 선택해주세요.');
-            e.preventDefault();
-            return;
+        if (isRegistered) {
+            const visibilitySelected = document.querySelector('.visibility-btn input.active');
+            if (!visibilitySelected) {
+                alert('맛집 공개 설정을 선택해주세요.');
+                return;
+            }
+        }
+        try {
+            // 폼 데이터 전송
+            const formData = new FormData(form);
+            const url = isRegistered ? '/matzip/myMatzips' : '/matzip/reviews';
+
+            const response = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) throw new Error('리뷰 저장 실패');
+
+            const completionData = await response.json();
+            showCompletionModal(completionData);
+
+        } catch (error) {
+            console.error('Error:', error);
+            alert('리뷰 저장 중 오류가 발생했습니다.');
         }
     });
+}
+
+function showCompletionModal(data) {
+    const modal = document.getElementById('completionModal');
+    const messageContainer = document.getElementById('messageContainer');
+    const friendsContainer = document.getElementById('friendProfiles');
+
+    let messages = [];
+
+    if (data.topFriendName && data.friendCount >= 0) {
+        const unlockMessage = `${data.topFriendName}${data.friendCount > 0 ? `외 ${data.friendCount}명` : ''}의 
+            hidden 맛집을 unlock 했습니다!`;
+        messages.push(
+            `<p class="unlock-message">
+                <i class="fas fa-unlock"></i> ${unlockMessage}
+            </p>`
+        );
+    }
+
+    if (data.intimacyIncrease > 0) {
+        const intimacyMessage = `${data.topFriendName}${data.friendCount > 0 ? `외 ${data.friendCount}명` : ''}의 
+            친밀도가 +${data.intimacyIncrease} 되었습니다!`;
+        messages.push(
+            `<p class="intimacy-message">
+                <i class="fas fa-heart"></i> ${intimacyMessage}
+            </p>`
+        );
+    }
+
+    if (data.rewardPoints > 0) {
+        messages.push(
+            `<p class="point-message">
+                <i class="fas fa-plus-circle"></i> +${data.rewardPoints}pt
+            </p>`
+        );
+    }
+
+    messageContainer.innerHTML = `
+        <div class="message-box">
+            ${messages.join('')}
+        </div>
+    `;
+
+    friendsContainer.innerHTML = data.hiddenFriends
+        .map(friend => `
+            <div class="friend-profile">
+                <img src="${friend.profileImg || '/images/default-profile.png'}" 
+                     alt="${friend.nickname}">
+                <p class="nickname">${friend.nickname}</p>
+                <p class="intimacy">친밀도: ${friend.intimacy}</p>
+            </div>
+        `)
+        .join('');
+
+    modal.classList.remove('hidden');
+
+    document.getElementById('modalCloseBtn').onclick = () => {
+        modal.classList.add('hidden');
+        window.location.href = '/matzip/reviewsList/{memberId}';  // 리뷰 목록 페이지로 이동
+    };
 }
 
 function setupRegistrationButtons() {
