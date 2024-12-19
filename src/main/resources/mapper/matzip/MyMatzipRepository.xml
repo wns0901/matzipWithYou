@@ -6,7 +6,7 @@
 <mapper namespace="com.lec.spring.matzip.repository.MyMatzipRepository">
 
     <resultMap id="mapMatzipDTO" type="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
-        <result column="id" property="id" />
+        <result column="id" property="id"/>
         <result column="imgUrl" property="imgUrl"/>
         <result column="name" property="name"/>
         <result column="kindName" property="kindName"/>
@@ -22,72 +22,76 @@
 
     <!--1. 기본 select문에 이미지, 가게이름 맛집 테이블에서 가져오기
     검색하는 BASE SQL문 잘 만들고  나머지 메소드문은 orderby로 정렬시키면 된다. -->
-    <select id = "findAll" resultType="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
-        SELECT
-            mymz.id AS id,
-            mymz.member_id AS memberId,
-            mymz.matzip_id AS matzipId,
-            mymz.regdate AS regdate,
-            mymz.visibility AS visibility,
-            mymz.content AS content,
-            mymz.star_rating AS starRating,
-            mz.name AS name,
-            mz.img_url AS imgUrl,
-            k.kindname AS kindName,
-            json_arrayagg(json_object('id', t.id, 'tagName', t.tagname)) AS tagList
+    <select id="findAll" resultType="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
+        SELECT mymz.id                                                      AS id,
+               mymz.member_id                                               AS memberid,
+               mymz.matzip_id                                               AS matzipid,
+               mymz.regdate                                                 AS regdate,
+               mymz.visibility                                              AS visibility,
+               mymz.content                                                 AS content,
+               mymz.star_rating                                             AS starrating,
+               mz.name                                                      AS name,
+               mz.img_url                                                   AS imgurl,
+               k.kindname                                                   AS kindname,
+               JSON_ARRAYAGG(JSON_OBJECT('id', t.id, 'tagName', t.tagname)) AS taglist
         FROM my_matzip mymz
                  JOIN matzip mz ON mymz.matzip_id = mz.id
                  JOIN food_kind k ON mz.kind_id = k.id
                  JOIN matzip_tag mt ON mymz.id = mt.my_matzip_id
                  JOIN tag t ON mt.tag_id = t.id
         WHERE mymz.member_id = #{id}
-        GROUP BY 1,2,3
+        GROUP BY 1, 2, 3
         ORDER BY 4 DESC;
     </select>
 
     <resultMap id="seoulDBDataDTO" type="com.lec.spring.matzip.domain.DTO.SeoulMapSqlDataDTO">
-        <result column="friendId" property="firendId"/>
+        <result column="friendId" property="friendId"/>
         <result column="nickname" property="nickname"/>
-        <result column="profileImg" property="profileImg" />
-        <result column="publicGu" property="publicGu" typeHandler="com.lec.spring.config.typeHandler.StringListHandler"/>
-        <result column="hiddenGu" property="hiddenGu" typeHandler="com.lec.spring.config.typeHandler.StringListHandler"/>
+        <result column="profileImg" property="profileImg"/>
+        <result column="publicGu" property="publicGu"
+                typeHandler="com.lec.spring.config.typeHandler.StringListHandler"/>
+        <result column="hiddenGu" property="hiddenGu"
+                typeHandler="com.lec.spring.config.typeHandler.StringListHandler"/>
     </resultMap>
 
     <select id="findSeoulMapData" resultMap="seoulDBDataDTO">
-        SELECT
-            f.memberId AS friendId,
-            m.nickname AS nickname,
-            p.filename AS profileImg,
-            JSON_ARRAYAGG(
-                    IF(mmz.visibility = 'PUBLIC', mz.gu, NULL)
-            ) AS publicGu,
-            JSON_ARRAYAGG(
-                    IF(mmz.visibility = 'HIDDEN', mz.gu, NULL)
-            ) AS hiddenGu
-        FROM (
-                 SELECT IF(receiver_id = #{id}, sender_id, receiver_id) AS memberId
-                 FROM friend
-                 WHERE (receiver_id = #{id} OR sender_id = #{id}) AND is_accept = 1
-             ) f
-                 JOIN my_matzip mmz ON f.memberId = mmz.member_id AND mmz.visibility != 'PRIVATE'
-                 JOIN member m ON f.memberId = m.id
-                 JOIN profile_img p ON f.memberId = p.member_id
+        SELECT f.memberid AS friendid,
+               m.nickname AS nickname,
+               p.filename AS profileimg,
+               JSON_ARRAYAGG(
+                       IF(mmz.visibility = 'PUBLIC', mz.gu, NULL)
+               )          AS publicgu,
+               JSON_ARRAYAGG(
+                       IF(mmz.visibility = 'HIDDEN', mz.gu, NULL)
+               )          AS hiddengu
+        FROM (SELECT IF(receiver_id = #{id}, sender_id, receiver_id) AS memberid
+              FROM friend
+              WHERE (receiver_id = #{id} OR sender_id = #{id})
+                AND is_accept = 1) f
+                 JOIN my_matzip mmz ON f.memberid = mmz.member_id AND mmz.visibility != 'PRIVATE'
+                 JOIN member m ON f.memberid = m.id
+                 JOIN profile_img p ON f.memberid = p.member_id
                  JOIN matzip mz ON mmz.matzip_id = mz.id
-        GROUP BY f.memberId, m.nickname, p.filename;
+        GROUP BY f.memberid, m.nickname, p.filename;
     </select>
 
-    <update id="updateMyMatzipVisibility" flushCache="true" parameterType="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
+    <update id="updateMyMatzipVisibility" flushCache="true"
+            parameterType="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
         UPDATE my_matzip
         SET visibility = #{visibility}
         WHERE id = #{id}
     </update>
 
     <delete id="deleteMyMatzip" flushCache="true" parameterType="com.lec.spring.matzip.domain.DTO.MyMatzipDTO">
-        DELETE FROM my_matzip WHERE id = #{id}
+        DELETE
+        FROM my_matzip
+        WHERE id = #{id}
     </delete>
 
     <select id="listCntByMemberId" resultType="int">
-        SELECT count(*) FROM my_matzip WHERE member_id = #{id}
+        SELECT COUNT(*)
+        FROM my_matzip
+        WHERE member_id = #{id}
     </select>
 
     <resultMap id="MatzipListDataDTO" type="com.lec.spring.matzip.domain.DTO.MatzipListDataDTO">
@@ -99,48 +103,49 @@
         <result column="regdate" property="regdate"/>
         <result column="visibility" property="visibility"/>
     </resultMap>
-    
+
     <resultMap id="FriendDataWithMatzipDTO" type="com.lec.spring.matzip.domain.DTO.FriendDataWithMatzipDTO">
         <result column="memberId" property="memberId"/>
-        <result column="nickname" property="nickname" />
-        <result column="profileImg" property="profileImg" />
-        <result column="matzipList" property="matzipList" typeHandler="com.lec.spring.config.typeHandler.MatzipListDataHandler" />
+        <result column="nickname" property="nickname"/>
+        <result column="profileImg" property="profileImg"/>
+        <result column="matzipList" property="matzipList"
+                typeHandler="com.lec.spring.config.typeHandler.MatzipListDataHandler"/>
     </resultMap>
 
     <select id="findGuMapData" resultMap="FriendDataWithMatzipDTO">
-        SELECT
-            m.id AS memberId,
-            m.nickname AS nickname,
-            p.filename AS profileImg,
-            json_arrayagg(
-                json_object(
-                    'memberId', m.id,
-                    'myMatzipId', mmz.id,
-                    'matzipId', mz.id,
-                    'visibility', mmz.visibility,
-                    'lat', mz.lat,
-                    'lng', mz.lng,
-                    'name', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.name ELSE NULL END,
-                    'address', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.address ELSE NULL END,
-                    'imgUrl', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.img_url ELSE NULL END,
-                    'regdate', CASE WHEN mmz.visibility = 'PUBLIC' THEN DATE_FORMAT(mmz.regdate, '%Y-%m-%d') ELSE NULL END
-
-                )
-            ) AS matzipList
-        FROM (
-                  SELECT IF(receiver_id = #{id}, sender_id, receiver_id) AS memberId
-                  FROM friend
-                  WHERE (receiver_id = #{id} OR sender_id = #{id}) AND is_accept = 1
-              ) f
-        JOIN member m ON m.id = f.memberId
-        JOIN profile_img p ON m.id = p.id
-        JOIN my_matzip mmz ON m.id = mmz.member_id AND mmz.visibility IN('PUBLIC', 'HIDDEN')
-        JOIN matzip mz ON mmz.matzip_id = mz.id AND mz.gu = #{gu}
-        GROUP BY m.id, m.nickname, p.filename, mmz.regdate
+        SELECT m.id       AS memberid,
+               m.nickname AS nickname,
+               p.filename AS profileimg,
+               JSON_ARRAYAGG(
+                       JSON_OBJECT(
+                               'memberId', m.id,
+                               'myMatzipId', mmz.id,
+                               'matzipId', mz.id,
+                               'visibility', mmz.visibility,
+                               'lat', mz.lat,
+                               'lng', mz.lng,
+                               'name', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.name ELSE NULL END,
+                               'address', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.address ELSE NULL END,
+                               'imgUrl', CASE WHEN mmz.visibility = 'PUBLIC' THEN mz.img_url ELSE NULL END,
+                               'regdate', CASE
+                                              WHEN mmz.visibility = 'PUBLIC' THEN DATE_FORMAT(mmz.regdate, '%Y-%m-%d')
+                                              ELSE NULL END
+                       )
+               )          AS matziplist
+        FROM (SELECT IF(receiver_id = #{id}, sender_id, receiver_id) AS memberid
+              FROM friend
+              WHERE (receiver_id = #{id} OR sender_id = #{id})
+                AND is_accept = 1) f
+                 JOIN member m ON m.id = f.memberid
+                 LEFT JOIN profile_img p ON m.id = p.id
+                 JOIN my_matzip mmz ON m.id = mmz.member_id AND mmz.visibility IN ('PUBLIC', 'HIDDEN')
+                 JOIN matzip mz ON mmz.matzip_id = mz.id AND mz.gu = #{gu}
+        GROUP BY m.id, m.nickname, mmz.regdate
         ORDER BY mmz.regdate
     </select>
 
-    <insert id="save" parameterType="com.lec.spring.matzip.domain.MyMatzip" flushCache="true" keyColumn="id" keyProperty="id">
+    <insert id="save" parameterType="com.lec.spring.matzip.domain.MyMatzip" flushCache="true" keyColumn="id"
+            keyProperty="id">
         INSERT INTO my_matzip (matzip_id, member_id, visibility, content, star_rating)
         VALUES (#{matzipId}, #{memberId}, #{visibility}, #{content}, #{starRating})
     </insert>

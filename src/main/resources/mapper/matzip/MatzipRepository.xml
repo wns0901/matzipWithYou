@@ -4,29 +4,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.lec.spring.matzip.repository.MatzipRepository">
-    <insert id="save" flushCache="true" parameterType="com.lec.spring.matzip.domain.Matzip" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO matzip (kind_id, address, lat, lng, img_url, gu, kakao_map_url, name)
-        VALUES (#{kindId}, #{address}, #{lat}, #{lng}, #{imgUrl}, #{gu}, #{kakaoMapUrl}, #{name})
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.matzip.domain.Matzip" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id">
+        INSERT INTO matzip (address, lat, lng, img_url, gu, kakao_map_url, name)
+        VALUES (#{address}, #{lat}, #{lng}, #{imgUrl}, #{gu}, #{kakaoMapUrl}, #{name})
     </insert>
 
     <sql id="SELECT_BASE">
-        SELECT
-            id,
-            kind_id AS 'kindId',
-            address,
-            lat,
-            lng,
-            img_url AS 'imgUrl',
-            gu,
-            kakao_map_url AS 'kakaoMapUrl',
-            name
-           -- regdate (regdate)있으면 detail에서 오류나길래 주석처리했음다(지윤)
+        SELECT id,
+               kind_id       AS 'kindId',
+               address,
+               lat,
+               lng,
+               img_url       AS 'imgUrl',
+               gu,
+               kakao_map_url AS 'kakaoMapUrl',
+               name
+        -- regdate (regdate)있으면 detail에서 오류나길래 주석처리했음다(지윤)
         FROM matzip
-        WHERE 1=1
+        WHERE 1 = 1
     </sql>
 
     <select id="findAll" resultType="com.lec.spring.matzip.domain.Matzip">
-        <include refid="SELECT_BASE" />
+        <include refid="SELECT_BASE"/>
         ORDER BY regdate DESC
     </select>
 
@@ -36,16 +36,18 @@
     </select>
 
     <select id="findById" resultType="com.lec.spring.matzip.domain.Matzip">
-        <include refid="SELECT_BASE" />
+        <include refid="SELECT_BASE"/>
         AND id = #{id}
     </select>
 
     <delete id="deleteById">
-        DELETE FROM matzip WHERE id = #{id}
+        DELETE
+        FROM matzip
+        WHERE id = #{id}
     </delete>
 
-<!--It's me.. (hjy)..-->
-    <select id="listTagName" >
+    <!--It's me.. (hjy)..-->
+    <select id="listTagName">
         SELECT t.tagname
         FROM tag t
                  JOIN matzip_tag mt ON t.id = mt.tag_id
@@ -58,7 +60,37 @@
         FROM food_kind f
                  JOIN matzip m ON m.kind_id = f.id
         WHERE m.kind_id = #{kindId}
-            LIMIT 1
+        LIMIT 1
     </select>
 
+    <resultMap id="DetailMatzipDTO" type="com.lec.spring.matzip.domain.DTO.DetailMatzipDTO">
+        <result column="id" property="id"/>
+        <result column="address" property="address"/>
+        <result column="imgUrl" property="imgUrl"/>
+        <result column="kakaoMapUrl" property="kakaoMapUrl"/>
+        <result column="name" property="name"/>
+        <result column="kindName" property="kindName"/>
+        <result column="starRating" property="starRating"/>
+        <result column="tagList" property="tagList" typeHandler="com.lec.spring.config.typeHandler.StringListHandler"/>
+    </resultMap>
+
+    <select id="findDetailMatzipByMatzipIdWithFriendId" resultMap="DetailMatzipDTO">
+        SELECT mz.id                    AS 'id',
+               mz.address               AS 'address',
+               mz.img_url               AS 'imgUrl',
+               mz.kakao_map_url         AS 'kakaoMapUrl',
+               mz.name                  AS 'name',
+               k.kindname               AS 'kindName',
+               mmz.star_rating          AS 'starRating',
+               JSON_ARRAYAGG(t.tagname) AS 'tagList'
+        FROM matzip mz
+                 JOIN my_matzip mmz ON mz.id = mmz.matzip_id
+                 JOIN food_kind k ON mz.kind_id = k.id
+                 JOIN matzip_tag mt ON mmz.id = mt.my_matzip_id
+                 JOIN tag t ON t.id = mt.tag_id
+        WHERE mz.id = #{matzipId}
+          AND mmz.member_id = #{friendId}
+        GROUP BY mz.id, mz.address, mz.img_url, mz.kakao_map_url, mz.name, k.kindname, mmz.star_rating
+        ;
+    </select>
 </mapper>

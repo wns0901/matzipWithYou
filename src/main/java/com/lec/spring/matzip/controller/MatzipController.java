@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.controller;
 
 import com.lec.spring.matzip.domain.DTO.DetailMapDataDTO;
+import com.lec.spring.matzip.domain.DTO.DetailMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.MatzipDTO;
 import com.lec.spring.matzip.domain.DTO.SeoulMapDataDTO;
 import com.lec.spring.matzip.domain.Matzip;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -27,8 +29,8 @@ public class MatzipController {
 
     @ResponseBody
     @PostMapping("")
-    public ResponseEntity<Map<String, String>> saveMatZip(@RequestBody MatzipDTO matzipDTO) {
-        return matzipService.saveMatzip((Matzip) matzipDTO.getData(), matzipDTO.getKind());
+    public ResponseEntity<Map<String, Object>> saveMatZip(@RequestBody MatzipDTO matzipDTO) {
+        return matzipService.saveMatzip((Matzip) matzipDTO);
     }
 
     @GetMapping("/{memberId}")
@@ -41,6 +43,10 @@ public class MatzipController {
     @GetMapping("/homework/{id}")
     public String getHomework(@PathVariable Long id, Model model) {
         Matzip matzip = matzipService.getMatzipById(id, model);
+        List<String> tagName = matzipService.listTagName(id);
+        List<String> kindName = matzipService.listKindName(id);
+        model.addAttribute("kindName", kindName);
+        model.addAttribute("tagName", tagName);
         model.addAttribute("matzip", matzip);
         return "matzip/detail";
     }
@@ -52,4 +58,9 @@ public class MatzipController {
         return "matzip/gu-detail-map";
     }
 
+    @ResponseBody
+    @GetMapping("/detail/{matzipId}")
+    public ResponseEntity<DetailMatzipDTO> detail(@PathVariable Long matzipId, @RequestParam Long friendId) {
+        return matzipService.getDetailMatzip(matzipId, friendId);
+    }
 }

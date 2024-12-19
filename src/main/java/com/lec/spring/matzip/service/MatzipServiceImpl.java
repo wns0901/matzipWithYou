@@ -1,6 +1,7 @@
 package com.lec.spring.matzip.service;
 
-import com.lec.spring.matzip.domain.FoodKind;
+import com.lec.spring.matzip.domain.DTO.DetailMatzipDTO;
+import com.lec.spring.matzip.domain.DTO.MatzipDTO;
 import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MatzipRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -30,27 +32,38 @@ public class MatzipServiceImpl implements MatzipService {
 
     @Override
     @Transactional
-    public ResponseEntity<Map<String, String>> saveMatzip(Matzip matzip, String kind) {
+    public ResponseEntity<Map<String, Object>> saveMatzip(Matzip matzip) {
+        Matzip duplicateCheck = matzipRepository.findByName(matzip.getName());
+        if (duplicateCheck != null) {
+            System.out.println("#".repeat(30));
+            System.out.println(duplicateCheck);
+            return ResponseEntity.ok(Map.of(
+                    "status", "SUCCESS",
+                    "data", duplicateCheck
+            ));
+        }
+
         String kakaoImgUrl = getImgUrlFromKakao(matzip.getKakaoMapUrl());
 
-        FoodKind foodKind = foodKindRepository.findByKindName(kind);
+//        FoodKind foodKind = foodKindRepository.findByKindName(kind);
 
         matzip.setImgUrl(kakaoImgUrl);
-        matzip.setKindId(foodKind.getId());
+//        matzip.setKindId(foodKind.getId());
 
         String gu = matzip.getAddress().split(" ")[1];
         matzip.setGu(gu);
 
         boolean result = matzipRepository.save(matzip);
-
+        matzip = new Matzip((MatzipDTO) matzip);
         if (result) {
             return ResponseEntity.ok(Map.of(
-                    "status","SUCCESS"
+                    "status", "SUCCESS",
+                    "data", matzip
             ));
         } else {
             return ResponseEntity.ok(Map.of(
-                    "status","FAIL",
-                    "msg","맛집 저장에 실패했습니다."
+                    "status", "FAIL",
+                    "msg", "음식점 로딩에 실패했습니다."
             ));
         }
     }
@@ -70,7 +83,34 @@ public class MatzipServiceImpl implements MatzipService {
 
     @Override
     public Matzip getMatzipById(Long id, Model model) {
-
         return matzipRepository.findById(id);
     }
+
+    @Override
+    public ResponseEntity<DetailMatzipDTO> getDetailMatzip(Long matzipId, Long friendId) {
+        return ResponseEntity.ok(matzipRepository.findDetailMatzipByMatzipIdWithFriendId(matzipId, friendId));
+    }
+
+    @Override
+
+    public List<String> listTagName(Long id) {
+        return matzipRepository.listTagName(id);
+    }
+
+    @Override
+    public List<String> listKindName(Long id) {
+        return matzipRepository.listKindName(id);
+    }
+
+
+    @Override
+    public List<Matzip> getAllMatzips() {
+        return matzipRepository.findAll();
+    }
+
+    @Override
+    public int deleteById(Long id) {
+        return matzipRepository.deleteById(id);
+    }
 }
+

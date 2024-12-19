@@ -12,6 +12,7 @@ import jakarta.mail.internet.MimeMessage;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,7 @@ public class MemberServiceImpl implements MemberService {
 
     private static final int REFERRAL_POINTS = 1000;    // 추천인 작성 시 포인트
     private static final int REFERRAL_INTIMACY = 10;
-
+    private final EmailAuthService emailAuthService;
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;
     private final FriendRepository friendRepository;
@@ -38,9 +39,10 @@ public class MemberServiceImpl implements MemberService {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
     private final RedisTemplate redisTemplate;
-    
 
-    public MemberServiceImpl(SqlSession sqlSession, PasswordEncoder passwordEncoder, JavaMailSender mailSender, SpringTemplateEngine templateEngine, @Qualifier("redisTemplate") RedisTemplate redisTemplate) {
+
+    public MemberServiceImpl(EmailAuthService emailAuthService, SqlSession sqlSession, PasswordEncoder passwordEncoder, JavaMailSender mailSender, SpringTemplateEngine templateEngine, @Qualifier("redisTemplate") RedisTemplate redisTemplate) {
+        this.emailAuthService = emailAuthService;
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
         this.authorityRepository = sqlSession.getMapper(AuthorityRepository.class);
         this.mailSender = mailSender;
@@ -48,6 +50,7 @@ public class MemberServiceImpl implements MemberService {
         this.passwordEncoder = passwordEncoder;
         this.templateEngine = templateEngine;
         this.redisTemplate = redisTemplate;
+
     }
 
     @Override
@@ -86,6 +89,55 @@ public class MemberServiceImpl implements MemberService {
         // OAuth 회원 추가 정보 입력 시 추천인 처리
         handleReferralProcess(member, referrer);
     }
+
+    // email auth start
+    private static int number;
+
+    @Override
+    public void createNumber() {
+        number = (int) (Math.random() * 90000) + 100000;
+
+    }
+
+    @Override
+    public MimeMessage createEmail(EmailMessage email) {
+        createNumber(); // 숫자 생성
+
+        //인증번호 저장
+        emailAuthService.storeAuthCode(email.getTo(), String.valueOf(number));
+
+
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true, "UTF-8");
+            mimeMessageHelper.setTo(email.getTo());
+            mimeMessageHelper.setSubject(email.getSubject());
+
+            // Thymeleaf 템플릿 처리
+            Context context = new Context();
+            context.setVariable("number", String.valueOf(number)); // 템플릿에 값 전달
+            context.setVariable("to", email.getTo());
+
+            // auth-email-template.html 템플릿을 Thymeleaf로 처리하여 HTML 내용을 생성
+            String body = templateEngine.process("auth-email-template", context);
+
+            mimeMessageHelper.setText(body, true); // HTML로 이메일 본문 설정
+
+            // 이메일 전송
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        return message;
+
+    }
+
+    @Override
+    public ResponseEntity<Map<String, List<String>>> findNicknameBymemberIds(List<Long> memberIds) {
+        return ResponseEntity.ok(Map.of("nickname", memberRepository.findNicknameByMemberIds(memberIds)));
+    }
+
 
     private void handleReferralProcess(Member member, Member referrer) {
         memberRepository.updatePoint(member.getId(), REFERRAL_POINTS);
@@ -130,33 +182,14 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findAll();
     }
 
-    //이메일 인증구현
     @Override
-    public String authorizationEmail(EmailMessage emailMessage) {
-        String randomCode = UUID.randomUUID().toString();
-        String uuid = UUID.randomUUID().toString();
-        String authorizationLink = "http://localhost:8080/member/authorizationEmail?uuid="+ uuid;
-        redisTemplate.opsForValue().set(uuid, randomCode, 3, TimeUnit.MINUTES);
+    public int deleteById(Long id) {
+        return memberRepository.deleteById(id);
+    }
 
-
-        Context context = new Context();
-        context.setVariable("authorizationLink", authorizationLink);
-        String emailContet = templateEngine.process("authorizationEmail-template", context);
-
-
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        try {
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-            mimeMessageHelper.setTo(emailMessage.getTo());
-            mimeMessageHelper.setSubject(emailMessage.getSubject());
-            mimeMessageHelper.setText(emailContet, true);
-            mailSender.send(mimeMessage);
-
-            return "success";
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-
+    @Override
+    public Member findById(Long id) {
+        return memberRepository.findById(id);
     }
 
     // 인증 유효성
@@ -177,7 +210,7 @@ public class MemberServiceImpl implements MemberService {
         }
         String uuid = UUID.randomUUID().toString();
 
-        redisTemplate.opsForValue().set(uuid, member.getId(), 3, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(TimeUnit.MINUTES, uuid, 3);
         String resetLink = "http://localhost:8080/member/reset-password?id=" + member.getId() + "&uuid=" + uuid;
 
         Context context = new Context();
@@ -206,8 +239,8 @@ public class MemberServiceImpl implements MemberService {
         String encodedPassword = passwordEncoder.encode(newPassword);
         Map<String, String> updatelist = new HashMap<String, String>();
         updatelist.put(String.valueOf(id), "id");
-        updatelist.put("newPassword", encodedPassword );
-       int result = memberRepository.updatePassword(id, encodedPassword);
+        updatelist.put("newPassword", encodedPassword);
+        int result = memberRepository.updatePassword(id, encodedPassword);
 
 
         return false;
@@ -220,7 +253,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
-
     @Override
     public Member findByNickname(String nickname) {
         return memberRepository.findByNickname(nickname);
@@ -230,4 +262,6 @@ public class MemberServiceImpl implements MemberService {
     public int updateMember(Member member) {
         return memberRepository.update(member);
     }
-}
+
+
+}// end MemberServiceImpl

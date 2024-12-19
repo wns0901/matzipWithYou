@@ -13,7 +13,7 @@
              , nickname   "nickname"
              , name       "name"
              , provider   "provider"
-             , providerId "providerId"
+             , providerid "providerId"
         FROM member
         WHERE 1 = 1
     </sql>
@@ -21,7 +21,8 @@
     <insert id="save" flushCache="true" parameterType="com.lec.spring.member.domain.Member"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO member(username, password, email, point, nickname, name, provider, providerId)
-        VALUES(#{username}, #{password}, #{email}, COALESCE(#{point}, 0), #{nickname}, #{name}, #{provider}, #{providerId})
+        VALUES (#{username}, #{password}, #{email}, COALESCE(#{point}, 0), #{nickname}, #{name}, #{provider},
+                #{providerId})
     </insert>
 
 
@@ -91,7 +92,7 @@
     <select id="selectEmail">
         select id, email
         from member
-        where email =#{email}
+        where email = #{email}
     </select>
 <!--비밀번호 업데이트하기-->
     <update id="updatePassword">
@@ -99,9 +100,11 @@
         set password = #{newPassword}
         where id = #{id}
     </update>
-<!--이메일로 아이디 찾기-->
-    <select id="findMemberIdByEmail" >
-        select id from member where email = #{email}
+    <!--이메일로 아이디 찾기-->
+    <select id="findMemberIdByEmail">
+        select id
+        from member
+        where email = #{email}
     </select>
 
     <select id="findReferrer" resultType="com.lec.spring.member.domain.Member">
@@ -110,4 +113,12 @@
         WHERE nickname = #{referrerNickname}
     </select>
 
+    <select id="findNicknameByMemberIds">
+        SELECT nickname
+        FROM member
+        WHERE id IN
+        <foreach collection="memberIds" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hint Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+            color: #555;
+            cursor: pointer; /* 클릭 가능하도록 커서 변경 */
+        }
+        .no-hints {
+            font-style: italic;
+            color: #999;
+        }
+    </style>
+    <script th:inline="javascript">
+        const memberIds = /*[[${#authentication.principal.member.id}]]*/ ;
+        // 로그인한 사용자의 ID
+        console.log("memberIds : " + memberIds);
+    </script>
+    <script>
+        function saveHint(tagId, myMatzipId, memberId) {
+            console.log("tagId  :  " + tagId + " myMatzipId : " + myMatzipId + " memberId :  "+ memberId)
+
+            fetch('/matzip/saveTag', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ memberId: memberId, myMatzipId: myMatzipId, tagId: tagId })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("힌트가 저장되었습니다.");
+                        // 힌트를 목록에서 제거
+                        const hintElement = document.querySelector(`li[data-hint-id="${tagId}"]`);
+                        if (hintElement) {
+                            hintElement.remove(); // 힌트 요소 제거
+                        }
+                    } else {
+                        alert("힌트 저장에 실패했습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+    </script>
+</head>
+<body>
+<h1>힌트 제공 목록</h1>
+
+<!-- 힌트가 있는 경우 -->
+<li th:each="hint : ${hints}"
+    th:text="${hint.tagName}"
+    th:attr="data-hint-id=${hint.tagId}"
+    th:onclick="'saveHint(' + ${hint.tagId} + ', ' + ${myMatzipId} + ', ' + ${#authentication.principal.member.id} + ')'">
+</li>
+
+
+
+<!-- 힌트가 없는 경우 -->
+<p class="no-hints" th:if="${hints == null or hints.isEmpty()}">
+    hidden 맛집이 아닙니다
+</p>
+</body>
+</html>

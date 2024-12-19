@@ -3,6 +3,8 @@ package com.lec.spring.matzip.domain;
 import com.lec.spring.member.domain.Member;
 import lombok.*;
 
+import java.util.Objects;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +22,7 @@ public class UserMatzipTagStatus {
         private Long matzipId;
         private String visibility;
         private Long id;
+
 
 
 }// end hintPurchase

@@ -1,16 +1,178 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>One Page Scroll</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/header.css}">
+    <style>
+        html, body {
+            background-color: #FFB17D;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 900; /* Noto Sans KR Black */
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* 스크롤바 숨김 */
+        }
+        .section {
+            height:calc(100vh - 65px); /* 각 섹션의 높이를 뷰포트 높이로 설정 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            transition: transform 0.5s ease; /* 부드러운 전환 효과 */
+        }
+        .section:nth-child(1) { background-color: #FFB17D; }
+        .section:nth-child(2) { background-color: #FFB17D; }
+        .section:nth-child(3) { background-color: #FFB17D; }
+        .section:nth-child(4) { background-color: #FFB17D; }
+
+        .section:nth-child(1) { background-color: #FFB17D; }
+        .section:nth-child(2) { background-color: #FFB17D; }
+        .section:nth-child(3) { background-color: #FFB17D; }
+        .section:nth-child(4) { background-color: #FFB17D; }
+        .radio-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px; /* 오른쪽 가장자리에 배치 */
+            display: flex;
+            flex-direction: column; /* 세로 정렬 */
+            gap: 10px; /* 버튼 간의 간격 */
+        }
+
+        .radio-buttons input {
+            display: none; /* 기본 라디오 버튼 숨김 */
+        }
+        .radio-buttons label {
+            background-color: #ffffff;
+            color: #f88f48;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        .radio-buttons input:checked + label {
+            background-color: #ff8c3c; /* 선택된 버튼 색상 */
+            color: whitesmoke;
+        }
+
+        .btn{
+            background-color: whitesmoke;
+            width: 180px;
+            padding: 10px;
+            border-radius: 50px;
+            position: fixed;
+            bottom: 15%;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            text-decoration: none; /* 밑줄 제거 */
+            color: #f88f48;
+        }
+        .btn:hover{
+            background-color: rgb(211, 209, 209);
+            width: 180px;
+            padding: 10px;
+            border-radius: 50px;
+            display: flex;
+            align-content: center;
+
+        }
+    table{
+        color: white;
+        font-size: 130px;
+        position: fixed;
+        bottom: 10%;
+        left: 50px; /* 오른쪽 가장자리에 배치 */
+        display: flex;
+
+    }
+        .title {
+            text-shadow: 2px 2px 4px rgb(239, 138, 71); /* 그림자 효과 */
+        }
+
+        #title-logo{
+            color: white;
+            width: 50%;
+            position: fixed;
+            bottom: 0px;
+            right: 60px; /* 오른쪽 가장자리에 배치 */
+            display: flex;
+
+        }
+
+        #seoul-map{
+            width: 20%;
+        }
+
+
+
+    </style>
+
 </head>
 <body>
-<th:block th:insert="~{common/header::header}"></th:block>
-<div class="container">
-    <h1>HOME</h1>
 
-    <a class="btn" th:href="@{/matzips/{memberId}(memberId=${#authentication.principal.member.id})}">Start</a>
+<th:block th:insert="~{common/header::header}"></th:block>
+<div class="section" id="page1">
+    <table>
+        <tr>
+            <td class="title title1">Matzip</td>
+        </tr>
+        <tr>
+            <td class="title">With</td>
+        </tr>
+        <tr>
+            <td class="title">you</td>
+        </tr>
+    </table>
+    <img  id="title-logo" src="/IMG/title-logo.png">
+
+
+    <a class="btn"
+       sec:authorize="isAuthenticated()"
+
+       th:href="@{/matzips/{memberId}(memberId=${#authentication.principal.member.id})}">Start</a>
+
+    <a class="btn"
+       sec:authorize="!isAuthenticated()"
+       th:href="@{/member/login}">Start</a></div>
+<div class="section" id="page2"><img id="seoul-map" src="/IMG/seoul-img.png"></div>
+<div class="section" id="page3">Page 3</div>
+<div class="section" id="page4">Page 4</div>
+
+<div class="radio-buttons">
+    <input type="radio" id="page1-radio" name="page" checked onclick="scrollToPage(0)">
+    <label for="page1-radio">1</label>
+    <input type="radio" id="page2-radio" name="page" onclick="scrollToPage(1)">
+    <label for="page2-radio">2</label>
+    <input type="radio" id="page3-radio" name="page" onclick="scrollToPage(2)">
+    <label for="page3-radio">3</label>
+    <input type="radio" id="page4-radio" name="page" onclick="scrollToPage(3)">
+    <label for="page4-radio">4</label>
 </div>
+
+<script>
+    let currentPage = 0; // 현재 페이지 인덱스
+
+    function scrollToPage(pageIndex) {
+        const sections = document.querySelectorAll('.section');
+        const totalPages = sections.length;
+
+        // 페이지 인덱스가 범위를 벗어나지 않도록 조정
+        if (pageIndex < 0 || pageIndex >= totalPages) return;
+
+        currentPage = pageIndex; // 현재 페이지 업데이트
+        const offset = -currentPage * 100; // 스크롤할 위치 계산
+
+        // 각 섹션을 이동
+        sections.forEach((section, index) => {
+            section.style.transform = `translateY(${offset}vh)`;
+        });
+    }
+</script>
+
+
+
+
+
 </body>
 </html>

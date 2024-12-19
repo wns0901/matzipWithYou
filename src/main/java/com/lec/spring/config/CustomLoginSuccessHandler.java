@@ -25,7 +25,14 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         LocalDateTime loginTime = LocalDateTime.now();
         request.getSession().setAttribute("loginTime", loginTime);
 
-        clearAuthenticationAttributes(request);
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+        if (isAdmin) {
+            getRedirectStrategy().sendRedirect(request, response, "/admin");
+            return;
+        }
+
 
         if (authentication instanceof OAuth2AuthenticationToken) {
             PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -40,6 +47,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
             super.onAuthenticationSuccess(request, response, authentication);
             return;
         }
+        clearAuthenticationAttributes(request);
 
         // OAuth2가 아니거나 추가 정보가 필요없는 경우
         super.onAuthenticationSuccess(request, response, authentication);

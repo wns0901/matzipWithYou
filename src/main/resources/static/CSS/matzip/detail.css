@@ -1,0 +1,138 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.out-box {
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    /*padding: 16px;*/
+
+}
+
+.out-box{
+   /*outline: solid black 3px;*/
+    width: 70%;
+    height: 90vh;
+    border-radius: 5%;
+
+}
+
+.img-box{
+ position: relative;
+}
+
+.heart-icon {
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    width: 50px;
+    height: auto;
+}
+
+#main-img{
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+ height: 50vh;
+    width: 100%;
+}
+#address{
+    color: #808080;
+}
+
+.matzip-title{
+    display: inline-block;
+}
+.text{
+    margin-left: 50px ;
+    margin-right: 50px;
+}
+.tagName {
+    display: inline-block; /* 또는 display: inline; */
+    border-collapse: collapse; /* 테이블 경계선 겹침 방지 */
+    margin: 10px; /* 테이블 간격 조정 */
+
+
+
+}
+tr{
+
+}
+
+.tag{
+    width: 150px;
+    height: 30px;
+    margin: 0 5px;
+    padding: 0 5px;
+    /*padding: 10%;*/
+    background-color: #484848;
+    color: #FFFFFF ;
+    border-radius: 30px;
+    text-align: center;
+}
+
+#title-line{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kindName{
+    display: inline;
+    color: #808080;;
+}
+
+
+.reivew{
+    width: 60px;
+}
+
+#reivew-tag-line{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+/*star rating start*/
+/* star rating start */
+.starRating {
+    display: flex;
+}
+
+.star {
+    display: none;
+
+}
+
+.star + label {
+    margin-right: 10px;
+    margin-top:30px;
+    cursor: pointer;
+    width: 30px; /* 별 이미지의 너비 (필요에 따라 조정 가능) */
+    height: 30px; /* 별 이미지의 높이 (필요에 따라 조정 가능) */
+    background-image: url("/IMG/star.png");/* 비어 있는 별 이미지 */
+    background-size: cover;
+}
+
+.star:hover + label,
+.star:checked + label {
+    background-image: url("/IMG/fill-star.png"); /* 채워진 별 이미지 */
+}
+
+/* 별점 활성화 상태 */
+.star:checked ~ .star + label {
+    background-image: url('/IMG/fill-star.png'); /* 채워진 별 이미지 */
+}
+
+.star:checked + label ~ .star + label {
+    background-image: url('/IMG/fill-star.png')
+}
+
+
+/*star Rating end*/
+
+#toggle-heart:checked + .heart-icon {
+    content: url('/IMG/fill-heart.png'); /* 변경할 이미지 경로 */
+}
