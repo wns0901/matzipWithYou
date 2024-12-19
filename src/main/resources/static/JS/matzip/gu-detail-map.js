@@ -10,8 +10,8 @@ const centerLatLng = data.centerLatLng,
     ps = new kakao.maps.services.Places(),
     map = new kakao.maps.Map(mapContainer, mapOption),
     overlay = new kakao.maps.CustomOverlay(),
-
     markers = [],
+
     closeBtn = document.getElementById('close_detail_btn'),
     detailInfo = document.getElementById('detail-info'),
     searchBtn = document.getElementById('search_btn'),
@@ -25,7 +25,8 @@ const centerLatLng = data.centerLatLng,
     closeHiddenDetailBtn = document.getElementById('close_hidden_detail_btn'),
     inputKeyWord = document.getElementById('keyword'),
     purchasingCancelBtn = document.querySelector('#cancel'),
-    hintResultColseBtn = document.querySelector('#stop')
+    hintResultColseBtn = document.querySelector('#stop'),
+    oneMoreBtn = document.querySelector('#one_more')
 ;
 
 let searchResultList,
@@ -146,6 +147,11 @@ async function purchasingHintEvent(e, myMatzipId, hintInfoWindow) {
         openHintCnt = openHint.length,
         unopenedHintCnt = unopenedHint.length;
 
+    oneMoreBtn.addEventListener('click', function oneMoreBtnEvent(event) {
+        purchasingHintEvent(event, myMatzipId, hintInfoWindow);
+        oneMoreBtn.removeEventListener('click', oneMoreBtnEvent);
+    })
+
     hintTagList.forEach((e, i) => {
         if (i < openHintCnt) {
             e.innerHTML = '<span class="hint_text">' + openHint[i].tagName + '</span>';
@@ -188,8 +194,8 @@ async function saveHintStatus(tagId, memberId, myMatzipId) {
         url = '/matzip/saveTag';
 
     const result = await fetch(url, {method, headers, body});
-    console.log(result);
-    return true;
+
+    return result.status === 200;
 }
 
 function cancelBtnEvent(e) {
