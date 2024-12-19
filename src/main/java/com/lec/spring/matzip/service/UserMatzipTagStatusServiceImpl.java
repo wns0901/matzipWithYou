@@ -5,6 +5,7 @@ import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
 import com.lec.spring.matzip.repository.TagRepository;
 import com.lec.spring.matzip.repository.UserMatzipTagStatusRepository;
+import org.apache.catalina.User;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -111,7 +112,15 @@ public class UserMatzipTagStatusServiceImpl implements UserMatzipTagStatusServic
     // 힌트태그(구매 안된태그)
     @Override
     public List<UserMatzipTagStatus> unpurchasedTag(Long memberId) {
-        return userMatzipTagStatusRepository.listUnpurchasedTagByMemberId(memberId);
+        List<UserMatzipTagStatus> hidden = userMatzipTagStatusRepository.listWholeHiddenMatizpByMemberId(memberId);
+        List<UserMatzipTagStatus> purchasedList = userMatzipTagStatusRepository.listpurchasedTagByMemberId(memberId);
+        // 중복 제거 로직
+        List<UserMatzipTagStatus> resultList = new ArrayList<>(hidden);
+        resultList.removeAll(purchasedList);
+
+        System.out.println("****************중복 제거된 결과: " + resultList.size());
+
+        return resultList;
     }
 
     @Override
