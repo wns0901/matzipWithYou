@@ -80,7 +80,7 @@ async function loadTags() {
         tags.forEach(tag => {
             const button = document.createElement('button');
             button.type = 'button';
-            button.textContent = tag.name;
+            button.textContent = tag.tagName;
             button.classList.add('tag-btn');
             button.dataset.tagId = tag.id;
 
@@ -104,7 +104,6 @@ async function loadTags() {
                 document.querySelectorAll('input[name="tagIds"]').forEach(el => el.remove());
                 document.querySelector('form').appendChild(hiddenInput);
             });
-
             tagContainer.appendChild(button);
         });
     } catch (error) {
@@ -115,16 +114,27 @@ async function loadTags() {
 async function setupFormSubmission() {
     const form = document.querySelector('.review-write-form');
     form.addEventListener('submit', async (e) => {
-        e.preventDefault();  // 기본 제출 동작 중지
+        e.preventDefault();
 
-        // 필수 입력 검증
-        const foodKind = document.querySelector('input[name="foodKind"]').value;
+        const starRating = document.querySelector('.rating-value').textContent;
+        const memberId = document.querySelector('input[name="memberId"]')?.value;
+        const matzipId = document.querySelector('input[name="matzipId"]')?.value;
+        const foodKind = document.querySelector('input[name="foodKind"]')?.value;
+        const content = document.querySelector('textarea[name="content"]')?.value;
+        const selectedTags = Array.from(document.querySelectorAll('.tag-btn.selected'));
+        const tagIds = document.querySelector('input[name="tagIds"]')?.value.split(',').filter(Boolean);
+
+        if (!memberId) {
+            alert('로그인이 필요합니다.');
+            window.location.href = '/member/login';
+            return;
+        }
+
         if(!foodKind) {
             alert('음식 종류를 선택해주세요.');
             return;
         }
 
-        const selectedTags = document.querySelectorAll('.tag-btn.selected');
         if(selectedTags.length < 3) {
             alert('최소 3개 이상의 태그를 선택해주세요.');
             return;
@@ -135,34 +145,54 @@ async function setupFormSubmission() {
             return;
         }
 
+        if(!content) {
+            alert('리뷰를 작성해주세요');
+            return;
+        }
+
+        const formObject = {
+            content: content,
+            starRating: starRating,
+            matzipId: Number(matzipId),
+            memberId: Number(memberId),
+            kindName: foodKind,
+            tagIds: tagIds
+        };
+
+        console.log(formObject);
+
         const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
 
-        if (isRegistered) {
-            const visibilitySelected = document.querySelector('.visibility-btn input.active');
-            if (!visibilitySelected) {
-                alert('맛집 공개 설정을 선택해주세요.');
-                return;
-            }
-        }
+        const url = isRegistered
+            ? `/matzip/mine/${memberId}/${matzipId}`
+            : `/matzip/reviews/${memberId}/${matzipId}`;
+
         try {
-            // 폼 데이터 전송
-            const formData = new FormData(form);
-            const url = isRegistered ? '/matzip/myMatzips' : '/matzip/reviews';
-
-            const response = await fetch(url, {
+            const saveResponse = await fetch(url, {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formObject),
             });
-
-            if (!response.ok) throw new Error('리뷰 저장 실패');
-
-            const completionData = await response.json();
-            showCompletionModal(completionData);
-
         } catch (error) {
             console.error('Error:', error);
             alert('리뷰 저장 중 오류가 발생했습니다.');
         }
+
+            const modalResponse = await fetch(`/matzip/api/reviews/${memberId}/${matzipId}/modal`);
+
+            const modalData = await modalResponse.json();
+            showCompletionModal(modalData);
+
+            document.getElementById('modalCloseBtn').onclick = () => {
+                const modal = document.getElementById('completionModal');
+                modal.classList.add('hidden');
+                window.location.href = isRegistered
+                    ? `/matzip/myMatzipList/${memberId}`
+                    : `/matzip/reviewList/${memberId}`;
+            };
     });
 }
 
@@ -219,11 +249,6 @@ function showCompletionModal(data) {
         .join('');
 
     modal.classList.remove('hidden');
-
-    document.getElementById('modalCloseBtn').onclick = () => {
-        modal.classList.add('hidden');
-        window.location.href = '/matzip/reviewsList/{memberId}';  // 리뷰 목록 페이지로 이동
-    };
 }
 
 function setupRegistrationButtons() {

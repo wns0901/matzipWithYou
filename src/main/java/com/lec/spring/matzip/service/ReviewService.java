@@ -47,5 +47,7 @@ public interface ReviewService {
 
     ReviewSubmitModalDTO reviewSubmitModal(ReviewDTO reviewDTO);
 
+    Long getAuthenticatedMemberId();
+
     int deleteReview(Long id);
 }

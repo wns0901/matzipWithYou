@@ -1,11 +1,19 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadReviewList();
-});
+    const mainElement = document.querySelector('main');
+    const memberId = mainElement ? mainElement.dataset.memberId : null;
 
-async function loadReviewList() {
-    const memberId = document.body.dataset.memberId;
     console.log("현재 memberId:", memberId);
 
+    if (!memberId) {
+        alert('로그인이 필요합니다.');
+        window.location.href = '/member/login';
+        return;
+    }
+
+    await loadReviewList(memberId);
+});
+
+async function loadReviewList(memberId) {
     try {
         const response = await fetch(`/matzip/api/reviews/${memberId}`);
         if (!response.ok) {
@@ -13,7 +21,6 @@ async function loadReviewList() {
         }
 
         const data = await response.json();
-        console.log("Received data:", data);
 
         displayReviews(data);
 
@@ -91,17 +98,23 @@ function displayReviews(reviewsData) {
         deleteBtn.addEventListener('click', async () => {
             if (confirm('이 리뷰를 삭제하시겠습니까?')) {
                 try {
-                    const response = await fetch(`/matzip/reviews/delete/${data.review.id}`, {
-                        method: 'DELETE'
+                    const response = await fetch(`/matzip/reviews/delete/${reviewId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
                     });
-                    if (response.ok) {
-                        reviewCard.remove();
-                        alert('리뷰가 삭제되었습니다.');
-                    } else {
-                        throw new Error('삭제 실패');
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || '삭제 실패');
                     }
+
+                    reviewCard.remove();
+                    alert('리뷰가 삭제되었습니다.');
                 } catch (error) {
-                    alert('리뷰 삭제에 실패했습니다.');
+                    console.error('Error:', error);
+                    alert(error.message || '리뷰 삭제에 실패했습니다.');
                 }
             }
         });
@@ -212,17 +225,8 @@ async function loadReviewDetail(reviewCard, reviewId) {
         contentDiv.classList.add('review-content');
         contentDiv.appendChild(detailSection);
 
-        const detailBtn = reviewCard.querySelector('.detail-btn');
-        updateDetailButtonText(detailBtn, show);
-
     } catch (error) {
         console.error('Failed to load review details:', error);
         alert('상세 정보를 불러오는데 실패했습니다.');
     }
-}
-
-function updateDetailButtonText(button, isShow) {
-    button.innerHTML = isShow ?
-        '<i class="fa-solid fa-minus"></i>상세접기' :
-        '<i class="fa-solid fa-plus"></i>상세보기';
 }

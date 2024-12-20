@@ -15,4 +15,6 @@ public class ReviewDTO extends Review {
     private String kindName;
     private List<Long> memberIds;
     private List<Long> tagIds;
+    private Long memberId;
+    private Long matzipId;
 }

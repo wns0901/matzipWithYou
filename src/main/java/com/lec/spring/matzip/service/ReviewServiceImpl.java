@@ -1,5 +1,6 @@
 package com.lec.spring.matzip.service;
 
+import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.matzip.domain.*;
 import com.lec.spring.matzip.domain.DTO.ReviewDTO;
 import com.lec.spring.matzip.domain.DTO.ReviewSubmitModalDTO;
@@ -16,6 +17,8 @@ import com.lec.spring.member.service.FriendService;
 import com.lec.spring.member.service.FriendServiceImpl;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -60,10 +63,29 @@ public class ReviewServiceImpl implements ReviewService {
         if (matzip == null) {
             throw new IllegalArgumentException("음식점 정보를 찾을 수 없습니다");
         }
-        int saved =reviewRepository.save(reviewDTO, model);
+        reviewDTO.setRegdate(LocalDateTime.now());
 
-        updateRelatedEntities(reviewDTO, model);
+        int saved = reviewRepository.save(reviewDTO);
+
+        if (saved > 0) {
+            updateRelatedEntities(reviewDTO, model);
+        }
         return saved;
+    }
+
+    @Override
+    public Long getAuthenticatedMemberId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof PrincipalDetails) {
+            PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+
+            Long memberId = principalDetails.getMember().getId();
+            System.out.println("##########memberId:" + memberId);
+            return memberId;
+        }
+
+        throw new IllegalStateException("로그인된 사용자 정보가 없습니다.");
     }
 
     private void updateRelatedEntities(ReviewDTO reviewDTO, Model model) {
@@ -290,15 +312,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public int deleteReview(Long id) {
-        int result = 0;
-
         Review review = reviewRepository.findById(id);
         if (review == null) {
             throw new IllegalArgumentException("삭제하려는 리뷰를 찾을 수 없습니다.");
-        } else {
-            result = reviewRepository.deleteById(id);
         }
 
-        return result;
+        reviewRepository.deleteReviewTags(id);
+        return reviewRepository.deleteReviewTags(id);
     }
 }
