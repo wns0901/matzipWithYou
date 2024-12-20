@@ -52,7 +52,18 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public List<FriendDetailsDTO> getFriendsWithDetailsDTO(Long memberId) {
         return friendRepository.findFriendsWithDetailsDTO(memberId);
+        // 친밀도 순으로 정렬 후 상위 3명 추출
+//        List<FriendDetailsDTO> top3Friends = friends.stream()
+//                .sorted(Comparator.comparing(FriendDetailsDTO::getIntimacy).reversed()) // 친밀도 내림차순
+//                .limit(3)
+//                .collect(Collectors.toList());
+//
+//        return top3Friends;
     }
+
+
+
+
 
     @Override
     public List<FriendRequestDTO> getPendingRequests(Long memberId) {
