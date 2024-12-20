@@ -73,7 +73,8 @@
             <div class="info-buttons">
                 <div class="info-button">
                     <!-- memberId를 올바르게 전달 -->
-                    <span class="info-label friends" th:data-member-id="${memberId}">친구 ></span>
+                    <span class="info-label friends" th:data-member-id="${memberId}"
+                          onclick="location.href='/members/${memberId}/friends'">친구 ></span>
                     <span class="info-value" th:text="${myPage.friendCnt}"></span>
                 </div>
                 <div class="info-button">
