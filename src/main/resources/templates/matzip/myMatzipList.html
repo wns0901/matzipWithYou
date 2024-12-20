@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/79c730033c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/CSS/matzip/myMatzipList.css}">
+    <script th:src="@{/JS/matzip/myMatzipList.js}"></script>
+    <title>리뷰관리페이지</title>
 </head>
-<body>
+<body th:data-member-id="${memberId}">
+<header class="top-header">
+    <div class="logo">
+        <img src="/IMG/logo.png" alt="맛집이쥬">
+    </div>
+    <div class="user-info">
+        <span th:text="|user 님 환영합니다|"></span>
+    </div>
+</header>
 
+<main class="main-container">
+    <section class="profile-section">
+        <img src="/IMG/reviewManagement.png" alt="리뷰 관리">
+    </section>
+
+    <section class="review-list-section">
+        <div class="review-filter">
+            <span>정렬방식:</span>
+            <span class="sort-option">등록순</span> |
+            <span class="sort-option">식사종류</span> |
+            <span class="sort-option">태그</span>
+        </div>
+        <div class="reviews-container">
+        </div>
+    </section>
+</main>
 </body>
 </html>

@@ -9,6 +9,8 @@ public interface FoodKindRepository {
 
     FoodKind findByKindName(String kindName);
 
+    FoodKind findByKindId(Long id);
+
     List<FoodKind> findAll();
 
     int deleteById(Long id);

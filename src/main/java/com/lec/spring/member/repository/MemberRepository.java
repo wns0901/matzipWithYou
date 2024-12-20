@@ -36,6 +36,8 @@ public interface MemberRepository {
 
     List<String> findNicknameByMemberIds(List<Long> memberIds);
 
+    int getPointByMemberId(Long memberId);
+
 }//end MemberRepository
 
 

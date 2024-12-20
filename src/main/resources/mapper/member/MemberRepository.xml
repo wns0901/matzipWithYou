@@ -20,7 +20,7 @@
 
     <insert id="save" flushCache="true" parameterType="com.lec.spring.member.domain.Member"
             useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        INSERT INTO member(username, password, email, point, nickname, name, provider, providerId)
+        INSERT INTO member(username, password, email, point, nickname, name, provider, providerid)
         VALUES (#{username}, #{password}, #{email}, COALESCE(#{point}, 0), #{nickname}, #{name}, #{provider},
                 #{providerId})
     </insert>
@@ -32,7 +32,7 @@
           , email            = #{email}
           , nickname         = #{nickname}
           , name             = #{name}
-          , referrerNickname = #{referrerNickname}
+          , referrernickname = #{referrerNickname}
         WHERE id = #{id}
     </update>
 
@@ -45,7 +45,9 @@
     </update>
 
     <delete id="deleteById">
-        DELETE FROM member WHERE id = #{id}
+        DELETE
+        FROM member
+        WHERE id = #{id}
     </delete>
 
     <select id="findAll" resultType="com.lec.spring.member.domain.Member">
@@ -87,24 +89,24 @@
         WHERE id = #{id}
     </update>
 
-<!--비밀번호 재설정-->
-<!--이메일 찾기-->
+    <!--비밀번호 재설정-->
+    <!--이메일 찾기-->
     <select id="selectEmail">
-        select id, email
-        from member
-        where email = #{email}
+        SELECT id, email
+        FROM member
+        WHERE email = #{email}
     </select>
-<!--비밀번호 업데이트하기-->
+    <!--비밀번호 업데이트하기-->
     <update id="updatePassword">
-        update member
-        set password = #{newPassword}
-        where id = #{id}
+        UPDATE member
+        SET password = #{newPassword}
+        WHERE id = #{id}
     </update>
     <!--이메일로 아이디 찾기-->
     <select id="findMemberIdByEmail">
-        select id
-        from member
-        where email = #{email}
+        SELECT id
+        FROM member
+        WHERE email = #{email}
     </select>
 
     <select id="findReferrer" resultType="com.lec.spring.member.domain.Member">
@@ -120,5 +122,11 @@
         <foreach collection="memberIds" open="(" separator="," close=")" item="id">
             #{id}
         </foreach>
+    </select>
+
+    <select id="getPointByMemberId" resultType="int">
+        SELECT point
+        FROM member
+        WHERE id = #{memberId}
     </select>
 </mapper>

@@ -1,22 +1,48 @@
+:root {
+    --primary-color: #ff7327;
+    --button-font-color: #ffffff;
+    --secondary-button-border-color: #c8c9cc;
+    --secondary-button-text-color: #303236;
+    --link-color: #ff7327;
+    --title-font-color: #ff7327;
+    --font-default-color: #63656d;
+    --widget-background-color: #ffffff;
+    --box-border-color: #ffffff;
+    --input-text-color: #121214;
+    --input-border-color: #c8c9cc;
+    --input-background-color: #ffffff;
+    --error-color: #e81d01;
+}
+
 .navbar {
     /*background-color: #FFFFFF;*/
     /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+
     padding: 1rem 0;
-    position: sticky;
+    position: absolute;
     top: 0;
     z-index: 1000;
+    position: sticky;
+    z-index: 100;
+}
+
+.navbar div {
+    z-index: 100;
+
 }
 
 .navbar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
 }
 
 .navbar-brand img {
+    margin-top: 0.5rem;
+    margin-left: 3rem;
     height: 40px;
     width: auto;
 }
@@ -50,12 +76,16 @@
 
 .nav-user {
     position: relative;
+    background-color: black;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
 }
 
 .dropbtn {
     background: none;
     border: none;
-    color: var(--font-default-color);
+    color: var(--button-font-color);
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-size: 16px;
@@ -88,7 +118,8 @@
     border: none;
     font-size: 16px;
     cursor: pointer;
-/transition: background-color 0.2s;/
+/ transition: background-color 0.2 s;
+/
 }
 
 .dropdown-content a:hover,
@@ -99,6 +130,10 @@
 
 .show {
     display: block;
+}
+
+#userDropdown {
+    overflow: hidden;
 }
 
 

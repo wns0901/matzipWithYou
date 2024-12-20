@@ -6,6 +6,69 @@
     <title>친구 목록</title>
     <link rel="stylesheet" th:href="@{/CSS/member/friend/friend_list.css}" type="text/css"/>
 </head>
+<style>
+    .modal {
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .friend-card {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .friend-card img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    .search-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    #searchButton {
+        padding: 5px 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #searchButton:hover {
+        background-color: #45a049;
+    }
+
+</style>
 <body>
 <div class="friend-container">
     <!-- 상단 친밀도 순위 영역 -->
@@ -77,6 +140,27 @@
     </div>
 
     <div id="friends-container"></div>
+</div>
+
+<!-- 모달 HTML -->
+<div id="friendRequestModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>친구 요청</h2>
+        <div id="pendingRequests"></div>
+    </div>
+</div>
+
+<div id="addFriendModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>친구 추가</h2>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="닉네임 또는 아이디를 입력하세요">
+            <button id="searchButton">검색</button>
+        </div>
+        <div id="searchResults"></div>
+    </div>
 </div>
 
 <script th:inline="javascript">
