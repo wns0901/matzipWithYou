@@ -75,7 +75,7 @@ VALUES ('ROLE_MEMBER'),
 
 INSERT INTO member (username, password, email, point, nickname, name)
 VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member1@email.com', 100,
-        'foodie1', '이동희'),
+        'foodie1', '최시후'),
        ('member_user2', '$2a$10$9eSoUc/.K3YyzQq5ZpOxnO01H0.oT8l.hlxgGDLS.mRBShESweioC', 'member2@email.com', 150,
         'matzip2', '이유나'),
        ('admin1_admin1', '$2a$10$csFKAeIbLoeMc.CdW0/AN.ydPVEZstCSLUf6L2st8ExYO4.JakF8.', 'admin@email.com', 500,
@@ -99,7 +99,7 @@ VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5c
        ('MEMBER_USER11', '$2a$10$aejxI6ImFhaqnBOy78YlNuQoX/zTOzWihehgQ0MykQpQY2m/6b/JS', 'member11@email.com', 300,
         'test8', '하늘'),
        ('MEMBER_USER12', '$2a$10$KuDVfAdLx0leQBUmzBwr6uvk5mUg.UnScNq9qC8PWxeiayMBKErjG', 'member12@email.com', 300,
-        'test9', '바다')
+        'test9', '이동희')
 
 
 
@@ -286,7 +286,10 @@ VALUES ('치킨공식', 2, '서울 강남구 역삼로17길 64 역삼동A4스페
         '성북구', 'https://place.map.kakao.com/382962073'),
        ('야스미', 4, '서울 종로구 대명길 39-10 1,2층 (우)03078', '37.582664', '126.999964',
         '//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2F8F9EB895A05F490186C27E1CB8A45EC1',
-        '종로구', 'https://place.map.kakao.com/13495138')
+        '종로구', 'https://place.map.kakao.com/13495138'),
+        ('광화문미진 본점',2, '서울 종로구 종로 19 르메이에르종로타운 1층 116-2,117호 (우)03157','37.570767', '126.979873',
+         '//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F0F10F43E18A04E6B8C04C2F7F7FA8DD3&quot',
+         '종로구','https://place.map.kakao.com/m/21326655')
 ;
 
 
