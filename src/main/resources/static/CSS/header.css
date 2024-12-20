@@ -126,6 +126,10 @@
     display: block;
 }
 
+#userDropdown {
+    overflow: hidden;
+}
+
 
 @media (max-width: 768px) {
     .navbar .container {
