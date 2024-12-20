@@ -57,8 +57,8 @@ function loadFriendsList(memberId) {
             return response.json();
         })
         .then(friends => {
-            friendsList = friends; // 전역 변수에 저장
-            updateFriendList(friends); // 초기 표시는 등록순
+            friendsList = friends;
+            updateFriendList(friends);
         })
         .catch(error => {
             console.error('친구 목록 로딩 오류:', error);
@@ -140,6 +140,7 @@ function updateFriendList(friends) {
 
 
 // 추가 구현
+
 // 모달 관련 함수들
 const requestModal = document.getElementById('friendRequestModal');
 const addModal = document.getElementById('addFriendModal');
@@ -151,36 +152,38 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
         const response = await fetch(`/members/${memberId}/friends/requests`);
         const requests = await response.json();
 
-
         const container = document.getElementById('pendingRequests');
         container.innerHTML = '';
 
+        // 여기가 문제였던 부분입니다.
+        // return을 제거하고, 모달은 항상 표시되도록 수정
         if (requests.length === 0) {
             container.innerHTML = '<p>친구 요청을 한 사람이 없습니다.</p>';
-            return;
+        } else {
+            requests.forEach(request => {
+                const card = document.createElement('div');
+                card.className = 'friend-card';
+                card.innerHTML = `
+                    <div>
+                        <img src="${request.profileImg || '/IMG/defaultProfileImg.png'}" 
+                             onerror="this.src='/IMG/defaultProfileImg.png'">
+                        <span>${request.nickname}</span>
+                        <span>${request.username}</span>
+                        <span>공개: ${request.publicCount}</span>
+                        <span>비공개: ${request.hiddenCount}</span>
+                    </div>
+                    <div>
+                        <button onclick="respondToRequest(${request.senderId}, true)">수락</button>
+                        <button onclick="respondToRequest(${request.senderId}, false)">거절</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
-        requests.forEach(request => {
-            const card = document.createElement('div');
-            card.className = 'friend-card';
-            card.innerHTML = `
-                <div>
-                    <img src="${request.profileImg || '/IMG/defaultProfileImg.png'}" 
-                         onerror="this.src='/IMG/defaultProfileImg.png'">
-                    <span>${request.nickname}</span>
-                    <span>${request.username}</span>
-                    <span>공개: ${request.publicCount}</span>
-                    <span>비공개: ${request.hiddenCount}</span>
-                </div>
-                <div>
-                    <button onclick="respondToRequest(${request.senderId}, true)">수락</button>
-                    <button onclick="respondToRequest(${request.senderId}, false)">거절</button>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-
+        // 모달 표시 (requests가 비어있어도 항상 실행)
         requestModal.style.display = 'block';
+
     } catch (error) {
         console.error('친구 요청 목록 로딩 실패:', error);
     }
@@ -236,7 +239,6 @@ async function respondToRequest(senderId, isAccept) {
             senderId: senderId,
             isAccept: isAccept
         };
-        console.log('요청 데이터:', requestData);
 
         const response = await fetch(`/members/${memberId}/friends`, {
             method: 'PATCH',
@@ -245,27 +247,21 @@ async function respondToRequest(senderId, isAccept) {
             },
             body: JSON.stringify(requestData)
         });
-        console.log(response)
 
-        const affectedRows = await response.json();  // 실제 DB에서 영향받은 행 수
+        const affectedRows = await response.json();
         console.log('영향받은 행 수:', affectedRows);
         console.log('3. 새로고침 전 현재 친구 목록:', friendsList);
 
-        if (affectedRows > 0) {  // 실제로 DB 업데이트가 성공했을 때만
-            console.log("친구 요청 처리 성공");
+        if (affectedRows > 0) {
             const modal = document.getElementById('friendRequestModal');
             if (modal) {
                 modal.style.display = 'none';
             }
 
             await loadFriendsList(memberId);
-            console.log('4. 새로고침 후 새로운 친구 목록:', friendsList);
         } else {
-            console.log("친구 요청 처리 실패");
-            // 실패 처리 로직 추가
         }
     } catch (error) {
-        console.error('친구 요청 응답 실패:', error);
     }
 }
 
