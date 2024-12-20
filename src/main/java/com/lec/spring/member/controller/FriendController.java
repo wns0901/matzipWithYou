@@ -31,7 +31,6 @@ public class FriendController {
     @ResponseBody
     @PostMapping("")
     public ResponseEntity<String> sendFriendRequest(
-
             @RequestBody Friend friend) {
         int result = friendService.sendFriendRequest(friend);
         if (result > 0) {
