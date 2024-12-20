@@ -28,7 +28,8 @@ const centerLatLng = data.centerLatLng,
     purchasingCancelBtn = document.querySelector('#cancel'),
     hintResultColseBtn = document.querySelector('#stop'),
     oneMoreBtn = document.querySelector('#one_more'),
-    backBtn = document.querySelector('#back')
+    backBtn = document.querySelector('#back'),
+    reviewBtn = detailInfo.querySelector('#write_review_btn')
 ;
 
 let searchResultList,
@@ -58,6 +59,7 @@ inputKeyWord.addEventListener('keyup', enterSearchEnvet);
 purchasingCancelBtn.addEventListener('click', cancelBtnEvent);
 hintResultColseBtn.addEventListener('click', cancelBtnEvent);
 backBtn.addEventListener('click', cancelBtnEvent);
+reviewBtn.addEventListener('click', reviewBtnClickedEvent);
 
 async function displayPlaces(places, isFriendList = false) {
     const matzipWrap = document.getElementById('matzip_wrap'),
@@ -449,6 +451,7 @@ function dataIntoDetailCard(result, isSearch = false) {
     address.textContent = result.address;
 
     reviewBtn.dataset.matzipId = result.id;
+    reviewBtn.dataset.memberId = data.memberId;
 
     kindName.textContent = result.kindName;
 
@@ -748,4 +751,10 @@ function enterSearchEnvet(e) {
         searchPlaces();
         searchWrap.scrollTop = 0;
     }
+}
+
+function reviewBtnClickedEvent(e) {
+    const matzipId = e.currentTarget.dataset.matzipId,
+        memberId = e.currentTarget.dataset.memberId;
+    window.location.href = '/matzip/reviews/' + matzipId + '/' + memberId;
 }
