@@ -37,7 +37,7 @@ public class FriendController {
             return ResponseEntity.ok("친구 신청에 성공했습니다.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("친구 신청에 실패했습니다. 이미 친구거나 수락 대기중입니다.");
+                    .body("이미 친구거나 수락 대기중입니다.");
         }
     }
 
