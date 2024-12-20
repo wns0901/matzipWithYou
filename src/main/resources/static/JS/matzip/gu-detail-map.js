@@ -37,7 +37,6 @@ let searchResultList,
     friendEnd = 2
 ;
 
-console.log(data);
 if (totalList[0]) displayPlaces(totalList);
 displayFriendProfile();
 
@@ -156,7 +155,7 @@ async function purchasingHintEvent(e, myMatzipId, hintInfoWindow) {
         unopenedHint = hintData.unpurchased,
         isFinished = unopenedHint.length === 1;
 
-    if(unopenedHint.length) {
+    if (unopenedHint.length) {
         hintPopup.classList.remove('hidden');
     } else {
         hintPopup.classList.add('hidden');
@@ -318,7 +317,7 @@ function makeWishListBtn(wishListBtn, matzipId, isSearch = false) {
     if (wishList.includes(matzipId)) {
         wishListBtn.style.backgroundImage = 'url(' + fillHeartImgUrl + ')';
         wishListBtn.dataset.status = 'fill';
-    } else if(isSearch) {
+    } else if (isSearch) {
         wishListBtn.style.backgroundImage = 'url(/IMG/matzip/gray_heart.png)';
         wishListBtn.dataset.status = 'empty';
     } else {
@@ -566,7 +565,7 @@ function updateWishListEvent(e, isSearch = false) {
     const item = e.currentTarget,
         isFilled = item.dataset.status === 'fill',
         isEmpty = !isFilled
-        matzipId = Number(item.dataset.matzipId),
+    matzipId = Number(item.dataset.matzipId),
         memberId = data.memberId,
         searchImgUrl = '/IMG/matzip/gray_heart.png',
         imgUrl = isEmpty ? fillHeartImgUrl : isSearch ? searchImgUrl : emptyHeartImgUrl,
