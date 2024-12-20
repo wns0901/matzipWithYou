@@ -241,8 +241,8 @@ function cancelBtnEvent(e) {
     const hintResultWindow = document.querySelector('#hint_result');
     hintResultWindow.classList.add('hidden');
     const hintTagsWindow = document.querySelector('#hint_tags');
-    hintInfoWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png" class="hidden">' +
-        '<button id="back"><span>돌아가기</span></button>';
+    hintTagsWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png" class="hidden">' +
+        '<button id="back" onclick="cancelBtnEvent()"><span>돌아가기</span></button>';
     hintTagsWindow.classList.add('hidden');
 }
 
@@ -546,6 +546,7 @@ function postMatzipData() {
     searchWindow.classList.add('hidden');
 
     const loadingImg = document.querySelector('#loading_img');
+    hiddenDetial.classList.add('hidden');
     loadingImg.classList.remove('hidden');
     detailInfo.classList.remove('hidden');
     fetch(url, {method, headers, body})
@@ -670,6 +671,7 @@ function friendClickEvent(e) {
 
     if (!overlay.classList.contains('hidden')) {
         overlay.classList.add('hidden');
+        delete friendData.isSelected;
         displayPlaces(totalList);
         return;
     }

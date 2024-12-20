@@ -16,7 +16,7 @@
 
 #map {
     width: 100vw;
-    height: 100vh;
+    height: 86.7vh;
     z-index: 1;
 }
 
@@ -703,4 +703,15 @@
     position: absolute;
     top: 0;
     left: 0;
+}
+
+#point {
+    position: absolute;
+    top: 80%;
+    left: 57%;
+    transform: translate(-50%, -50%);
+    font-family: "Noto Sans KR", serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
 }
