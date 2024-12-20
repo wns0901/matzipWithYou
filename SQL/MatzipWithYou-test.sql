@@ -261,4 +261,6 @@ SELECT * FROM matzip_tag mt
                   JOIN my_matzip mm ON mt.my_matzip_id = mm.id
 WHERE mm.member_id = 5;
 
+
 SELECT * FROM matzip WHERE gu = '광진구';
+
