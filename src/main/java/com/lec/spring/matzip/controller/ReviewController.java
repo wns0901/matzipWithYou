@@ -166,7 +166,7 @@ public class ReviewController {
                     .matzipId(matzipId)
                     .build();
 
-            ReviewSubmitModalDTO modalData = reviewService.reviewSubmitModal(reviewDTO);
+            ReviewSubmitModalDTO modalData = reviewService.getModalInfo(reviewDTO);
             return ResponseEntity.ok(modalData);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

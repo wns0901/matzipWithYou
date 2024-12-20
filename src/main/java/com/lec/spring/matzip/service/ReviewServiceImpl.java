@@ -237,51 +237,46 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
+        int resultPoint = !hiddenMatzipMemberIds.isEmpty() ?  rewardHiddenPoint : rewardPoint;
 
-        int resultPoint = !hiddenMatzipMemberIds.isEmpty() ?  rewardHiddenPoint: rewardPoint;
+        int currentPoint = member.getPoint();
+        int newPoint = currentPoint + resultPoint;
 
-        member.setPoint(member.getPoint() + resultPoint);
-        memberRepository.updatePoint(member.getId(), member.getPoint());
+        member.setPoint(newPoint);
+        memberRepository.updatePoint(member.getId(), newPoint);
 
-        return member.getPoint();
+        return resultPoint;
     }
 
     @Override
     public int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy, int rewardIntimacy) {
-        List<FriendDetailsDTO> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getId());
-        if (friends == null) {
-            throw new IllegalArgumentException("Friend not found");
+        List<FriendDetailsDTO> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getMemberId());
+        if (friends == null || friends.isEmpty()) {
+            return 0;
         }
 
         List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
 
         int resultIntimacy = !hiddenMatzipMemberIds.isEmpty() ? rewardHiddenIntimacy : rewardIntimacy;
-        int newIntimacy = 0;
 
         for(FriendDetailsDTO friend : friends) {
             friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
             friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
-            newIntimacy = friend.getIntimacy();
         }
 
-        return newIntimacy;
+        return resultIntimacy;
     }
 
     @Override
-    public ReviewSubmitModalDTO reviewSubmitModal(ReviewDTO reviewDTO) {
-        // 히든 맛집으로 등록한 친구들 조회
+    public ReviewSubmitModalDTO getModalInfo(ReviewDTO reviewDTO) {
         List<Member> hiddenMatzipMembers = hiddenMatzipMemberIds(reviewDTO);
 
-        // 포인트 지급 처리
-        int rewardPoints = rewardReviewPoint(reviewDTO, 100, 10);
+        int pointIncrease = rewardReviewPoint(reviewDTO, 100, 10);
 
-        // 친밀도 증가 처리
-        int intimacyIncrease = rewardReviewIntimacy(reviewDTO, 100, 10);
+        int intimacyIncrease = hiddenMatzipMembers.isEmpty() ? 10 : 100;
 
-        // 친구 상세 정보 조회
         List<FriendDetailsDTO> friendDetails = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getMemberId());
 
-        // 히든맛집 친구들의 상세 정보 필터링
         List<FriendDetailsDTO> hiddenFriendProfiles = friendDetails.stream()
                 .filter(friend -> hiddenMatzipMembers.stream()
                         .anyMatch(member -> member.getId().equals(friend.getFriendId())))
@@ -305,7 +300,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .topFriendName(topFriend != null ? topFriend.getNickname() : null)
                 .friendCount(hiddenFriendProfiles.isEmpty() ? 0 : hiddenFriendProfiles.size() - 1)
                 .intimacyIncrease(intimacyIncrease)
-                .rewardPoints(rewardPoints)
+                .rewardPoints(pointIncrease)
                 .build();
     }
 

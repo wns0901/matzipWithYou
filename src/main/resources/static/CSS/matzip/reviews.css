@@ -285,7 +285,6 @@ body {
     margin-top: 1.2rem;
     padding: 1rem 0;
     background: transparent;
-    position: sticky;
 }
 
 .submit-button {
@@ -310,7 +309,8 @@ body {
     }
 
     .section-container > section:first-child,
-    .right-container {
+    .right-container,
+    .submit-section {
         flex: none;
     }
 }

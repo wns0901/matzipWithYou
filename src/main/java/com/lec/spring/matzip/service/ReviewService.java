@@ -45,7 +45,7 @@ public interface ReviewService {
 
     int rewardReviewIntimacy(ReviewDTO reviewDTO, int rewardHiddenIntimacy ,int rewardIntimacy);
 
-    ReviewSubmitModalDTO reviewSubmitModal(ReviewDTO reviewDTO);
+    ReviewSubmitModalDTO getModalInfo(ReviewDTO reviewDTO);
 
     Long getAuthenticatedMemberId();
 

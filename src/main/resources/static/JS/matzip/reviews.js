@@ -184,6 +184,7 @@ async function setupFormSubmission() {
             const modalResponse = await fetch(`/matzip/api/reviews/${memberId}/${matzipId}/modal`);
 
             const modalData = await modalResponse.json();
+            console.log(modalData);
             showCompletionModal(modalData);
 
             document.getElementById('modalCloseBtn').onclick = () => {
