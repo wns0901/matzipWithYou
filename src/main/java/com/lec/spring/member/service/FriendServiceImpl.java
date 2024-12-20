@@ -42,13 +42,11 @@ public class FriendServiceImpl implements FriendService {
         }
     }
 
-
     // 친구 삭제
     @Override
-    public int deleteFriend(Friend friend) {
-        return friendRepository.rejectFriendRequest(friend);
+    public int deleteFriend(Long friendId, Long memberId) {
+        return friendRepository.deleteFriend(friendId, memberId);
     }
-
 
     // 친구 목록(상세정보) 가져오기
     @Override

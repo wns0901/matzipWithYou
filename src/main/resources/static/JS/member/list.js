@@ -19,7 +19,7 @@ function getMemberIdFromUrl() {
     return memberIndex !== -1 ? pathParts[memberIndex + 1] : null;
 }
 
-let friendsList = []; // 전역 변수로 친구 목록 저장
+let friendsList = [];
 
 function sortFriends(sortType) {
     switch (sortType) {
@@ -113,6 +113,7 @@ function updateFriendList(friends) {
     fullListContainer.classList.add('full-friend-list');
     fullListContainer.innerHTML = '<h3>전체 친구 목록</h3>';
 
+
     // 전체 친구 목록 표시
     friends.forEach(friend => {
         const friendItem = document.createElement('div');
@@ -128,19 +129,23 @@ function updateFriendList(friends) {
             <p>비공개 맛집 수: ${friend.hiddenCount}</p>
             <p>친밀도: ${friend.intimacy}</p>
             <button class="btn btn-delete" data-friend-id="${friend.friendId}">삭제</button>
+            
         `;
+
+        friendItem.querySelector('.btn-delete').addEventListener('click', async function () {
+            const friendId = this.dataset.friendId;
+            await deleteFriend(friendId);
+        });
 
         fullListContainer.appendChild(friendItem);
     });
 
-    // 컨테이너에 추가
     container.appendChild(top3Container);
     container.appendChild(fullListContainer);
 }
 
 
 // 추가 구현
-
 // 모달 관련 함수들
 const requestModal = document.getElementById('friendRequestModal');
 const addModal = document.getElementById('addFriendModal');
@@ -276,8 +281,6 @@ async function respondToRequest(senderId, isAccept) {
         });
 
         const affectedRows = await response.json();
-        console.log('영향받은 행 수:', affectedRows);
-        console.log('3. 새로고침 전 현재 친구 목록:', friendsList);
 
         if (affectedRows > 0) {
             const modal = document.getElementById('friendRequestModal');
@@ -318,6 +321,37 @@ async function sendFriendRequest(receiverId) {
         }
     } catch (error) {
         console.error('친구 요청 실패:', error);
+    }
+}
+
+// 친구 삭제
+async function deleteFriend(friendId) {
+    const memberId = getMemberIdFromUrl();
+
+    if (!confirm('정말 삭제하시겠습니까?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/members/${memberId}/friends`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                friendId: friendId
+            })
+        });
+
+        if (!response.ok) throw new Error('삭제 실패');
+
+        const affectedRows = await response.json();
+        if (affectedRows > 0) {
+            await loadFriendsList(memberId);
+        }
+    } catch (error) {
+        console.error('친구 삭제 실패:', error);
+        alert('친구 삭제에 실패했습니다.');
     }
 }
 
