@@ -542,7 +542,12 @@ function postMatzipData() {
         },
         body = JSON.stringify(data)
     ;
+    const searchWindow = document.getElementById('search_window');
+    searchWindow.classList.add('hidden');
 
+    const loadingImg = document.querySelector('#loading_img');
+    loadingImg.classList.remove('hidden');
+    detailInfo.classList.remove('hidden');
     fetch(url, {method, headers, body})
         .then(res => res.json())
         .then(res => {
@@ -551,12 +556,11 @@ function postMatzipData() {
                 return;
             }
 
-            const searchWindow = document.getElementById('search_window');
-            searchWindow.classList.add('hidden')
+
             dataIntoDetailCard(res.data, true);
             detailInfo.querySelector('#star_rating_list').innerHTML = '';
             detailInfo.querySelector('#tags_wrap').innerHTML = '';
-            detailInfo.classList.remove('hidden')
+            loadingImg.classList.add('hidden');
             searchWindow.childNodes[0].value = '';
             searchWindow.childNodes[2].innerHTML = '';
         })

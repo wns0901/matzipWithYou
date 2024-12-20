@@ -45,10 +45,7 @@ public class MatzipServiceImpl implements MatzipService {
 
         String kakaoImgUrl = getImgUrlFromKakao(matzip.getKakaoMapUrl());
 
-//        FoodKind foodKind = foodKindRepository.findByKindName(kind);
-
         matzip.setImgUrl(kakaoImgUrl);
-//        matzip.setKindId(foodKind.getId());
 
         String gu = matzip.getAddress().split(" ")[1];
         matzip.setGu(gu);
@@ -73,7 +70,12 @@ public class MatzipServiceImpl implements MatzipService {
         WebDriver driver = new ChromeDriver();
         driver.get(kakaoPageUrl);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        WebElement doc = driver.findElement(By.cssSelector(".bg_present"));
+        WebElement doc;
+        try {
+            doc = driver.findElement(By.cssSelector(".bg_present"));
+        } catch (Exception e) {
+            return "/IMG/defaultStoreImg.png";
+        }
         String str = doc.getAttribute("style");
         driver.quit();
         String url = str.substring(str.indexOf("url(\"") + 5, str.indexOf("\")"));
