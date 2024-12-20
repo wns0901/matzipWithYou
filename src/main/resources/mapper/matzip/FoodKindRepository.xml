@@ -16,6 +16,12 @@
         WHERE kindname = #{kindName}
     </select>
 
+    <select id="findByKindId" resultType="com.lec.spring.matzip.domain.FoodKind">
+        SELECT id, kindname, regdate
+        FROM food_kind
+        WHERE id = #{kindId}
+    </select>
+
     <select id="findAll" resultType="com.lec.spring.matzip.domain.FoodKind">
         SELECT id, kindname, regdate
         FROM food_kind

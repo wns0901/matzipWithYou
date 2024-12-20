@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/79c730033c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/CSS/header.css}">
+    <link rel="stylesheet" th:href="@{/CSS/matzip/reviews.css}">
+    <link rel="stylesheet" th:href="@{/CSS/matzip/reviewModal.css}">
+    <script th:src="@{/JS/matzip/reviews.js}"></script>
+    <title>Review</title>
+</head>
+<body>
+    <div th:replace="~{common/header :: header}"></div>
+
+    <form th:action="@{/matzip/reviews/{memberId}/{matzipId}(memberId=${memberId},matzipId=${matzipId})}"
+          method="post"
+          class="review-write-form"
+          sec:authorize="isAuthenticated()">
+
+        <input type="hidden" name="matzipId" th:value="${matzipId}">
+        <input type="hidden" name="memberId"
+               th:value="${#authentication.principal.member.id}">
+        <input type="hidden" name="rating" id="rating" value="1">
+        <div class="section-container">
+            <section>
+                <div class="star-rating-container">
+                    <div class="star-rating">
+                        <input type="hidden" name="starRating" id="starRating" value="1">
+                        <div class="star" data-value="1"></div>
+                        <div class="star" data-value="2"></div>
+                        <div class="star" data-value="3"></div>
+                        <div class="star" data-value="4"></div>
+                        <div class="star" data-value="5"></div>
+                    </div>
+                    <div class="star-rating-text">평점 <span class="rating-value">1</span>점</div>
+                </div>
+                <div class="food-kind-container">
+                    <div class="food-kind-text">식사종류</div>
+                    <div class="select-foodKind"></div>
+                    <input type="hidden" name="foodKind" required/>
+                </div>
+                <div class="tags-container">
+                    <div class="tag-container"></div>
+                    <div>최소 3가지 이상 태그를 선택해주세요.</div>
+                </div>
+            </section>
+
+            <div class="right-container">
+
+                <section class="review-section">
+                    <div class="write-box">
+                        <div class="write-box">
+                        <textarea
+                                name="content"
+                                class="write-review"
+                                placeholder="리뷰를 작성해주세요"
+                                required
+                                th:value="${content}"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="register-section">
+                    <div class="register-matzip">
+                        <span>내 맛집 등록</span>
+                        <div class="register-btn">
+                            <input type="button" data-name="registerOk" value="등록"/>
+                            <input type="button" data-name="Unregister" value="미등록"/>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="visibility-section">
+                    <div class="matzip-visibility">
+                        <span>맛집 공개 설정</span>
+                        <div class="visibility-btn">
+                            <input type="button" data-name="PUBLIC" value="공개"/>
+                            <input type="button" data-name="HIDDEN" value="히든"/>
+                            <input type="button" data-name="PRIVATE" value="비공개"/>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+        <section class="submit-section">
+            <button type="submit" class="submit-button">완료</button>
+        </section>
+    </form>
+
+    <div sec:authorize="!isAuthenticated()">
+        <script th:inline="javascript">
+            window.onload = function() {
+                alert('로그인이 필요합니다.');
+                window.location.href = '/member/login';
+            }
+        </script>
+    </div>
+
+    <div id="completionModal" class="modal hidden">
+        <div class="modal-content">
+            <div id="messageContainer">
+            </div>
+            <div class="friend-profiles" id="friendProfiles">
+            </div>
+            <button id="modalCloseBtn" class="btn-close">확인</button>
+        </div>
+    </div>
+</body>
+</html>

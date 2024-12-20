@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/matzip/gu-detail-map.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/header.css}">
     <script th:inline="javascript">
         const data = /*[[${data}]]*/ {},
             hiddenImgUrl = /*[[@{/IMG/matzip/hidden_matzip.png}]]*/ 'hiddenImg',
@@ -19,6 +20,8 @@
 
 </head>
 <body>
+<th:block th:insert="~{common/header::header}"></th:block>
+
 <div id="all_overlay" class="hidden"></div>
 <div id="purchasing_hint_info" class="hidden">
     <img th:src="@{/IMG/matzip/hint_info.png}">

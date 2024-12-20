@@ -64,6 +64,7 @@ public class SecurityConfig {
                                 "/members/{id}",
                                 "/matzips/*/visibility",
                                 "/matzips/reviews/**",
+                                "/matzip/reviewList/**",
                                 "/matzips/hint-tags/**",
                                 "/matzips/wish-list/**",
                                 "/member/*/friends/**",
