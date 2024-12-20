@@ -195,14 +195,12 @@ document.querySelector('.btn-add').addEventListener('click', () => {
 });
 
 // 기존 검색 함수를 아래와 같이 수정
-let searchTimeout;
 const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
 const searchResults = document.getElementById('searchResults');
 
 // 검색 함수
 const performSearch = async (searchTerm) => {
-    // 검색어가 비어있으면 결과를 비움
     if (!searchTerm.trim()) {
         searchResults.innerHTML = '';
         return;
@@ -235,7 +233,10 @@ const performSearch = async (searchTerm) => {
                     <span>공개: ${member.publicCount}</span>
                     <span>비공개: ${member.hiddenCount}</span>
                 </div>
-                <button onclick="sendFriendRequest(${member.id})">친구 요청</button>
+                <button onclick="sendFriendRequest(${member.id})" ${member.isAlreadyFriend ? 'disabled' : ''}
+                class="${member.isAlreadyFriend ? 'btn-disabled' : 'btn-request'}">
+                    ${member.isAlreadyFriend ? '이미 친구입니다' : '친구 요청'}
+                </button>
             `;
             searchResults.appendChild(card);
         });
@@ -301,7 +302,10 @@ async function sendFriendRequest(receiverId) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                receiverId: receiverId
+                senderId: memberId,
+                receiverId: receiverId,
+                intimacy: 0,
+                isAccept: false
             })
         });
 

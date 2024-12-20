@@ -17,4 +17,5 @@ public class FriendSearchResponseDTO {
     private String profileImg;
     private int publicCount;
     private int hiddenCount;
+    private boolean isAlreadyFriend;
 }
