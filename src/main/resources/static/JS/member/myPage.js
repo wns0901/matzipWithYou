@@ -1,9 +1,16 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 하트 버튼 토글 기능
-    const heartButtons = document.querySelectorAll('.heart-button');
+// 설정버튼 드롭다운
+document.querySelector('.settings-button').addEventListener('click', function() {
+    const dropdown = this.nextElementSibling;
+    dropdown.classList.toggle('show');
+});
 
-    function toggleHeart(element) {
-        element.classList.toggle('clicked');
+// 드롭다운 외부 클릭시 닫기
+window.addEventListener('click', function(event) {
+    if (!event.target.closest('.settings-container')) {
+        const dropdowns = document.querySelectorAll('.dropdown-menu');
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('show');
+        });
     }
 });
 
@@ -69,37 +76,60 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // 서버에서 로그인된 사용자 ID를 가져옴
-        fetch('/members')
+        const memberId= parseInt(window.location.pathname.split('/').pop());
+        // 서버에 변경된 닉 전송
+        fetch(`/members/${memberId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ newNickname })
+        })
             .then(response => response.json())
-            .then(memberId => {
-                const newNickname = document.getElementById('newNickname').value;
-
-                // 서버로 닉네임 전송
-                fetch(`/members/${memberId}`, {
-                    method: 'PATCH',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({newNickname})
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        const errorMessage = document.getElementById('errorMessage');
-                        if (data.error) {
-                            errorMessage.textContent = data.error;
-                        } else {
-                            // 성공 시 팝업 닫기 및 닉네임 갱신
-                            document.querySelector('.nickname-text').textContent = newNickname;
-                            document.getElementById('nicknamePopup').style.display = 'none';
-                            document.getElementById('overlay').style.display = 'none';
-                        }
-                    })
-                    .catch(error => {
-                        errorMessage.textContent = '서버와의 통신 중 오류가 발생했습니다.';
-                        console.error('Error:', error);
-                    });
+            .then(data => {
+                const errorMessage = document.getElementById('errorMessage');
+                if (data.error) {
+                    errorMessage.textContent = data.error;
+                } else {
+                    // 성공 시 팝업 닫기 및 닉네임 갱신
+                    document.querySelector('.nickname-text').textContent = newNickname;
+                    document.getElementById('nicknamePopup').style.display = 'none';
+                    document.getElementById('overlay').style.display = 'none';
+                }
             })
             .catch(error => {
-                console.error('로그인 사용자 정보를 가져오는 중 오류 발생:', error);
+                errorMessage.textContent = '서버와의 통신 중 오류가 발생했습니다.';
+                console.error('Error:', error);
             });
     });
 });
+
+
+
+
+// 페이지 로드 후 호출
+document.addEventListener("DOMContentLoaded", function () {
+    renderStarRating();
+});
+
+// 별점 렌더링 함수
+function renderStarRating() {
+    const reviewCards = document.querySelectorAll(".review-card .starRating");
+
+    reviewCards.forEach(starRatingElement => {
+        const ratingText = starRatingElement.closest(".review-card").querySelector(".ratingText"); // 수정: starRatingElement로부터 부모 탐색
+        const rating = parseInt(starRatingElement.getAttribute("data-rating"));
+        starRatingElement.innerHTML = ""; // 초기화
+
+        for (let i = 1; i <= 5; i++) {
+            const starImg = document.createElement("img");
+            starImg.src = i <= rating ? "/IMG/Star-Yellow.png" : "/IMG/Star-Gray.png";
+            starImg.alt = "star";
+            starImg.style.width = "16px";
+            starImg.style.height = "16px";
+            starImg.style.marginRight = "4px";
+            starRatingElement.appendChild(starImg);
+        }
+        // 평점 텍스트 추가
+        ratingText.textContent = `${rating}점`;
+    });
+}
+
