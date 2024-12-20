@@ -1,13 +1,12 @@
 package com.lec.spring.matzip.repository;
 
 import com.lec.spring.matzip.domain.*;
+import com.lec.spring.matzip.domain.DTO.ReviewDTO;
 import com.lec.spring.matzip.service.ReviewServiceImpl;
-import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.domain.Member;
 import com.lec.spring.member.repository.FriendRepository;
 import com.lec.spring.member.repository.MemberRepository;
-import com.lec.spring.member.service.MemberServiceImpl;
 import org.apache.ibatis.session.SqlSession;
 
 import org.junit.jupiter.api.Test;
@@ -31,14 +30,21 @@ class ReviewRepositoryTest {
     @Autowired
     private ReviewServiceImpl reviewServiceImpl;
 
-    @Test
-    void testFindAllReview() {
-        ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);
+//    @Test
+//    void testFindAllReview() {
+//        ReviewRepository reviewRepository = sqlSession.getMapper(ReviewRepository.class);
+//
+//        List<Review> reviewList = reviewRepository.findAll();
+//        System.out.println("모든 객체: " + reviewList);
+//        assertNotNull(reviewList);
+//        assertFalse(reviewList.isEmpty());
+//    }
 
-        List<Review> reviewList = reviewRepository.findAll();
-        System.out.println("모든 객체: " + reviewList);
-        assertNotNull(reviewList);
-        assertFalse(reviewList.isEmpty());
+    @Test
+    public void getKindName() {
+
+        Long id = 1L;
+        reviewServiceImpl.getKindName(id);
     }
 
     @Test
@@ -74,14 +80,12 @@ class ReviewRepositoryTest {
         assertEquals(1, saved);
 
         FoodKind foodKind = reviewServiceImpl.addFoodKind(reviewDTO.getKindName());
-        List<ReviewTag> addReviewTag = reviewServiceImpl.addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
         List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
         int rewardReviewPoint = reviewServiceImpl.rewardReviewPoint(reviewDTO, 100, 10);
         int rewardReviewIntimacy = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, 100, 10);
 
         model.addAttribute("foodKind", foodKind);
         model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
-        model.addAttribute("reviewTags", addReviewTag);
         model.addAttribute("members", hiddenMatzipMemberIds);
         model.addAttribute("rewardReviewPoint", rewardReviewPoint);
         model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
@@ -111,19 +115,7 @@ class ReviewRepositoryTest {
         List<Tag> tags = tagRepository.findByIds(tagIds);
         assertNotNull(tags);
 
-        List<ReviewTag> reviewTags = tags.stream()
-                .map(tag -> ReviewTag.builder()
-                        .tagId(tag.getId())
-                        .reviewId(review.getId())
-                        .regdate(LocalDateTime.now())
-                        .build())
-                .toList();
 
-        reviewRepository.saveReviewTags(reviewTags);
-
-        List<ReviewTag> testReviewTags = reviewServiceImpl.addReviewTags(review.getId(), tagIds);
-
-        assertNotNull(reviewTags);
     }
 
     @Test

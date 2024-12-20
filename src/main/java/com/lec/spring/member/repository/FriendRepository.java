@@ -2,6 +2,7 @@ package com.lec.spring.member.repository;
 
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
+import com.lec.spring.member.domain.FriendRequestDTO;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 

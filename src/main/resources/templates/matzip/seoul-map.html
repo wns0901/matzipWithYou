@@ -10,6 +10,7 @@
 </head>
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
+
 <div class="container">
     <div class="friends-sidebar">
         <h2>친구 리스트</h2>
@@ -123,7 +124,6 @@
     /*<![CDATA[*/
     const serverData = /*[[${data}]]*/ {};
     /*]]>*/
-    console.log(serverData)
 </script>
 <script type="text/javascript" th:src="@{/js/matzip/seoul-map.js}"></script>
 </body>

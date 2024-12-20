@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/matzip/gu-detail-map.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/header.css}">
     <script th:inline="javascript">
         const data = /*[[${data}]]*/ {},
             hiddenImgUrl = /*[[@{/IMG/matzip/hidden_matzip.png}]]*/ 'hiddenImg',
@@ -19,6 +20,25 @@
 
 </head>
 <body>
+<th:block th:insert="~{common/header::header}"></th:block>
+
+<div id="all_overlay" class="hidden"></div>
+<div id="purchasing_hint_info" class="hidden">
+    <img th:src="@{/IMG/matzip/hint_info.png}">
+    <span></span>
+    <button id="purchase"><span>뽑기</span></button>
+    <button id="cancel"><span>취소</span></button>
+</div>
+<div id="hint_result" class="hidden">
+    <img th:src="@{/IMG/matzip/hint_result.png}">
+    <span id="hint_result_text"></span>
+    <button id="one_more"><span>한번 더 뽑기</span></button>
+    <button id="stop"><span>그만하기</span></button>
+</div>
+<div id="hint_tags" class="hidden">
+    <img id="hint_popup" th:src="@{/IMG/matzip/hint_popup.png}">
+    <button id="back"><span>돌아가기</span></button>
+</div>
 <div id="map"></div>
 <div id="menu_wrap">
     <div id="friend_list">
@@ -50,6 +70,8 @@
         <div id="star_rating_list"></div>
 
         <div id="tags_wrap"></div>
+
+        <input id="detail_wish_list_btn">
 
         <button id="close_detail_btn" class="close_btn"></button>
         <button id="write_review_btn"></button>

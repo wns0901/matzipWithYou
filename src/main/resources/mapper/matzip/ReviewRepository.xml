@@ -5,21 +5,35 @@
 
 <mapper namespace="com.lec.spring.matzip.repository.ReviewRepository">
 
-    <select id="findAll" resultType="com.lec.spring.matzip.domain.Review">
-        SELECT * FROM my_review
+    <select id="findAll" resultMap="ReviewResultMap">
+        SELECT r.*, m.id as matzip_id, m.name as matzip_name, m.address as matzip_address
+        FROM my_review r
+        INNER JOIN matzip m ON r.matzip_id = m.id
+        WHERE r.member_id = #{memberId}
+        ORDER BY r.regdate DESC
     </select>
 
-    <select id="findById" resultType="com.lec.spring.matzip.domain.Review">
-        SELECT *
+    <resultMap id="ReviewResultMap" type="com.lec.spring.matzip.domain.Review">
+        <id property="id" column="id"/>
+        <result property="matzipId" column="matzip_id"/>
+        <result property="memberId" column="member_id"/>
+        <result property="content" column="content"/>
+        <result property="regdate" column="regdate"/>
+        <result property="starRating" column="star_rating"/>
+    </resultMap>
+
+    <select id="findById" resultMap="ReviewResultMap">
+        SELECT id, matzip_id, member_id, content, regdate, star_rating
         FROM my_review
         WHERE id = #{id}
     </select>
 
-    <insert id="save" flushCache="true" parameterType="map" useGeneratedKeys="true" keyProperty="reviewDTO.id" keyColumn="id">
+    <insert id="save" flushCache="true" parameterType="com.lec.spring.matzip.domain.DTO.ReviewDTO"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO my_review
             (matzip_id, member_id, content, regdate, star_rating)
         VALUES
-            (#{reviewDTO.matzipId}, #{reviewDTO.memberId}, #{reviewDTO.content}, #{reviewDTO.regdate}, #{reviewDTO.starRating})
+            (#{matzipId}, #{memberId}, #{content}, #{regdate}, #{starRating})
     </insert>
 
     <insert id="saveReviewTags" parameterType="list">
@@ -29,6 +43,12 @@
             (#{reviewTag.tagId}, #{reviewTag.reviewId}, COALESCE(#{reviewTag.regdate}, NOW()))
         </foreach>
     </insert>
+
+    <select id="getReviewTags" resultType="com.lec.spring.matzip.domain.ReviewTag">
+        SELECT regdate, my_review_id AS reviewId, tag_id AS tagId
+        FROM review_tag
+        WHERE my_review_id = #{id}
+    </select>
 
     <select id="checkHiddenMatzip" resultType="Long">
         SELECT m.member_id
@@ -44,5 +64,9 @@
 
     <delete id="deleteById" flushCache="true" parameterType="com.lec.spring.matzip.domain.Review">
         DELETE FROM my_review WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteReviewTags">
+        DELETE FROM review_tag WHERE my_review_id = #{id}
     </delete>
 </mapper>

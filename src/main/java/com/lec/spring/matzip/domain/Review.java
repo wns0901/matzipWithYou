@@ -9,10 +9,13 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 public class Review {
     private Long id;
     private String content;
     private LocalDateTime regdate;
     private int starRating;
+
+    private Long matzipId;
+    private Long memberId;
 }

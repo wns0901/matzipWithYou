@@ -263,5 +263,8 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.update(member);
     }
 
-
+    @Override
+    public int getPoontByMemberId(Long id) {
+        return memberRepository.getPointByMemberId(id);
+    }
 }// end MemberServiceImpl
