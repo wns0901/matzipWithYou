@@ -1,19 +1,15 @@
-package com.lec.spring.matzip.domain;
+package com.lec.spring.matzip.domain.DTO;
 
+import com.lec.spring.matzip.domain.ReviewTag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class ReviewTag {
-    private LocalDateTime regdate;
-
-    private Long tagId;
-    private Long reviewId;
+public class ReviewTagDTO extends ReviewTag {
+    private String tagName;
 }
