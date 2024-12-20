@@ -318,6 +318,6 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         reviewRepository.deleteReviewTags(id);
-        return reviewRepository.deleteReviewTags(id);
+        return reviewRepository.deleteById(id);
     }
 }
