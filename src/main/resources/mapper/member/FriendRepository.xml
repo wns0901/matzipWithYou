@@ -100,6 +100,39 @@
                  p.filename
     </select>
 
+    <!-- 친구 검색 -->
+    <!-- 친구 검색 -->
+    <select id="searchPotentialFriends" resultType="com.lec.spring.member.domain.FriendSearchResponseDTO">
+        SELECT DISTINCT
+            m.id AS id,
+            m.username AS username,
+            m.nickname AS nickname,
+            pi.filename AS profileImg,
+            COUNT(CASE WHEN mm.visibility = 'PUBLIC' THEN 1 END) AS publicCount,
+            COUNT(CASE WHEN mm.visibility = 'HIDDEN' THEN 1 END) AS hiddenCount
+        FROM member m
+                 LEFT JOIN profile_img pi ON m.id = pi.member_id
+                 LEFT JOIN my_matzip mm ON m.id = mm.member_id
+        WHERE
+            m.id != #{currentMemberId}
+          AND m.id NOT IN (
+            SELECT DISTINCT
+            CASE
+            WHEN sender_id = #{currentMemberId} THEN receiver_id
+            WHEN receiver_id = #{currentMemberId} THEN sender_id
+            END
+            FROM friend
+            WHERE (sender_id = #{currentMemberId} OR receiver_id = #{currentMemberId})
+            )
+          AND (
+            LOWER(m.nickname) LIKE CONCAT('%', LOWER(#{searchTerm}), '%')
+           OR LOWER(m.username) LIKE CONCAT('%', LOWER(#{searchTerm}), '%')
+            )
+          AND #{searchTerm} != ''
+        GROUP BY
+            m.id, m.username, m.nickname, pi.filename;
+    </select>
+
 
     <!-- 친밀도 업데이트 -->
     <update id="updateIntimacy" flushCache="true">

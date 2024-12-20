@@ -1,11 +1,14 @@
 package com.lec.spring.member.controller;
 
+import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.domain.FriendRequestDTO;
+import com.lec.spring.member.domain.FriendSearchResponseDTO;
 import com.lec.spring.member.service.FriendService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -74,7 +77,7 @@ public class FriendController {
         return ResponseEntity.ok(affectedRows);
     }
 
-
+    // 친구 목록
     @GetMapping("")
     public String showFriendList(@PathVariable Long memberId, Model model) {
         model.addAttribute("memberId", memberId);

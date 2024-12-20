@@ -1,8 +1,6 @@
 package com.lec.spring.member.service;
 
-import com.lec.spring.member.domain.Friend;
-import com.lec.spring.member.domain.FriendDetailsDTO;
-import com.lec.spring.member.domain.FriendRequestDTO;
+import com.lec.spring.member.domain.*;
 import com.lec.spring.member.repository.FriendRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -13,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+
 public class FriendServiceImpl implements FriendService {
     private final FriendRepository friendRepository;
 
@@ -22,7 +21,7 @@ public class FriendServiceImpl implements FriendService {
 
     // 친구 요청 보내기
     @Override
-    public int sendFriendRequest(Friend friend) {
+    public int sendFriendRequest(Friend friend){
 
         // 중복 요청 확인
         if (friendRepository.isAlreadyFriend(friend)) { // ?
@@ -83,6 +82,19 @@ public class FriendServiceImpl implements FriendService {
                     return dto;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FriendSearchResponseDTO> searchPotentialFriends(String searchTerm, Long currentMemberId) {
+        List<FriendSearchResponseDTO> results = friendRepository.searchPotentialFriends(searchTerm, currentMemberId);
+
+        results.forEach(dto -> {
+            dto.setProfileImg(dto.getProfileImg() != null ?
+                    "/upload/" + dto.getProfileImg() :
+                    "/images/default-profile.png");
+        });
+
+        return results;
     }
 
 

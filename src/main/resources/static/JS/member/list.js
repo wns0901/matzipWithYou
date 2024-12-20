@@ -194,41 +194,67 @@ document.querySelector('.btn-add').addEventListener('click', () => {
     addModal.style.display = 'block';
 });
 
-// 친구 검색 기능
+// 기존 검색 함수를 아래와 같이 수정
 let searchTimeout;
-document.getElementById('searchInput').addEventListener('input', (e) => {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(async () => {
-        const searchTerm = e.target.value;
-        if (!searchTerm) return;
+const searchInput = document.getElementById('searchInput');
+const searchButton = document.getElementById('searchButton');
+const searchResults = document.getElementById('searchResults');
 
-        try {
-            const response = await fetch(`/api/members/search?term=${searchTerm}`);
-            const results = await response.json();
+// 검색 함수
+const performSearch = async (searchTerm) => {
+    // 검색어가 비어있으면 결과를 비움
+    if (!searchTerm.trim()) {
+        searchResults.innerHTML = '';
+        return;
+    }
 
-            const container = document.getElementById('searchResults');
-            container.innerHTML = '';
+    try {
+        const response = await fetch(`/api/friends/search?term=${encodeURIComponent(searchTerm)}`);
+        const results = await response.json();
 
-            results.forEach(user => {
-                const card = document.createElement('div');
-                card.className = 'friend-card';
-                card.innerHTML = `
-                    <div>
-                        <img src="${user.profileImg || '/IMG/defaultProfileImg.png'}"
-                             onerror="this.src='/IMG/defaultProfileImg.png'">
-                        <span>${user.nickname}</span>
-                        <span>@${user.username}</span>
-                        <span>공개: ${user.publicCount}</span>
-                        <span>비공개: ${user.hiddenCount}</span>
-                    </div>
-                    <button onclick="sendFriendRequest(${user.id})">친구 요청</button>
-                `;
-                container.appendChild(card);
-            });
-        } catch (error) {
-            console.error('사용자 검색 실패:', error);
+        searchResults.innerHTML = '';
+
+        if (results.length === 0) {
+            searchResults.innerHTML = `
+                <div class="no-results">
+                    <p>결과가 없습니다.</p>
+                    <p>철자가 정확한지 확인하거나 다시 입력해보세요.</p>
+                </div>`;
+            return;
         }
-    }, 300);
+
+        results.forEach(member => {
+            const card = document.createElement('div');
+            card.className = 'friend-card';
+            card.innerHTML = `
+                <div>
+                    <img src="${member.profileImg || '/IMG/defaultProfileImg.png'}"
+                         onerror="this.src='/IMG/defaultProfileImg.png'">
+                    <span>${member.nickname}</span>
+                    <span>@${member.username}</span>
+                    <span>공개: ${member.publicCount}</span>
+                    <span>비공개: ${member.hiddenCount}</span>
+                </div>
+                <button onclick="sendFriendRequest(${member.id})">친구 요청</button>
+            `;
+            searchResults.appendChild(card);
+        });
+    } catch (error) {
+        console.error('사용자 검색 실패:', error);
+        searchResults.innerHTML = '<div class="error">검색 중 오류가 발생했습니다.</div>';
+    }
+};
+
+// 검색 버튼 클릭 이벤트
+searchButton.addEventListener('click', () => {
+    performSearch(searchInput.value);
+});
+
+// 입력창 이벤트는 검색 버튼을 눌렀을 때만 작동하도록 제거
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        performSearch(searchInput.value);
+    }
 });
 
 async function respondToRequest(senderId, isAccept) {
