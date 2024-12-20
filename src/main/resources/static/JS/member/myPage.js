@@ -7,20 +7,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    const friendButton = document.querySelector('.info-button .friends');
-    friendButton.addEventListener('click', function() {
-        // URL에서 현재 memberId 가져오기
-        const currentPath = window.location.pathname;
-        const memberId = currentPath.split('/')[2]; // /members/{memberId} 에서 memberId 추출
 
-        if (memberId) {
-            window.location.href = `/members/${memberId}/friends/view`;
-        } else {
-            console.error('memberId is missing');
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.pathname.match(/^\/members\/\d+$/)) {
+        const friendButton = document.querySelector('.info-button .info-label.friends');
+        if (!friendButton) {
+            console.error('친구 버튼을 찾을 수 없습니다');
+            return;
         }
-    });
+
+        friendButton.addEventListener('click', function() {
+            console.log(1)
+            const memberId = this.getAttribute('data-member-id');
+            if (!memberId) {
+                console.error('회원 ID를 찾을 수 없습니다');
+                return;
+            }
+
+            // URL 이동
+            window.location.href = `/members/${memberId}/friends`;
+        });
+    }
 });
+
 
 // 닉 변경 기능
 document.addEventListener('DOMContentLoaded', function () {
@@ -68,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 // 서버로 닉네임 전송
                 fetch(`/members/${memberId}`, {
                     method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ newNickname })
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({newNickname})
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -93,7 +103,3 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
-
-
-
-

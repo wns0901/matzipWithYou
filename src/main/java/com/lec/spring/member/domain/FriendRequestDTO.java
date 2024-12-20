@@ -5,16 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FriendDetailsDTO {
-    private Long friendId;
+public class FriendRequestDTO {
+    private Long senderId;
+    private Long receiverId;
     private String nickname;
     private String username;
     private Integer intimacy;
+    private Boolean isAccept;
+    private String profileImg;
     private Integer publicCount;
     private Integer hiddenCount;
-    private String profileImg;
+    private LocalDateTime regdate;
+
 }

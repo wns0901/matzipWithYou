@@ -57,11 +57,11 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/matzips/food-kinds/**",
                                 "/matzips/tags/**",
-                                "/admin/**",
-                                "/members/{id}"
+                                "/admin/**"
                         ).hasRole("ADMIN")
 
                         .requestMatchers(
+                                "/members/{id}",
                                 "/matzips/*/visibility",
                                 "/matzips/reviews/**",
                                 "/matzip/reviewList/**",

@@ -1,6 +1,7 @@
 const centerLatLng = data.centerLatLng,
     totalList = data.totalMatzipList,
     friendListLenght = data.friendList.length,
+    TIMEOUT = 1000,
 
     mapContainer = document.getElementById("map"),
     mapOption = {
@@ -10,8 +11,8 @@ const centerLatLng = data.centerLatLng,
     ps = new kakao.maps.services.Places(),
     map = new kakao.maps.Map(mapContainer, mapOption),
     overlay = new kakao.maps.CustomOverlay(),
-
     markers = [],
+
     closeBtn = document.getElementById('close_detail_btn'),
     detailInfo = document.getElementById('detail-info'),
     searchBtn = document.getElementById('search_btn'),
@@ -23,7 +24,11 @@ const centerLatLng = data.centerLatLng,
     rightBtn = document.getElementById('right'),
     hiddenDetial = document.getElementById('hidden_detail'),
     closeHiddenDetailBtn = document.getElementById('close_hidden_detail_btn'),
-    inputKeyWord = document.getElementById('keyword')
+    inputKeyWord = document.getElementById('keyword'),
+    purchasingCancelBtn = document.querySelector('#cancel'),
+    hintResultColseBtn = document.querySelector('#stop'),
+    oneMoreBtn = document.querySelector('#one_more'),
+    backBtn = document.querySelector('#back')
 ;
 
 let searchResultList,
@@ -32,16 +37,14 @@ let searchResultList,
     friendEnd = 2
 ;
 
-console.log(data);
-
-displayPlaces(totalList);
+if (totalList[0]) displayPlaces(totalList);
 displayFriendProfile();
 
 searchBtn.addEventListener('click', searchPlaces);
 searchSelectBtn.addEventListener('click', postMatzipData);
 addBtn.addEventListener('click', () => searchWindow.classList.remove('hidden'));
 closeSearchBtn.addEventListener('click', () => {
-    searchWindow.className += ' hidden'
+    searchWindow.classList.add('hidden')
     Array.from(searchWindow.childNodes).forEach(node => {
         if (node.id === 'keyword') node.value = '';
         else if (node.id === 'result_list') node.innerHTML = '';
@@ -51,13 +54,15 @@ closeBtn.addEventListener('click', closeDetailEnvent);
 leftBtn.addEventListener('click', moveLeftFriendListEvent);
 rightBtn.addEventListener('click', moveRightFriendListEvent);
 closeHiddenDetailBtn.addEventListener('click', closeHiddenDetailEvent);
-inputKeyWord.addEventListener('keyup', enterSearchEnvet)
+inputKeyWord.addEventListener('keyup', enterSearchEnvet);
+purchasingCancelBtn.addEventListener('click', cancelBtnEvent);
+hintResultColseBtn.addEventListener('click', cancelBtnEvent);
+backBtn.addEventListener('click', cancelBtnEvent);
 
 async function displayPlaces(places, isFriendList = false) {
     const matzipWrap = document.getElementById('matzip_wrap'),
         bounds = new kakao.maps.LatLngBounds(),
         fragment = document.createDocumentFragment();
-
     removeAllChildNods(matzipWrap);
     removeMarker();
 
@@ -79,6 +84,11 @@ async function displayPlaces(places, isFriendList = false) {
                     overlay.setMap(null);
                     item.classList.remove('selected')
                 });
+            } else {
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    const myMatzipIds = place.myMatzipIds ? place.myMatzipIds : [place.myMatzipId];
+                    clickHiddenEvent(place.myMatzipIds)
+                })
             }
 
             item.onmouseover = function () {
@@ -98,6 +108,140 @@ async function displayPlaces(places, isFriendList = false) {
     matzipWrap.appendChild(fragment);
 
     if (!isFriendList) map.setBounds(bounds);
+}
+
+function getMemberPoint(id) {
+    const url = '/member/' + id + '/points';
+    return fetch(url).then(res => res.json());
+}
+
+async function clickHiddenEvent(myMatzipIds) {
+    const point = (await getMemberPoint(data.memberId)).point;
+    myMatzipId = myMatzipIds[0];
+    const pointSpan = document.querySelector('#purchasing_hint_info span'),
+        hintInfoWindow = document.querySelector('#purchasing_hint_info'),
+        allOverlay = document.getElementById('all_overlay');
+
+    allOverlay.classList.remove('hidden');
+    hintInfoWindow.classList.remove('hidden');
+
+    pointSpan.textContent = '소지 포인트 ' + point + 'pt';
+
+    const purchaseBtn = document.querySelector('#purchase');
+    purchaseBtn.addEventListener('click', (e) => {
+        purchasingHintEvent(e, myMatzipId, hintInfoWindow)
+    });
+}
+
+async function getHintList(myMatzipId) {
+    const url = '/matzip/tags/' + myMatzipId;
+    return await fetch(url).then(res => res.json());
+}
+
+async function purchasingHintEvent(e, myMatzipId, hintInfoWindow) {
+    hintInfoWindow.className = 'fade_out';
+    const hintTagWindow = document.querySelector('#hint_tags');
+    hintTagWindow.className = 'fade_in_ready';
+    setTimeout(() => {
+        hintInfoWindow.className = 'hidden';
+        document.querySelector('#hint_result').className = 'hidden'
+        hintTagWindow.className = 'fade_in';
+    }, TIMEOUT)
+    const hintTagList = document.querySelectorAll('.hint_tag'),
+        hintPopup = document.querySelector('#hint_popup'),
+        fragment = document.createDocumentFragment(),
+        hintData = await getHintList(myMatzipId),
+        openHint = hintData.purchased,
+        unopenedHint = hintData.unpurchased,
+        isFinished = unopenedHint.length === 1;
+
+    if (unopenedHint.length) {
+        hintPopup.classList.remove('hidden');
+    } else {
+        hintPopup.classList.add('hidden');
+    }
+
+
+    oneMoreBtn.addEventListener('click', function oneMoreBtnEvent(event) {
+        document.querySelector('#hint_result').className = 'fade_out';
+        purchasingHintEvent(event, myMatzipId, hintInfoWindow);
+        oneMoreBtn.removeEventListener('click', oneMoreBtnEvent);
+    });
+
+    unopenedHint.forEach((tag, i) => {
+        const tagElement = document.createElement('div');
+        tagElement.className = 'hint_tag';
+        tagElement.id = 'hint_tag' + (i + 1);
+        tagElement.innerHTML = '<span class="hint_text">HINT</span>'
+
+        const reqData = {tag, hintTagWindow, hintTagList, myMatzipId, memberId: data.memberId};
+        tagElement.addEventListener('click', (event) => openingHintEvent(event, reqData, isFinished));
+
+        fragment.appendChild(tagElement);
+
+    })
+
+
+    openHint.forEach((tag, i) => {
+        const tagElement = document.createElement('div');
+        tagElement.className = 'result_tag';
+        tagElement.id = 'result_tag' + (i + 1);
+        tagElement.innerHTML = '<span class="result_text">' + tag.tagName + '</span>'
+
+        fragment.appendChild(tagElement);
+    })
+
+    hintTagWindow.appendChild(fragment);
+}
+
+async function openingHintEvent(e, {tag, hintTagWindow, hintTagList, memberId, myMatzipId}, isFinished) {
+
+    e.stopPropagation();
+    hintTagWindow.className = 'fade_out';
+    const hintResultWindow = document.querySelector('#hint_result');
+    hintResultWindow.className = 'fade_in_ready';
+    setTimeout(() => {
+        hintTagWindow.className = 'hidden';
+        hintTagWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png" class="hidden">';
+        hintTagWindow.appendChild(backBtn);
+        hintResultWindow.className = 'fade_in';
+    }, TIMEOUT)
+    if (isFinished) {
+        oneMoreBtn.classList.add('hidden');
+    } else {
+        oneMoreBtn.classList.remove('hidden');
+    }
+    hintResultWindow.classList.remove('hidden');
+    if (!(await saveHintStatus(tag.tagId, memberId, myMatzipId))) {
+        alert('힌트 구매 실패');
+        location.reload();
+        return;
+    }
+    const hintSpan = document.querySelector('#hint_result span');
+    hintSpan.textContent = tag.tagName;
+}
+
+async function saveHintStatus(tagId, memberId, myMatzipId) {
+    const method = 'POST',
+        headers = {'Content-Type': 'application/json'},
+        body = JSON.stringify({tagId, memberId, myMatzipId}),
+        url = '/matzip/saveTag';
+
+    const result = await fetch(url, {method, headers, body});
+    return result.status === 200;
+}
+
+function cancelBtnEvent(e) {
+    const allOverlay = document.getElementById('all_overlay');
+    allOverlay.classList.add('hidden');
+    const hintInfoWindow = document.querySelector('#purchasing_hint_info');
+    hintInfoWindow.classList.add('hidden');
+    const hintResultWindow = document.querySelector('#hint_result');
+    hintResultWindow.classList.add('hidden');
+    const hintTagsWindow = document.querySelector('#hint_tags');
+    hintInfoWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png" class="hidden">' +
+        '<button id="back"><span>돌아가기</span></button>';
+    hintTagsWindow.classList.add('hidden');
 }
 
 function addMakers(position) {
@@ -152,17 +296,7 @@ async function getDivItem(place, wishList) {
         matzipName.className = 'matzip_name';
         matzipName.textContent = place.name;
 
-        wishListBtn.className = 'wish_heart';
-        wishListBtn.type = 'button';
-        wishListBtn.dataset.matzipId = place.matzipId;
-        wishListBtn.onclick = updateWishListEvent;
-        if (wishList.includes(place.matzipId)) {
-            wishListBtn.style.backgroundImage = 'url(' + fillHeartImgUrl + ')';
-            wishListBtn.dataset.status = 'fill';
-        } else {
-            wishListBtn.style.backgroundImage = 'url(' + emptyHeartImgUrl + ')';
-            wishListBtn.dataset.status = 'empty';
-        }
+        makeWishListBtn(wishListBtn, place.matzipId);
 
         card.appendChild(matzipImg);
         card.appendChild(matzipName);
@@ -173,6 +307,23 @@ async function getDivItem(place, wishList) {
     }
 
     return card;
+}
+
+function makeWishListBtn(wishListBtn, matzipId, isSearch = false) {
+    wishListBtn.className = 'wish_heart';
+    wishListBtn.type = 'button';
+    wishListBtn.dataset.matzipId = matzipId;
+    wishListBtn.addEventListener('click', (e) => updateWishListEvent(e, isSearch));
+    if (wishList.includes(matzipId)) {
+        wishListBtn.style.backgroundImage = 'url(' + fillHeartImgUrl + ')';
+        wishListBtn.dataset.status = 'fill';
+    } else if (isSearch) {
+        wishListBtn.style.backgroundImage = 'url(/IMG/matzip/gray_heart.png)';
+        wishListBtn.dataset.status = 'empty';
+    } else {
+        wishListBtn.style.backgroundImage = 'url(' + emptyHeartImgUrl + ')';
+        wishListBtn.dataset.status = 'empty';
+    }
 }
 
 function removeMarker() {
@@ -280,14 +431,16 @@ function makeTagList(node, tagList) {
     node.appendChild(fragment);
 }
 
-function dataIntoDetailCard(result) {
+function dataIntoDetailCard(result, isSearch = false) {
     const img = detailInfo.querySelector('#matzip_detail_img'),
         name = detailInfo.querySelector('#matzip_name'),
         address = detailInfo.querySelector('#matzip_address'),
         starRating = detailInfo.querySelector('#star_rating_list'),
         tagList = detailInfo.querySelector('#tags_wrap'),
         reviewBtn = detailInfo.querySelector('#write_review_btn'),
-        kindName = detailInfo.querySelector('#kind_name');
+        kindName = detailInfo.querySelector('#kind_name'),
+        wishListBtn = detailInfo.querySelector('#detail_wish_list_btn')
+    ;
 
     img.src = result.imgUrl;
 
@@ -303,6 +456,12 @@ function dataIntoDetailCard(result) {
 
     makeStarList(starRating, result.starRating);
 
+    if (isSearch) {
+        makeWishListBtn(wishListBtn, result.id, isSearch);
+    } else {
+        wishListBtn.style.backgroundImage = null;
+        wishListBtn.dataset.status = null;
+    }
 }
 
 function searchPlaces() {
@@ -390,8 +549,8 @@ function postMatzipData() {
             }
 
             const searchWindow = document.getElementById('search_window');
-            searchWindow.className += ' hidden'
-            dataIntoDetailCard(res.data)
+            searchWindow.classList.add('hidden')
+            dataIntoDetailCard(res.data, true);
             detailInfo.querySelector('#star_rating_list').innerHTML = '';
             detailInfo.querySelector('#tags_wrap').innerHTML = '';
             detailInfo.classList.remove('hidden')
@@ -400,14 +559,16 @@ function postMatzipData() {
         })
 }
 
-function updateWishListEvent(e) {
+function updateWishListEvent(e, isSearch = false) {
     e.stopPropagation();
 
     const item = e.currentTarget,
         isFilled = item.dataset.status === 'fill',
-        matzipId = Number(item.dataset.matzipId),
+        isEmpty = !isFilled
+    matzipId = Number(item.dataset.matzipId),
         memberId = data.memberId,
-        imgUrl = isFilled ? emptyHeartImgUrl : fillHeartImgUrl,
+        searchImgUrl = '/IMG/matzip/gray_heart.png',
+        imgUrl = isEmpty ? fillHeartImgUrl : isSearch ? searchImgUrl : emptyHeartImgUrl,
 
         method = isFilled ? 'DELETE' : 'POST',
         url = '/matzips/wish-list/' + memberId + (isFilled ? '/' + matzipId : ''),
@@ -429,7 +590,6 @@ function updateWishListEvent(e) {
                 alert('위시리스트 업데이트 실패')
                 return;
             }
-
             item.style.backgroundImage = 'url(' + imgUrl + ')';
             item.dataset.status = isFilled ? 'empty' : 'fill';
         })
@@ -502,12 +662,12 @@ function friendClickEvent(e) {
         friendMatzipList = friendData.matzipList;
 
     if (!overlay.classList.contains('hidden')) {
-        overlay.className += ' hidden';
+        overlay.classList.add('hidden');
         displayPlaces(totalList);
         return;
     }
 
-    for (const e of overlayList) e.className += ' hidden';
+    for (const e of overlayList) e.classList.add('hidden');
     friendList.forEach(f => {
         delete f.isSelected;
     })
@@ -549,9 +709,10 @@ function closeDetailEnvent(e) {
         starRating = detailInfo.querySelector('#star_rating_list'),
         tagList = detailInfo.querySelector('#tags_wrap'),
         reviewBtn = detailInfo.querySelector('#write_review_btn'),
-        kindName = detailInfo.querySelector('#kind_name');
+        kindName = detailInfo.querySelector('#kind_name'),
+        wishListBtn = detailInfo.querySelector('#detail_wish_list_btn');
 
-    detailInfo.className += ' hidden';
+    detailInfo.classList.add('hidden');
 
     img.src = '#';
 
@@ -566,13 +727,16 @@ function closeDetailEnvent(e) {
     tagList.innerHTML = '';
 
     starRating.innerHTML = '';
+
+    delete wishListBtn.style.backgroundImage;
+    delete wishListBtn.dataset.status;
 }
 
 function closeHiddenDetailEvent(e) {
     const text1 = hiddenDetial.querySelector('#hidden_detail_text1'),
         text2 = hiddenDetial.querySelector('#hidden_detail_text2');
 
-    hiddenDetial.className += ' hidden';
+    hiddenDetial.classList.add('hidden');
 
     text1.textContent = '';
     text2.textContent = '';

@@ -4,7 +4,6 @@ package com.lec.spring.matzip.repository;
 import com.lec.spring.matzip.domain.UserMatzipTagStatus;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface UserMatzipTagStatusRepository {
@@ -24,8 +23,11 @@ public interface UserMatzipTagStatusRepository {
     // memberID기준으로 member가 구매한 태그와 구매하지 않은 태그가져오기 (visiblity = "hidden")이여야함
     List<UserMatzipTagStatus> listpurchasedTagByMemberId(Long memberId);
 
-    List<UserMatzipTagStatus> listUnpurchasedTagByMemberId(Long memberId);
+    List <UserMatzipTagStatus> listWholeHiddenMatizpByMemberId();
 
+    int deductPointsForHint(Long memberId, int pointsToDeduct);
+    // 현재 소지 포인트
+    int getCurrentPoint(Long memberId);
 
 } // end HintPurchaseRepository
 

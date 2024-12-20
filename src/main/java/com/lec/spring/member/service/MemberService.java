@@ -55,5 +55,6 @@ public interface MemberService {
 
     ResponseEntity<Map<String, List<String>>> findNicknameBymemberIds(List<Long> memberIds);
 
+    int getPoontByMemberId(Long id);
 
 }

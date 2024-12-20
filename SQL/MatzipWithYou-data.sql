@@ -83,7 +83,28 @@ VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5c
        ('member_user3', '$2a$10$Qk.A1REypdS/s1YmvjmiIO2ES/6AfB45asIW7kM/7d3yLbOKp1zS2', 'member3@email.com', 80,
         'gourmet3', '현지윤'),
        ('member_user4', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member4@email.com', 300,
-        'test1', '테스트')
+        'test1', '테스트'),
+       ('MEMBER_USER5', '$2a$10$GlFVmb/5z0.aFThUugcM3OUmhH46cMqAGFN1W8IbduyT3iyT5orXC', 'member5@email.com', 300,
+        'test2', '길동이'),
+       ('MEMBER_USER6', '$2a$10$c9yisLysQE1drcbWSN29b.V2WHBlvuri3rdypd6Qyzqp9FLXB7fk.', 'member6@email.com', 300,
+        'test3', '이동혁'),
+       ('MEMBER_USER7', '$2a$10$5GL24HpEFb9znIaoc3oSn.DYTPv6coPhNWkG9uJT9rIgTEjYWrcRe', 'member7@email.com', 300,
+        'test4', '역삼역'),
+       ('MEMBER_USER8', '$2a$10$6u7ikvytMmJD6u4owOCUwutiSwB3jPGj2YPZ9lUF.FqwDqXn6rrym', 'member8@email.com', 300,
+        'test5', '드뷔시'),
+       ('MEMBER_USER9', '$2a$10$H9NkzUqcvJP0CgMYb8pHCe14.5Hr7c6/7hUxkdd5c8/YPPbCUqncm', 'member9@email.com', 300,
+        'test6', '기러기'),
+       ('MEMBER_USER10', '$2a$10$2G.SqWi7EwBXpKLkFYuLzuOgrm/fLIOq.VSBGfpinOKu58nErzoSO', 'member10@email.com', 300,
+        'test7', '우주'),
+       ('MEMBER_USER11', '$2a$10$aejxI6ImFhaqnBOy78YlNuQoX/zTOzWihehgQ0MykQpQY2m/6b/JS', 'member11@email.com', 300,
+        'test8', '하늘'),
+       ('MEMBER_USER12', '$2a$10$KuDVfAdLx0leQBUmzBwr6uvk5mUg.UnScNq9qC8PWxeiayMBKErjG', 'member12@email.com', 300,
+        'test9', '바다')
+
+
+
+
+
 ;
 
 -- member_authorities 테이블 더미 데이터
@@ -355,7 +376,10 @@ VALUES (1, 2, 200, TRUE),
        (2, 4, 500, TRUE),
        (2, 3, 300, TRUE),
        (3, 4, 0, FALSE),
-       (2, 5, 10, TRUE)
+       (2, 5, 10, TRUE),
+       (5, 1, 50, FALSE),
+       (6, 1, 20, FALSE),
+       (7, 1, 0, FALSE)
 ;
 
 
