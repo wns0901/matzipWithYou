@@ -17,13 +17,21 @@
           AND receiver_id = #{receiverId}
     </update>
 
-    <!-- 친구 요청 거절 / 삭제 -->
+    <!-- 친구 요청 거절 -->
     <delete id="rejectFriendRequest" parameterType="com.lec.spring.member.domain.Friend" flushCache="true">
         DELETE
         FROM friend
         WHERE receiver_id = #{receiverId}
           and sender_id = #{senderId}
     </delete>
+
+    <!-- 친구 삭제 -->
+    <update id="deleteFriend" parameterType="Long">
+        UPDATE friend
+        SET is_accept = false
+        WHERE (sender_id = #{friendId} OR receiver_id = #{friendId})
+          AND is_accept = true
+    </update>
 
     <!-- 친구 신청 보낼 때 이미 보낸/받은 신청은 아닌지 확인 -->
     <select id="isAlreadyFriend" parameterType="com.lec.spring.member.domain.Friend" resultType="boolean">

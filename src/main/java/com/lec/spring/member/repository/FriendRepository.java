@@ -18,6 +18,7 @@ public interface FriendRepository{
     // 친구 목록 조회 (친구와 맛집 공개 상태 정보 포함)
     List<FriendDetailsDTO> findFriendsWithDetailsDTO(Long memberId);
 
+    // 친구 검색
     List<FriendSearchResponseDTO> searchPotentialFriends(@Param("searchTerm") String searchTerm,
                                                          @Param("currentMemberId") Long currentMemberId);
     // 대기 중인 요청 목록 조회
@@ -28,6 +29,10 @@ public interface FriendRepository{
 
     // 친구 요청 거절 & 친삭
     int rejectFriendRequest(Friend friend);
+
+
+    int deleteFriend(Long friendId, Long memberId);
+
 
     // 친구 요청 보내기
     int sendFriendRequest(Friend friend);

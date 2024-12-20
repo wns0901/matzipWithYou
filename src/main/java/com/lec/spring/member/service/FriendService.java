@@ -17,7 +17,7 @@ public interface FriendService {
     int respondToRequest(Friend friend);
 
     // 친구 삭제
-    int deleteFriend(Friend friend);
+    int deleteFriend(Long friendId, Long memberId);
 
     // 친구 상세 정보
     List<FriendDetailsDTO> getFriendsWithDetailsDTO(Long memberId);
