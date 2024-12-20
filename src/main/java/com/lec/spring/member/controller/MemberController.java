@@ -313,6 +313,12 @@ public class MemberController {
         return memberService.findNicknameBymemberIds(memberId);
     }
 
+    @ResponseBody
+    @GetMapping("/{memberId}/points")
+    public ResponseEntity<Map<String, Integer>> getMemberPoints(@PathVariable Long memberId) {
+        return ResponseEntity.ok(Map.of("point", memberService.getPoontByMemberId(memberId)));
+    }
+
     @Qualifier("redisTemplate")
     @Autowired
     public void setRedisTemplate(RedisTemplate redisTemplate) {

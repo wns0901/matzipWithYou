@@ -16,6 +16,7 @@ import java.util.Objects;
 public class TotalMatzipListDataDTO {
     private String visibility;
     private List<Long> memberIds;
+    private List<Long> myMatzipIds;
     private Long matzipId;
     private String name;
     private String address;
@@ -34,6 +35,7 @@ public class TotalMatzipListDataDTO {
         lng = other.getLng();
         imgUrl = other.getImgUrl();
         regdate = other.getRegdate();
+        myMatzipIds = new ArrayList<>(List.of(other.getMyMatzipId()));
     }
 
     @Override

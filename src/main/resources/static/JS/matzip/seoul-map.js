@@ -27,42 +27,42 @@ const districtNames = {
 };
 
 const lockPositions = {
-    'Gangnam-gu': { x: 950, y: 1020 },
-    'Gangdong-gu': { x: 1220, y: 770 },
-    'Gangbuk-gu': { x: 824, y: 385 },
-    'Gangseo-gu': { x: 200, y: 720 },
-    'Gwanak-gu': { x: 600, y: 1100 },
-    'Gwangjin-gu': { x: 950, y: 700 },
-    'Guro-gu': { x: 400, y: 900 },
-    'Geumcheon-gu': { x: 450, y: 1050 },
-    'Nowon-gu': { x: 1000, y: 300 },
-    'Dobong-gu': { x: 885, y: 275 },
-    'Dongdaemun-gu': { x: 945, y: 620 },
-    'Dongjak-gu': { x: 600, y: 965 },
-    'Mapo-gu': { x: 490, y: 735 },
-    'Seodaemun-gu': { x: 570, y: 630 },
-    'Seocho-gu': { x: 810, y: 1100 },
-    'Seongdong-gu': { x: 895, y: 755 },
-    'Seongbuk-gu': { x: 800, y: 450 },
-    'Songpa-gu': { x: 1000, y: 850 },
-    'Yangcheon-gu': { x: 350, y: 750 },
-    'Yeongdeungpo-gu': { x: 500, y: 800 },
-    'Yongsan-gu': { x: 700, y: 750 },
-    'Eunpyeong-gu': { x: 550, y: 400 },
-    'Jongno-gu': { x: 700, y: 500 },
-    'Jung-gu': { x: 750, y: 650 },
-    'Jungnang-gu': { x: 1000, y: 500 }
+    'Gangnam-gu': {x: 950, y: 1020},
+    'Gangdong-gu': {x: 1220, y: 770},
+    'Gangbuk-gu': {x: 824, y: 385},
+    'Gangseo-gu': {x: 200, y: 720},
+    'Gwanak-gu': {x: 600, y: 1100},
+    'Gwangjin-gu': {x: 950, y: 700},
+    'Guro-gu': {x: 400, y: 900},
+    'Geumcheon-gu': {x: 450, y: 1050},
+    'Nowon-gu': {x: 1000, y: 300},
+    'Dobong-gu': {x: 885, y: 275},
+    'Dongdaemun-gu': {x: 945, y: 620},
+    'Dongjak-gu': {x: 600, y: 965},
+    'Mapo-gu': {x: 490, y: 735},
+    'Seodaemun-gu': {x: 570, y: 630},
+    'Seocho-gu': {x: 810, y: 1100},
+    'Seongdong-gu': {x: 895, y: 755},
+    'Seongbuk-gu': {x: 800, y: 450},
+    'Songpa-gu': {x: 1000, y: 850},
+    'Yangcheon-gu': {x: 350, y: 750},
+    'Yeongdeungpo-gu': {x: 500, y: 800},
+    'Yongsan-gu': {x: 700, y: 750},
+    'Eunpyeong-gu': {x: 550, y: 400},
+    'Jongno-gu': {x: 700, y: 500},
+    'Jung-gu': {x: 750, y: 650},
+    'Jungnang-gu': {x: 1000, y: 500}
 };
 
 let currentData = serverData.toTalData;
 let selectedFriendId = null;
 
 const colorRanges = [
-    { threshold: 0, color: '#FFFFFF' },
-    { threshold: 0.0001, color: '#FFE2BA' },
-    { threshold: 0.25, color: '#FF9345' },
-    { threshold: 0.50, color: '#FF7327' },
-    { threshold: 0.75, color: '#D25800' }
+    {threshold: 0, color: '#FFFFFF'},
+    {threshold: 0.0001, color: '#FFE2BA'},
+    {threshold: 0.25, color: '#FF9345'},
+    {threshold: 0.50, color: '#FF7327'},
+    {threshold: 0.75, color: '#D25800'}
 ];
 
 function getMaxCount(data) {
@@ -211,12 +211,18 @@ document.addEventListener('DOMContentLoaded', () => {
     paths.forEach(path => {
         path.addEventListener('mousemove', (e) => showTooltip(e, path.id));
         path.addEventListener('mouseleave', hideTooltip);
+        path.addEventListener('click', guClickEvent);
     });
 
     initializeFriendCards();
     updateMap(currentData);
 });
 
-
-
+function guClickEvent(e) {
+    const target = e.target,
+        memberId = location.href.split('/').pop(),
+        gu = districtNames[target.id],
+        url = '/matzips/' + memberId + '/' + gu;
+    location.href = url;
+}
 
