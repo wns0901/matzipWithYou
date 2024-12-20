@@ -298,3 +298,9 @@ ALTER TABLE matzip
             REFERENCES food_kind (id)
             ON UPDATE RESTRICT
             ON DELETE CASCADE;
+
+alter table member
+    add column provider varchar(40);
+
+alter table member
+    add column providerId varchar(200);
