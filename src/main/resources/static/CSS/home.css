@@ -5,6 +5,10 @@ html, body {
     margin: 0;
     overflow: hidden;
 }
+
+.navbar .container {
+    background-color: transparent;
+}
 .section {
     transform: translateY(100vh); /* 기본적으로 화면 밖으로 밀어냄 */
 }
@@ -290,4 +294,29 @@ padding-left: 20px;
 position: fixed;
 top: 28%;
 left: 0;
+}
+
+.navbar .container {
+    box-shadow: none;
+    padding: 0px;
+}
+
+.navbar{
+    position: absolute;
+}
+
+.nav-buttons{
+    left: 0;
+    position: fixed;
+    left: 82%;
+}
+
+.nav-user{
+    left: 0;
+    position: fixed;
+    left: 82%;
+}
+
+.nav-buttons > a:first-child {
+    background-color: white; /* 배경색을 흰색으로 설정 */
 }
