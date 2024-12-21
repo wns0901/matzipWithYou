@@ -16,10 +16,11 @@ public interface MatzipRepository {
 
     int deleteById(Long id);
 
-    // 지윤...
     List<String> listTagName(Long id);
 
     List<String> listKindName(Long id);
+
+    int updateFoodKind(Long matzipId, Long foodKindId);
 
     DetailMatzipDTO findDetailMatzipByMatzipIdWithFriendId(Long matzipId, Long friendId);
 }
