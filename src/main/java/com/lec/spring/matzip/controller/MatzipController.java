@@ -4,9 +4,13 @@ import com.lec.spring.matzip.domain.DTO.DetailMapDataDTO;
 import com.lec.spring.matzip.domain.DTO.DetailMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.MatzipDTO;
 import com.lec.spring.matzip.domain.DTO.SeoulMapDataDTO;
+import com.lec.spring.matzip.domain.FoodKind;
 import com.lec.spring.matzip.domain.Matzip;
+import com.lec.spring.matzip.domain.Tag;
+import com.lec.spring.matzip.service.FoodKindService;
 import com.lec.spring.matzip.service.MatzipService;
 import com.lec.spring.matzip.service.MyMatzipService;
+import com.lec.spring.matzip.service.TagService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,10 +25,12 @@ public class MatzipController {
 
     private final MatzipService matzipService;
     private final MyMatzipService myMatzipService;
+    private final FoodKindService foodKindService;
 
-    public MatzipController(MatzipService matzipService, MyMatzipService myMatzipService) {
+    public MatzipController(MatzipService matzipService, MyMatzipService myMatzipService, FoodKindService foodKindService) {
         this.matzipService = matzipService;
         this.myMatzipService = myMatzipService;
+        this.foodKindService = foodKindService;
     }
 
     @ResponseBody
@@ -42,7 +48,7 @@ public class MatzipController {
 
     @GetMapping("/homework/{id}")
     public String getHomework(@PathVariable Long id, Model model) {
-        Matzip matzip = matzipService.getMatzipById(id, model);
+        Matzip matzip = matzipService.getMatzipById(id);
         List<String> tagName = matzipService.listTagName(id);
         List<String> kindName = matzipService.listKindName(id);
         model.addAttribute("kindName", kindName);
@@ -62,5 +68,17 @@ public class MatzipController {
     @GetMapping("/detail/{matzipId}")
     public ResponseEntity<DetailMatzipDTO> detail(@PathVariable Long matzipId, @RequestParam Long friendId) {
         return matzipService.getDetailMatzip(matzipId, friendId);
+    }
+
+    @ResponseBody
+    @GetMapping("/food-kinds")
+    public ResponseEntity<List<FoodKind>> getTags() {
+        return ResponseEntity.ok(foodKindService.getAllFoodKinds());
+    }
+
+    @ResponseBody
+    @GetMapping("")
+    public ResponseEntity<Matzip> getMatzip(@RequestParam Long matzipId) {
+        return ResponseEntity.ok(matzipService.getMatzipById(matzipId));
     }
 }

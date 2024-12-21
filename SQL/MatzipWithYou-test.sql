@@ -264,3 +264,20 @@ WHERE mm.member_id = 5;
 
 SELECT * FROM matzip WHERE gu = '광진구';
 
+SELECT
+    f.memberid AS 'friendId',
+    m.nickname AS 'nickname',
+    m.username AS 'username',
+    f.intimacy AS 'intimacy',
+    p.filename AS 'profileImg'
+FROM (SELECT IF(receiver_id = 2, sender_id, receiver_id) AS memberid,
+                intimacy
+                FROM friend f
+                WHERE (receiver_id = 2 OR sender_id = 2)
+            AND is_accept = 1) f
+JOIN member m ON m.id = f.memberid
+JOIN my_matzip mz ON f.memberid = mz.member_id AND mz.matzip_id = 6 AND mz.visibility = 'HIDDEN'
+LEFT JOIN profile_img p ON m.id = p.id;
+
+
+

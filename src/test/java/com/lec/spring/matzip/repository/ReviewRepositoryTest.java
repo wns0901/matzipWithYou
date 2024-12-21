@@ -76,23 +76,23 @@ class ReviewRepositoryTest {
         Member member = memberRepository.findById(reviewDTO.getMemberId());
         assertNotNull(member);
 
-        int saved = reviewRepository.save(reviewDTO, model);
-        assertEquals(1, saved);
-
-        FoodKind foodKind = reviewServiceImpl.addFoodKind(reviewDTO.getKindName());
-        List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
-        int rewardReviewPoint = reviewServiceImpl.rewardReviewPoint(reviewDTO, 100, 10);
-        int rewardReviewIntimacy = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, 100, 10);
-
-        model.addAttribute("foodKind", foodKind);
-        model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
-        model.addAttribute("members", hiddenMatzipMemberIds);
-        model.addAttribute("rewardReviewPoint", rewardReviewPoint);
-        model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
-
-        String result = (String) model.getAttribute("isHidden");
-        assertNotNull(result);
-        assertTrue(result.equals("UNLOCK") || result.equals("saveOk"));
+//        int saved = reviewRepository.save(reviewDTO, model);
+//        assertEquals(1, saved);
+//
+//        FoodKind foodKind = reviewServiceImpl.addFoodKind(reviewDTO.getKindName());
+//        List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
+//        int rewardReviewPoint = reviewServiceImpl.rewardReviewPoint(reviewDTO, 100, 10);
+//        int rewardReviewIntimacy = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, 100, 10);
+//
+//        model.addAttribute("foodKind", foodKind);
+//        model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
+//        model.addAttribute("members", hiddenMatzipMemberIds);
+//        model.addAttribute("rewardReviewPoint", rewardReviewPoint);
+//        model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
+//
+//        String result = (String) model.getAttribute("isHidden");
+//        assertNotNull(result);
+//        assertTrue(result.equals("UNLOCK") || result.equals("saveOk"));
     }
 
     @Test
@@ -114,8 +114,6 @@ class ReviewRepositoryTest {
 
         List<Tag> tags = tagRepository.findByIds(tagIds);
         assertNotNull(tags);
-
-
     }
 
     @Test

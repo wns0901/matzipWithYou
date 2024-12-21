@@ -51,4 +51,11 @@ class  MyMatzipRepositoryTest {
         System.out.println(result.get(0).getMatzipList().get(0).equals(test));
         System.out.println("#".repeat(20) + "test" + "#".repeat(20));
     }
+
+    @Test void test3() {
+        MyMatzipRepository myMatzipRepository = sqlSession.getMapper(MyMatzipRepository.class);
+        List<Long> friendsIds = List.of(1L, 5L, 4L, 3L);
+
+        myMatzipRepository.updateIntimacyByFriendsIds(friendsIds, 100, 2L);
+    }
 }
