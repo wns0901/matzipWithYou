@@ -21,13 +21,20 @@
     border-radius: 8px;
     max-width: 500px;
     width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .message-box {
     padding: 20px;
-    background: #f8f9fa;
     border-radius: 10px;
-    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .friend-profiles {
@@ -49,15 +56,21 @@
     object-fit: cover;
 }
 
-.unlock-message, .intimacy-message, .point-message {
-    margin: 10px 0;
+.unlock-message,
+.intimacy-message,
+.point-message {
+    margin: 10px auto;
     font-size: 1.1em;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
 }
 
 .btn-close {
     width: 100%;
     padding: 0.75rem;
-    background: #007bff;
+    background: #FF7327;
     color: white;
     border: none;
     border-radius: 4px;
@@ -65,5 +78,5 @@
 }
 
 .btn-close:hover {
-    background: #0056b3;
+    background: #FF7327;
 }

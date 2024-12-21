@@ -13,10 +13,7 @@
 <body>
     <div th:replace="~{common/header :: header}"></div>
 
-    <form th:action="@{/matzip/reviews/{memberId}/{matzipId}(memberId=${memberId},matzipId=${matzipId})}"
-          method="post"
-          class="review-write-form"
-          sec:authorize="isAuthenticated()">
+    <form class="review-write-form">
 
         <input type="hidden" name="matzipId" th:value="${matzipId}">
         <input type="hidden" name="memberId"
@@ -89,22 +86,14 @@
         </section>
     </form>
 
-    <div sec:authorize="!isAuthenticated()">
-        <script th:inline="javascript">
-            window.onload = function() {
-                alert('로그인이 필요합니다.');
-                window.location.href = '/member/login';
-            }
-        </script>
-    </div>
-
     <div id="completionModal" class="modal hidden">
         <div class="modal-content">
-            <div id="messageContainer">
-            </div>
             <div class="friend-profiles" id="friendProfiles">
             </div>
-            <button id="modalCloseBtn" class="btn-close">확인</button>
+            <div id="messageContainer">
+            </div>
+            <button id="point-btn" class="btn-close">
+            </button>
         </div>
     </div>
 </body>

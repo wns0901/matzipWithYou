@@ -15,7 +15,7 @@ public interface ReviewService {
 
     Review findById(Long id);
 
-    int addReview(ReviewDTO reviewDTO, Model model);
+    int addReview(ReviewDTO reviewDTO);
 
     String addContent(Long id, String content);
 
@@ -37,7 +37,7 @@ public interface ReviewService {
 
     List<String> getReviewTagNames(Long id);
 
-    List<ReviewTagDTO> addReviewTags(Long id, List<Long> tagIds);
+    List<ReviewTag> addReviewTags(Long reviewId, List<Long> tagIds);
 
     List<Member> hiddenMatzipMemberIds(ReviewDTO reviewDTO);
 

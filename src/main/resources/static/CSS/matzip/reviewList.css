@@ -140,11 +140,6 @@ body {
     gap: 5px;
 }
 
-.detail-btn.show {
-    background-color: #FF7327;
-    color: white;
-}
-
 .delete-btn {
     margin-top: 1.5rem;
     align-self: flex-end;
@@ -160,7 +155,12 @@ body {
 }
 
 .delete-btn:hover {
-    color: #FF7327;
+    background-color: #FF7327;
+    color: white;
+}
+
+.detail-btn.show {
+    color: white;
 }
 
 .review-detail {

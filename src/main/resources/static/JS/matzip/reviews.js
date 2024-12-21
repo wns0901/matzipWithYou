@@ -159,8 +159,6 @@ async function setupFormSubmission() {
             tagIds: tagIds
         };
 
-        console.log(formObject);
-
         const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
 
         const url = isRegistered
@@ -187,7 +185,7 @@ async function setupFormSubmission() {
             console.log(modalData);
             showCompletionModal(modalData);
 
-            document.getElementById('modalCloseBtn').onclick = () => {
+            document.getElementById('point-btn').onclick = () => {
                 const modal = document.getElementById('completionModal');
                 modal.classList.add('hidden');
                 window.location.href = isRegistered
@@ -198,23 +196,30 @@ async function setupFormSubmission() {
 }
 
 function showCompletionModal(data) {
+    const point = document.getElementById('point-btn');
     const modal = document.getElementById('completionModal');
     const messageContainer = document.getElementById('messageContainer');
     const friendsContainer = document.getElementById('friendProfiles');
 
     let messages = [];
 
-    if (data.topFriendName && data.friendCount >= 0) {
-        const unlockMessage = `${data.topFriendName}${data.friendCount > 0 ? `외 ${data.friendCount}명` : ''}의 
-            hidden 맛집을 unlock 했습니다!`;
+    if (data.topFriendName && data.friendCount > 0) {
+        const unlockMessage = `${data.topFriendName}외 ${data.friendCount}명의 hidden 맛집을 unlock 했습니다!`;
         messages.push(
             `<p class="unlock-message">
                 <i class="fas fa-unlock"></i> ${unlockMessage}
             </p>`
         );
+    } else {
+        const unlockMessage = `리뷰를 등록했습니다.<br>${data.rewardPoints}포인트가 지급됩니다.`
+        messages.push(
+            `<p class="unlock-message">
+                <i class="fa-solid fa-envelope-circle-check"></i> ${unlockMessage}
+            </p>`
+        );
     }
 
-    if (data.intimacyIncrease > 0) {
+    if (data.friendCount > 0) {
         const intimacyMessage = `${data.topFriendName}${data.friendCount > 0 ? `외 ${data.friendCount}명` : ''}의 
             친밀도가 +${data.intimacyIncrease} 되었습니다!`;
         messages.push(
@@ -224,13 +229,9 @@ function showCompletionModal(data) {
         );
     }
 
-    if (data.rewardPoints > 0) {
-        messages.push(
-            `<p class="point-message">
-                <i class="fas fa-plus-circle"></i> +${data.rewardPoints}pt
-            </p>`
-        );
-    }
+    point.innerHTML = `
+        <i class="fa-solid fa-plus"></i> ${data.rewardPoints}pt
+    `;
 
     messageContainer.innerHTML = `
         <div class="message-box">
@@ -241,10 +242,8 @@ function showCompletionModal(data) {
     friendsContainer.innerHTML = data.hiddenFriends
         .map(friend => `
             <div class="friend-profile">
-                <img src="${friend.profileImg || '/images/default-profile.png'}" 
+                <img src="${friend.profileImg ? '/upload/' + friend.profileImg : '/images/default-profile.png'}" 
                      alt="${friend.nickname}">
-                <p class="nickname">${friend.nickname}</p>
-                <p class="intimacy">친밀도: ${friend.intimacy}</p>
             </div>
         `)
         .join('');

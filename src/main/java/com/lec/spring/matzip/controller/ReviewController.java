@@ -182,25 +182,18 @@ public class ReviewController {
             @PathVariable Long matzipId,
             Model model
     ) {
-        try {
-            reviewDTO.setMemberId(memberId);
-            reviewDTO.setMatzipId(matzipId);
+        reviewDTO.setMemberId(memberId);
+        reviewDTO.setMatzipId(matzipId);
 
-            int saved = reviewService.addReview(reviewDTO, model);
-            if (saved > 0) {
-                addSuccessAttributes(model, new RedirectAttributesModelMap());
-                return ResponseEntity.ok(Map.of(
-                        "success", true,
-                        "message", "리뷰가 저장되었습니다."
-                ));
-            } else {
-                return ResponseEntity.badRequest().body(Map.of("error", "리뷰작성에 실패했습니다."));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            String errorMessage = (e.getMessage() != null) ? e.getMessage() : "알 수 없는 오류가 발생했습니다.";
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", errorMessage));
+        int saved = reviewService.addReview(reviewDTO);
+        if (saved > 0) {
+            addSuccessAttributes(model, new RedirectAttributesModelMap());
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "message", "리뷰가 저장되었습니다."
+            ));
+        } else {
+            return ResponseEntity.badRequest().body(Map.of("error", "리뷰작성에 실패했습니다."));
         }
     }
 

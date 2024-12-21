@@ -58,7 +58,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public int addReview(ReviewDTO reviewDTO, Model model) {
+    public int addReview(ReviewDTO reviewDTO) {
         Matzip matzip = matzipRepository.findById(reviewDTO.getMatzipId());
         if (matzip == null) {
             throw new IllegalArgumentException("음식점 정보를 찾을 수 없습니다");
@@ -66,10 +66,8 @@ public class ReviewServiceImpl implements ReviewService {
         reviewDTO.setRegdate(LocalDateTime.now());
 
         int saved = reviewRepository.save(reviewDTO);
+        addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
 
-        if (saved > 0) {
-            updateRelatedEntities(reviewDTO, model);
-        }
         return saved;
     }
 
@@ -86,25 +84,6 @@ public class ReviewServiceImpl implements ReviewService {
         }
 
         throw new IllegalStateException("로그인된 사용자 정보가 없습니다.");
-    }
-
-    private void updateRelatedEntities(ReviewDTO reviewDTO, Model model) {
-        String content = addContent(reviewDTO.getId(), reviewDTO.getContent());
-        List<String> foodKinds = getFoodKinds();
-        FoodKind foodKind = addFoodKind(reviewDTO.getKindName());
-        List<ReviewTagDTO> addReviewTag = addReviewTags(reviewDTO.getId(), reviewDTO.getTagIds());
-        List<Member> hiddenMatzipMemberIds = hiddenMatzipMemberIds(reviewDTO);
-        int rewardReviewPoint = rewardReviewPoint(reviewDTO, 100, 10);
-        int rewardReviewIntimacy = rewardReviewIntimacy(reviewDTO, 100, 10);
-
-        model.addAttribute("content", content);
-        model.addAttribute("foodKinds", foodKinds);
-        model.addAttribute("foodKind", foodKind);
-        model.addAttribute("reviewTags", addReviewTag);
-        model.addAttribute("isHidden", !hiddenMatzipMemberIds.isEmpty()  ? "UNLOCK" : "saveOk");
-        model.addAttribute("members", hiddenMatzipMemberIds);
-        model.addAttribute("rewardReviewPoint", rewardReviewPoint);
-        model.addAttribute("rewardReviewIntimacy", rewardReviewIntimacy);
     }
 
     @Override
@@ -193,17 +172,16 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public List<ReviewTagDTO> addReviewTags(Long id, List<Long> tagIds) {
+    public List<ReviewTag> addReviewTags(Long id, List<Long> tagIds) {
         List<Tag> tags = tagRepository.findByIds(tagIds);
 
         if (tags == null || tags.isEmpty()) {
             throw new IllegalArgumentException("태그 정보를 찾을 수 없습니다.");
         }
 
-        List<ReviewTagDTO> reviewTags = tags.stream()
-                .map(tag -> ReviewTagDTO.builder()
+        List<ReviewTag> reviewTags = tags.stream()
+                .map(tag -> ReviewTag.builder()
                         .tagId(tag.getId())
-                        .tagName(tag.getTagName())
                         .reviewId(id)
                         .regdate(LocalDateTime.now())
                         .build())
@@ -221,12 +199,12 @@ public class ReviewServiceImpl implements ReviewService {
 
         List<Long> hiddenFriendIds = reviewRepository.checkHiddenMatzip(matzipId, memberId);
 
-        List<Member> hiddenMatzipMembers = new ArrayList<>();
-        if (hiddenFriendIds != null && !hiddenFriendIds.isEmpty()) {
-            hiddenMatzipMembers = memberRepository.findByIds(hiddenFriendIds);
+        if (hiddenFriendIds == null || hiddenFriendIds.isEmpty()) {
+            return new ArrayList<>(); // 빈 리스트 반환
         }
 
-        return hiddenMatzipMembers;
+        List<Member> hiddenMatzipMembers = memberRepository.findByIds(hiddenFriendIds);
+        return hiddenMatzipMembers != null ? hiddenMatzipMembers : new ArrayList<>();
     }
 
     @Override
@@ -243,7 +221,7 @@ public class ReviewServiceImpl implements ReviewService {
         int newPoint = currentPoint + resultPoint;
 
         member.setPoint(newPoint);
-        memberRepository.updatePoint(member.getId(), newPoint);
+        memberRepository.updatePoint(member.getId(), member.getPoint());
 
         return resultPoint;
     }
@@ -261,7 +239,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         for(FriendDetailsDTO friend : friends) {
             friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
-            friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
+            friendRepository.updateIntimacy(reviewDTO.getMemberId(), friend.getFriendId(),friend.getIntimacy());
         }
 
         return resultIntimacy;
@@ -272,36 +250,46 @@ public class ReviewServiceImpl implements ReviewService {
         List<Member> hiddenMatzipMembers = hiddenMatzipMemberIds(reviewDTO);
 
         int pointIncrease = rewardReviewPoint(reviewDTO, 100, 10);
-
-        int intimacyIncrease = hiddenMatzipMembers.isEmpty() ? 10 : 100;
+        int intimacyIncrease = rewardReviewIntimacy(reviewDTO, 100, 10);
 
         List<FriendDetailsDTO> friendDetails = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getMemberId());
 
-        List<FriendDetailsDTO> hiddenFriendProfiles = friendDetails.stream()
-                .filter(friend -> hiddenMatzipMembers.stream()
-                        .anyMatch(member -> member.getId().equals(friend.getFriendId())))
-                .map(friend -> FriendDetailsDTO.builder()
-                        .friendId(friend.getFriendId())
-                        .profileImg(friend.getProfileImg())
-                        .nickname(friend.getNickname())
-                        .username(friend.getUsername())
-                        .intimacy(friend.getIntimacy())
-                        .publicCount(friend.getPublicCount())
-                        .hiddenCount(friend.getHiddenCount())
-                        .build())
-                .collect(Collectors.toList());
+        if (hiddenMatzipMembers == null && hiddenMatzipMembers.isEmpty()) {
+            return ReviewSubmitModalDTO.builder()
+                    .hiddenFriends(new ArrayList<>())
+                    .topFriendName(null)
+                    .friendCount(0)
+                    .intimacyIncrease(intimacyIncrease)
+                    .rewardPoints(pointIncrease)
+                    .build();
+        } else {
+            List<FriendDetailsDTO> hiddenFriendProfiles = friendDetails.stream()
+                    .filter(friend -> hiddenMatzipMembers.stream()
+                            .anyMatch(member -> member.getId().equals(friend.getFriendId())))
+                    .map(friend -> FriendDetailsDTO.builder()
+                            .friendId(friend.getFriendId())
+                            .profileImg(friend.getProfileImg())
+                            .nickname(friend.getNickname())
+                            .username(friend.getUsername())
+                            .intimacy(friend.getIntimacy())
+                            .publicCount(friend.getPublicCount())
+                            .hiddenCount(friend.getHiddenCount())
+                            .build())
+                    .distinct()
+                    .collect(Collectors.toList());
 
-        FriendDetailsDTO topFriend = hiddenFriendProfiles.stream()
-                .max(Comparator.comparingInt(FriendDetailsDTO::getIntimacy))
-                .orElse(null);
+            FriendDetailsDTO topFriend = hiddenFriendProfiles.stream()
+                    .max(Comparator.comparingInt(FriendDetailsDTO::getIntimacy))
+                    .orElse(null);
 
-        return ReviewSubmitModalDTO.builder()
-                .hiddenFriends(hiddenFriendProfiles)
-                .topFriendName(topFriend != null ? topFriend.getNickname() : null)
-                .friendCount(hiddenFriendProfiles.isEmpty() ? 0 : hiddenFriendProfiles.size() - 1)
-                .intimacyIncrease(intimacyIncrease)
-                .rewardPoints(pointIncrease)
-                .build();
+            return ReviewSubmitModalDTO.builder()
+                    .hiddenFriends(hiddenFriendProfiles)
+                    .topFriendName(topFriend != null ? topFriend.getNickname() : null)
+                    .friendCount(hiddenFriendProfiles.isEmpty() ? 0 : hiddenFriendProfiles.size() - 1)
+                    .intimacyIncrease(intimacyIncrease)
+                    .rewardPoints(pointIncrease)
+                    .build();
+        }
     }
 
 

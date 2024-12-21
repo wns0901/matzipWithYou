@@ -104,11 +104,11 @@
     <!-- 친밀도 업데이트 -->
     <update id="updateIntimacy" flushCache="true">
         UPDATE friend f
-        SET f.intimacy = f.intimacy + #{member.intimacy}
+        SET f.intimacy = f.intimacy + #{intimacy}
         WHERE f.is_accept = TRUE
           AND (
-            (f.sender_id = #{memberId} AND f.receiver_id = #{targetId})
-                OR (f.receiver_id = #{memberId} AND f.sender_id = #{targetId})
+            (f.sender_id = #{id} AND f.receiver_id = #{targetId})
+                OR (f.receiver_id = #{id} AND f.sender_id = #{targetId})
             )
     </update>
 
