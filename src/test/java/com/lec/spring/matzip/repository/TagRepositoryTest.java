@@ -24,4 +24,10 @@ class TagRepositoryTest {
 
         System.out.println(tags);
     }
+
+    @Test
+    void test2() {
+        TagRepository tagRepository = sqlSession.getMapper(TagRepository.class);
+        tagRepository.saveMatzipTags(List.of(1L, 2L, 3L), 33L);
+    }
 }

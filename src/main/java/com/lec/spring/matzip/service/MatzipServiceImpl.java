@@ -84,7 +84,7 @@ public class MatzipServiceImpl implements MatzipService {
     }
 
     @Override
-    public Matzip getMatzipById(Long id, Model model) {
+    public Matzip getMatzipById(Long id) {
         return matzipRepository.findById(id);
     }
 

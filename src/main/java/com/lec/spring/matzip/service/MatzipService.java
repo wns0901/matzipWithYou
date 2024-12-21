@@ -13,7 +13,7 @@ public interface MatzipService {
 
     String getImgUrlFromKakao(String kakaoPageUrl);
 
-    Matzip getMatzipById(Long id, Model model);
+    Matzip getMatzipById(Long id);
 
     ResponseEntity<DetailMatzipDTO> getDetailMatzip(Long matzipId, Long memberId);
 

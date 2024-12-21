@@ -762,5 +762,5 @@ function enterSearchEnvet(e) {
 function reviewBtnClickedEvent(e) {
     const matzipId = e.currentTarget.dataset.matzipId,
         memberId = e.currentTarget.dataset.memberId;
-    window.location.href = '/matzip/reviews/' + matzipId + '/' + memberId;
+    window.location.href = '/matzip/reviews/' + memberId + '/' + matzipId;
 }

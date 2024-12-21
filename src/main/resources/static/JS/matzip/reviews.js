@@ -34,37 +34,56 @@ function initializeStarRating() {
 
 async function loadFoodKinds() {
     try {
-        const response = await fetch('/matzip/reviews/food-kinds');
-        if(!response.ok) {
-            throw new Error('Failed to fetch food kinds');
-        }
-        const foodKinds = await response.json();
+        const matzipId = document.querySelector('input[name="matzipId"]')?.value;
+        const isFoodKindAleadyExist = await fetch(`/matzips?matzipId=${matzipId}`).then(res => res.json());
+
+        const foodKinds = await fetch('/matzips/food-kinds').then(res => res.json());
 
         const foodKindContainer = document.querySelector('.select-foodKind');
         foodKindContainer.innerHTML = '';
+        const fragment = document.createDocumentFragment();
 
-        foodKinds.forEach(kindName => {
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.textContent = kindName;
-            button.classList.add('food-kind-btn');
-            button.dataset.kindName = kindName;
-
-            button.addEventListener('click', () => {
-
-                foodKindContainer.querySelectorAll('.food-kind-btn').forEach(btn => {
-                    btn.classList.remove('selected');
-                });
-
-                button.classList.add('selected');
-                document.querySelector('input[name="foodKind"]').value = kindName;
+        if(isFoodKindAleadyExist.kindId) {
+            const foodKind = foodKinds.find(foodKind => foodKind.id === isFoodKindAleadyExist.kindId);
+            fragment.appendChild(createFoodKindButton(foodKind, true));
+        } else {
+            foodKinds.forEach(foodKind => {
+                fragment.appendChild(createFoodKindButton(foodKind));
             });
+        }
 
-            foodKindContainer.appendChild(button);
-        });
+        foodKindContainer.appendChild(fragment);
+
     } catch (error) {
         console.error('Failed to load Food Kind:', error);
     }
+}
+
+function createFoodKindButton(foodKind, isExist = false) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = foodKind.kindName;
+    button.classList.add('food-kind-btn');
+    button.dataset.foodKindId = foodKind.id;
+    const hiddenInput = document.querySelector('input[name="foodKind"]');
+    if(isExist) {
+        hiddenInput.value = foodKind.kindName;
+        hiddenInput.dataset.foodKindId = foodKind.id;
+        button.classList.add('selected');
+    } else {
+        button.addEventListener('click', () => {
+            const foodKindContainer = document.querySelector('.select-foodKind');
+            foodKindContainer.querySelectorAll('.food-kind-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+
+            button.classList.add('selected');
+            hiddenInput.value = foodKind.kindName;
+            hiddenInput.dataset.foodKindId = foodKind.id;
+
+        });
+    }
+    return button;
 }
 
 async function loadTags() {
@@ -111,6 +130,20 @@ async function loadTags() {
     }
 }
 
+async function saveMyMatzip(url, formObject) {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(formObject),
+    }
+    console.log(formObject);
+    const result = await fetch(url, options).then(res => res.json());
+    showCompletionModal(result);
+}
+
 async function setupFormSubmission() {
     const form = document.querySelector('.review-write-form');
     form.addEventListener('submit', async (e) => {
@@ -120,9 +153,11 @@ async function setupFormSubmission() {
         const memberId = document.querySelector('input[name="memberId"]')?.value;
         const matzipId = document.querySelector('input[name="matzipId"]')?.value;
         const foodKind = document.querySelector('input[name="foodKind"]')?.value;
+        const foodKindId = document.querySelector('input[name="foodKind"]')?.dataset.foodKindId;
         const content = document.querySelector('textarea[name="content"]')?.value;
         const selectedTags = Array.from(document.querySelectorAll('.tag-btn.selected'));
         const tagIds = document.querySelector('input[name="tagIds"]')?.value.split(',').filter(Boolean);
+        const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
 
         if (!memberId) {
             alert('로그인이 필요합니다.');
@@ -159,41 +194,50 @@ async function setupFormSubmission() {
             tagIds: tagIds
         };
 
-        console.log(formObject);
-
-        const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
+        // console.log(formObject);
 
         const url = isRegistered
-            ? `/matzip/mine/${memberId}/${matzipId}`
+            ? `/matzips/mine/${memberId}/${matzipId}`
             : `/matzip/reviews/${memberId}/${matzipId}`;
 
-        try {
-            const saveResponse = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(formObject),
-            });
-        } catch (error) {
-            console.error('Error:', error);
-            alert('리뷰 저장 중 오류가 발생했습니다.');
+        if(isRegistered) {
+            formObject.kindId = foodKindId;
+            formObject.visibility = document.querySelector('.visibility-btn .active.selected').dataset.name;
+            saveMyMatzip(url, formObject) //TODO
+        } else {
+            await saveReview(memberId, matzipId, formObject, url);
         }
 
-            const modalResponse = await fetch(`/matzip/api/reviews/${memberId}/${matzipId}/modal`);
-
-            const modalData = await modalResponse.json();
-            showCompletionModal(modalData);
-
-            document.getElementById('modalCloseBtn').onclick = () => {
-                const modal = document.getElementById('completionModal');
-                modal.classList.add('hidden');
-                window.location.href = isRegistered
-                    ? `/matzip/myMatzipList/${memberId}`
-                    : `/matzip/reviewList/${memberId}`;
-            };
+        document.getElementById('modalCloseBtn').onclick = () => {
+            const modal = document.getElementById('completionModal');
+            modal.classList.add('hidden');
+            window.location.href = isRegistered
+                ? `/matzip/myMatzipList/${memberId}`
+                : `/matzip/reviewList/${memberId}`;
+        };
     });
+}
+
+async function saveReview(memberId, matzipId, formObject, url) {
+    try {
+        const saveResponse = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formObject),
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        alert('리뷰 저장 중 오류가 발생했습니다.');
+    }
+
+    const modalResponse = await fetch(`/matzip/api/reviews/${memberId}/${matzipId}/modal`);
+
+    const modalData = await modalResponse.json();
+    showCompletionModal(modalData);
+
 }
 
 function showCompletionModal(data) {

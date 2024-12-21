@@ -18,5 +18,5 @@ public interface MyMatzipService {
 
     DetailMapDataDTO findGuMapDataById(Long id, String gu);
 
-    boolean saveMyMatzip(MyMatzip myMatzip);
+    ResponseEntity<ReviewSubmitModalDTO> saveMyMatzip(SaveMyMatzipDTO saveMyMatzipDTO);
 }
