@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>친구 목록</title>
+    <link rel="stylesheet" th:href="@{/CSS/member/friend/friend_list.css}" type="text/css"/>
 </head>
 <style>
     .modal {
@@ -70,6 +71,78 @@
 </style>
 <body>
 <div class="friend-container">
+    <!-- 상단 친밀도 순위 영역 -->
+    <div class="intimacy-ranking" >
+    <img src="/IMG/banner.png" class="banner" >
+        <div class="ranking-title">
+            <span>나의 친구</span>
+            <span style="font-size: 2em">친밀도</span>
+            <span style="font-size: 2em">순위</span>
+        </div>
+        <div class="ranking-list">
+            <!-- 1위 -->
+            <div class="ranking-item">
+                <img src="/IMG/rank1.png">
+
+
+                <div class="rank-nickname" >
+<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
+
+                    <span>닉네임</span>
+                    <div></div>
+                </div>
+                <div class="rank-avatar">
+<!--                    <img src="/images/avatar1.png" alt="1등 프로필">-->
+
+<!--                    <img th:src="${friend.profileImg}">-->
+
+                </div>
+                <div class="rank-number">1</div>
+            </div>
+            <!-- 2위 -->
+            <div class="ranking-item">
+                <img src="/IMG/rank2.png">
+
+
+<!--                <div class="rank-nickname" th:text="${}">-->
+<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
+
+                    <span>닉네임</span>
+                    <div></div>
+                </div>
+                <div class="rank-avatar">
+<!--                    <img src="/images/avatar2.png" alt="2등 프로필">-->
+
+<!--                    <img th:src="${friend.profileImg}">-->
+
+                </div>
+                <div class="rank-number">2</div>
+            </div>
+            <!-- 3위 -->
+            <div class="ranking-item">
+                <img src="/IMG/rank3.png">
+
+
+                <div class="rank-nickname"  >
+<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
+
+                    <span>닉네임</span>
+                    <div></div>
+                </div>
+                <div class="rank-avatar">
+<!--                    <img src="/images/avatar3.png" alt="3등 프로필">-->
+
+<!--                    <img th:src="${friend.profileImg}">-->
+
+                </div>
+                <div class="rank-number">3</div>
+            </div>
+        </div>
+
+    </div>
+
+
+
     <div class="friend-header">
         <h1>친구 목록</h1>
         <div class="friend-actions">

@@ -2,9 +2,12 @@ package com.lec.spring.matzip.controller;
 
 
 import com.lec.spring.matzip.domain.DTO.FindingResultMyMatzipDTO;
+import com.lec.spring.matzip.domain.DTO.ReviewSubmitModalDTO;
+import com.lec.spring.matzip.domain.DTO.SaveMyMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.UpdateMyMatzipVisibility;
 import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.service.MyMatzipService;
+import com.lec.spring.member.domain.FriendDetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,10 +39,10 @@ public class MyMatzipController {
         return "/myMatzip/list";
     }
 
-    @PostMapping("")
-    public String save(@RequestBody MyMatzip myMatzip, Model model) {
-        model.addAttribute("result", myMatzipService.saveMyMatzip(myMatzip));
-        return "/matzip/myMatzipSaveOK";
+    @ResponseBody
+    @PostMapping("/{memberId}/{matzipId}")
+    public ResponseEntity<ReviewSubmitModalDTO> save(@RequestBody SaveMyMatzipDTO saveMyMatzipDTO) {
+        return myMatzipService.saveMyMatzip(saveMyMatzipDTO);
     }
 
     @PatchMapping("/{myMatzipId}")

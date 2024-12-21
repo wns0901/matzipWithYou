@@ -55,13 +55,14 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers(
+//                                "/members/{id}",
                                 "/matzips/food-kinds/**",
                                 "/matzips/tags/**",
                                 "/admin/**"
                         ).hasRole("ADMIN")
 
                         .requestMatchers(
-                                "/members/{id}",
+
                                 "/matzips/*/visibility",
                                 "/matzips/reviews/**",
                                 "/matzip/reviewList/**",
@@ -75,6 +76,7 @@ public class SecurityConfig {
                         ).hasAnyRole("MEMBER", "ADMIN")
 
                         .requestMatchers(
+                                "/members/{id}",
                                 "/matzips/**",
                                 "/member/**",
                                 "/member/*/friends",

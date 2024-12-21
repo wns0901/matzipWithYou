@@ -6,12 +6,13 @@
     <title>My Page</title>
     <link rel="stylesheet" th:href="@{/CSS/member/myPage.css}" type="text/css"/>
     <script th:inline="javascript">
+        console.log(1);
         console.log(/*[[${myPage}]]*/ '');
-        // <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        // <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
-        // <link
-        //     href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@100..900&display=swap"
-        //     rel="stylesheet"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans+KR:wght@100..900&display=swap"
+            rel="stylesheet"/>
     </script>
 </head>
 <body>
@@ -23,9 +24,15 @@
         <!-- 프로필 콘텐츠 -->
         <div class="profile-content">
             <!--  설정 버튼-->
-            <button class="settings-button">
-                <img src="/IMG/settings-icon.svg" alt="설정 아이콘" class="settings-icon">
-            </button>
+            <div class="settings-container">
+                <button class="settings-button">
+                    <img src="/IMG/settings-icon.svg" alt="설정 아이콘" class="settings-icon">
+                </button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item">비밀번호 변경</button>
+                    <button class="dropdown-item">회원 탈퇴</button>
+                </div>
+            </div>
             <!-- 프로필 이미지 영역 -->
             <div class="profile-image-wrapper">
                 <img src="/IMG/profile-image.svg" alt="프로필 이미지" class="profile-image">
@@ -36,7 +43,7 @@
 
             <div class="nickname-container">
                 <div class="nickname-text" th:text="${myPage.nickname}"></div>
-                <!-- 닉네임 변경 팝업 -->
+                        <!-- 닉네임 변경 팝업 -->
                 <button class="edit-button" id="editButton">
                     <img src="/IMG/edit.svg" alt="Edit"/>
                 </button>
@@ -47,8 +54,8 @@
                 <div class="message align-message">
                     <img src="/IMG/notice.png" alt="포인트 차감 설명" class="point-notice">
                     <div class="message-text">
-                        닉네임 변경시에는 포인트가 5000pt가 차감됩니다.<br>
-                        정말 변경하시겠습니까?
+                    닉네임 변경시에는 포인트가 5000pt가 차감됩니다.<br>
+                    정말 변경하시겠습니까?
                     </div>
                 </div>
                 <div class="button-group">
@@ -61,15 +68,17 @@
             <div class="overlaybackground" id="overlay"></div>
 
 
+
             <!-- 친구 수 & 포인트 버튼 -->
             <div class="info-buttons">
                 <div class="info-button">
                     <!-- memberId를 올바르게 전달 -->
-                    <span class="info-label friends" th:data-member-id="${memberId}">친구 ></span>
+                    <span class="info-label friends" th:data-member-id="${memberId}"
+                          onclick="location.href='/members/${memberId}/friends'">친구 ></span>
                     <span class="info-value" th:text="${myPage.friendCnt}"></span>
                 </div>
                 <div class="info-button">
-                    <span class="info-label">포인트 ></span>
+                    <span class="info-label">포인트</span>
                     <span class="info-value" th:text="${myPage.point}"></span>
                 </div>
             </div>
@@ -90,13 +99,12 @@
                 <h2 class="h2"> 위시 리스트(</h2>
                     <h2 class="h2" th:text="${myPage.wishInfo.count}"></h2>
                 <h2 class="h2">곳)</h2>
-                <button class="view-all-button" onclick="location.href='/members/wish-list/${memberId}'">전체보기 ></button>
+                <button class="view-all-button">전체보기 ></button>
             </span>
             <div class="card-container" id="wish-list-cards">
-                <!--                <img src="${myPage.reviewPreview.matzipImage || '/IMG/defaultStoreImgSMALL.png'}" class="matzipImage" alt="Review Image">-->
-                <!--                <div class="matzipName">${myPage.matzipPreview.matzipName}</div>-->
                 <div th:each="wish : ${myPage.wishInfo.preview}" class="card">
-                    <img th:src="${wish.matzipImage}" class="matzipImage" alt="Wish Image">
+                    <img th:src="${wish.matzipImage != '#none' ? wish.matzipImage : '/IMG/defaultStoreImgSMALL.png'}"
+                         class="matzipImage" alt="Wish Image">
                     <div class="matzipName" th:text="${wish.matzipName}">가게 이름</div>
                 </div>
             </div>
@@ -107,16 +115,16 @@
             <span class="section-header">
             <img class="icon" src="/IMG/Union.png" alt="spoon-icon">
                 <h2 class="h2"> 나의 맛집(</h2>
-                <h2 class="h2" th:text="${myPage.matzipInfo.count}"></h2>
+                    <h2 class="h2" th:text="${myPage.matzipInfo.count}"></h2>
                 <h2 class="h2">곳)</h2>
                 <button class="view-all-button"
-                        onclick="location.href='/members/matzip-list/${memberId}'">전체보기 ></button>
+                        onclick="location.href='/matzips/mine/${memberId}'">전체보기 ></button>
             </span>
             <div class="card-container" id="my-matzip-cards">
-                <!--                <img src="${myPage.reviewPreview.matzipImage || '/IMG/defaultStoreImgSMALL.png'}" class="matzipImage" alt="Review Image">-->
-                <!--                <div class="matzipName">${myPage.matzipPreview.matzipName}</div>-->
                 <div th:each="matzip : ${myPage.matzipInfo.preview}" class="card">
-                    <img th:src="${matzip.matzipImage}" class="matzipImage" alt="Matzip Image">
+                    <img th:src=
+                    "${matzip.matzipImage != '#none' ? matzip.matzipImage : '/IMG/defaultStoreImgSMALL.png'}"
+                    class="matzipImage" alt="Matzip Image">
                     <div class="matzipName" th:text="${matzip.matzipName}">가게 이름</div>
                 </div>
             </div>
@@ -125,22 +133,25 @@
         <!-- 나의 리뷰 -->
         <div class="section">
             <span class="section-header">
-            <img class="icon" src="/IMG/review-icon.png" alt="review-icon">
+            <img  class="icon" src="/IMG/review-icon.png" alt="review-icon">
                 <h2 class="h2"> 나의 리뷰(</h2>
                     <h2 class="h2" th:text="${myPage.reviewInfo.count}"></h2>
                 <h2 class="h2">개)</h2>
                 <button class="view-all-button"
-                        onclick="location.href='/members/review-list/${memberId}'">전체보기 ></button>
+                        onclick="location.href='/matzip/review/list/${memberId}'">전체보기 ></button>
             </span>
             <div class="review-container" id="review-container">
-                <!--                <img src="${myPage.reviewPreview.matzipImage || '/IMG/defaultStoreImgSMALL.png'}" class="matzipImage" alt="Review Image">-->
-                <!--                    <div class="starRating"></div>-->
-                <!--                    <div class="matzipName">${myPage.reviewPreview.matzipName}</div>-->
-                <!--                    <div class="reviewContent">${myPage.reviewPreview.reviewContent}</div>-->
                 <div th:each="review : ${myPage.reviewInfo.preview}" class="review-card">
-                    <img th:src="${review.matzipImage}" class="matzipImage" alt="Review Image">
-                    <div class="matzipName" th:text="${review.matzipName}">가게 이름</div>
-                    <div class="reviewContent" th:text="${review.reviewContent}">리뷰 내용</div>
+                    <img th:src="${review.matzipImage != '#none' ? review.matzipImage : '/IMG/defaultStoreImgSMALL.png'}"
+                         class="matzipImage reviewImage" alt="Review Image">
+                    <div class="review-details">
+                        <div class="rating-container">
+                            <div class="starRating" th:data-rating="${review.starRating}"></div>
+                            <span class="ratingText"></span>
+                        </div>
+                        <div class="RmatzipName" th:text="${review.matzipName}">가게 이름</div>
+                        <div class="reviewContent" th:text="${review.reviewContent}">리뷰 내용</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,3 +164,6 @@
 <script th:src="@{/JS/member/myPage.js}" type="text/javascript"></script>
 </body>
 </html>
+
+
+

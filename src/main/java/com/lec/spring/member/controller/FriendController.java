@@ -79,7 +79,10 @@ public class FriendController {
     // 친구 목록
     @GetMapping("")
     public String showFriendList(@PathVariable Long memberId, Model model) {
-        model.addAttribute("memberId", memberId);
+        List<FriendDetailsDTO> allFriends = friendService.getFriendsWithDetailsDTO(memberId);
+
+        // 전체 친구 목록 전달
+        model.addAttribute("allFriends", allFriends);
         return "member/friend/friend_list";
     }
 

@@ -25,7 +25,7 @@ public class MyPageServiceImpl implements MyPageService {
 
         // 1. 닉네임 형식 검증 (20자 이하, 숫자/영어/한글만 허용)
         if (!newNickname.matches("^[a-zA-Z0-9가-힣\\s]{1,20}$")) {
-            throw new IllegalArgumentException("닉네임은 20자 이하, 숫자, 영어, 한글만 허용됩니다.");
+            throw new IllegalArgumentException("닉네임은 20자 이하의 숫자, 영어, 한글만 허용됩니다.");
         }
 
         // 2. 닉네임 중복 확인
@@ -37,7 +37,7 @@ public class MyPageServiceImpl implements MyPageService {
         // 3. 현재 포인트 확인
         int currentPoint = myPageRepository.getCurrentPoint(memberId);
         if (currentPoint < 5000) {
-            throw new IllegalArgumentException("포인트가 부족합니다. 현재 소지 포인트: " + currentPoint);
+            throw new IllegalArgumentException("포인트가 부족합니다. (소지 포인트: " + currentPoint +"pt)");
         }
 
         // 포인트 차감 및 닉네임 업데이트

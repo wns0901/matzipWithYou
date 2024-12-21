@@ -241,8 +241,8 @@ function cancelBtnEvent(e) {
     const hintResultWindow = document.querySelector('#hint_result');
     hintResultWindow.classList.add('hidden');
     const hintTagsWindow = document.querySelector('#hint_tags');
-    hintInfoWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png" class="hidden">' +
-        '<button id="back"><span>돌아가기</span></button>';
+    hintTagsWindow.innerHTML = '<img id="hint_popup" src="/IMG/matzip/hint_popup.png" class="hidden">' +
+        '<button id="back" onclick="cancelBtnEvent()"><span>돌아가기</span></button>';
     hintTagsWindow.classList.add('hidden');
 }
 
@@ -542,7 +542,13 @@ function postMatzipData() {
         },
         body = JSON.stringify(data)
     ;
+    const searchWindow = document.getElementById('search_window');
+    searchWindow.classList.add('hidden');
 
+    const loadingImg = document.querySelector('#loading_img');
+    hiddenDetial.classList.add('hidden');
+    loadingImg.classList.remove('hidden');
+    detailInfo.classList.remove('hidden');
     fetch(url, {method, headers, body})
         .then(res => res.json())
         .then(res => {
@@ -551,12 +557,11 @@ function postMatzipData() {
                 return;
             }
 
-            const searchWindow = document.getElementById('search_window');
-            searchWindow.classList.add('hidden')
+
             dataIntoDetailCard(res.data, true);
             detailInfo.querySelector('#star_rating_list').innerHTML = '';
             detailInfo.querySelector('#tags_wrap').innerHTML = '';
-            detailInfo.classList.remove('hidden')
+            loadingImg.classList.add('hidden');
             searchWindow.childNodes[0].value = '';
             searchWindow.childNodes[2].innerHTML = '';
         })
@@ -666,6 +671,7 @@ function friendClickEvent(e) {
 
     if (!overlay.classList.contains('hidden')) {
         overlay.classList.add('hidden');
+        delete friendData.isSelected;
         displayPlaces(totalList);
         return;
     }
@@ -756,5 +762,5 @@ function enterSearchEnvet(e) {
 function reviewBtnClickedEvent(e) {
     const matzipId = e.currentTarget.dataset.matzipId,
         memberId = e.currentTarget.dataset.memberId;
-    window.location.href = '/matzip/reviews/' + matzipId + '/' + memberId;
+    window.location.href = '/matzip/reviews/' + memberId + '/' + matzipId;
 }
