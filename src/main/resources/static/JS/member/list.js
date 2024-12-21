@@ -109,7 +109,7 @@ function updateFriendList(friends) {
         // TOP 3 친구 항목 클릭 이벤트
         topFriendItem.style.cursor = 'pointer';
         topFriendItem.addEventListener('click', function () {
-            window.location.href = `/members/${friend.memberId}/mymatzip`;
+            window.location.href = `/members/${friend.friendId}/matzips/mine`;
             // mymatzip 주소로 바꾸기 요망
         });
 
@@ -132,7 +132,7 @@ function updateFriendList(friends) {
                  alt="Profile"
                  class="friend-profile"
                  onerror="this.src='/IMG/defaultProfileImg.png'">
-            <p>닉네임: ${friend.nickname}</p>
+            <p>닉네임: <span class="friend-nickname-hover">${friend.nickname}</span></p>
             <p>공개 맛집 수: ${friend.publicCount}</p>
             <p>비공개 맛집 수: ${friend.hiddenCount}</p>
             <p>친밀도: ${friend.intimacy}</p>
@@ -146,8 +146,9 @@ function updateFriendList(friends) {
         });
 
         // friend-item 전체 클릭 이벤트
+        friendItem.style.cursor = 'pointer';
         friendItem.addEventListener('click', function () {
-            window.location.href = `/members/${friend.memberId}/mymatzip`;
+            window.location.href = `/members/${friend.friendId}/matzips/mine`;
             // mymatzip 주소로 바꾸기 요망
         });
 
@@ -161,7 +162,6 @@ function updateFriendList(friends) {
 }
 
 
-// 추가 구현
 // 모달 관련 함수들
 const requestModal = document.getElementById('friendRequestModal');
 const addModal = document.getElementById('addFriendModal');
@@ -176,8 +176,6 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
         const container = document.getElementById('pendingRequests');
         container.innerHTML = '';
 
-        // 여기가 문제였던 부분입니다.
-        // return을 제거하고, 모달은 항상 표시되도록 수정
         if (requests.length === 0) {
             container.innerHTML = '<p>친구 요청을 한 사람이 없습니다.</p>';
         } else {
