@@ -210,7 +210,7 @@ public class MemberServiceImpl implements MemberService {
         }
         String uuid = UUID.randomUUID().toString();
 
-        redisTemplate.opsForValue().set(TimeUnit.MINUTES, uuid, 3);
+        redisTemplate.opsForValue().set(uuid, member.getId(), 3, TimeUnit.MINUTES);
         String resetLink = "http://localhost:8080/member/reset-password?id=" + member.getId() + "&uuid=" + uuid;
 
         Context context = new Context();
@@ -219,6 +219,7 @@ public class MemberServiceImpl implements MemberService {
 
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
+        System.out.println("mimeMessage: " + mimeMessage);
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
             mimeMessageHelper.setTo(emailMessage.getTo());
