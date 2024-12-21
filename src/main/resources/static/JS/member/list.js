@@ -105,6 +105,14 @@ function updateFriendList(friends) {
                 <span class="friend-nickname">${friend.nickname}</span>
             </div>
         `;
+
+        // TOP 3 친구 항목 클릭 이벤트
+        topFriendItem.style.cursor = 'pointer';
+        topFriendItem.addEventListener('click', function () {
+            window.location.href = `/members/${friend.memberId}/mymatzip`;
+            // mymatzip 주소로 바꾸기 요망
+        });
+
         top3Container.appendChild(topFriendItem);
     });
 
@@ -136,6 +144,14 @@ function updateFriendList(friends) {
             const friendId = this.dataset.friendId;
             await deleteFriend(friendId);
         });
+
+        // friend-item 전체 클릭 이벤트
+        friendItem.addEventListener('click', function () {
+            window.location.href = `/members/${friend.memberId}/mymatzip`;
+            // mymatzip 주소로 바꾸기 요망
+        });
+
+        fullListContainer.appendChild(friendItem);
 
         fullListContainer.appendChild(friendItem);
     });
