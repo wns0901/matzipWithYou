@@ -208,6 +208,7 @@ body {
     padding: 1rem;
     border: none;
     border-radius: 8px;
+    font-size: 0.9rem;
     resize: vertical;
     font-family: inherit;
     line-height: 1.6;
@@ -263,6 +264,11 @@ body {
     background-color: #FF7327;
     color: white;
     border: none;
+}
+
+.visibility-btn input[data-name="HIDDEN"].active {
+    background-color: #A6FF00;
+    color: black;
 }
 
 .visibility-btn input.disabled {

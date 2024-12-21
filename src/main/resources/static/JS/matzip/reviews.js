@@ -43,12 +43,17 @@ async function loadFoodKinds() {
         const foodKindContainer = document.querySelector('.select-foodKind');
         foodKindContainer.innerHTML = '';
 
-        foodKinds.forEach(kindName => {
+        foodKinds.forEach((kindName, index) => {
             const button = document.createElement('button');
             button.type = 'button';
             button.textContent = kindName;
             button.classList.add('food-kind-btn');
             button.dataset.kindName = kindName;
+
+            if (index === 0) {
+                button.classList.add('selected');
+                document.querySelector('input[name="foodKind"]').value = kindName;
+            }
 
             button.addEventListener('click', () => {
 
@@ -83,6 +88,19 @@ async function loadTags() {
             button.textContent = tag.tagName;
             button.classList.add('tag-btn');
             button.dataset.tagId = tag.id;
+
+            if (tag.id === 1) {
+                button.classList.add('selected');
+                selectedTagIds.push(tag.id);
+
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'tagIds';
+                hiddenInput.value = selectedTagIds.join(',');
+                document.querySelectorAll('input[name="tagIds"]').forEach(el => el.remove());
+                document.querySelector('form').appendChild(hiddenInput);
+            }
+
 
             button.addEventListener('click', () => {
                 button.classList.toggle('selected');
@@ -123,6 +141,13 @@ async function setupFormSubmission() {
         const content = document.querySelector('textarea[name="content"]')?.value;
         const selectedTags = Array.from(document.querySelectorAll('.tag-btn.selected'));
         const tagIds = document.querySelector('input[name="tagIds"]')?.value.split(',').filter(Boolean);
+        const registerBtn = document.querySelector('input[data-name="registerOk"]');
+        const unregisterBtn = document.querySelector('input[data-name="Unregister"]');
+
+        if (!registerBtn.classList.contains('active') && !unregisterBtn.classList.contains('active')) {
+            alert('등록 여부를 선택해주세요.');
+            return;
+        }
 
         if (!memberId) {
             alert('로그인이 필요합니다.');
@@ -262,6 +287,23 @@ function setupRegistrationButtons() {
     });
     visibilityContainer.style.pointerEvents = 'none';
     visibilityContainer.style.opacity = '0.5';
+
+    const registerBtn = document.querySelector('input[data-name="registerOk"]');
+    if (registerBtn) {
+        registerBtn.classList.add('active', 'selected');
+
+        visibilityButtons.forEach(visibilityBtn => {
+            visibilityBtn.disabled = false;
+            visibilityBtn.classList.remove('disabled');
+        });
+        visibilityContainer.style.pointerEvents = 'auto';
+        visibilityContainer.style.opacity = '1';
+
+        const hiddenBtn = document.querySelector('input[data-name="HIDDEN"]');
+        if (hiddenBtn) {
+            hiddenBtn.classList.add('active', 'selected');
+        }
+    }
 
     registerButtons.forEach(btn => {
         btn.addEventListener('click', () => {

@@ -34,12 +34,23 @@ async function loadReviewList(memberId) {
 function displayReviews(reviewsData) {
     console.log("Received data structure:", reviewsData);
 
+    reviewsData.sort((a, b) => {
+        return new Date(b.regdate) - new Date(a.regdate);
+    });
+
     const reviewsContainer = document.querySelector('.reviews-container');
     reviewsContainer.innerHTML = '';
 
     reviewsData.forEach(data => {
         const reviewCard = document.createElement('div');
         reviewCard.classList.add('review-item');
+
+        reviewCard.dataset.reviewData = JSON.stringify({
+            regdate: data.regdate,
+            matzipName: data.matzipName,
+            starRating: data.starRating
+        });
+
 
         const reviewId = data.id;
         reviewCard.dataset.reviewId = reviewId;
@@ -121,38 +132,40 @@ function displayReviews(reviewsData) {
 
         reviewsContainer.appendChild(reviewCard);
     });
-}
 
-document.querySelectorAll('.sort-option').forEach(option => {
-    option.addEventListener('click', () => {
-        const sortType = option.dataset.sort;
-        const reviewsContainer = document.querySelector('.reviews-container');
-        const reviews = Array.from(reviewsContainer.children);
+    document.querySelectorAll('.sort-option').forEach(option => {
+        option.addEventListener('click', () => {
 
-        reviews.sort((a, b) => {
-            const dataA = JSON.parse(a.dataset.reviewData);
-            const dataB = JSON.parse(b.dataset.reviewData);
+            document.querySelectorAll('.sort-option').forEach(opt =>
+                opt.classList.remove('active'));
+            option.classList.add('active');
 
-            console.log(dataA, dataB);
+            const sortType = option.dataset.sort;
+            const reviewSection = option.closest('.review-list-section');
+            const reviewsContainer = reviewSection.querySelector('.reviews-container');
+            const reviews = Array.from(reviewsContainer.children);
 
-            switch(sortType) {
-                case 'date':
-                    return new Date(dataB.regdate) - new Date(dataA.regdate);
-                case 'name':
-                    return dataA.matzipName.localeCompare(dataB.matzipName);
-                case 'type':
-                    return dataA.foodKind.localeCompare(dataB.foodKind);
-                case 'rating':
-                    return dataB.starRating - dataA.review.starRating;
-                default:
-                    return 0;
-            }
+            reviews.sort((a, b) => {
+                const dataA = JSON.parse(a.dataset.reviewData);
+                const dataB = JSON.parse(b.dataset.reviewData);
+
+                switch (sortType) {
+                    case 'date':
+                        return new Date(dataB.regdate) - new Date(dataA.regdate);
+                    case 'name':
+                        return dataA.matzipName.localeCompare(dataB.matzipName);
+                    case 'rating':
+                        return dataB.starRating - dataA.starRating;
+                    default:
+                        return 0;
+                }
+            });
+
+            reviewsContainer.innerHTML = '';
+            reviews.forEach(review => reviewsContainer.appendChild(review));
         });
-
-        reviewsContainer.innerHTML = '';
-        reviews.forEach(review => reviewsContainer.appendChild(review));
     });
-});
+}
 
 async function loadReviewDetail(reviewCard, reviewId) {
     try {
