@@ -1,28 +1,33 @@
-loadPage(data)
+const list = data.list,
+    isMine = data.memberId === who;
 
-function loadPage(data) {
-    const list = data.list,
-    fragment = document.createDocumentFragment(),
+let wishList;
+
+loadPage(list)
+
+document.querySelectorAll('.filter_btn').forEach(btn => btn.addEventListener('click', filterEvent));
+
+async function loadPage(list) {
+    const fragment = document.createDocumentFragment(),
     cardList = document.querySelector('#myMatzip_card_list');
 
-    list.forEach((myMatzip) => {
-        fragment.appendChild(makeMyMatzipCard(myMatzip))
-    });
+    cardList.innerHTML = '';
+
+    for (const listElement of list) {
+        const card  = await makeMyMatzipCard(listElement);
+        if(!card) continue;
+        fragment.appendChild(card)
+    }
 
     cardList.appendChild(fragment);
 }
 
-function makeMyMatzipCard(myMatzip) {
+async function makeMyMatzipCard(myMatzip) {
     const card = document.createElement('div'),
         img = document.createElement('img'),
         textDiv = document.createElement('div'),
         name = document.createElement('h3'),
         address = document.createElement('p'),
-        visibilityBtnList = document.createElement('div'),
-        publicBtn = document.createElement('button'),
-        privateBtn = document.createElement('button'),
-        hiddenBtn = document.createElement('button'),
-        deleteBtn = document.createElement('button'),
         moreDetailBtn = document.createElement('button'),
         moreDetailDiv = document.createElement('div'),
         starRating = document.createElement('div'),
@@ -32,16 +37,19 @@ function makeMyMatzipCard(myMatzip) {
         detailTitle = document.createElement('h3')
     ;
 
+    if(isMine) {
+        myPage(card, myMatzip);
+    } else {
+        if(myMatzip.visibility === 'PRIVATE') return;
+        await otherPage(card, myMatzip);
+        if(myMatzip.visibility === 'HIDDEN') return;
+    }
+
     card.classList.add('card');
     img.classList.add('matzip_img');
     textDiv.classList.add('text_div');
     name.classList.add('name');
     address.classList.add('address');
-    visibilityBtnList.classList.add('visibility_btn_list');
-    publicBtn.classList.add('visibility_btn','PUBLIC');
-    privateBtn.classList.add('visibility_btn','PRIVATE');
-    hiddenBtn.classList.add('visibility_btn','HIDDEN');
-    deleteBtn.classList.add('delete_btn');
     moreDetailBtn.classList.add('more_detail_btn');
     moreDetailDiv.classList.add('more_detail_div', 'hidden');
     starRating.classList.add('star_rating');
@@ -68,6 +76,30 @@ function makeMyMatzipCard(myMatzip) {
     moreDetailDiv.appendChild(tagList);
     moreDetailDiv.appendChild(detailTitle);
 
+    moreDetailBtn.addEventListener('click', moreDetailEvent);
+
+    textDiv.appendChild(name);
+    textDiv.appendChild(address);
+    card.appendChild(img);
+    card.appendChild(textDiv);
+    card.appendChild(moreDetailBtn);
+    card.appendChild(moreDetailDiv);
+
+    return card;
+}
+
+function myPage(card, myMatzip) {
+    const visibilityBtnList = document.createElement('div'),
+        publicBtn = document.createElement('button'),
+        privateBtn = document.createElement('button'),
+        hiddenBtn = document.createElement('button'),
+        deleteBtn = document.createElement('button')
+
+    visibilityBtnList.classList.add('visibility_btn_list');
+    publicBtn.classList.add('visibility_btn','PUBLIC');
+    privateBtn.classList.add('visibility_btn','PRIVATE');
+    hiddenBtn.classList.add('visibility_btn','HIDDEN');
+    deleteBtn.classList.add('delete_btn');
 
     deleteBtn.dataset.id = myMatzip.id;
 
@@ -85,7 +117,6 @@ function makeMyMatzipCard(myMatzip) {
     visibilityBtnList.dataset.matzipId = myMatzip.matzipId;
 
     deleteBtn.addEventListener('click', deleteEvent);
-    moreDetailBtn.addEventListener('click', moreDetailEvent);
     publicBtn.addEventListener('click', updateVisibilityEvent);
     privateBtn.addEventListener('click', updateVisibilityEvent);
     hiddenBtn.addEventListener('click', updateVisibilityEvent);
@@ -94,16 +125,69 @@ function makeMyMatzipCard(myMatzip) {
     visibilityBtnList.appendChild(hiddenBtn);
     visibilityBtnList.appendChild(privateBtn);
 
-    textDiv.appendChild(name);
-    textDiv.appendChild(address);
-    card.appendChild(img);
-    card.appendChild(textDiv);
     card.appendChild(visibilityBtnList);
     card.appendChild(deleteBtn);
-    card.appendChild(moreDetailBtn);
-    card.appendChild(moreDetailDiv);
+}
 
-    return card;
+async function otherPage(card, myMatzip) {
+    await getWishList()
+    const wishBtn = document.createElement('input'),
+        matzipId = myMatzip.matzipId,
+        fillHeartImgUrl = '/IMG/matzip/fill_heart.png',
+        emptyHeartImgUrl = '/IMG/matzip/empty_heart.png';
+
+    wishBtn.className = 'wish_heart';
+    wishBtn.type = 'button';
+    wishBtn.dataset.matzipId = matzipId;
+    wishBtn.addEventListener('click', (e) => updateWishListEvent(e));
+    if (wishList.includes(matzipId)) {
+        wishBtn.style.backgroundImage = 'url(' + fillHeartImgUrl + ')';
+        wishBtn.dataset.status = 'fill';
+    } else {
+        wishBtn.style.backgroundImage = 'url(' + emptyHeartImgUrl + ')';
+        wishBtn.dataset.status = 'empty';
+    }
+
+    card.appendChild(wishBtn);
+}
+
+function updateWishListEvent(e) {
+    e.stopPropagation();
+    const fillHeartImgUrl = '/IMG/matzip/fill_heart.png',
+        emptyHeartImgUrl = '/IMG/matzip/empty_heart.png';
+
+    const item = e.currentTarget,
+        isFilled = item.dataset.status === 'fill',
+        isEmpty = !isFilled,
+        matzipId = Number(item.dataset.matzipId),
+        memberId = data.memberId,
+        searchImgUrl = '/IMG/matzip/gray_heart.png',
+        imgUrl = isEmpty ? fillHeartImgUrl : isSearch ? searchImgUrl : emptyHeartImgUrl,
+
+        method = isFilled ? 'DELETE' : 'POST',
+        url = '/matzips/wish-list/' + memberId + (isFilled ? '/' + matzipId : ''),
+        headers = {'Content-Type': 'application/json'},
+        body = JSON.stringify({matzipId}),
+        option = isFilled ? {method, headers} : {method, headers, body}
+    ;
+
+    if (isFilled) {
+        wishList = wishList.filter(e => e !== matzipId);
+    } else {
+        wishList.push(matzipId);
+    }
+
+    fetch(url, option)
+        .then(res => res.json())
+        .then(res => {
+            if (res.status !== 'SUCCESS') {
+                alert('위시리스트 업데이트 실패')
+                return;
+            }
+            item.style.backgroundImage = 'url(' + imgUrl + ')';
+            item.dataset.status = isFilled ? 'empty' : 'fill';
+        })
+
 }
 
 function makeTagList(tagListDiv, tagListData) {
@@ -118,13 +202,13 @@ function makeTagList(tagListDiv, tagListData) {
     tagListDiv.appendChild(fragment);
 }
 
-function makeStarList(node, starRating) {
+function makeStarList(item, starRating) {
     const filledStar = document.createElement('img'),
         emptyStar = document.createElement('img'),
         text = document.createElement('span'),
         fragment = document.createDocumentFragment();
 
-    node.innerHTML = '';
+    item.innerHTML = '';
 
     filledStar.className = 'star';
     emptyStar.className = 'star';
@@ -139,7 +223,7 @@ function makeStarList(node, starRating) {
     text.textContent = '평점 ' + starRating;
     fragment.appendChild(text);
 
-    node.appendChild(fragment);
+    item.appendChild(fragment);
 }
 
 async function deleteEvent(e) {
@@ -196,6 +280,67 @@ async function updateVisibilityEvent(e) {
     btn.classList.add('active');
 }
 
-function sortEvent() {}
+function sortEvent() {
+    const item = event.currentTarget,
+        type = item.dataset.type;
 
-function filterEvent() {}
+    if(item.classList.contains('active')) return;
+
+    item.classList.toggle('active');
+
+    if(type === 'reg') {
+        loadPage(list);
+        return;
+    }
+    
+    const sortedList = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    loadPage(sortedList);
+}
+
+function filterEvent(e) {
+    const filter = e.currentTarget.dataset.type;
+    let filterModal;
+    if(filter === 'kind') {
+        filterModal = document.querySelector('#all_kind_list');
+    } else if(filter === 'tag') {
+        filterModal = document.querySelector('#all_tag_list');
+    }
+    filterModal.classList.toggle('hidden');
+}
+
+function tagFilterEvent() {
+    const item = event.currentTarget,
+        tagId = Number(item.dataset.tagId);
+    if(item.classList.contains('active')) {
+        loadPage(list);
+        return;
+    }
+
+    const filteredList = list.filter(myMatzip => myMatzip.tagList.some(tag => tag.id === tagId));
+
+    item.classList.toggle('active');
+
+    loadPage(filteredList);
+}
+
+function kindFilterEvent() {
+    const item = event.currentTarget,
+        kind = item.dataset.kindName;
+
+    if(item.classList.contains('active')) {
+        loadPage(list);
+        return;
+    }
+
+    const filteredList = list.filter(myMatzip => myMatzip.kindName === kind);
+
+    item.classList.toggle('active');
+
+    loadPage(filteredList);
+}
+
+async function getWishList() {
+    const url = '/matzips/wish-list/' + who;
+    wishList = await fetch(url).then(res => res.json()).then(res => res.data.map(wish => wish.id));
+    console.log(wishList);
+}

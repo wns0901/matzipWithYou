@@ -5,29 +5,51 @@
     <title>Title</title>
     <script th:inline="javascript">
         const data = /*[[${result}]]*/ {};
+        const who = /*[[${#authentication.principal.member.id}]]*/ 0;
         console.log(data);
     </script>
     <link rel="stylesheet" href="/CSS/matzip/myMatzipPage.css">
 </head>
 <body>
-<div id="info">
-    <img src="#" alt="matzip">
+<div th:if="${result.memberId.equals(#authentication.principal.member.id)}" class="profile_card">
+    <img th:if="${result.profileImg != null}" th:src="@{'/upload/' + '${result.profileImg}'}" alt="profile">
+    <img th:unless="${result.profileImg != null}" th:src="@{/IMG/defaultProfileImg.png}" alt="profile">
+    <span>나의 맛집 관리</span>
+</div>
+<div th:unless="${result.memberId.equals(#authentication.principal.member.id)}" class="profile_card">
+    <img th:if="${result.profileImg != null} " th:src="@{'/upload/' + '${result.profileImg}'}" alt="profile">
+    <img th:unless="${result.profileImg != null}" th:src="@{/IMG/defaultProfileImg.png}" alt="profile">
+    <span>[[${result.nickname}]]님의 맛집 페이지입니다.</span>
 </div>
 
 <div id="sort">
     <span>정렬방식:</span>
     <span>|</span>
-    <span>등록순</span>
+    <button class="sort_btn" onclick="sortEvent()" data-type="reg">등록순</button>
     <span>|</span>
-    <span>가나다</span>
+    <button class="sort_btn" onclick="sortEvent()" data-type="name">가나다</button>
 </div>
+
+
 
 <div id="filter">
     <span>필터:</span>
     <span>|</span>
-    <span>식사 종류</span>
+    <button class="filter_btn" data-type="kind">식사 종류</button>
     <span>|</span>
-    <span>태그</span>
+    <button class="filter_btn" data-type="tag">태그</button>
+</div>
+
+<div id="all_tag_list" class="hidden">
+    <button th:each="tag : ${result.allTagList}" class="tag_btn" onclick="tagFilterEvent()" th:data-tag-id="${tag.id}">
+        <span th:text="${tag.tagName}" ></span>
+    </button>
+</div>
+
+<div id="all_kind_list" class="hidden">
+    <button th:each="kind : ${result.allKindList}" class="kind_btn" onclick="kindFilterEvent()" th:data-kind-name="${kind.kindName}">
+        <span th:text="${kind.kindName}" th:data-kind-id="${kind.id}"></span>
+    </button>
 </div>
 
 <div id="myMatzip_card_list"></div>

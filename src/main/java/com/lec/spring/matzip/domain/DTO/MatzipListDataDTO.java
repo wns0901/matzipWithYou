@@ -1,5 +1,6 @@
 package com.lec.spring.matzip.domain.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lec.spring.matzip.domain.Matzip;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -10,6 +11,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MatzipListDataDTO {
 
     private String visibility;

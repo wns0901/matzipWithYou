@@ -4,11 +4,13 @@ import com.lec.spring.matzip.domain.DTO.*;
 import com.lec.spring.matzip.domain.GuCenterLatLng;
 import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.domain.WishList;
+import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MyMatzipRepository;
 import com.lec.spring.matzip.repository.TagRepository;
 import com.lec.spring.matzip.repository.WishListRepository;
 import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.repository.MemberRepository;
+import com.lec.spring.member.repository.ProfileImgRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,20 +25,31 @@ public class MyMatzipServiceImpl implements MyMatzipService {
     private final WishListRepository wishListRepository;
     private final MemberRepository memberRepository;
     private final TagRepository tagRepository;
+    private final FoodKindRepository foodKindRepository;
+    private final ProfileImgRepository profileImgRepository;
 
     public MyMatzipServiceImpl(SqlSession sqlSession) {
         this.myMatzipRepository = sqlSession.getMapper(MyMatzipRepository.class);
         this.wishListRepository = sqlSession.getMapper(WishListRepository.class);
         this.memberRepository = sqlSession.getMapper(MemberRepository.class);
         this.tagRepository = sqlSession.getMapper(TagRepository.class);
+        this.foodKindRepository = sqlSession.getMapper(FoodKindRepository.class);
+        this.profileImgRepository = sqlSession.getMapper(ProfileImgRepository.class);
     }
 
 
     @Override
     public FindingResultMyMatzipDTO findByMemberId(Long id) {
+        List<MyMatzipDTO> result = myMatzipRepository.findAll(id);
+        Long memberId = result.get(0).getMemberId();
         return FindingResultMyMatzipDTO.builder()
                 .cnt(myMatzipRepository.listCntByMemberId(id))
-                .list(myMatzipRepository.findAll(id))
+                .list(result)
+                .memberId(memberId)
+                .profileImg(profileImgRepository.findByMemberId(memberId).getFilename())
+                .allKindList(foodKindRepository.findAll())
+                .allTagList(tagRepository.findAll())
+                .nickname(memberRepository.findById(memberId).getNickname())
                 .build();
     }
 
