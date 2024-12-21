@@ -36,7 +36,7 @@ public class MyMatzipController {
         FindingResultMyMatzipDTO result = myMatzipService.findByMemberId(memberId);
         model.addAttribute("result", result);
 
-        return "/myMatzip/list";
+        return "/matzip/myMatzipPage";
     }
 
     @ResponseBody

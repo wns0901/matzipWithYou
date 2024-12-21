@@ -1,0 +1,40 @@
+:root {
+    --primary-color: #ff7327;
+    --button-font-color: #ffffff;
+    --secondary-button-border-color: #c8c9cc;
+    --secondary-button-text-color: #303236;
+    --link-color: #ff7327;
+    --title-font-color: #ff7327;
+    --font-default-color: #63656d;
+    --widget-background-color: #ffffff;
+    --box-border-color: #ffffff;
+    --input-text-color: #121214;
+    --input-border-color: #c8c9cc;
+    --input-background-color: #ffffff;
+    --error-color: #e81d01;
+}
+
+.delete_btn {
+    background-image: url("/IMG/delete_btn.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: 100px;
+    height: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+.PUBLIC.active {
+    background-color: var(--primary-color);
+}
+.HIDDEN.active {
+    background-color: #A6FF00;
+}
+.PRIVATE.active {
+    background-color: #6A6A6A;
+}

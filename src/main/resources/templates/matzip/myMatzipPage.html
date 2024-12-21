@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:inline="javascript">
+        const data = /*[[${result}]]*/ {};
+        console.log(data);
+    </script>
+    <link rel="stylesheet" href="/CSS/matzip/myMatzipPage.css">
+</head>
+<body>
+<div id="info">
+    <img src="#" alt="matzip">
+</div>
+
+<div id="sort">
+    <span>정렬방식:</span>
+    <span>|</span>
+    <span>등록순</span>
+    <span>|</span>
+    <span>가나다</span>
+</div>
+
+<div id="filter">
+    <span>필터:</span>
+    <span>|</span>
+    <span>식사 종류</span>
+    <span>|</span>
+    <span>태그</span>
+</div>
+
+<div id="myMatzip_card_list"></div>
+
+</body>
+<script th:src="@{/JS/matzip/myMatzipPage.js}"></script>
+</html>
