@@ -74,6 +74,7 @@ VALUES ('ROLE_MEMBER'),
        ('ROLE_ADMIN');
 
 INSERT INTO member (username, password, email, point, nickname, name)
+
 VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member1@email.com', 100,
         'foodie1', '최시후'),
        ('member_user2', '$2a$10$9eSoUc/.K3YyzQq5ZpOxnO01H0.oT8l.hlxgGDLS.mRBShESweioC', 'member2@email.com', 150,
@@ -83,7 +84,7 @@ VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5c
        ('member_user3', '$2a$10$Qk.A1REypdS/s1YmvjmiIO2ES/6AfB45asIW7kM/7d3yLbOKp1zS2', 'member3@email.com', 80,
         'gourmet3', '현지윤'),
        ('member_user4', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member4@email.com', 300,
-        'test1', '테스트'),
+        'test1', '이동희'),
        ('MEMBER_USER5', '$2a$10$GlFVmb/5z0.aFThUugcM3OUmhH46cMqAGFN1W8IbduyT3iyT5orXC', 'member5@email.com', 300,
         'test2', '길동이'),
        ('MEMBER_USER6', '$2a$10$c9yisLysQE1drcbWSN29b.V2WHBlvuri3rdypd6Qyzqp9FLXB7fk.', 'member6@email.com', 300,
