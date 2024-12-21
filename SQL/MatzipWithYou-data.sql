@@ -74,7 +74,7 @@ VALUES ('ROLE_MEMBER'),
        ('ROLE_ADMIN');
 
 INSERT INTO member (username, password, email, point, nickname, name)
-VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member1@email.com', 100,
+VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5caLC7m', 'member1@email.com', 100000,
         'foodie1', '이동희'),
        ('member_user2', '$2a$10$9eSoUc/.K3YyzQq5ZpOxnO01H0.oT8l.hlxgGDLS.mRBShESweioC', 'member2@email.com', 150,
         'matzip2', '이유나'),
