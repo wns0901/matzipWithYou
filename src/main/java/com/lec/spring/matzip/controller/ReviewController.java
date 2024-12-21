@@ -6,6 +6,7 @@ import com.lec.spring.matzip.domain.Review;
 import com.lec.spring.matzip.domain.ReviewTag;
 import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.service.ReviewService;
+import com.lec.spring.matzip.service.MatzipService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,11 @@ import java.util.Map;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final MatzipService matzipService;
 
-    public ReviewController(ReviewService reviewService) {
+    public ReviewController(ReviewService reviewService, MatzipService matzipService) {
         this.reviewService = reviewService;
+        this.matzipService = matzipService;
     }
 
     @GetMapping("/reviewList/{memberId}")
@@ -185,6 +188,10 @@ public class ReviewController {
         try {
             reviewDTO.setMemberId(memberId);
             reviewDTO.setMatzipId(matzipId);
+
+            if (reviewDTO.getFoodKindId() != null) {
+                matzipService.updateMatzipFoodKind(matzipId, reviewDTO.getFoodKindId());
+            }
 
             int saved = reviewService.addReview(reviewDTO, model);
             if (saved > 0) {

@@ -35,25 +35,30 @@ function initializeStarRating() {
 async function loadFoodKinds() {
     try {
         const matzipId = document.querySelector('input[name="matzipId"]')?.value;
-        const isFoodKindAleadyExist = await fetch(`/matzips?matzipId=${matzipId}`).then(res => res.json());
+        const response = await fetch(`/matzips?matzipId=${matzipId}`);
+        const existingMatzip = await response.json();
 
-        const foodKinds = await fetch('/matzips/food-kinds').then(res => res.json());
+        const foodKindsResponse = await fetch('/matzips/food-kinds');
+        const foodKinds = await foodKindsResponse.json();
 
         const foodKindContainer = document.querySelector('.select-foodKind');
         foodKindContainer.innerHTML = '';
         const fragment = document.createDocumentFragment();
 
-        if(isFoodKindAleadyExist.kindId) {
-            const foodKind = foodKinds.find(foodKind => foodKind.id === isFoodKindAleadyExist.kindId);
-            fragment.appendChild(createFoodKindButton(foodKind, true));
+        // 맛집의 기존 foodKind가 있는 경우
+        if (existingMatzip && existingMatzip.kindId) {
+            const foodKind = foodKinds.find(foodKind => foodKind.id === existingMatzip.kindId);
+            if (foodKind) {
+                fragment.appendChild(createFoodKindButton(foodKind, true));
+            }
         } else {
+            // 첫 리뷰인 경우 모든 foodKind 옵션을 보여줌
             foodKinds.forEach(foodKind => {
                 fragment.appendChild(createFoodKindButton(foodKind));
             });
         }
 
         foodKindContainer.appendChild(fragment);
-
     } catch (error) {
         console.error('Failed to load Food Kind:', error);
     }
@@ -65,12 +70,17 @@ function createFoodKindButton(foodKind, isExist = false) {
     button.textContent = foodKind.kindName;
     button.classList.add('food-kind-btn');
     button.dataset.foodKindId = foodKind.id;
+
     const hiddenInput = document.querySelector('input[name="foodKind"]');
-    if(isExist) {
+
+    if (isExist) {
+        // 기존 리뷰가 있는 경우 - 선택된 상태로 설정하고 수정 불가능하게 만듦
         hiddenInput.value = foodKind.kindName;
         hiddenInput.dataset.foodKindId = foodKind.id;
         button.classList.add('selected');
+        button.disabled = true;
     } else {
+        // 첫 리뷰인 경우 - 선택 가능하게 설정
         button.addEventListener('click', () => {
             const foodKindContainer = document.querySelector('.select-foodKind');
             foodKindContainer.querySelectorAll('.food-kind-btn').forEach(btn => {
@@ -80,9 +90,9 @@ function createFoodKindButton(foodKind, isExist = false) {
             button.classList.add('selected');
             hiddenInput.value = foodKind.kindName;
             hiddenInput.dataset.foodKindId = foodKind.id;
-
         });
     }
+
     return button;
 }
 
@@ -153,7 +163,7 @@ async function setupFormSubmission() {
         const memberId = document.querySelector('input[name="memberId"]')?.value;
         const matzipId = document.querySelector('input[name="matzipId"]')?.value;
         const foodKind = document.querySelector('input[name="foodKind"]')?.value;
-        const foodKindId = document.querySelector('input[name="foodKind"]')?.dataset.foodKindId;
+        const foodKindId = document.querySelector('input[name="foodKind"]')?.dataset.foodKindId; // foodKindId 가져오기
         const content = document.querySelector('textarea[name="content"]')?.value;
         const selectedTags = Array.from(document.querySelectorAll('.tag-btn.selected'));
         const tagIds = document.querySelector('input[name="tagIds"]')?.value.split(',').filter(Boolean);
@@ -165,7 +175,7 @@ async function setupFormSubmission() {
             return;
         }
 
-        if(!foodKind) {
+        if(!foodKind || !foodKindId) {  // foodKindId 체크 추가
             alert('음식 종류를 선택해주세요.');
             return;
         }
@@ -191,10 +201,9 @@ async function setupFormSubmission() {
             matzipId: Number(matzipId),
             memberId: Number(memberId),
             kindName: foodKind,
+            foodKindId: Number(foodKindId),  // foodKindId 추가
             tagIds: tagIds
         };
-
-        // console.log(formObject);
 
         const url = isRegistered
             ? `/matzips/mine/${memberId}/${matzipId}`
@@ -203,7 +212,7 @@ async function setupFormSubmission() {
         if(isRegistered) {
             formObject.kindId = foodKindId;
             formObject.visibility = document.querySelector('.visibility-btn .active.selected').dataset.name;
-            saveMyMatzip(url, formObject) //TODO
+            saveMyMatzip(url, formObject)
         } else {
             await saveReview(memberId, matzipId, formObject, url);
         }
@@ -370,3 +379,4 @@ function setupFoodKindTextHeight() {
         });
     }
 }
+

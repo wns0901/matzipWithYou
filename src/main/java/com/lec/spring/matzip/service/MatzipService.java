@@ -25,4 +25,6 @@ public interface MatzipService {
 
     int deleteById(Long id);
 
+    void updateMatzipFoodKind(Long matzipId, Long foodKindId);
+
 }
