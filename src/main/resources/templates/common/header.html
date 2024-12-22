@@ -31,6 +31,9 @@
 
                     <div id="userDropdown" class="dropdown-content">
                         <a th:href="@{/members/{id}(id=${#authentication.principal.member.id})}">마이페이지</a>
+                        <div sec:authorize="hasRole('ADMIN')" class="admin-menu">
+                            <a th:href="@{/admin}">관리자 페이지</a>
+                        </div>
                         <form th:action="@{/member/logout}" method="POST">
                             <button type="submit">로그아웃</button>
                         </form>
