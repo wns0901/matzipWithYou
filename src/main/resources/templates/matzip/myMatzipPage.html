@@ -8,9 +8,11 @@
         const who = /*[[${#authentication.principal.member.id}]]*/ 0;
         console.log(data);
     </script>
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/header.css}">
     <link rel="stylesheet" href="/CSS/matzip/myMatzipPage.css">
 </head>
 <body>
+<th:block th:insert="~{common/header::header}"></th:block>
 <div th:if="${result.memberId.equals(#authentication.principal.member.id)}" class="profile_card">
     <img th:if="${result.profileImg != null}" th:src="@{'/upload/' + '${result.profileImg}'}" alt="profile">
     <img th:unless="${result.profileImg != null}" th:src="@{/IMG/defaultProfileImg.png}" alt="profile">

@@ -33,6 +33,7 @@
                mz.name                                                      AS name,
                mz.img_url                                                   AS imgurl,
                k.kindname                                                   AS kindname,
+               mz.address AS address,
                JSON_ARRAYAGG(JSON_OBJECT('id', t.id, 'tagName', t.tagname)) AS tagList
         FROM my_matzip mymz
                  JOIN matzip mz ON mymz.matzip_id = mz.id

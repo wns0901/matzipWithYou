@@ -70,11 +70,11 @@ async function makeMyMatzipCard(myMatzip) {
     makeStarList(starRating, myMatzip.starRating)
     makeTagList(tagList, myMatzip.tagList);
 
+    moreDetailDiv.appendChild(detailTitle);
     moreDetailDiv.appendChild(starRating);
     moreDetailDiv.appendChild(foodKind);
     moreDetailDiv.appendChild(content);
     moreDetailDiv.appendChild(tagList);
-    moreDetailDiv.appendChild(detailTitle);
 
     moreDetailBtn.addEventListener('click', moreDetailEvent);
 
@@ -248,6 +248,7 @@ function moreDetailEvent(e) {
     const card = e.currentTarget.closest('.card'),
         detailDiv = card.querySelector('.more_detail_div');
     detailDiv.classList.toggle('hidden');
+    card.classList.toggle('selected');
 }
 
 async function updateVisibilityEvent(e) {
