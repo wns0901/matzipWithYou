@@ -509,20 +509,10 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
 .matzipImage {
     width: 120px;
     height: 120px;
     border-radius: 10px;
-    /*margin-bottom: 10px;*/
     /*margin: 0 auto 10px auto; !* 위-0, 아래-10px, 좌우-자동 *!*/
     object-fit: cover;
     /*display: block;*/
@@ -534,18 +524,6 @@ body {
     font-size: 12px;
     margin: 15px auto 10px auto;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -723,3 +701,35 @@ body {
     }
 }
 
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .profile-section {
+        width: 100%;
+        min-height: 500px;  /* 프로필 섹션의 최소 높이 설정 */
+        background-color: #FFA375;  /* 배경색 유지 */
+    }
+
+    .content-section {
+        width: 100%;
+        padding: 20px;  /* 모바일에서의 패딩 조정 */
+    }
+
+    /* 카드 컨테이너 스크롤 처리 */
+    .card-container, .review-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .review-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
