@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadReviewList(memberId) {
     try {
-        const response = await fetch(`/matzip/api/reviews/${memberId}`);
+        const response = await fetch(`/matzips/mine/${memberId}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -74,6 +74,11 @@ function displayReviews(reviewsData) {
                                 상세보기
                             </button>
                         </div>
+                        <div class="visibility-controls">
+                            <button class="visibility-btn public ${data.review.visibility === 'PUBLIC' ? 'active' : ''}">공개</button>
+                            <button class="visibility-btn hide ${data.review.visibility === 'HIDDEN' ? 'active' : ''}">히든</button>
+                            <button class="visibility-btn private ${data.review.visibility === 'PRIVATE' ? 'active' : ''}">비공개</button>
+                        </div>
                         <button class="delete-btn">
                             <i class="fas fa-trash"></i>
                             삭제하기
@@ -105,11 +110,16 @@ function displayReviews(reviewsData) {
             }
         });
 
+        const visibilityButtons = reviewCard.querySelectorAll('.visibility-btn');
+        visibilityButtons.forEach(button => {
+            button.addEventListener('click', () => handleVisibilityChange(button, reviewCard.dataset.reviewId));
+        });
+
         const deleteBtn = reviewCard.querySelector('.delete-btn');
         deleteBtn.addEventListener('click', async () => {
             if (confirm('이 리뷰를 삭제하시겠습니까?')) {
                 try {
-                    const response = await fetch(`/matzip/reviews/delete/${reviewId}`, {
+                    const response = await fetch(`/matzips/mine/${reviewId}`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json'
@@ -169,7 +179,13 @@ function displayReviews(reviewsData) {
 
 async function loadReviewDetail(reviewCard, reviewId) {
     try {
-        const response = await fetch(`/matzip/api/reviews/${reviewId}/detail`);
+        const response = await fetch(`/matzips/mine/${reiviewId}`, {
+            method: 'PATCH',  // DELETE가 아닌 PATCH 메소드 사용
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ visibility })
+        });
         if (!response.ok) {
             throw new Error('Failed to load review details');
         }
@@ -241,5 +257,35 @@ async function loadReviewDetail(reviewCard, reviewId) {
     } catch (error) {
         console.error('Failed to load review details:', error);
         alert('상세 정보를 불러오는데 실패했습니다.');
+    }
+}
+
+async function handleVisibilityChange(button, reviewId) {
+    const controls = button.closest('.visibility-controls');
+    const allButtons = controls.querySelectorAll('.visibility-btn');
+
+    let visibility;
+    if (button.classList.contains('public')) visibility = 'PUBLIC';
+    else if (button.classList.contains('hide')) visibility = 'HIDDEN';
+    else visibility = 'PRIVATE';
+
+    try {
+        const response = await fetch(`/matzips/mine/${reviewId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ visibility })
+        });
+
+        if (response.ok) {
+            allButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        } else {
+            throw new Error('상태 업데이트 실패');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('상태 업데이트에 실패했습니다.');
     }
 }
