@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 @Configuration
 @EnableWebSecurity
@@ -39,6 +40,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
+                .addFilterBefore(new MemberAccessFilter(), FilterSecurityInterceptor.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
@@ -55,7 +57,6 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers(
-//                                "/members/{id}",
                                 "/matzips/food-kinds/**",
                                 "/matzips/tags/**",
                                 "/admin/**"
