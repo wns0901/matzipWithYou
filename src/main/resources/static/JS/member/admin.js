@@ -233,42 +233,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // 폼 제출 이벤트 처리
-    matzipForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const formData = {
-            id: document.getElementById('matzipId').value || null,
-            name: document.getElementById('name').value,
-            address: document.getElementById('address').value,
-            kindId: document.getElementById('kindId').value
-        };
-
-        const method = formData.id ? 'PUT' : 'POST';
-        const url = formData.id ? `/matzips/${formData.id}` : '/matzips';
-
-        fetch(url, {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'SUCCESS') {
-                    alert(formData.id ? '수정되었습니다.' : '추가되었습니다.');
-                    closeModal();
-                    loadData('matzips');
-                } else {
-                    alert(data.msg || '오류가 발생했습니다.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('저장 중 오류가 발생했습니다.');
-            });
-    });
 
     function formatDate(dateArray) {
         if (!Array.isArray(dateArray) || dateArray.length < 3) {
@@ -289,4 +253,60 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 초기 실행
     attachDeleteListeners();
+});
+
+// 태그 모달 관련 변수
+const tagModal = document.getElementById('tagModal');
+const addTagBtn = document.getElementById('addTagBtn');
+const tagForm = document.getElementById('tagForm');
+const closeTagBtn = tagModal.querySelector('.close');
+
+// 태그 모달 열기/닫기
+addTagBtn.onclick = () => {
+    tagModal.style.display = "block";
+};
+
+closeTagBtn.onclick = () => {
+    tagModal.style.display = "none";
+    tagForm.reset();
+};
+
+window.onclick = (event) => {
+    if (event.target === tagModal) {
+        tagModal.style.display = "none";
+        tagForm.reset();
+    }
+};
+
+// 태그 추가 제출
+tagForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = {
+        tagName: document.getElementById('tagName').value
+    };
+
+    fetch('/tags/save', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'SUCCESS') {
+                alert(data.message);
+                tagModal.style.display = "none";
+                tagForm.reset();
+                window.location.reload();
+                loadData('tags');
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('태그 추가 중 오류가 발생했습니다.');
+        });
 });

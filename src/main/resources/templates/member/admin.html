@@ -87,7 +87,10 @@
     </div>
 
     <div id="tags" class="tab-content">
-        <h2>태그 목록</h2>
+        <div class="header-container">
+            <h2>태그 목록</h2>
+            <button id="addTagBtn" class="add-btn">+ 태그 추가하기</button>
+        </div>
         <table class="table">
             <thead>
             <tr>
@@ -99,6 +102,21 @@
             </thead>
             <tbody id="tagsList"></tbody>
         </table>
+    </div>
+
+    <!-- 태그 추가 모달 -->
+    <div id="tagModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>태그 추가</h2>
+            <form id="tagForm">
+                <div class="form-group">
+                    <label for="tagName">태그명</label>
+                    <input type="text" id="tagName" name="tagName" required>
+                </div>
+                <button type="submit" class="submit-btn">저장</button>
+            </form>
+        </div>
     </div>
 
     <div id="foodkinds" class="tab-content">
