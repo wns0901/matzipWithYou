@@ -133,3 +133,38 @@ function renderStarRating() {
     });
 }
 
+// 프사 변경 기능
+
+const profileImageInput = document.getElementById("profileImageInput");
+const profileImagePreview = document.getElementById("profileImagePreview");
+const deleteImageButton = document.getElementById("deleteImageButton");
+const memberId = "{memberId}"; // 서버에서 제공한 memberId 바인딩
+
+// 이미지 변경 시 미리보기 업데이트
+profileImageInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            profileImagePreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        // 자동으로 폼 제출
+        document.getElementById("profileImageForm").submit();
+    }
+});
+
+// 이미지 삭제 버튼 클릭 시
+deleteImageButton.addEventListener("click", () => {
+    if (confirm("정말로 이미지를 삭제하시겠습니까?")) {
+        fetch(`/members/${memberId}/profile-img`, { method: "DELETE" })
+            .then((response) => {
+                if (response.ok) {
+                    location.reload(); // 페이지 새로고침
+                } else {
+                    alert("이미지 삭제에 실패했습니다.");
+                }
+            });
+    }
+});
