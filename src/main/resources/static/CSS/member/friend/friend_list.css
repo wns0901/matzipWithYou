@@ -17,36 +17,94 @@ body {
 
 /* 상단 친밀도 순위 영역 */
 .intimacy-ranking {
-    height: 890px;
-    /*border-radius: 20px;*/
     position: relative;
-    overflow: hidden;
+    width: 100%;
+    height: 500px; /* 800px를 viewport height 기준으로 변환 */
+    /*text-align: center;*/
+    background: linear-gradient(to bottom, #f5f5f5, rgba(245, 245, 245, 0));
+    padding: 20px 0;
 }
-/* 배경 이미지 스타일링 */
+
+/* 배경 이미지 설정 */
 .intimacy-ranking .banner {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지 비율을 유지하면서 영역을 채움 */
-    z-index: 1; /* 가장 아래 레이어 */
+    object-fit: cover;
+    z-index: 1;
 }
 
-.intimacy-ranking::after {
-    content: '';
+
+.ranking-sections, .top-friend-item{
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)); /* 어두운 오버레이 */
+    bottom: -20px; /* 하단에 붙임 */
+    right: 10%; /* 우측에서 10% 여백 */
+    /*position: relative;*/
     z-index: 2;
+    display: flex;
+    justify-content: flex-end; /* 우측 정렬 */
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.first, .rank-1{
+    bottom: 10px;
+}
+
+.second, .rank-2 {
+    bottom: -20px; /* 하단에 붙임 */
+
+}
+.third, .rank-3 {
+    bottom: -50px; /* 하단에 붙임 */
+}
+
+
+
+/* 각 섹션 크기 */
+.ranking-section {
+    position: relative;
+    width: 120px;
+    text-align: center;
+
+}
+
+.ranking-bg {
+    width: 100%;
+    /*border-radius: 20px;*/
+}
+.ranking-profile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 3;
+}
+/* 랭커 프사 */
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+.friend-nickname{
+    font-family: RecipeKoreaOTF;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .ranking-title {
-    position: relative;
-    z-index: 3; /* 배경 이미지보다 위에 표시 */
+    position: absolute;
+    left: 5%; /* 좌측 여백 */
+    top: 50%;
+    transform: translateY(-50%); /* 수직 중앙 정렬 */
+    z-index: 2; /* 배경 이미지보다 위에 표시 */
     padding: 40px;
     color: white;
     font-family: RecipeKoreaOTF;
@@ -57,13 +115,18 @@ body {
 
 .ranking-title span {
     display: block;
+    z-index: 3; /* 배경 이미지보다 위에 표시 */
+    line-height: 1.2;
+
 }
 
 .ranking-list {
+    float: right;
+    max-width: 30%;
     position: relative;
     z-index: 3; /* 배경 이미지보다 위에 표시 */
     display: flex;
-    justify-content: center;
+    justify-content: end;
     gap: 30px;
     margin-top: 100px;
 }
@@ -124,18 +187,12 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.friend-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-right: 20px;
-}
 
 .friend-info {
     flex-grow: 1;
 }
 
-.friend-name {
+.friend-nickname {
     font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 5px;
@@ -192,4 +249,54 @@ body {
 
 .btn-sort:hover {
     background: #dee2e6;
+}
+
+
+/* friend-profile-small 위치 조정 */
+/*.ranking-section .friend-profile-small, .friend-profile {*/
+/*    position: absolute;*/
+/*    top: 18%; !* 하얀 원의 중앙에 맞게 조정 *!*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%); !* 정확히 중앙 정렬 *!*/
+/*    width: 80px; !* 프로필 이미지 크기 *!*/
+/*    height: 80px;*/
+/*    border-radius: 50%;*/
+/*    object-fit: cover;*/
+/*    border: 2px solid white; !* 하얀 테두리 *!*/
+/*    z-index: 2; !* 배경 이미지보다 위에 표시 *!*/
+/*}*/
+
+/*.friend-profile-small {*/
+/*    width: 80px;*/
+/*    height: 80px;*/
+/*    border-radius: 50%;*/
+/*    margin-right: 20px;*/
+/*}*/
+/* friend-profile-small 위치 및 스타일 */
+.friend-profile-small {
+    width: 85px; /* 프로필 이미지 크기 */
+    height: 85px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ccc; /* 기본 배경색 */
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -110%);
+    z-index: 5; /* 배경 이미지보다 위에 표시 */
+}
+
+/* 닉네임 스타일 */
+.friend-nickname {
+    font-family: RecipeKoreaOTF, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-top: 100px; /* 닉네임 위치 조정 */
+    position: relative;
+    z-index: 3; /* 배경 이미지보다 위에 표시 */
+    text-align: center;
 }

@@ -93,7 +93,7 @@ function updateFriendList(friends) {
     // 상위 3명 표시
     top3Friends.forEach((friend, index) => {
         const topFriendItem = document.createElement('div');
-        topFriendItem.classList.add('top-friend-item');
+        topFriendItem.classList.add('top-friend-item', `rank-${index + 1}`);
 
         topFriendItem.innerHTML = `
             <div class="rank">${index + 1}위</div>
@@ -122,12 +122,12 @@ function updateFriendList(friends) {
         friendItem.innerHTML = `
             <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
                  alt="Profile"
-                 class="friend-profile"
+                 class="full-friend-profile"
                  onerror="this.src='/IMG/defaultProfileImg.png'">
-            <p>닉네임: ${friend.nickname}</p>
-            <p>공개 맛집 수: ${friend.publicCount}</p>
-            <p>비공개 맛집 수: ${friend.hiddenCount}</p>
-            <p>친밀도: ${friend.intimacy}</p>
+            <div class="full-friend-nickname">닉네임: ${friend.nickname}</div>
+            <div class="open-matzip">공개 맛집 수: ${friend.publicCount}</div>
+            <div class="hidden-matzip">비공개 맛집 수: ${friend.hiddenCount}</div>
+<!--            <p>친밀도: ${friend.intimacy}</p>-->
             <button class="btn btn-delete" data-friend-id="${friend.friendId}">삭제</button>
             
         `;

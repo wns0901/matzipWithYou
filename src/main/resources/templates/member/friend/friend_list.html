@@ -9,7 +9,7 @@
 <style>
     .modal {
         position: fixed;
-        z-index: 1;
+        z-index: 6;
         left: 0;
         top: 0;
         width: 100%;
@@ -18,6 +18,7 @@
     }
 
     .modal-content {
+        z-index: 7;
         background-color: #fefefe;
         margin: 15% auto;
         padding: 20px;
@@ -72,60 +73,40 @@
 <body>
 <div class="friend-container">
     <!-- 상단 친밀도 순위 영역 -->
-    <div class="intimacy-ranking" >
-    <img src="/IMG/banner.png" class="banner" >
+    <div class="intimacy-ranking">
+        <img src="/IMG/banner.png" class="banner">
         <div class="ranking-title">
             <span>나의 친구</span>
             <span style="font-size: 2em">친밀도</span>
             <span style="font-size: 2em">순위</span>
         </div>
-        <div class="ranking-list">
+        <div class="ranking-sections">
             <!-- 1위 -->
-            <div class="ranking-item">
-                <img src="/IMG/rank1.png">
-
-                <div class="rank-nickname" >
-<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
-                    <span>닉네임</span>
-                    <div></div>
-                </div>
-                <div class="rank-avatar">
-<!--                    <img src="/images/avatar1.png" alt="1등 프로필">-->
-<!--                    <img th:src="${friend.profileImg}">-->
-                </div>
-                <div class="rank-number">1</div>
+            <div class="ranking-section first">
+                <img class="ranking-bg" src="/IMG/1.png" alt="1st Background">
+<!--                <div class="ranking-profile rank-1">-->
+<!--                    <img class="friend-profile-small"></img>-->
+<!--                    <div class="friend-nickname"></div>-->
+<!--                </div>-->
             </div>
             <!-- 2위 -->
-            <div class="ranking-item">
-                <img src="/IMG/rank2.png">
-
-<!--                <div class="rank-nickname" th:text="${}">-->
-<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
-                    <span>닉네임</span>
-                    <div></div>
-                </div>
-                <div class="rank-avatar">
-<!--                    <img src="/images/avatar2.png" alt="2등 프로필">-->
-<!--                    <img th:src="${friend.profileImg}">-->
-                </div>
-                <div class="rank-number">2</div>
+            <div class="ranking-section second">
+                <img class="ranking-bg" src="/IMG/2.png" alt="2nd Background">
+<!--                <div class="ranking-profile rank-2">-->
+<!--                    <img class="friend-profile-small"></img>-->
+<!--                    <div class="friend-nickname"></div>-->
+<!--                </div>-->
             </div>
             <!-- 3위 -->
-            <div class="ranking-item">
-                <img src="/IMG/rank3.png">
-
-                <div class="rank-nickname"  >
-<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
-                    <span>닉네임</span>
-                    <div></div>
-                </div>
-                <div class="rank-avatar">
-<!--                    <img src="/images/avatar3.png" alt="3등 프로필">-->
-<!--                    <img th:src="${friend.profileImg}">-->
-                </div>
-                <div class="rank-number">3</div>
+            <div class="ranking-section third">
+                <img class="ranking-bg" src="/IMG/3.png" alt="3rd Background">
+<!--                <div class="ranking-profile rank-3">-->
+<!--                    <img class="friend-profile-small"></img>-->
+<!--                    <div class="friend-nickname"></div>-->
+<!--                </div>-->
             </div>
         </div>
+    </div>
     </div>
 
 
