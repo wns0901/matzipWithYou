@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('matzipModal');
+    const addBtn = document.getElementById('addMatzipBtn');
+    const closeBtn = document.querySelector('.close');
+    const searchBtn = document.getElementById('search_btn');
+    const searchSelectBtn = document.getElementById('search_select_btn');
+    const inputKeyword = document.getElementById('keyword');
+
+    // 탭 이벤트 리스너
     document.querySelectorAll('.tab-button').forEach(button => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
@@ -15,121 +23,270 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    attachDeleteListeners();
-});
+    let searchResultList;
 
-function attachDeleteListeners() {
-    document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const id = this.dataset.id;
-            const type = this.dataset.type;
-            if (id && type) {
-                deleteItem(type, id);
-            }
-        });
-    });
-}
+    const ps = new kakao.maps.services.Places();
 
-function loadData(type) {
-    fetch(`/admin/api/${type}`)
-        .then(response => response.json())
-        .then(data => {
-            updateTable(type, data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('데이터를 불러오는데 실패했습니다.');
-        });
-}
+    addBtn.onclick = () => {
+        modal.style.display = "block";
+    };
 
-function updateTable(type, data) {
-    const tbody = document.getElementById(`${type}List`);
-    switch (type) {
-        case 'matzips':
-            tbody.innerHTML = data.map(item => `
+
+    closeBtn.onclick = () => {
+        modal.style.display = "none";
+        clearSearchResults();
+    };
+
+    window.onclick = (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+            clearSearchResults();
+        }
+    };
+
+    function loadData(type) {
+        fetch(`/admin/api/${type}`)
+            .then(response => response.json())
+            .then(data => {
+                updateTable(type, data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('데이터를 불러오는데 실패했습니다.');
+            });
+    }
+
+    function updateTable(type, data) {
+        const tbody = document.getElementById(`${type}List`);
+        switch (type) {
+            case 'matzips':
+                tbody.innerHTML = data.map(item => `
                 <tr>
                     <td>${item.id}</td>
                     <td>${item.name}</td>
                     <td>${item.address}</td>
-                    <td>${item.kindId}</td>
-                    <td><button class="delete-btn" data-id="${item.id}" data-type="matzips">삭제</button></td>
+                    <td>${item.kindId || '미지정'}</td>
+                    <td>
+                        <button class="delete-btn" data-id="${item.id}" data-type="matzips">삭제</button>
+                    </td>
                 </tr>
             `).join('');
-            break;
-        case 'tags':
-            tbody.innerHTML = data.map(item => `
-                <tr>
-                    <td>${item.id}</td>
-                    <td>${item.tagName}</td>
-                    <td>${formatDate(item.regdate)}</td>
-                    <td><button class="delete-btn" data-id="${item.id}" data-type="tags">삭제</button></td>
-                </tr>
-            `).join('');
-            break;
-        case 'foodkinds':
-            tbody.innerHTML = data.map(item => `
-                <tr>
-                    <td>${item.id}</td>
-                    <td>${item.kindName}</td>
-                    <td>${formatDate(item.regdate)}</td>
-                    <td><button class="delete-btn" data-id="${item.id}" data-type="foodkinds">삭제</button></td>
-                </tr>
-            `).join('');
-            break;
+                        break;
+
+            case 'tags':
+                tbody.innerHTML = data.map(item => `
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.tagName}</td>
+                        <td>${formatDate(item.regdate)}</td>
+                        <td><button class="delete-btn" data-id="${item.id}" data-type="tags">삭제</button></td>
+                    </tr>
+                `).join('');
+                break;
+            case 'foodkinds':
+                tbody.innerHTML = data.map(item => `
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.kindName}</td>
+                        <td>${formatDate(item.regdate)}</td>
+                        <td><button class="delete-btn" data-id="${item.id}" data-type="foodkinds">삭제</button></td>
+                    </tr>
+                `).join('');
+                break;
+        }
+
+        attachDeleteListeners();
     }
 
-    // 삭제 버튼 이벤트 리스너 추가
-    document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const id = this.dataset.id;
-            const type = this.dataset.type;
-            deleteItem(type, id);
-        });
+    // 검색 기능
+    searchBtn.addEventListener('click', searchPlaces);
+    inputKeyword.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') searchPlaces();
     });
-}
 
-function deleteItem(type, id) {
+    function searchPlaces() {
+        const keyword = document.getElementById('keyword').value;
+        if (!keyword.replace(/^\s+|\s+$/g, '')) {
+            alert('키워드를 입력해주세요!');
+            return false;
+        }
+        ps.keywordSearch(keyword, placesSearchCB);
+    }
 
-    if (confirm('정말 삭제하시겠습니까?')) {
-        fetch(`/admin/api/${type}/${id}`, {
-            method: 'DELETE',
+    function placesSearchCB(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            makeResultCards(result);
+        } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+            alert('검색 결과가 존재하지 않습니다.');
+        } else if (status === kakao.maps.services.Status.ERROR) {
+            alert('검색 결과 중 오류가 발생했습니다.');
+        }
+    }
+
+    function makeResultCards(result) {
+        const searchWrap = document.getElementById('result_list');
+        searchWrap.innerHTML = '';
+        searchResultList = result;
+
+        const fragment = document.createDocumentFragment();
+        result.forEach((place, i) => {
+            const searchCard = document.createElement('div');
+            searchCard.className = 'search_card';
+            searchCard.dataset.searchIndex = i;
+            searchCard.innerHTML = `
+            <span class="search_name">${place.place_name}</span><br>
+            <span class="search_address">${place.road_address_name}</span>
+        `;
+            searchCard.onclick = (e) => {
+                const selectedList = document.getElementsByClassName('selected');
+                Array.from(selectedList).forEach(el => el.classList.remove('selected'));
+                e.currentTarget.classList.add('selected');
+            };
+
+            fragment.appendChild(searchCard);
+        });
+        searchWrap.appendChild(fragment);
+    }
+
+    searchSelectBtn.onclick = function () {
+        const selectedItem = document.querySelector('.search_card.selected');
+        if (!selectedItem) return;
+
+        const selectedIndex = Number(selectedItem.dataset.searchIndex);
+        const placeData = searchResultList[selectedIndex];
+        const matzipData = {
+            name: placeData.place_name,
+            address: placeData.road_address_name,
+            lat: placeData.y,
+            lng: placeData.x,
+            kakaoMapUrl: placeData.place_url
+        };
+
+        fetch('/matzips', {
+            method: 'POST',
             headers: {
-                'Content-Type':'application/json'
-            }
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(matzipData)
         })
-            .then(response => response.text())
-            .then(result => {
-                if (result === '삭제 성공') {
-                    alert('삭제되었습니다.');
-                    if (type === 'members') {
-                        window.location.reload();
-                    } else {
-                        loadData(type);
-                    }
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'SUCCESS') {
+                    alert('맛집이 추가되었습니다.');
+                    modal.style.display = "none";
+                    clearSearchResults();
+                    loadData('matzips');
                 } else {
-                    alert(result);
+                    alert(data.msg || '맛집 추가에 실패했습니다.');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('삭제 중 오류가 발생했습니다.');
+                alert('맛집 추가 중 오류가 발생했습니다.');
             });
-    }
-}
-function formatDate(dateArray) {
-    if (!Array.isArray(dateArray) || dateArray.length < 3) {
-        console.warn('Invalid date array:', dateArray);
-        return '';
-    }
+    };
 
-    const [year, month, day, hour = 0, minute = 0, second = 0] = dateArray;
-    const date = new Date(year, month - 1, day, hour, minute, second);
-
-    if (isNaN(date.getTime())) {
-        console.warn('Invalid date:', dateArray);
-        return '';
+    function clearSearchResults() {
+        document.getElementById('keyword').value = '';
+        document.getElementById('result_list').innerHTML = '';
+        searchResultList = null;
     }
 
-    return date.toLocaleDateString('ko-KR');
-}
 
+    function deleteItem(type, id) {
+        if (confirm('정말 삭제하시겠습니까?')) {
+            fetch(`/admin/api/${type}/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.text())
+                .then(result => {
+                    if (result === '삭제 성공') {
+                        alert('삭제되었습니다.');
+                        if (type === 'members') {
+                            window.location.reload();
+                        } else {
+                            loadData(type);
+                        }
+                    } else {
+                        alert(result);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('삭제 중 오류가 발생했습니다.');
+                });
+        }
+    }
+
+    function attachDeleteListeners() {
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.dataset.id;
+                const type = this.dataset.type;
+                if (id && type) {
+                    deleteItem(type, id);
+                }
+            });
+        });
+    }
+
+    // 폼 제출 이벤트 처리
+    matzipForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = {
+            id: document.getElementById('matzipId').value || null,
+            name: document.getElementById('name').value,
+            address: document.getElementById('address').value,
+            kindId: document.getElementById('kindId').value
+        };
+
+        const method = formData.id ? 'PUT' : 'POST';
+        const url = formData.id ? `/matzips/${formData.id}` : '/matzips';
+
+        fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'SUCCESS') {
+                    alert(formData.id ? '수정되었습니다.' : '추가되었습니다.');
+                    closeModal();
+                    loadData('matzips');
+                } else {
+                    alert(data.msg || '오류가 발생했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('저장 중 오류가 발생했습니다.');
+            });
+    });
+
+    function formatDate(dateArray) {
+        if (!Array.isArray(dateArray) || dateArray.length < 3) {
+            console.warn('Invalid date array:', dateArray);
+            return '';
+        }
+
+        const [year, month, day, hour = 0, minute = 0, second = 0] = dateArray;
+        const date = new Date(year, month - 1, day, hour, minute, second);
+
+        if (isNaN(date.getTime())) {
+            console.warn('Invalid date:', dateArray);
+            return '';
+        }
+
+        return date.toLocaleDateString('ko-KR');
+    }
+
+    // 초기 실행
+    attachDeleteListeners();
+});
