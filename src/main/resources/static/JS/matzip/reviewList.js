@@ -54,13 +54,14 @@ function displayReviews(reviewsData) {
 
         const reviewId = data.id;
         reviewCard.dataset.reviewId = reviewId;
+        const imgUrl = data.kakaoImgUrl !== '#none' ? data.kakaoImgUrl : "/IMG/defaultStoreImg.png";
 
         reviewCard.innerHTML = `
             <div class="review-card">
                 <section class="review-card-container">
                     <div class="left-info">
                         <div class="review-image">
-                            <img src="${data.kakaoImgUrl || '/img/default-restaurant.jpg'}" alt="맛집 이미지">
+                            <img src="${imgUrl}" alt="맛집 이미지">
                         </div>
                     </div>    
                     <div class="right-info">
