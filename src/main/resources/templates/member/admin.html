@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Page</title>
+    <script type="text/javascript" th:src="${@environment.getProperty('app.kakaoMap.url')}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/header.css}">
     <link rel="stylesheet" th:href="@{/CSS/member/admin.css}">
 </head>
@@ -40,18 +41,24 @@
             <tbody>
             <tr th:each="member : ${members}">
                 <td th:text="${member.id}"></td>
-                <td><a th:href="@{/members/{id}(id=${member.id})}" class="username-link" th:text="${member.username}"></a></td>
+                <td><a th:href="@{/members/{id}(id=${member.id})}" class="username-link"
+                       th:text="${member.username}"></a></td>
                 <td th:text="${member.email}"></td>
                 <td th:text="${member.nickname}"></td>
                 <td th:text="${member.point}"></td>
-                <td><button class="delete-btn" th:data-id="${member.id}" th:data-type="members">삭제</button></td>
+                <td>
+                    <button class="delete-btn" th:data-id="${member.id}" th:data-type="members">삭제</button>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 
     <div id="matzips" class="tab-content">
-        <h2>맛집 목록</h2>
+        <div class="header-container">
+            <h2>맛집 목록</h2>
+            <button id="addMatzipBtn" class="add-btn">+ 맛집 추가하기</button>
+        </div>
         <table class="table">
             <thead>
             <tr>
@@ -66,8 +73,24 @@
         </table>
     </div>
 
+    <div id="matzipModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>맛집 추가</h2>
+            <div class="search-container">
+                <input type="text" id="keyword" placeholder="맛집을 검색하세요">
+                <button id="search_btn">검색</button>
+            </div>
+            <div id="result_list"></div>
+            <button id="search_select_btn" class="submit-btn">선택</button>
+        </div>
+    </div>
+
     <div id="tags" class="tab-content">
-        <h2>태그 목록</h2>
+        <div class="header-container">
+            <h2>태그 목록</h2>
+            <button id="addTagBtn" class="add-btn">+ 태그 추가하기</button>
+        </div>
         <table class="table">
             <thead>
             <tr>
@@ -79,6 +102,21 @@
             </thead>
             <tbody id="tagsList"></tbody>
         </table>
+    </div>
+
+    <!-- 태그 추가 모달 -->
+    <div id="tagModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>태그 추가</h2>
+            <form id="tagForm">
+                <div class="form-group">
+                    <label for="tagName">태그명</label>
+                    <input type="text" id="tagName" name="tagName" required>
+                </div>
+                <button type="submit" class="submit-btn">저장</button>
+            </form>
+        </div>
     </div>
 
     <div id="foodkinds" class="tab-content">
@@ -98,5 +136,7 @@
 </div>
 
 <script th:src="@{/JS/member/admin.js}"></script>
+<script th:src="@{/JS/header.js}"></script>
+
 </body>
 </html>
