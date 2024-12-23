@@ -214,10 +214,10 @@ body {
     opacity: 1; /* 호버 시 표시 */
 }
 .settings-button {
-    margin: 10px 0; /* 상하 여백만 주기 */
+    margin: 10px 0;
     position: absolute;
-    top: 10px; /* 위 여백 */
-    right: 0px; /* 오른쪽 여백 */
+    top: 10px;
+    right: 0px;
     background-color: #FF7A29;
     border: none;
     border-radius: 50%;
@@ -227,9 +227,8 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/
     z-index: 1000;
-    margin-bottom: -20px; /* 프로필 이미지 바로 위로 밀어 올림 */
+    margin-bottom: -20px;
 }
 
 .settings-icon {
@@ -246,7 +245,8 @@ body {
 .dropdown-menu {
     position: absolute;
     top: 65px;
-    right: 0;
+    right: 0; /* 오른쪽 정렬 */
+    left: auto; /* 왼쪽 자동 정렬 제거 */
     background-color: white;
     border-radius: 8px;
     padding: 8px 0;
@@ -611,8 +611,8 @@ body {
     }
 
     .settings-button {
-        top: 13px;  /* 10px * 1.33 */
-        width: 47px;  /* 35px * 1.33 */
+        top: 13px;
+        width: 47px;
         height: 47px;
     }
 
@@ -622,9 +622,8 @@ body {
     }
 
     .dropdown-menu {
-        top: 87px;  /* 65px * 1.33 */
-        min-width: 266px;  /* 200px * 1.33 */
-        padding: 11px 0;  /* 8px * 1.33 */
+        top: 87px;
+        min-width: 266px;
     }
 
     .dropdown-item {
@@ -856,6 +855,14 @@ body {
         padding: 6px 12px;
         width: 80px;
         font-size: 0.75rem;
+    }
+
+    .settings-container {
+        padding-right: 20px;
+    }
+
+    .dropdown-menu {
+        right: 20px;
     }
 }
 
