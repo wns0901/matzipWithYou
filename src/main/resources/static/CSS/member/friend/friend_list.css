@@ -27,12 +27,39 @@ body {
     width: 80%;
     max-width: 500px;
 }
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.friend-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.friend-nickname-hover {
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.friend-nickname-hover:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: black;
+    text-underline-offset: 2px;
+}
+
 .search-container {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
 }
-
 #searchButton {
     padding: 5px 15px;
     background-color: #4CAF50;
@@ -46,9 +73,21 @@ body {
     background-color: #45a049;
 }
 .friend-container {
-    max-width: 1200px;
+    /*display: block;*/
+    max-width: 1920px;
     margin: 0 auto;
     padding: 20px;
+}
+.friend-header {
+    position: relative;
+    display: flex;
+    align-items: center; /* 세로 정렬을 중앙으로 */
+    justify-content: space-between;
+    /*margin: 40px auto; !* 상하 여백 및 중앙 정렬 *!*/
+    max-width: 1900px; /* 컨테이너 크기 */
+    width: 95%; /* 컨테이너의 너비 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    transform: translateX(1%);
 }
 
 /* 상단 친밀도 순위 영역 */
@@ -82,36 +121,37 @@ body {
     z-index: 2;
     display: flex;
     justify-content: flex-end; /* 우측 정렬 */
-    gap: 20px;
+    gap: 60px;
     padding: 0 20px;
 }
 
 .first, .rank-1{
-    bottom: 10px;
+    bottom: -10px;
 }
 
 .second, .rank-2 {
-    bottom: -20px; /* 하단에 붙임 */
+    bottom: -50px; /* 하단에 붙임 */
 
 }
 .third, .rank-3 {
-    bottom: -50px; /* 하단에 붙임 */
+    bottom: -100px; /* 하단에 붙임 */
 }
-
 
 
 /* 각 섹션 크기 */
 .ranking-section {
     position: relative;
-    width: 120px;
+    width: 130px;
     text-align: center;
 
 }
 
 .ranking-bg {
-    width: 100%;
+    width: 130%;
     /*border-radius: 20px;*/
 }
+
+
 .ranking-profile {
     position: absolute;
     top: 50%;
@@ -138,7 +178,7 @@ body {
 
 .ranking-title {
     position: absolute;
-    left: 5%; /* 좌측 여백 */
+    left: 15%; /* 좌측 여백 */
     top: 50%;
     transform: translateY(-50%); /* 수직 중앙 정렬 */
     z-index: 2; /* 배경 이미지보다 위에 표시 */
@@ -228,17 +268,6 @@ body {
     color: white;
 }
 
-.friend-header {
-    position:relative;
-    display: flex; /* 자식 요소들을 가로로 정렬 */
-    align-items: center; /* 세로 정렬을 중앙으로 */
-    justify-content: center; /* 기본적으로 중앙 정렬 */
-    margin: 40px auto; /* 상하 여백 및 중앙 정렬 */
-    width: 80%; /* 컨테이너의 너비 */
-    /*max-width: 1600px; !* 최대 너비 제한 *!*/
-    text-align: center; /* 텍스트 가운데 정렬 */
-    transform: translateX(10%);
-}
 
 .sort-buttons {
     margin-left: 10px;
@@ -347,7 +376,8 @@ body {
 .friend-box {
     z-index: 0;
     position: relative; /* 자식 요소의 기준점을 설정 */
-    width: 1236px; /* 컨테이너 크기 */
+    max-width: 1236px; /* 컨테이너 크기 */
+    width: 100%;
     height: 250px; /* 컨테이너 크기 */
     margin: 10px auto;
 }
@@ -356,31 +386,12 @@ body {
     z-index: 0;
     position: absolute; /* 내부 요소의 위치를 기준으로 조정 가능 */
     display: flex;
-    /*align-items: center;*/
-    /*justify-content: space-between; !* 요소들을 양 끝으로 정렬 *!*/
-    /*background-color: white; !* 옅은 회색 *!*/
-    /*width: 58.33%; !* 화면 가로비율 기준 7/12 *!*/
-    /*height: 250px;*/
-    /*padding: 1rem;*/
-    /*border-radius: 10px;*/
-    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); !* 약간의 그림자 *!*/
-    /*margin: 10px auto; !* 부모 컨테이너를 화면 가로 중앙에 위치 *!*/
+    max-width: 1236px; /* 컨테이너 크기 */
+    width: 100%;
 
 }
 
-.friend-item {
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*justify-content: space-between; !* 요소들을 양 끝으로 정렬 *!*/
-    /*position: relative; !* 내부 요소의 위치를 기준으로 조정 가능 *!*/
-    /*background-color: white; !* 옅은 회색 *!*/
-    /*width: 58.33%; !* 화면 가로비율 기준 7/12 *!*/
-    /*height: 250px;*/
-    /*padding: 1rem;*/
-    /*border-radius: 10px;*/
-    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); !* 약간의 그림자 *!*/
-    /*margin: 10px auto; !* 부모 컨테이너를 화면 가로 중앙에 위치 *!*/
-}
+
 
 .full-friend-profile {
     z-index: 1;
@@ -453,36 +464,12 @@ body {
 
 }
 
-/*.open-matzip-bg,*/
-/*.hidden-matzip-bg {*/
-/*    position: absolute;*/
-/*    !*left: 50%;*!*/
-/*    !*transform: translateY(-50%);*!*/
-/*    z-index: 1; !* 배경 이미지는 텍스트 뒤로 배치 *!*/
-/*    width: 100%;*/
-/*    height: auto;*/
-/*    bottom: 0; !* 하단에 붙임 *!*/
-/*}*/
 
 .btn-delete {
     position: absolute;
     bottom: 5%;
     right: 10%;
-    /*background-color: #6a6a6a;*/
-    /*color: white;*/
-    /*font-family: 'Noto Sans KR', sans-serif;*/
-    /*font-weight: 300; !* 미디엄 *!*/
-    /*border: none;*/
-    /*padding: 10px;*/
-    /*border-radius: 5px;*/
-    z-index: 3; /* 가장 위에 버튼을 배치 */
+    z-index: 3;
     cursor: pointer;
-    /*background-size: contain;*/
-    /*border: none;*/
-    /*width: 3rem; !* 버튼 크기 조정 *!*/
-    /*height: 3rem;*/
-    /*margin-left: 1rem;*/
-    /*cursor: pointer;*/
-    /*position: relative;*/
     transform: translateX(60%) translateY(-200%);
 }
