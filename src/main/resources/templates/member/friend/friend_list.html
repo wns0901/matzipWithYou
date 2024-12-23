@@ -6,77 +6,14 @@
     <title>친구 목록</title>
     <link rel="stylesheet" th:href="@{/CSS/member/friend/friend_list.css}" type="text/css"/>
 </head>
-<style>
-    .modal {
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
 
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 500px;
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .friend-card {
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin: 10px 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .friend-card img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-    }
-
-    .friend-nickname-hover {
-        position: relative;
-        cursor: pointer;
-        text-decoration: none;
-    }
-
-    .friend-nickname-hover:hover {
-        text-decoration: underline;
-        text-decoration-thickness: 2px;
-        text-decoration-color: black;
-        text-underline-offset: 2px;
-    }
-
-    .search-container {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-
-
-</style>
 <body>
 <div class="friend-container">
     <!-- 상단 친밀도 순위 영역 -->
     <div class="intimacy-ranking">
         <img src="/IMG/banner.png" class="banner">
         <div class="ranking-title">
-            <span>나의 친구</span>
+            <span style="margin-bottom: 10px">나의 친구</span>
             <span style="font-size: 2em">친밀도</span>
             <span style="font-size: 2em">순위</span>
         </div>
@@ -110,7 +47,7 @@
     </div>
 
 
-    <span class="friend-header" style="margin : 20px">
+    <div class="friend-header" style="margin : 20px">
         <img class="icon" src="/IMG/friend-icon.png" alt="friend-icon">
         <span class="subtitle">친구 목록</span>
         <span class="sort-buttons">
@@ -128,7 +65,7 @@
             <img class="icon" src="/IMG/bell.png" alt="request">
             <span class="btn btn-request">친구 요청</span>
         </span>
-    </span>
+    </div>
 
     <div id="friends-container"></div>
 
