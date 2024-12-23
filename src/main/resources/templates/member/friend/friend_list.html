@@ -68,109 +68,71 @@
         margin-bottom: 15px;
     }
 
-    #searchButton {
-        padding: 5px 15px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    #searchButton:hover {
-        background-color: #45a049;
-    }
 
 </style>
 <body>
 <div class="friend-container">
     <!-- 상단 친밀도 순위 영역 -->
-    <div class="intimacy-ranking" >
-    <img src="/IMG/banner.png" class="banner" >
+    <div class="intimacy-ranking">
+        <img src="/IMG/banner.png" class="banner">
         <div class="ranking-title">
             <span>나의 친구</span>
             <span style="font-size: 2em">친밀도</span>
             <span style="font-size: 2em">순위</span>
         </div>
-        <div class="ranking-list">
+        <div class="ranking-sections">
             <!-- 1위 -->
-            <div class="ranking-item">
-                <img src="/IMG/rank1.png">
-
-
-                <div class="rank-nickname" >
-<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
-
-                    <span>닉네임</span>
-                    <div></div>
-                </div>
-                <div class="rank-avatar">
-<!--                    <img src="/images/avatar1.png" alt="1등 프로필">-->
-
-<!--                    <img th:src="${friend.profileImg}">-->
-
-                </div>
-                <div class="rank-number">1</div>
+            <div class="ranking-section first">
+                <img class="ranking-bg" src="/IMG/1.png" alt="1st Background">
+<!--                <div class="ranking-profile rank-1">-->
+<!--                    <img class="friend-profile-small"></img>-->
+<!--                    <div class="friend-nickname"></div>-->
+<!--                </div>-->
             </div>
             <!-- 2위 -->
-            <div class="ranking-item">
-                <img src="/IMG/rank2.png">
-
-
-<!--                <div class="rank-nickname" th:text="${}">-->
-<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
-
-                    <span>닉네임</span>
-                    <div></div>
-                </div>
-                <div class="rank-avatar">
-<!--                    <img src="/images/avatar2.png" alt="2등 프로필">-->
-
-<!--                    <img th:src="${friend.profileImg}">-->
-
-                </div>
-                <div class="rank-number">2</div>
+            <div class="ranking-section second">
+                <img class="ranking-bg" src="/IMG/2.png" alt="2nd Background">
+<!--                <div class="ranking-profile rank-2">-->
+<!--                    <img class="friend-profile-small"></img>-->
+<!--                    <div class="friend-nickname"></div>-->
+<!--                </div>-->
             </div>
             <!-- 3위 -->
-            <div class="ranking-item">
-                <img src="/IMG/rank3.png">
-
-
-                <div class="rank-nickname"  >
-<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
-
-                    <span>닉네임</span>
-                    <div></div>
-                </div>
-                <div class="rank-avatar">
-<!--                    <img src="/images/avatar3.png" alt="3등 프로필">-->
-
-<!--                    <img th:src="${friend.profileImg}">-->
-
-                </div>
-                <div class="rank-number">3</div>
+            <div class="ranking-section third">
+                <img class="ranking-bg" src="/IMG/3.png" alt="3rd Background">
+<!--                <div class="ranking-profile rank-3">-->
+<!--                    <img class="friend-profile-small"></img>-->
+<!--                    <div class="friend-nickname"></div>-->
+<!--                </div>-->
             </div>
         </div>
-
+    </div>
     </div>
 
 
-
-    <div class="friend-header">
-        <h1>친구 목록</h1>
-        <div class="friend-actions">
-            <button class="btn btn-add">친구 추가</button>
-            <button class="btn btn-request">친구 요청</button>
-        </div>
-        <div class="sort-buttons">
-            <button class="btn btn-sort" data-sort="registration">등록순</button>
-            <button class="btn btn-sort" data-sort="alphabet">가나다순</button>
-            <button class="btn btn-sort" data-sort="intimacy">친밀도순</button>
-        </div>
-    </div>
+    <span class="friend-header" style="margin : 20px">
+        <img class="icon" src="/IMG/friend-icon.png" alt="friend-icon">
+        <span class="subtitle">친구 목록</span>
+        <span class="sort-buttons">
+            <span class="btn-title">정렬방식 :</span>
+            <span class="btn btn-sort" data-sort="registration">등록순</span>
+            <span> | </span>
+            <span class="btn btn-sort" data-sort="alphabet">가나다순</span>
+            <span> | </span>
+            <span class="btn btn-sort" data-sort="intimacy">친밀도순</span>
+        </span>
+        <span class="friend-actions">
+            <img class="icon" src="/IMG/send-friend.png" alt="add">
+            <span class="btn btn-add">친구 추가</span>
+            <span class="btn-add">|</span>
+            <img class="icon" src="/IMG/bell.png" alt="request">
+            <span class="btn btn-request">친구 요청</span>
+        </span>
+    </span>
 
     <div id="friends-container"></div>
-</div>
+
+
 
 <!-- 모달 HTML -->
 <div id="friendRequestModal" class="modal" style="display: none;">
