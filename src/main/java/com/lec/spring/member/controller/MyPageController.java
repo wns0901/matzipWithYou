@@ -35,6 +35,7 @@ public class MyPageController {
             @PathVariable Long memberId
             , Model model
     ) {
+
         MyPage myPageInfo = myPageService.getFullMyPageInfo(memberId);
 
         // 리뷰 데이터 제한

@@ -89,16 +89,18 @@
     <div class="content-section">
         <!-- 위시 리스트 -->
         <div class="section">
-            <span class="section-header">
-            <img class="icon" src="/IMG/heart-filled.svg" alt="heart-icon">
-                <h2 class="h2"> 위시 리스트(</h2>
-                    <h2 class="h2" th:text="${myPage.wishInfo.count}"></h2>
-                <h2 class="h2">곳)</h2>
-                <button class="view-all-button"
-                        th:onclick="|location.href='@{/matzips/wish-list/}${memberId}'|">
-                    전체보기 >
-                </button>
-            </span>
+       <span class="section-header">
+    <img class="icon" src="/IMG/heart-filled.svg" alt="heart-icon">
+    <h2 class="h2"> 위시 리스트(</h2>
+    <h2 class="h2" th:text="${myPage.wishInfo.count}"></h2>
+    <h2 class="h2">곳)</h2>
+   <button class="view-all-button"
+           th:onclick="|location.href='@{/matzips/wish-list/}${memberId}'|">
+    전체보기 >
+</button>
+
+</span>
+<!--end modal-->
             <div class="card-container" id="wish-list-cards">
                 <div th:each="wish : ${myPage.wishInfo.preview}" class="card">
                     <img th:src="${wish.matzipImage != '#none' ? wish.matzipImage : '/IMG/defaultStoreImgSMALL.png'}"
