@@ -120,7 +120,10 @@
     </div>
 
     <div id="foodkinds" class="tab-content">
-        <h2>음식 종류 목록</h2>
+        <div class="header-container">
+            <h2>음식 종류 목록</h2>
+            <button id="addFoodKindBtn" class="add-btn">+ 음식 종류 추가하기</button>
+        </div>
         <table class="table">
             <thead>
             <tr>
@@ -133,6 +136,22 @@
             <tbody id="foodkindsList"></tbody>
         </table>
     </div>
+
+    <!-- 음식 종류 추가 모달 -->
+    <div id="foodKindModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>음식 종류 추가</h2>
+            <form id="foodKindForm">
+                <div class="form-group">
+                    <label for="kindName">음식 종류명</label>
+                    <input type="text" id="kindName" name="kindName" required>
+                </div>
+                <button type="submit" class="submit-btn">저장</button>
+            </form>
+        </div>
+    </div>
+
 </div>
 
 <script th:src="@{/JS/member/admin.js}"></script>

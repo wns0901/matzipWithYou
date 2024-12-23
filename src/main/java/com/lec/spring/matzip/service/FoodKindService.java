@@ -7,6 +7,9 @@ import java.util.List;
 
 @Service
 public interface FoodKindService {
+
+    FoodKind save(FoodKind foodKind);
+
     List<FoodKind> getAllFoodKinds();
 
     int deleteById(Long id);

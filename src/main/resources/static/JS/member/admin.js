@@ -6,6 +6,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchSelectBtn = document.getElementById('search_select_btn');
     const inputKeyword = document.getElementById('keyword');
 
+    // 태그 모달 관련 변수들
+    const tagModal = document.getElementById('tagModal');
+    const addTagBtn = document.getElementById('addTagBtn');
+    const tagForm = document.getElementById('tagForm');
+    const closeTagBtn = tagModal.querySelector('.close');
+
+    // 음식 종류 모달 관련 변수들
+    const foodKindModal = document.getElementById('foodKindModal');
+    const addFoodKindBtn = document.getElementById('addFoodKindBtn');
+    const foodKindForm = document.getElementById('foodKindForm');
+    const closeFoodKindBtn = foodKindModal.querySelector('.close');
+
     // 탭 이벤트 리스너
     document.querySelectorAll('.tab-button').forEach(button => {
         button.addEventListener('click', function (e) {
@@ -27,20 +39,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const ps = new kakao.maps.services.Places();
 
+    // 모달 관련 이벤트 리스너
     addBtn.onclick = () => {
         modal.style.display = "block";
     };
-
 
     closeBtn.onclick = () => {
         modal.style.display = "none";
         clearSearchResults();
     };
 
+    addTagBtn.onclick = () => {
+        tagModal.style.display = "block";
+    };
+
+    closeTagBtn.onclick = () => {
+        tagModal.style.display = "none";
+        tagForm.reset();
+    };
+
+    addFoodKindBtn.onclick = () => {
+        foodKindModal.style.display = "block";
+    };
+
+    closeFoodKindBtn.onclick = () => {
+        foodKindModal.style.display = "none";
+        foodKindForm.reset();
+    };
+
     window.onclick = (event) => {
         if (event.target === modal) {
             modal.style.display = "none";
             clearSearchResults();
+        }
+        if (event.target === tagModal) {
+            tagModal.style.display = "none";
+            tagForm.reset();
+        }
+        if (event.target === foodKindModal) {
+            foodKindModal.style.display = "none";
+            foodKindForm.reset();
         }
     };
 
@@ -61,18 +99,17 @@ document.addEventListener('DOMContentLoaded', function () {
         switch (type) {
             case 'matzips':
                 tbody.innerHTML = data.map(item => `
-                <tr>
-                    <td>${item.id}</td>
-                    <td>${item.name}</td>
-                    <td>${item.address}</td>
-                    <td>${item.kindId || '미지정'}</td>
-                    <td>
-                        <button class="delete-btn" data-id="${item.id}" data-type="matzips">삭제</button>
-                    </td>
-                </tr>
-            `).join('');
-                        break;
-
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.address}</td>
+                        <td>${item.kindId || '미지정'}</td>
+                        <td>
+                            <button class="delete-btn" data-id="${item.id}" data-type="matzips">삭제</button>
+                        </td>
+                    </tr>
+                `).join('');
+                break;
             case 'tags':
                 tbody.innerHTML = data.map(item => `
                     <tr>
@@ -94,7 +131,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 `).join('');
                 break;
         }
-
         attachDeleteListeners();
     }
 
@@ -134,9 +170,9 @@ document.addEventListener('DOMContentLoaded', function () {
             searchCard.className = 'search_card';
             searchCard.dataset.searchIndex = i;
             searchCard.innerHTML = `
-            <span class="search_name">${place.place_name}</span><br>
-            <span class="search_address">${place.road_address_name}</span>
-        `;
+                <span class="search_name">${place.place_name}</span><br>
+                <span class="search_address">${place.road_address_name}</span>
+            `;
             searchCard.onclick = (e) => {
                 const selectedList = document.getElementsByClassName('selected');
                 Array.from(selectedList).forEach(el => el.classList.remove('selected'));
@@ -192,7 +228,6 @@ document.addEventListener('DOMContentLoaded', function () {
         searchResultList = null;
     }
 
-
     function deleteItem(type, id) {
         if (confirm('정말 삭제하시겠습니까?')) {
             fetch(`/admin/api/${type}/${id}`, {
@@ -233,7 +268,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-
     function formatDate(dateArray) {
         if (!Array.isArray(dateArray) || dateArray.length < 3) {
             console.warn('Invalid date array:', dateArray);
@@ -251,62 +285,68 @@ document.addEventListener('DOMContentLoaded', function () {
         return date.toLocaleDateString('ko-KR');
     }
 
+    // 태그 추가 제출
+    tagForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = {
+            tagName: document.getElementById('tagName').value
+        };
+
+        fetch('/tags/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'SUCCESS') {
+                    tagModal.style.display = "none";
+                    tagForm.reset();
+                    loadData('tags');
+                } else {
+                    alert('태그 추가에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('태그 추가 중 오류가 발생했습니다.');
+            });
+    });
+
+    // 음식 종류 추가 제출
+    foodKindForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = {
+            kindName: document.getElementById('kindName').value
+        };
+
+        fetch('/foodkinds/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.text())
+            .then(result => {
+                if (result === '저장 성공') {
+                    foodKindModal.style.display = "none";
+                    foodKindForm.reset();
+                    loadData('foodkinds');
+                } else {
+                    alert('음식 종류 추가에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('음식 종류 추가 중 오류가 발생했습니다.');
+            });
+    });
+
     // 초기 실행
     attachDeleteListeners();
-});
-
-// 태그 모달 관련 변수
-const tagModal = document.getElementById('tagModal');
-const addTagBtn = document.getElementById('addTagBtn');
-const tagForm = document.getElementById('tagForm');
-const closeTagBtn = tagModal.querySelector('.close');
-
-// 태그 모달 열기/닫기
-addTagBtn.onclick = () => {
-    tagModal.style.display = "block";
-};
-
-closeTagBtn.onclick = () => {
-    tagModal.style.display = "none";
-    tagForm.reset();
-};
-
-window.onclick = (event) => {
-    if (event.target === tagModal) {
-        tagModal.style.display = "none";
-        tagForm.reset();
-    }
-};
-
-// 태그 추가 제출
-tagForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const formData = {
-        tagName: document.getElementById('tagName').value
-    };
-
-    fetch('/tags/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'SUCCESS') {
-                alert(data.message);
-                tagModal.style.display = "none";
-                tagForm.reset();
-                window.location.reload();
-                loadData('tags');
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('태그 추가 중 오류가 발생했습니다.');
-        });
 });
