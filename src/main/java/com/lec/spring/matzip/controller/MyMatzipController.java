@@ -5,9 +5,7 @@ import com.lec.spring.matzip.domain.DTO.FindingResultMyMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.ReviewSubmitModalDTO;
 import com.lec.spring.matzip.domain.DTO.SaveMyMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.UpdateMyMatzipVisibility;
-import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.service.MyMatzipService;
-import com.lec.spring.member.domain.FriendDetailsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,7 +34,7 @@ public class MyMatzipController {
         FindingResultMyMatzipDTO result = myMatzipService.findByMemberId(memberId);
         model.addAttribute("result", result);
 
-        return "/matzip/myMatzipPage";
+        return "matzip/myMatzipPage";
     }
 
     @ResponseBody
@@ -46,13 +44,13 @@ public class MyMatzipController {
     }
 
     @PatchMapping("/{myMatzipId}")
-    public ResponseEntity<Map<String,String>> updateMyMatzipVisibility(@PathVariable Long myMatzipId, @RequestBody UpdateMyMatzipVisibility updateMyMatzipVisibility) {
+    public ResponseEntity<Map<String, String>> updateMyMatzipVisibility(@PathVariable Long myMatzipId, @RequestBody UpdateMyMatzipVisibility updateMyMatzipVisibility) {
         updateMyMatzipVisibility.setMyMatzipId(myMatzipId);
         return myMatzipService.updateMyMatzipVisibility(updateMyMatzipVisibility);
     }
 
     @DeleteMapping("/{myMatzipId}")
-    public ResponseEntity<Map<String,String>> deleteMyMatzip(@PathVariable Long myMatzipId) {
+    public ResponseEntity<Map<String, String>> deleteMyMatzip(@PathVariable Long myMatzipId) {
         return myMatzipService.deleteMyMatzip(myMatzipId);
     }
 }
