@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>위시리스트</title>
+</head>
+<html>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+    }
+    .container {
+        max-width: 800px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        max-height: 400px; /* 최대 높이 설정 */
+        overflow-y: auto; /* 세로 스크롤 활성화 */
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0; /* 기본 여백 제거 */
+    }
+    li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    img {
+        width: 80px;
+        height: 80px;
+        border-radius: 5px;
+        margin-right: 15px;
+    }
+    button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>내 위시리스트</h1>
+    <ul>
+        <li th:each="item : ${wishList}">
+            <img th:src="${item.imgUrl}" alt="맛집 이미지">
+            <span th:text="${item.name}">맛집 이름</span>
+            <button th:onclick="'deleteWishlist(' + ${item.id} + ', ' + ${memberId} + ');'">
+                <span>삭제</span>
+            </button>
+        </li>
+    </ul>
+</div>
+
+<script>
+    async function deleteWishlist(matzipId, memberId) {
+        const button = event.target;
+
+        const response = await fetch(`/matzips/wish-list/${memberId}/${matzipId}`, {
+            method: 'DELETE'
+        });
+
+        const data = await response.json();
+        alert("위시리스트에서 삭제되었습니다.");
+
+        // 페이지 새로 고침
+        location.reload();
+    }
+</script>
+</body>
+</html>
+

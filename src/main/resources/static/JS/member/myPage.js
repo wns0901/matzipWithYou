@@ -1,11 +1,11 @@
 // 설정버튼 드롭다운
-document.querySelector('.settings-button').addEventListener('click', function() {
+document.querySelector('.settings-button').addEventListener('click', function () {
     const dropdown = this.nextElementSibling;
     dropdown.classList.toggle('show');
 });
 
 // 드롭다운 외부 클릭시 닫기
-window.addEventListener('click', function(event) {
+window.addEventListener('click', function (event) {
     if (!event.target.closest('.settings-container')) {
         const dropdowns = document.querySelectorAll('.dropdown-menu');
         dropdowns.forEach(dropdown => {
@@ -15,8 +15,7 @@ window.addEventListener('click', function(event) {
 });
 
 
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname.match(/^\/members\/\d+$/)) {
         const friendButton = document.querySelector('.info-button .info-label.friends');
         if (!friendButton) {
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        friendButton.addEventListener('click', function() {
+        friendButton.addEventListener('click', function () {
             console.log(1)
             const memberId = this.getAttribute('data-member-id');
             if (!memberId) {
@@ -131,12 +130,12 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const memberId= parseInt(window.location.pathname.split('/').pop());
+        const memberId = parseInt(window.location.pathname.split('/').pop());
         // 서버에 변경된 닉 전송
         fetch(`/members/${memberId}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ newNickname })
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({newNickname})
         })
             .then(response => response.json())
             .then(data => {
@@ -156,8 +155,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-
-});
 
 // 페이지 로드 후 호출
 document.addEventListener("DOMContentLoaded", function () {

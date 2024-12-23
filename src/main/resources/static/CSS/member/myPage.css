@@ -734,6 +734,9 @@ body {
     }
 }
 
+
+
+
 /* 회원 탈퇴 팝업 스타일 */
 .delete-account-popup {
     position: fixed;
@@ -855,3 +858,4 @@ body {
         font-size: 0.75rem;
     }
 }
+
