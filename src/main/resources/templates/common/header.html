@@ -30,9 +30,13 @@
                     </button>
 
                     <div id="userDropdown" class="dropdown-content">
-                        <a th:href="@{/members/{id}(id=${#authentication.principal.member.id})}">마이페이지</a>
+                        <form th:action="@{/members/{id}(id=${#authentication.principal.member.id})}" method="get">
+                            <button type="submit">마이페이지</button>
+                        </form>
                         <div sec:authorize="hasRole('ADMIN')" class="admin-menu">
-                            <a th:href="@{/admin}">관리자 페이지</a>
+                            <form th:action="@{/admin}" method="get">
+                                <button type="submit">관리자 페이지</button>
+                            </form>
                         </div>
                         <form th:action="@{/member/logout}" method="POST">
                             <button type="submit">로그아웃</button>
@@ -50,7 +54,6 @@
                 userDropdown.classList.toggle("show");
             }
         }
-
     </script>
 </th:block>
 </body>
