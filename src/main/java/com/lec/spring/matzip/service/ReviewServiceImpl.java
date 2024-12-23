@@ -249,8 +249,8 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewSubmitModalDTO getModalInfo(ReviewDTO reviewDTO) {
         List<Member> hiddenMatzipMembers = hiddenMatzipMemberIds(reviewDTO);
 
-        int pointIncrease = rewardReviewPoint(reviewDTO, 100, 10);
-        int intimacyIncrease = rewardReviewIntimacy(reviewDTO, 100, 10);
+        int pointIncrease = rewardReviewPoint(reviewDTO, 500, 100);
+        int intimacyIncrease = rewardReviewIntimacy(reviewDTO, 100, 0);
 
         List<FriendDetailsDTO> friendDetails = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getMemberId());
 
