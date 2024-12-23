@@ -327,9 +327,10 @@ body {
     #searchResults, #pendingRequests {
         grid-template-columns: 1fr;
     }
-.friend-info {
-    flex-grow: 1;
-}
+
+    .friend-info {
+        flex-grow: 1;
+    }
 }
 
 .friend-nickname {
