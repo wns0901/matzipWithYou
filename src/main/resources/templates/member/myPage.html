@@ -30,8 +30,26 @@
                 </button>
                 <div class="dropdown-menu">
                     <button class="dropdown-item" th:onclick="|location.href='@{/member/request-reset}'|">비밀번호 변경</button>
-                    <button class="dropdown-item">회원 탈퇴</button>
+                    <button class="dropdown-item" id="deleteAccountBtn">회원 탈퇴</button>
                 </div>
+
+                <!-- 회원 탈퇴 팝업 -->
+                <div class="delete-account-popup" id="deleteAccountPopup" style="display: none;">
+                    <div class="message align-message">
+                        <img src="/IMG/notice.png" alt="경고" class="point-notice">
+                        <div class="message-text">
+                            회원 탈퇴 시, 저장된 맛집을 볼 수 없습니다.<br>
+                            계정을 삭제하시겠습니까?
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button class="confirm-button" id="confirmDeleteBtn">예</button>
+                        <button class="cancel-button" id="cancelDeleteBtn">아니오</button>
+                    </div>
+                </div>
+
+                <!-- 기존 overlay div 사용 -->
+                <div class="overlaybackground" id="overlay"></div>
             </div>
             <!-- 프로필 이미지 영역 -->
             <div class="profile-image-wrapper">
