@@ -118,6 +118,7 @@ body {
     position: relative;
     width: 800px;
     height: 800px;
+    justify-content: center
 }
 
 #seoul-map {
