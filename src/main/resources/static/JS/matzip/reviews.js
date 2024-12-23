@@ -5,7 +5,35 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFormSubmission();
     setupRegistrationButtons();
     setupFoodKindTextHeight();
+    const matzipId = document.querySelector('input[name="matzipId"]').value;
+    loadStoreInfo(matzipId);
 });
+
+async function loadStoreInfo(matzipId) {
+    const memberId = document.querySelector('input[name="memberId"]').value;
+    const response = await fetch(`/matzip/api/store/${memberId}/${matzipId}`);
+
+    const data = await response.json();
+
+    const storeContainer = document.querySelector('.store-container');
+    const imgUrl = data.kakaoImgUrl !== '#none' ? data.kakaoImgUrl : "/IMG/defaultStoreImg.png";
+
+    storeContainer.innerHTML = `
+        <div class="left-info">
+            <div class="review-image">
+                <img src="${imgUrl}" alt="맛집 이미지">
+            </div>
+        </div>
+        <div class="right-info">
+            <div class="store-info">
+                <div class="store-details">
+                    <h3>${data.matzipName}</h3>
+                    <p>${data.matzipAddress}</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
 
 function initializeStarRating() {
     const starContainer = document.querySelector(".star-rating");
@@ -167,7 +195,13 @@ async function setupFormSubmission() {
         const content = document.querySelector('textarea[name="content"]')?.value;
         const selectedTags = Array.from(document.querySelectorAll('.tag-btn.selected'));
         const tagIds = document.querySelector('input[name="tagIds"]')?.value.split(',').filter(Boolean);
-        const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
+        const registerBtn = document.querySelector('input[data-name="registerOk"]');
+        const unregisterBtn = document.querySelector('input[data-name="Unregister"]');
+
+        if (!registerBtn.classList.contains('active') && !unregisterBtn.classList.contains('active')) {
+            alert('등록 여부를 선택해주세요.');
+            return;
+        }
 
         if (!memberId) {
             alert('로그인이 필요합니다.');
@@ -205,6 +239,8 @@ async function setupFormSubmission() {
             tagIds: tagIds
         };
 
+        const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
+
         const url = isRegistered
             ? `/matzips/mine/${memberId}/${matzipId}`
             : `/matzip/reviews/${memberId}/${matzipId}`;
@@ -217,13 +253,6 @@ async function setupFormSubmission() {
             await saveReview(memberId, matzipId, formObject, url);
         }
 
-        document.getElementById('modalCloseBtn').onclick = () => {
-            const modal = document.getElementById('completionModal');
-            modal.classList.add('hidden');
-            window.location.href = isRegistered
-                ? `/matzip/myMatzipList/${memberId}`
-                : `/matzip/reviewList/${memberId}`;
-        };
     });
 }
 
@@ -243,30 +272,44 @@ async function saveReview(memberId, matzipId, formObject, url) {
     }
 
     const modalResponse = await fetch(`/matzip/api/reviews/${memberId}/${matzipId}/modal`);
-
+    const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
     const modalData = await modalResponse.json();
     showCompletionModal(modalData);
 
+    document.getElementById('point-btn').onclick = () => {
+        const modal = document.getElementById('completionModal');
+        modal.classList.add('hidden');
+        window.location.href = isRegistered
+            ? `/matzip/myMatzipList/${memberId}`
+            : `/matzip/reviewList/${memberId}`;
+    };
 }
 
 function showCompletionModal(data) {
+    const point = document.getElementById('point-btn');
     const modal = document.getElementById('completionModal');
     const messageContainer = document.getElementById('messageContainer');
     const friendsContainer = document.getElementById('friendProfiles');
 
     let messages = [];
 
-    if (data.topFriendName && data.friendCount >= 0) {
-        const unlockMessage = `${data.topFriendName}${data.friendCount > 0 ? `외 ${data.friendCount}명` : ''}의 
-            hidden 맛집을 unlock 했습니다!`;
+    if (data.topFriendName && data.friendCount > 0) {
+        const unlockMessage = `${data.topFriendName}외 ${data.friendCount}명의 hidden 맛집을 unlock 했습니다!`;
         messages.push(
             `<p class="unlock-message">
                 <i class="fas fa-unlock"></i> ${unlockMessage}
             </p>`
         );
+    } else {
+        const unlockMessage = `리뷰를 등록했습니다.<br>${data.rewardPoints}포인트가 지급됩니다.`
+        messages.push(
+            `<p class="unlock-message">
+                <i class="fa-solid fa-envelope-circle-check"></i> ${unlockMessage}
+            </p>`
+        );
     }
 
-    if (data.intimacyIncrease > 0) {
+    if (data.friendCount > 0) {
         const intimacyMessage = `${data.topFriendName}${data.friendCount > 0 ? `외 ${data.friendCount}명` : ''}의 
             친밀도가 +${data.intimacyIncrease} 되었습니다!`;
         messages.push(
@@ -276,13 +319,9 @@ function showCompletionModal(data) {
         );
     }
 
-    if (data.rewardPoints > 0) {
-        messages.push(
-            `<p class="point-message">
-                <i class="fas fa-plus-circle"></i> +${data.rewardPoints}pt
-            </p>`
-        );
-    }
+    point.innerHTML = `
+        <i class="fa-solid fa-plus"></i> ${data.rewardPoints}pt
+    `;
 
     messageContainer.innerHTML = `
         <div class="message-box">
@@ -293,10 +332,8 @@ function showCompletionModal(data) {
     friendsContainer.innerHTML = data.hiddenFriends
         .map(friend => `
             <div class="friend-profile">
-                <img src="${friend.profileImg || '/images/default-profile.png'}" 
+                <img src="${friend.profileImg ? '/upload/' + friend.profileImg : '/images/default-profile.png'}" 
                      alt="${friend.nickname}">
-                <p class="nickname">${friend.nickname}</p>
-                <p class="intimacy">친밀도: ${friend.intimacy}</p>
             </div>
         `)
         .join('');

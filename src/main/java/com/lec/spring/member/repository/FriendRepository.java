@@ -38,7 +38,7 @@ public interface FriendRepository{
     int sendFriendRequest(Friend friend);
 
     // 친밀도 업데이트
-    int updateIntimacy(@Param("id") Long id, @Param("intimacy")Integer intimacy);
+    int updateIntimacy(@Param("id") Long id, @Param("targetId") Long targetId,@Param("intimacy")Integer intimacy);
 
     Friend findFriendRelationById(Long friendId);
 

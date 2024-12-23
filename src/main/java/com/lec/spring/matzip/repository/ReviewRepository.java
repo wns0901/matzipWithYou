@@ -20,7 +20,7 @@ public interface ReviewRepository {
 
     int save(ReviewDTO reviewDTO);
 
-    int saveReviewTags(List<ReviewTagDTO> reviewTags);
+    int saveReviewTags(List<ReviewTag> reviewTags);
 
     List<Long> checkHiddenMatzip(Long matzipId, Long memberId);
 

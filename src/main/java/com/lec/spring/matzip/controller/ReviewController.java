@@ -42,6 +42,27 @@ public class ReviewController {
         return "matzip/reviewList";
     }
 
+    @GetMapping("/api/store/{memberId}/{matzipId}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getStoreInfo(
+            @PathVariable Long memberId,
+            @PathVariable Long matzipId) {
+        try {
+            String matzipName = reviewService.getMatzipName(matzipId);
+            String matzipAddress = reviewService.getMatzipAddress(matzipId);
+            String kakaoImgUrl = reviewService.getKakaoImgURl(matzipId);
+
+            Map<String, Object> storeInfo = new HashMap<>();
+            storeInfo.put("matzipName", matzipName);
+            storeInfo.put("matzipAddress", matzipAddress);
+            storeInfo.put("kakaoImgUrl", kakaoImgUrl);
+
+            return ResponseEntity.ok(storeInfo);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @GetMapping("/api/reviews/{memberId}")
     @ResponseBody
     public ResponseEntity<List<Map<String, Object>>> getReviewsWithMatzipInfo(@PathVariable Long memberId) {
@@ -130,6 +151,7 @@ public class ReviewController {
     public String save(@PathVariable Long matzipId
             , @PathVariable Long memberId
             , Model model) {
+
         model.addAttribute("memberId", memberId);
         model.addAttribute("matzipId", matzipId);
         model.addAttribute("foodKinds", reviewService.getFoodKinds());
@@ -169,7 +191,7 @@ public class ReviewController {
                     .matzipId(matzipId)
                     .build();
 
-            ReviewSubmitModalDTO modalData = reviewService.reviewSubmitModal(reviewDTO);
+            ReviewSubmitModalDTO modalData = reviewService.getModalInfo(reviewDTO);
             return ResponseEntity.ok(modalData);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -193,7 +215,7 @@ public class ReviewController {
                 matzipService.updateMatzipFoodKind(matzipId, reviewDTO.getFoodKindId());
             }
 
-            int saved = reviewService.addReview(reviewDTO, model);
+            int saved = reviewService.addReview(reviewDTO);
             if (saved > 0) {
                 addSuccessAttributes(model, new RedirectAttributesModelMap());
                 return ResponseEntity.ok(Map.of(
