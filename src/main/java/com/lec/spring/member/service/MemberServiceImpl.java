@@ -211,6 +211,8 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByEmail(emailMessage.getTo());
         if (member == null) {
             return "이메일이 등록되지 않았습니다;";
+        } else {
+            System.out.println(member + "에게 이미엘이 보내졌습니다");
         }
 
         // UUID 생성 및 Redis에 저장 (3분 TTL)
@@ -250,10 +252,12 @@ public class MemberServiceImpl implements MemberService {
     public boolean updatePassword(Long id, String newPassword) {
 
         String encodedPassword = passwordEncoder.encode(newPassword);
+        System.out.println("#########encodedPassword = " + encodedPassword);
         Map<String, String> updatelist = new HashMap<String, String>();
         updatelist.put(String.valueOf(id), "id");
         updatelist.put("newPassword", encodedPassword);
         int result = memberRepository.updatePassword(id, encodedPassword);
+        System.out.println("update : " +result);
 
 
         return false;
