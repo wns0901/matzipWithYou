@@ -105,16 +105,7 @@ function updateFriendList(friends) {
         //         <span class="friend-nickname">${friend.nickname}</span>
         //     </div>
         // `;
-        topFriendItem.innerHTML = `
-            <div class="rank">${index + 1}위</div>
-            <div class="friend-content">
-                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
-                     alt="${friend.nickname}님의 프로필"
-                     class="friend-profile-small"
-                     onerror="this.src='/IMG/defaultProfileImg.png'">
-                <span class="friend-nickname">${friend.nickname}</span>
-            </div>
-        `;
+
 
         // TOP 3 친구 항목 클릭 이벤트
         topFriendItem.style.cursor = 'pointer';
