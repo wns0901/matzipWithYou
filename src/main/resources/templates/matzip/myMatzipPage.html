@@ -14,12 +14,12 @@
 <body>
 <th:block th:insert="~{common/header::header}"></th:block>
 <div th:if="${result.memberId.equals(#authentication.principal.member.id)}" class="profile_card">
-    <img th:if="${result.profileImg != null}" th:src="@{'/upload/' + '${result.profileImg}'}" alt="profile">
+    <img th:if="${result.profileImg != null}" th:src="@{'/upload/' + ${result.profileImg}}" alt="profile">
     <img th:unless="${result.profileImg != null}" th:src="@{/IMG/defaultProfileImg.png}" alt="profile">
     <span>나의 맛집 관리</span>
 </div>
 <div th:unless="${result.memberId.equals(#authentication.principal.member.id)}" class="profile_card">
-    <img th:if="${result.profileImg != null} " th:src="@{'/upload/' + '${result.profileImg}'}" alt="profile">
+    <img th:if="${result.profileImg != null} " th:src="@{'/upload/' + ${result.profileImg}}" alt="profile">
     <img th:unless="${result.profileImg != null}" th:src="@{/IMG/defaultProfileImg.png}" alt="profile">
     <span>[[${result.nickname}]]님의 맛집 페이지입니다.</span>
 </div>

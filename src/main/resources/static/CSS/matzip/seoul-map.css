@@ -124,6 +124,8 @@ body {
 #seoul-map {
     width: 102%;
     height: 102%;
+    position: absolute;
+    left: 200px;
 }
 
 #seoul-map path {
