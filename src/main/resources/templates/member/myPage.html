@@ -29,7 +29,7 @@
                     <img src="/IMG/settings-icon.svg" alt="설정 아이콘" class="settings-icon">
                 </button>
                 <div class="dropdown-menu">
-                    <button class="dropdown-item">비밀번호 변경</button>
+                    <button class="dropdown-item" th:onclick="|location.href='@{/member/request-reset}'|">비밀번호 변경</button>
                     <button class="dropdown-item">회원 탈퇴</button>
                 </div>
             </div>
