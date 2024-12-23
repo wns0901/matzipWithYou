@@ -27,11 +27,10 @@
 <div id="sort">
     <span>정렬방식:</span>
     <span>|</span>
-    <button class="sort_btn" onclick="sortEvent()" data-type="reg">등록순</button>
+    <button class="sort_btn active" onclick="sortEvent()" data-type="reg">등록순</button>
     <span>|</span>
     <button class="sort_btn" onclick="sortEvent()" data-type="name">가나다</button>
 </div>
-
 
 
 <div id="filter">
@@ -42,14 +41,15 @@
     <button class="filter_btn" data-type="tag">태그</button>
 </div>
 
-<div id="all_tag_list" class="hidden">
+<div id="all_tag_list" class="filter_list hidden">
     <button th:each="tag : ${result.allTagList}" class="tag_btn" onclick="tagFilterEvent()" th:data-tag-id="${tag.id}">
-        <span th:text="${tag.tagName}" ></span>
+        <span th:text="${tag.tagName}"></span>
     </button>
 </div>
 
-<div id="all_kind_list" class="hidden">
-    <button th:each="kind : ${result.allKindList}" class="kind_btn" onclick="kindFilterEvent()" th:data-kind-name="${kind.kindName}">
+<div id="all_kind_list" class="filter_list hidden">
+    <button th:each="kind : ${result.allKindList}" class="kind_btn" onclick="kindFilterEvent()"
+            th:data-kind-name="${kind.kindName}">
         <span th:text="${kind.kindName}" th:data-kind-id="${kind.id}"></span>
     </button>
 </div>

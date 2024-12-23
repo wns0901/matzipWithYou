@@ -9,13 +9,13 @@ document.querySelectorAll('.filter_btn').forEach(btn => btn.addEventListener('cl
 
 async function loadPage(list) {
     const fragment = document.createDocumentFragment(),
-    cardList = document.querySelector('#myMatzip_card_list');
+        cardList = document.querySelector('#myMatzip_card_list');
 
     cardList.innerHTML = '';
 
     for (const listElement of list) {
-        const card  = await makeMyMatzipCard(listElement);
-        if(!card) continue;
+        const card = await makeMyMatzipCard(listElement);
+        if (!card) continue;
         fragment.appendChild(card)
     }
 
@@ -37,12 +37,12 @@ async function makeMyMatzipCard(myMatzip) {
         detailTitle = document.createElement('h3')
     ;
 
-    if(isMine) {
+    if (isMine) {
         myPage(card, myMatzip);
     } else {
-        if(myMatzip.visibility === 'PRIVATE') return;
+        if (myMatzip.visibility === 'PRIVATE') return;
         await otherPage(card, myMatzip);
-        if(myMatzip.visibility === 'HIDDEN') return;
+        if (myMatzip.visibility === 'HIDDEN') return;
     }
 
     card.classList.add('card');
@@ -57,7 +57,7 @@ async function makeMyMatzipCard(myMatzip) {
     content.classList.add('content');
     tagList.classList.add('tag_list');
 
-    img.src = myMatzip.imgUrl;
+    img.src = myMatzip.imgUrl === '#none' ? '/IMG/defaultStoreImgSMALL.png' : myMatzip.imgUrl;
     name.textContent = myMatzip.name;
     address.textContent = myMatzip.address;
     moreDetailBtn.innerHTML = '<span>+ 상세보기</span>'
@@ -96,9 +96,9 @@ function myPage(card, myMatzip) {
         deleteBtn = document.createElement('button')
 
     visibilityBtnList.classList.add('visibility_btn_list');
-    publicBtn.classList.add('visibility_btn','PUBLIC');
-    privateBtn.classList.add('visibility_btn','PRIVATE');
-    hiddenBtn.classList.add('visibility_btn','HIDDEN');
+    publicBtn.classList.add('visibility_btn', 'PUBLIC');
+    privateBtn.classList.add('visibility_btn', 'PRIVATE');
+    hiddenBtn.classList.add('visibility_btn', 'HIDDEN');
     deleteBtn.classList.add('delete_btn');
 
     deleteBtn.dataset.id = myMatzip.id;
@@ -229,10 +229,10 @@ function makeStarList(item, starRating) {
 async function deleteEvent(e) {
     const id = e.currentTarget.dataset.id,
         card = e.currentTarget.closest('.card'),
-    url = '/matzips/mine/' + id,
-    options = {
-        method: 'DELETE',
-    };
+        url = '/matzips/mine/' + id,
+        options = {
+            method: 'DELETE',
+        };
 
     const res = await fetch(url, options).then(res => res.json());
     console.log(res);
@@ -246,31 +246,33 @@ async function deleteEvent(e) {
 
 function moreDetailEvent(e) {
     const card = e.currentTarget.closest('.card'),
-        detailDiv = card.querySelector('.more_detail_div');
+        detailDiv = card.querySelector('.more_detail_div'),
+        deleteBtn = card.querySelector('.delete_btn');
     detailDiv.classList.toggle('hidden');
     card.classList.toggle('selected');
+    deleteBtn.classList.toggle('selected');
 }
 
 async function updateVisibilityEvent(e) {
-    if(e.currentTarget.classList.contains('active')) return;
+    if (e.currentTarget.classList.contains('active')) return;
 
     const btnList = e.currentTarget.closest('.visibility_btn_list'),
         id = btnList.dataset.matzipId,
         btn = e.currentTarget,
-    url = '/matzips/mine/' + id,
-    options = {
-        method: 'PATCH',
-        headers: {
-            'Content-Type':'application/json'
-        },
-        body: JSON.stringify({
-            visibility: btn.classList[1]
-        })
-    };
+        url = '/matzips/mine/' + id,
+        options = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                visibility: btn.classList[1]
+            })
+        };
 
     const res = await fetch(url, options).then(res => res.json());
 
-    if(res.status !== 'SUCCESS') {
+    if (res.status !== 'SUCCESS') {
         alert(res.msg);
         return;
     }
@@ -283,39 +285,59 @@ async function updateVisibilityEvent(e) {
 
 function sortEvent() {
     const item = event.currentTarget,
-        type = item.dataset.type;
+        type = item.dataset.type,
+        btns = document.querySelectorAll('.sort_btn');
 
-    if(item.classList.contains('active')) return;
+    if (item.classList.contains('active')) return;
 
-    item.classList.toggle('active');
+    btns.forEach(btn => btn.classList.remove('active'));
 
-    if(type === 'reg') {
+    item.classList.add('active');
+
+    if (type === 'reg') {
         loadPage(list);
         return;
     }
-    
+
     const sortedList = [...list].sort((a, b) => a.name.localeCompare(b.name));
     loadPage(sortedList);
 }
 
 function filterEvent(e) {
-    const filter = e.currentTarget.dataset.type;
+    const filter = e.currentTarget.dataset.type,
+        filterLists = document.querySelectorAll('.filter_list'),
+        tartList = filter === 'kind' ? document.querySelector('#all_kind_list') : document.querySelector('#all_tag_list');
     let filterModal;
-    if(filter === 'kind') {
+
+    e.currentTarget.classList.toggle('active');
+
+    if (!tartList.classList.contains('hidden')) {
+        tartList.classList.add('hidden');
+        return;
+    }
+
+
+    filterLists.forEach(filterList => filterList.classList.add('hidden'));
+
+    if (filter === 'kind') {
         filterModal = document.querySelector('#all_kind_list');
-    } else if(filter === 'tag') {
+    } else if (filter === 'tag') {
         filterModal = document.querySelector('#all_tag_list');
     }
-    filterModal.classList.toggle('hidden');
+    filterModal.classList.remove('hidden');
 }
 
 function tagFilterEvent() {
     const item = event.currentTarget,
         tagId = Number(item.dataset.tagId);
-    if(item.classList.contains('active')) {
+    if (item.classList.contains('active')) {
+        item.classList.remove('active');
         loadPage(list);
         return;
     }
+
+    const tags = document.querySelectorAll('.tag_btn');
+    tags.forEach(tag => tag.classList.remove('active'));
 
     const filteredList = list.filter(myMatzip => myMatzip.tagList.some(tag => tag.id === tagId));
 
@@ -328,10 +350,14 @@ function kindFilterEvent() {
     const item = event.currentTarget,
         kind = item.dataset.kindName;
 
-    if(item.classList.contains('active')) {
+    if (item.classList.contains('active')) {
+        item.classList.remove('active');
         loadPage(list);
         return;
     }
+
+    const kinds = document.querySelectorAll('.kind_btn');
+    kinds.forEach(kind => kind.classList.remove('active'));
 
     const filteredList = list.filter(myMatzip => myMatzip.kindName === kind);
 

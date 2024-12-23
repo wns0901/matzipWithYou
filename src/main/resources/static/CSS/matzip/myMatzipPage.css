@@ -38,7 +38,7 @@ body {
     right: 660px;
 }
 
-.profile_card img{
+.profile_card img {
     aspect-ratio: 1/1;
     width: 75%;
     border-radius: 100px;
@@ -51,12 +51,16 @@ body {
 
 .profile_card span {
     position: absolute;
-    bottom: 50px;
+    top: 250px;
     left: 50%;
     transform: translateX(-50%);
     color: white;
     font-size: 25px;
     font-weight: bold;
+    width: 84%;
+    text-align: center;
+    padding: 0 20px;
+    word-break: break-word;
 }
 
 .delete_btn {
@@ -68,9 +72,13 @@ body {
     border: none;
     width: 100px;
     height: 30px;
-    position: relative;
-    left: 973px;
-    bottom: 50px;
+    position: absolute;
+    right: 25px;
+    bottom: 25px;
+}
+
+.delete_btn.selected {
+    bottom: 315px;
 }
 
 .card {
@@ -88,9 +96,7 @@ body {
     height: 260px;
     border-radius: 15px;
     object-fit: cover;
-    position: relative;
-    bottom: 50px;
-    right: 100px;
+    position: absolute;
 }
 
 #myMatzip_card_list {
@@ -100,30 +106,30 @@ body {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    bottom: 260px;
+    bottom: 255px;
 }
 
 .text_div {
-    position: relative;
-    bottom: 315px;
-    left: 275px;
+    position: absolute;
+    left: 300px;
     background-color: #F5F5F5;
     border-radius: 12px;
     padding: 10px;
-    width: 40vw;
+    width: 69%;
 }
 
 .text_div h3 {
     margin: 0 5px;
 }
+
 .text_div p {
-   margin: 0 5px
+    margin: 0 5px
 }
 
 .more_detail_btn {
-    position: relative;
-    bottom: 300px;
-    left: 276px;
+    position: absolute;
+    top: 100px;
+    left: 300px;
     background-color: black;
     color: white;
     border-radius: 15px;
@@ -136,7 +142,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .PUBLIC.active {
@@ -168,12 +174,12 @@ body {
 }
 
 .visibility_btn_list {
-    position: relative;
-    left: 615px;
-    top: 85px;
+    position: absolute;
+    right: 25px;
+    top: 100px;
     border-radius: 46px;
     background-color: #D9D9D9;
-    width: 42%;
+    width: 40%;
 }
 
 .visibility_btn_list span {
@@ -190,9 +196,9 @@ body {
     background-color: #F5F5F5;
     border-radius: 14px;
     padding: 10px;
-    width: 98%;
-    position: relative;
-    bottom: 120px;
+    width: 94%;
+    position: absolute;
+    bottom: 30px;
     height: 230px;
 }
 
@@ -285,7 +291,7 @@ body {
 #filter {
     position: relative;
     left: 1390px;
-    bottom: 276px;
+    bottom: 271px;
 }
 
 #sort {
@@ -300,7 +306,7 @@ body {
     font-size: 18px;
 }
 
-#sort button, #filter button {
+.sort_btn, .filter_btn {
     color: white;
     background-color: rgba(0, 0, 0, 0);
     border: none;
@@ -310,7 +316,61 @@ body {
 
 .sort_btn.active {
     color: var(--primary-color);
+!important;
 }
 
+#all_kind_list, #all_tag_list {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    bottom: 500px;
+    left: 1210px;
+    background-color: #ff7327;
+    border-radius: 10px;
+    padding: 10px;
+    width: 360px;
+    height: 130px;
+    z-index: 1;
+    align-content: space-around
+}
 
+.kind_btn {
+    width: 31%;
+    padding: 8px 0;
+    border-radius: 15px;
+    border: none;
+    background-color: #c8c9cc;
+}
 
+.tag_btn {
+    width: 31%;
+    padding: 8px 0;
+    border-radius: 15px;
+    border: none;
+    background-color: #c8c9cc;
+}
+
+.kind_btn.active {
+    background-color: white;
+}
+
+.tag_btn.active {
+    background-color: white;
+}
+
+#all_tag_list {
+    height: 250px;
+    top: 215px;
+}
+
+.filter_btn.active {
+    color: var(--primary-color);
+}
+
+.wish_heart {
+    position: absolute;
+    right: 50px;
+    top: 150px
+}
