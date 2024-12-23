@@ -634,25 +634,25 @@
 
 /* 각 순위별로 미세 조정이 필요한 경우 */
 .first .profile-container {
-    transform: translate(-45%, -90%); /* 1등은 조금 더 위로 */
+    transform: translate(-36%, -105%); /* 1등은 조금 더 위로 */
 }
 
 .second .profile-container {
-    transform: translate(-42%, -90%); /* 2등은 중간 정도로 */
+    transform: translate(-36%, -100%); /* 2등은 중간 정도로 */
 }
 
 .third .profile-container {
-    transform: translate(-42%, -90%); /* 3등은 기본값 유지 */
+    transform: translate(-35%, -100%); /* 3등은 기본값 유지 */
 }
 
 .first .friend-profile-small {
-    transform: translate(12%, -22%);
+    transform: translate(2%, 6%);
 }
 
 .second .friend-profile-small {
-    transform: translate(10%, -20%);
+    transform: translate(1%, 2%);
 }
 
 .third .friend-profile-small {
-    transform: translate(8%, -18%);
+    transform: translate(-1%, 1%);
 }
