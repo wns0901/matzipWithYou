@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    const mainElement = document.querySelector('main');
+    const memberId = mainElement ? mainElement.dataset.memberId : null;
+
+    console.log("현재 memberId:", memberId);
+
+    if (!memberId) {
+        alert('로그인이 필요합니다.');
+        window.location.href = '/member/login';
+        return;
+    }
+
     await loadReviewList(memberId);
 });
 
@@ -23,6 +34,10 @@ async function loadReviewList(memberId) {
 function displayReviews(reviewsData) {
     console.log("Received data structure:", reviewsData);
 
+    reviewsData.sort((a, b) => {
+        return new Date(b.regdate) - new Date(a.regdate);
+    });
+
     const reviewsContainer = document.querySelector('.reviews-container');
     reviewsContainer.innerHTML = '';
 
@@ -35,6 +50,7 @@ function displayReviews(reviewsData) {
             matzipName: data.matzipName,
             starRating: data.starRating
         });
+
 
         const reviewId = data.id;
         reviewCard.dataset.reviewId = reviewId;
@@ -126,21 +142,23 @@ function displayReviews(reviewsData) {
             option.classList.add('active');
 
             const sortType = option.dataset.sort;
-            const reviewsContainer = document.querySelector('.reviews-container');
+            const reviewSection = option.closest('.review-list-section');
+            const reviewsContainer = reviewSection.querySelector('.reviews-container');
             const reviews = Array.from(reviewsContainer.children);
 
             reviews.sort((a, b) => {
                 const dataA = JSON.parse(a.dataset.reviewData);
                 const dataB = JSON.parse(b.dataset.reviewData);
 
-                if(sortType === 'date') {
-                    return dataB.id - dataA.id;
-                } else if(sortType === 'name') {
-                    return dataA.matzipName.localeCompare(dataB.matzipName);
-                } else if(sortType === 'rating') {
-                    return dataB.starRating - dataA.starRating;
-                } else {
-                    return 0;
+                switch (sortType) {
+                    case 'date':
+                        return new Date(dataB.regdate) - new Date(dataA.regdate);
+                    case 'name':
+                        return dataA.matzipName.localeCompare(dataB.matzipName);
+                    case 'rating':
+                        return dataB.starRating - dataA.starRating;
+                    default:
+                        return 0;
                 }
             });
 
@@ -187,8 +205,8 @@ async function loadReviewDetail(reviewCard, reviewId) {
         const tagsHtml = detailData.reviewTags && detailData.reviewTags.length > 0 ? `
             <div class="tags-container">
                 ${detailData.reviewTagName.map(tagName =>
-                    `<div class="tag">#${tagName}</div>`
-                ).join('')}
+            `<div class="tag">#${tagName}</div>`
+        ).join('')}
             </div>
         ` : '';
 
