@@ -14,7 +14,7 @@
 
             <div class="nav-buttons" sec:authorize="isAnonymous()">
                 <a th:href="@{/member/login}">로그인</a>
-                <a th:href="@{/member/signup}">회원가입</a>
+                <a th:href="@{/member/register}">회원가입</a>
             </div>
 
             <div class="nav-user" sec:authorize="isAuthenticated()"
