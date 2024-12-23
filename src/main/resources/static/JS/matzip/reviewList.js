@@ -2,16 +2,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const mainElement = document.querySelector('main');
     const memberId = mainElement ? mainElement.dataset.memberId : null;
 
-    console.log("현재 memberId:", memberId);
-
-    if (!memberId) {
-        alert('로그인이 필요합니다.');
-        window.location.href = '/member/login';
-        return;
-    }
-
     await loadReviewList(memberId);
+    displayProfile()
 });
+
+function displayProfile(data) {
+    const friendProfile = document.querySelector('.friend-profile');
+    const imgUrl = profile ? '/upload/' + profile.filename : '/IMG/member/default-profile-img.png';
+
+    friendProfile.innerHTML = `
+       <img src="${imgUrl}" alt="프로필 이미지">
+   `;
+}
 
 async function loadReviewList(memberId) {
     try {

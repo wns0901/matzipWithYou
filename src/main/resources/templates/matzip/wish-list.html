@@ -6,7 +6,12 @@
     <script src="https://kit.fontawesome.com/79c730033c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/CSS/header.css}">
     <link rel="stylesheet" th:href="@{/CSS/matzip/wish-list.css}">
+    <script th:inline="javascript">
+        const profile = /*[[${profileImg}]]*/ {};
+    </script>
+    <script th:src="@{/JS/matzip/wish-list.js}"></script>
     <title>위시리스트</title>
+
 </head>
 <html>
 
@@ -17,7 +22,16 @@
     <th:block th:insert="~{common/header::header}"></th:block>
     <div class="main-container">
         <section class="profile-section">
-            <img src="/IMG/matzip/whisList.png" alt="리뷰 관리">
+            <div class="card">
+                <div class="icon-circle">
+                    <div class="inner-circle">
+                        <div class="friend-profile">
+                        </div>
+                    </div>
+                </div>
+                <h1 class="title">나의 위시리스트</h1>
+                <p class="subtitle">위시리스트로 지정한 맛집을 보여줍니다.</p>
+            </div>
         </section>
         <section id="wish-list-section">
             <div class="wish-card">
@@ -47,6 +61,10 @@
         </section>
     </div>
 </div>
+<script th:inline="javascript">
+    const profile = /*[[${profileImg}]]*/ {};
+    console.log("profile : " + profile )
+</script>
 
 <script>
     async function deleteWishlist(matzipId, memberId) {
@@ -63,6 +81,7 @@
         location.reload();
     }
 </script>
+
 </body>
 </html>
 

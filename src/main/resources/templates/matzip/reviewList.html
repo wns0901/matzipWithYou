@@ -6,6 +6,9 @@
     <script src="https://kit.fontawesome.com/79c730033c.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/CSS/header.css}">
     <link rel="stylesheet" th:href="@{/CSS/matzip/reviewList.css}">
+    <script th:inline="javascript">
+        const profile = /*[[${profileImg}]]*/ {};
+    </script>
     <script th:src="@{/JS/matzip/reviewList.js}"></script>
     <title>리뷰관리페이지</title>
 </head>
@@ -13,7 +16,16 @@
     <th:block th:insert="~{common/header::header}"></th:block>
     <main class="main-container" th:data-member-id="${memberId}">
     <section class="profile-section">
-        <img src="/IMG/reviewManagement.png" alt="리뷰 관리">
+        <div class="card">
+            <div class="icon-circle">
+                <div class="inner-circle">
+                    <div class="friend-profile">
+                    </div>
+                </div>
+            </div>
+            <h1 class="title">나의 리뷰 관리</h1>
+            <p class="subtitle">내가 리뷰를 쓴 곳 입니다.</p>
+        </div>
     </section>
 
     <section class="review-list-section">

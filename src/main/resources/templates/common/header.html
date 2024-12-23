@@ -21,10 +21,10 @@
                  th:with="member=${#authentication.getPrincipal().getMember()}">
                 <div class="dropdown">
                     <button onclick="toggleDropdown()" class="dropbtn" id="userMenuButton">
-                        <span sec:authorize="hasRole('ADMIN')">
+                        <span class="member-name" sec:authorize="hasRole('ADMIN')">
                             관리자 [[${member.nickname}]]님 환영합니다!
                         </span>
-                        <span sec:authorize="hasRole('MEMBER') and !hasRole('ADMIN')">
+                        <span class="member-name" sec:authorize="hasRole('MEMBER') and !hasRole('ADMIN')">
                             [[${member.nickname}]]님 환영합니다!
                         </span>
                     </button>
