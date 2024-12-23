@@ -149,9 +149,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const starImg = document.createElement("img");
                 starImg.src = i <= rating ? "/IMG/Star-Yellow.png" : "/IMG/Star-Gray.png";
                 starImg.alt = "star";
-                starImg.style.width = "16px";
-                starImg.style.height = "16px";
-                starImg.style.marginRight = "4px";
+                starImg.style.width = "2.3vh";
+                starImg.style.height = "2.3vh";
+                starImg.style.marginRight = "0.5vh";
                 starRatingElement.appendChild(starImg);
             }
             ratingText.textContent = `${rating}점`;
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const profileImageInput = document.getElementById("profileImageInput");
 const profileImagePreview = document.getElementById("profileImagePreview");
 const deleteImageButton = document.getElementById("deleteImageButton");
-const memberId = "{memberId}"; // 서버에서 제공한 memberId 바인딩
+const memberId = parseInt(window.location.pathname.split('/').pop());
 
 // 이미지 변경 시 미리보기 업데이트
 profileImageInput.addEventListener("change", (event) => {

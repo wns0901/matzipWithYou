@@ -20,7 +20,7 @@
 /* 기본 스타일 */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     background-color: #F5F5F5;
 }
 
@@ -28,22 +28,22 @@ body {
 .h2{
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 2.3vh;
 }
 .h3{
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 2vh;
 }
 
 .icon {
-    width: 20px;
+    width: 3vh;
     /*height: 20px;*/
     margin-right: 5px;
 }
 
 /*  주황색 컨테이너 레이아웃 */
-.container {
+.mpcontainer {
     display: flex;
     min-height: 100vh;
 }
@@ -65,23 +65,28 @@ body {
 .section-header {
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 3vh;
     display: flex;
     justify-content: start;
     align-items: center;
 }
 
+.h2{
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    font-size: 3vh;
+}
+
 .view-all-button {
     font-family: "Noto Sans KR", sans-serif;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 1.7vh;
     background: none;
     border: none;
     color: #6a6a6a;
     cursor: pointer;
     justify-self: end;
-    /*position: relative;*/
-    /*right: 60px;*/
+    transform: translateX(2vh);
 }
 
 /* 카드 컨테이너 */
@@ -98,7 +103,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex: 0 0 calc(20% - 43px); /* 카드 너비를 3등분 */
+    flex: 0 0 calc(18%); /* 카드 너비를 3등분 */
     /*flex-wrap: nowrap;*/
     /*flex: 0 0 auto; !* 카드의 크기가 변하지 않도록 고정 *!*/
     background-color: white;
@@ -111,7 +116,7 @@ body {
 .card-info{
     font-family: "Noto Sans KR", sans-serif;
     font-weight: normal;
-    font-size: 15px;
+    font-size: 2vh;
 }
 
 
@@ -177,8 +182,8 @@ body {
     justify-content: center;
     position: relative;
     margin: 10px 0; /* 위아래 여백 */
-    width: 200px;
-    height: 200px;
+    width: 28.5vh;
+    height: 28.5vh;
     border-radius: 50%;
     overflow: hidden;
     background-color: #ddd;
@@ -222,19 +227,20 @@ body {
     background-color: #FF7A29;
     border: none;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
+    width: 5vh;
+    height: 5vh;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     z-index: 1000;
     margin-bottom: -20px;
+    transform: translateX(25%) translateY(-25%)
 }
 
 .settings-icon {
-    width: 35px;
-    height: 35px;
+    width: 5vh;
+    height: 5vh;
 }
 
 /* 설정버튼 */
@@ -270,7 +276,7 @@ body {
     background: none;
     cursor: pointer;
     color: #333;
-    font-size: 14px;
+    font-size: 2vh;
 }
 
 .dropdown-item:hover {
@@ -294,8 +300,8 @@ body {
     background-color: #ff7a35; /* 주황색 배경 */
     border: none; /* 테두리 제거 */
     border-radius: 50%; /* 완전한 원형 */
-    width: 50px; /* 버튼 크기 */
-    height: 51px; /* 버튼 크기 */
+    width: 6vh; /* 버튼 크기 */
+    height: 6vh; /* 버튼 크기 */
     display: flex;
     align-items: center; /* 이미지 중앙 정렬 */
     justify-content: center; /* 이미지 중앙 정렬 */
@@ -306,8 +312,8 @@ body {
 
 /* 버튼 안의 이미지 스타일 */
 .edit-button img {
-    width: 50px; /* 아이콘 크기 */
-    height: 51px; /* 아이콘 크기 */
+    width: 6vh; /* 아이콘 크기 */
+    height: 6vh; /* 아이콘 크기 */
 }
 
 
@@ -318,9 +324,9 @@ body {
     align-items: center; /* 세로 정렬 */
     justify-content: center; /* 좌우 여백 자동 조절 */
     background-color: #fff; /* 배경색 흰색 */
-    border-radius: 30px; /* 둥근 모서리 */
-    padding: 10px 20px; /* 내부 여백 */
-    width: 200px; /* 전체 박스의 너비 */
+    border-radius: 5vh; /* 둥근 모서리 */
+    padding: 1vh 1.8vh; /* 내부 여백 */
+    width: 25vh;; /* 전체 박스의 너비 */
     /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); !* 가벼운 그림자 효과 *!*/
     position: relative;
     margin: 10px 0; /* 위아래 여백 */
@@ -329,7 +335,7 @@ body {
 /* 닉네임 텍스트 스타일 */
 .nickname-text {
     font-family: RecipeKoreaOTF;
-    font-size: 20px; /* 글자 크기 */
+    font-size: 2.8vh; /* 글자 크기 */
     font-weight: normal; /* 글자 굵기 */
     color: #000; /* 글자색 검정 */
     flex-grow: 1; /* 텍스트 영역 확장 */
@@ -479,7 +485,7 @@ body {
     background-color: #FF7A29;
     color: white;
     border-radius: 15px;
-    padding: 10px 10px;
+    padding: 1.5vh 1.5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -490,7 +496,7 @@ body {
 /* 친구, 포인트 타이틀 */
 .info-label {
     font-family: RecipeKoreaOTF;
-    font-size: 16px;
+    font-size: 2.1vh;
     font-weight: normal;
     padding-top : 5px;
     padding-bottom : 5px;
@@ -500,19 +506,19 @@ body {
 .info-value {
     /*transform: translateY(5px);*/
     font-family: RecipeKoreaOTF;
-    font-size: 14px;
+    font-size: 1.9vh;
     font-weight: bold;
     color: #333;
     background-color: white;
     border-radius: 15px;
-    padding: 15px 30px;
+    padding: 2vh 4vh;
     /*margin-top: 10px;*/
 }
 
 
 .matzipImage {
-    width: 120px;
-    height: 120px;
+    width: 17vh;
+    height: 17vh;
     border-radius: 10px;
     /*margin: 0 auto 10px auto; !* 위-0, 아래-10px, 좌우-자동 *!*/
     object-fit: cover;
@@ -520,9 +526,9 @@ body {
 }
 
 .matzipName{
-    font-family: "Noto Sans KR", sans-serif;
-    font-weight: bold;
-    font-size: 12px;
+    font-family: "Noto Sans KR", sans-serif !important;
+    font-weight: 500;
+    font-size: 1.7vh;
     margin: 15px auto 10px auto;
 }
 
@@ -548,11 +554,11 @@ body {
 }
 
 .reviewImage {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
+    width: 11.4vh;
+    height: 11.4vh;
+    border-radius: 1vh;
     object-fit: cover;
-    margin-right: 10px;
+    margin-right:  1.5vh;
 }
 
 .review-details {
@@ -564,14 +570,14 @@ body {
 }
 .RmatzipName{
     font-family: "Noto Sans KR", sans-serif;
-    font-weight: bold;
-    font-size: 12px;
+    font-weight: 500;
+    font-size: 1.7vh;
 }
 
 .reviewContent{
     font-family: "Noto Sans KR", sans-serif;
     font-weight: normal;
-    font-size: 10px;
+    font-size: 1.4vh;
 }
 
 .rating-container {
@@ -588,7 +594,7 @@ body {
 }
 
 .ratingText {
-    font-size: 10px;
+    font-size: 1.4vh;
     color: #6a6a6a; /* 텍스트 색상 */
     transform: translateY(-5px);
     /*position: relative; !* 또는 absolute, fixed *!*/
@@ -867,3 +873,146 @@ body {
     }
 }
 
+
+
+/* ================  내비 바~! =============== */
+
+
+.navbar {
+
+    padding: 1rem 0;
+    position: absolute;
+    top: 0;
+    z-index: 1000;
+    position: sticky;
+    z-index: 3;
+}
+
+.navbar div {
+    z-index: 3;
+
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.navbar-brand img {
+    margin-top: 0.5rem;
+    margin-left: 3rem;
+    height: 40px;
+    width: auto;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav-buttons a {
+    text-decoration: none;
+    color: var(--secondary-button-text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-buttons a:first-child {
+    border: 1px solid #FFFFFF;
+}
+
+.nav-buttons a:last-child {
+    background-color: var(--primary-color);
+    color: var(--button-font-color);
+}
+
+.nav-buttons a:hover {
+    transform: translateY(-1px);
+}
+
+.nav-user {
+    position: relative;
+    background-color: black;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    color: var(--button-font-color);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 2.3vh;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1;
+    margin-top: 0.5rem;
+}
+
+.dropdown-content a,
+.dropdown-content button {
+    color: var(--font-default-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 2.28vh;
+    cursor: pointer;
+/ transition: background-color 0.2 s;
+/
+}
+
+.dropdown-content a:hover,
+.dropdown-content button:hover {
+    background-color: rgba(255, 115, 39, 0.1);
+    color: var(--primary-color);
+}
+
+.show {
+    display: block;
+}
+
+#userDropdown {
+    overflow: hidden;
+}
+
+
+@media (max-width: 768px) {
+    .navbar .container {
+        padding: 0 1rem;
+    }
+
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+
+    .nav-buttons a {
+        padding: 0.5rem 0.75rem;
+        font-size: 2vh;
+    }
+
+    .dropbtn {
+        font-size: 2vh;
+    }
+}
