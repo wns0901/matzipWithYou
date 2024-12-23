@@ -82,22 +82,23 @@ function updateFriendList(friends) {
 
     const top3Container = document.createElement('div');
     top3Container.classList.add('top-3-friends');
-    top3Container.innerHTML = '<h3>친밀도 TOP 3</h3>';
+    // top3Container.innerHTML = '<h3>친밀도 TOP 3</h3>';
 
     top3Friends.forEach(async (friend, index) => {
         const topFriendItem = document.createElement('div');
-        topFriendItem.classList.add('top-friend-item');
+        topFriendItem.classList.add('top-friend-item', `rank-${index + 1}`);
 
-        topFriendItem.innerHTML = `
-            <div class="rank">${index + 1}위</div>
-            <div class="friend-content">
-                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
-                     alt="${friend.nickname}님의 프로필"
-                     class="friend-profile-small"
-                     onerror="this.src='/IMG/defaultProfileImg.png'">
-                <span class="friend-nickname">${friend.nickname}</span>
-            </div>
-        `;
+        // topFriendItem.innerHTML = `
+        //     <div class="rank">${index + 1}위</div>
+        //     <div class="friend-content">
+        //         <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
+        //              alt="${friend.nickname}님의 프로필"
+        //              class="friend-profile-small"
+        //              onerror="this.src='/IMG/defaultProfileImg.png'">
+        //         <span class="friend-nickname">${friend.nickname}</span>
+        //     </div>
+        // `;
+
 
         topFriendItem.style.cursor = 'pointer';
         topFriendItem.addEventListener('click', async function () {
@@ -145,22 +146,35 @@ function updateFriendList(friends) {
     });
     const fullListContainer = document.createElement('div');
     fullListContainer.classList.add('full-friend-list');
-    fullListContainer.innerHTML = '<h3>전체 친구 목록</h3>';
+    // fullListContainer.innerHTML = '<h3>전체 친구 목록</h3>';
 
     friends.forEach(friend => {
         const friendItem = document.createElement('div');
         friendItem.classList.add('friend-item');
 
         friendItem.innerHTML = `
+<div class="friend-box">
+    <img class="friend-background" src="/IMG/friend-box-t.png" alt="friend-box">
             <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
                  alt="Profile"
-                 class="friend-profile"
+                 class="full-friend-profile"
                  onerror="this.src='/IMG/defaultProfileImg.png'">
-            <p>닉네임: <span class="friend-nickname-hover">${friend.nickname}</span></p>
-            <p>공개 맛집 수: ${friend.publicCount}</p>
-            <p>비공개 맛집 수: ${friend.hiddenCount}</p>
-            <p>친밀도: ${friend.intimacy}</p>
-            <button class="btn btn-delete" data-friend-id="${friend.friendId}">삭제</button>
+
+            <div class="full-friend-nickname">${friend.nickname}</div>
+            <div class="full-friend-username">ID : ${friend.username}</div>
+            <div class="open-matzip">${friend.publicCount}
+<!--            <img class="open-matzip" src="/IMG/open_matzip.png" alt="openMZ Background">-->
+            </div>
+            <div class="hidden-matzip">${friend.hiddenCount}
+<!--             <img class="hidden-matzip" src="/IMG/hidden_matzip.png" alt="hiddenMZ Background">-->
+            </div>
+            <img class="btn btn-delete" 
+                src="/IMG/delete_friend.png"
+                alt="delete-friend"
+                data-friend-id="${friend.friendId}"></img>
+</div>
+            
+
         `;
 
         friendItem.querySelector('.btn-delete').addEventListener('click', async function (event) {

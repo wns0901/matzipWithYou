@@ -208,6 +208,7 @@ body {
 
 .camera-icon {
     height: 40px;
+    cursor : pointer;
 }
 
 .profile-image-wrapper:hover .overlay {

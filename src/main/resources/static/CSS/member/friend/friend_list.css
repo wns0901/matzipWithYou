@@ -19,6 +19,76 @@
     max-width: 800px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
+.modal {
+    position: fixed;
+    z-index: 6;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    z-index: 7;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.friend-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.friend-nickname-hover {
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.friend-nickname-hover:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: black;
+    text-underline-offset: 2px;
+}
+
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+#searchButton {
+    padding: 5px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#searchButton:hover {
+    background-color: #45a049;
+}
+.friend-container {
+    /*display: block;*/
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 20px;
 
 .close {
     color: #666;
@@ -27,7 +97,156 @@
     font-weight: bold;
     cursor: pointer;
     transition: color 0.3s ease;
+
 }
+.friend-header {
+    position: relative;
+    display: flex;
+    align-items: center; /* 세로 정렬을 중앙으로 */
+    justify-content: space-between;
+    /*margin: 40px auto; !* 상하 여백 및 중앙 정렬 *!*/
+    max-width: 1900px; /* 컨테이너 크기 */
+    width: 95%; /* 컨테이너의 너비 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    transform: translateX(1%);
+}
+
+/* 상단 친밀도 순위 영역 */
+.intimacy-ranking {
+    position: relative;
+    width: 100%;
+    height: 500px; /* 800px를 viewport height 기준으로 변환 */
+    /*text-align: center;*/
+    background: linear-gradient(to bottom, #f5f5f5, rgba(245, 245, 245, 0));
+    padding: 20px 0;
+    transform: translateY(5px);
+}
+
+/* 배경 이미지 설정 */
+.intimacy-ranking .banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+
+.ranking-sections, .top-friend-item{
+    position: absolute;
+    bottom: -20px; /* 하단에 붙임 */
+    right: 10%; /* 우측에서 10% 여백 */
+    /*position: relative;*/
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end; /* 우측 정렬 */
+    gap: 60px;
+    padding: 0 20px;
+}
+
+.first, .rank-1{
+    bottom: -10px;
+}
+
+.second, .rank-2 {
+    bottom: -50px; /* 하단에 붙임 */
+
+}
+.third, .rank-3 {
+    bottom: -100px; /* 하단에 붙임 */
+}
+
+
+/* 각 섹션 크기 */
+.ranking-section {
+    position: relative;
+    width: 130px;
+    text-align: center;
+
+}
+
+.ranking-bg {
+    width: 130%;
+    /*border-radius: 20px;*/
+}
+
+
+.ranking-profile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 3;
+}
+/* 랭커 프사 */
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+.friend-nickname{
+    font-family: RecipeKoreaOTF;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.ranking-title {
+    position: absolute;
+    left: 15%; /* 좌측 여백 */
+    top: 50%;
+    transform: translateY(-50%); /* 수직 중앙 정렬 */
+    z-index: 2; /* 배경 이미지보다 위에 표시 */
+    padding: 40px;
+    color: white;
+    font-family: RecipeKoreaOTF;
+    font-size: 3.5em;
+    font-weight: normal;
+    margin-bottom: 60px;
+}
+
+.ranking-title span {
+    display: block;
+    z-index: 3; /* 배경 이미지보다 위에 표시 */
+    line-height: 1.2;
+
+}
+
+.ranking-list {
+    float: right;
+    max-width: 30%;
+    position: relative;
+    z-index: 3; /* 배경 이미지보다 위에 표시 */
+    display: flex;
+    justify-content: end;
+    gap: 30px;
+    margin-top: 100px;
+}
+
+.ranking-item .rank-number {
+    font-family: RecipeKoreaOTF;
+    font-weight: normal;
+    font-size: 4em;
+    color: #FF5900;
+    margin: 20px 0;
+}
+
+/* 친구 목록 카드 영역 */
+.friend-list {
+    padding: 20px 0;
+}
+
+.friend-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
 
 .close:hover {
     color: #000;
@@ -70,10 +289,13 @@
     border-radius: 8px;
     padding: 15px;
     margin: 0;
+
     display: flex;
     align-items: center;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+
+
 
 /* 반응형 디자인 */
 @media (max-width: 600px) {
@@ -83,6 +305,13 @@
 }
 
 
+
+
+.friend-nickname {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+
 .btn-request, .btn-accept, .btn-reject {
     padding: 8px 16px;
     border-radius: 6px;
@@ -90,6 +319,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease;
+
 }
 
 
@@ -111,6 +341,212 @@
 .btn-reject:hover {
     background-color: #f03e3e;
 }
+
+
+
+.sort-buttons {
+    margin-left: 10px;
+    margin-right: auto; /* 왼쪽으로 정렬 */
+    display: flex; /* 버튼들을 가로로 나열 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 10px; /* 버튼 간의 간격 */
+}
+
+.friend-actions {
+    margin-left: auto; /* 오른쪽으로 정렬 */
+    display: flex; /* 버튼들을 가로로 나열 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 10px; /* 버튼 간의 간격 */
+}
+
+.subtitle{
+    margin-left: 10px;
+    font-size: 4vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bolder;
+}
+
+.btn{
+ cursor: pointer;
+}
+
+.icon {
+    size : 3vh;
+    transform: translateY(3px);
+}
+.friend-icon{
+    /*margin-left: 50px;*/
+}
+.btn-add, .btn-request{
+    font-size: 4vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+}
+
+.btn-title{
+    font-size: 2vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+}
+
+.btn-sort {
+    font-size: 2vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+}
+.btn-sort:hover {
+    color: #ff7327;;
+}
+
+
+/* friend-profile-small 위치 조정 */
+/*.ranking-section .friend-profile-small, .friend-profile {*/
+/*    position: absolute;*/
+/*    top: 18%; !* 하얀 원의 중앙에 맞게 조정 *!*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%); !* 정확히 중앙 정렬 *!*/
+/*    width: 80px; !* 프로필 이미지 크기 *!*/
+/*    height: 80px;*/
+/*    border-radius: 50%;*/
+/*    object-fit: cover;*/
+/*    border: 2px solid white; !* 하얀 테두리 *!*/
+/*    z-index: 2; !* 배경 이미지보다 위에 표시 *!*/
+/*}*/
+
+/*.friend-profile-small {*/
+/*    width: 80px;*/
+/*    height: 80px;*/
+/*    border-radius: 50%;*/
+/*    margin-right: 20px;*/
+/*}*/
+/* friend-profile-small 위치 및 스타일 */
+.friend-profile-small {
+    width: 85px; /* 프로필 이미지 크기 */
+    height: 85px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ccc; /* 기본 배경색 */
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -110%);
+    z-index: 5; /* 배경 이미지보다 위에 표시 */
+}
+
+/* 닉네임 스타일 */
+.friend-nickname {
+    font-family: RecipeKoreaOTF, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-top: 100px; /* 닉네임 위치 조정 */
+    position: relative;
+    z-index: 5; /* 배경 이미지보다 위에 표시 */
+    text-align: center;
+}
+
+.friend-box {
+    z-index: 0;
+    position: relative; /* 자식 요소의 기준점을 설정 */
+    max-width: 1236px; /* 컨테이너 크기 */
+    width: 100%;
+    height: 250px; /* 컨테이너 크기 */
+    margin: 10px auto;
+}
+
+.friend-background {
+    z-index: 0;
+    position: absolute; /* 내부 요소의 위치를 기준으로 조정 가능 */
+    display: flex;
+    max-width: 1236px; /* 컨테이너 크기 */
+    width: 100%;
+
+}
+
+
+
+.full-friend-profile {
+    z-index: 1;
+    position: absolute; /* 부모 요소 기준으로 위치 설정 */
+    width: 200px; /* 부모 컨테이너의 2/7 */
+    aspect-ratio: 1 / 1; /* 정사각형 비율 */
+    border-radius: 50%; /* 원형 */
+    object-fit: cover;
+    margin: 1rem;
+    transform: translateX(30%) translateY(5%);
+    align-self: center;
+}
+
+.full-friend-nickname {
+    z-index: 3;
+    position: absolute;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700; /* 미디엄 */
+    font-size: 2.5rem; /* 32px */
+    transform: translateY(80px);
+    margin-left: 300px;
+    margin-right: 1rem; /* 오른쪽 간격 */
+    align-self: center;
+}
+.full-friend-username {
+    z-index: 3;
+    position: absolute;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500; /* 미디엄 */
+    font-size: 1.3rem; /* 32px */
+    color: #6a6a6a;
+    transform: translateY(130px);
+    margin-left: 300px;
+    margin-right: 1rem; /* 오른쪽 간격 */
+    align-self: center;
+}
+
+.hidden-matzip {
+    display: flex;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 900; /* 블랙 */
+    font-size: 3.125rem; /* 50px */
+    margin-right: 1rem; /* 오른쪽 간격 */
+    align-items: center; /* 텍스트와 이미지 수직 중앙 정렬 */
+    justify-content: center;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    top: -20px;
+    position: absolute;
+    bottom: 10%;
+    left: 75.5%;
+    /*transform: translateX(-50%);*/
+    z-index: 3;
+}
+
+.open-matzip{
+    display: flex;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 900; /* 블랙 */
+    font-size: 3.125rem; /* 50px */
+    margin-right: 1rem; /* 오른쪽 간격 */
+    align-items: center; /* 텍스트와 이미지 수직 중앙 정렬 */
+    justify-content: center;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    top: -20px;
+    position: absolute;
+    bottom: 10%;
+    left: 61.5%;
+    /*transform: translateX(-50%);*/
+    z-index: 3;
+
+}
+
+
+.btn-delete {
+    position: absolute;
+    bottom: 5%;
+    right: 10%;
+    z-index: 3;
+    cursor: pointer;
+    transform: translateX(60%) translateY(-200%);
 
 .btn-disabled {
     background-color: #dee2e6;
@@ -163,4 +599,5 @@
     #searchResults .friend-card img, #pendingRequests .friend-card img {
         margin-bottom: 10px;
     }
+
 }
