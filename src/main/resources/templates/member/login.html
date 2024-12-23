@@ -8,7 +8,9 @@
 </head>
 <body>
 <div class="container">
-    <img class="logo" src="/IMG/logo.png" alt="LOGO">
+    <a th:href="@{/home}">
+        <img class="logo" src="/IMG/logo.png" alt="LOGO">
+    </a>
 
     <form th:action="@{/member/login}" method="POST">
         <h1>로그인</h1>
@@ -55,8 +57,6 @@
 
 
         <a th:href="@{'/member/request-reset'}">비밀번호를 잊어버리셨나요?</a>
-
-
 
 
         <button class="btn-submit" type="submit">로그인</button>
