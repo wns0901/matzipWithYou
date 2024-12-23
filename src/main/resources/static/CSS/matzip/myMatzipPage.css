@@ -1,0 +1,376 @@
+:root {
+    --primary-color: #ff7327;
+    --button-font-color: #ffffff;
+    --secondary-button-border-color: #c8c9cc;
+    --secondary-button-text-color: #303236;
+    --link-color: #ff7327;
+    --title-font-color: #ff7327;
+    --font-default-color: #63656d;
+    --widget-background-color: #ffffff;
+    --box-border-color: #ffffff;
+    --input-text-color: #121214;
+    --input-border-color: #c8c9cc;
+    --input-background-color: #ffffff;
+    --error-color: #e81d01;
+}
+
+body {
+    background-color: #FFC993;
+    margin: 0;
+}
+
+.navbar {
+    padding: 0;
+}
+
+.navbar .container {
+    background-color: white;
+}
+
+.profile_card {
+    position: relative;
+    aspect-ratio: 1/1.25;
+    width: 270px;
+    background-color: var(--primary-color);
+    border-radius: 15px;
+    margin: 0 auto 10px;
+    top: 140px;
+    right: 660px;
+}
+
+.profile_card img {
+    aspect-ratio: 1/1;
+    width: 75%;
+    border-radius: 100px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 32px;
+    background-color: white;
+}
+
+.profile_card span {
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    width: 84%;
+    text-align: center;
+    padding: 0 20px;
+    word-break: break-word;
+}
+
+.delete_btn {
+    background-image: url("/IMG/delete_btn.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: 100px;
+    height: 30px;
+    position: absolute;
+    right: 25px;
+    bottom: 25px;
+}
+
+.delete_btn.selected {
+    bottom: 315px;
+}
+
+.card {
+    width: 100%;
+    aspect-ratio: 1/0.28 !important;
+    background-color: white;
+    border-radius: 20px;
+    padding: 25px;
+    position: relative;
+    height: 260px;
+}
+
+.matzip_img {
+    width: 260px;
+    height: 260px;
+    border-radius: 15px;
+    object-fit: cover;
+    position: absolute;
+}
+
+#myMatzip_card_list {
+    position: relative;
+    width: 56.45%;
+    left: 498px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    bottom: 255px;
+}
+
+.text_div {
+    position: absolute;
+    left: 300px;
+    background-color: #F5F5F5;
+    border-radius: 12px;
+    padding: 10px;
+    width: 69%;
+}
+
+.text_div h3 {
+    margin: 0 5px;
+}
+
+.text_div p {
+    margin: 0 5px
+}
+
+.more_detail_btn {
+    position: absolute;
+    top: 100px;
+    left: 300px;
+    background-color: black;
+    color: white;
+    border-radius: 15px;
+    width: 100px;
+    text-align: center;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    border: none;
+    height: 30px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.PUBLIC.active {
+    background-color: var(--primary-color);
+    z-index: 1;
+}
+
+.HIDDEN.active {
+    background-color: #A6FF00;
+    z-index: 1;
+}
+
+.HIDDEN.active span {
+    color: black;
+}
+
+.PRIVATE.active {
+    background-color: #6A6A6A;
+    z-index: 1;
+}
+
+.visibility_btn {
+    border: none;
+    border-radius: 46px;
+    width: 150px;
+    height: 50px;
+    padding: 5px 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.visibility_btn_list {
+    position: absolute;
+    right: 25px;
+    top: 100px;
+    border-radius: 46px;
+    background-color: #D9D9D9;
+    width: 40%;
+}
+
+.visibility_btn_list span {
+    font-size: 18px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: white;
+}
+
+.card.selected {
+    height: 550px;
+}
+
+.more_detail_div {
+    background-color: #F5F5F5;
+    border-radius: 14px;
+    padding: 10px;
+    width: 94%;
+    position: absolute;
+    bottom: 30px;
+    height: 230px;
+}
+
+.star_rating img {
+    width: 35px;
+    height: 35px;
+}
+
+.star_rating {
+    display: flex;
+    position: relative;
+    left: 10px;
+    top: 5px;
+}
+
+.star_rating span {
+    position: relative;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #828282;
+    padding: 8px 0;
+    left: 10px;
+}
+
+.food_kind {
+    position: relative;
+    top: 50px;
+    left: 10px;
+}
+
+.food_kind span {
+    background-color: #D6D6D6;
+    border-radius: 17px;
+    padding: 5px 10px;
+    font-size: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: black;
+    display: block;
+    width: 100px;
+    text-align: center;
+}
+
+.content {
+    position: relative;
+    float: right;
+    background-color: white;
+    border-radius: 10px;
+    margin: 10px;
+    width: 500px;
+    padding: 20px;
+    height: 175px;
+    bottom: 125px;
+}
+
+.content span {
+    word-break: break-word;
+}
+
+.tag_list {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    top: 70px;
+    left: 10px;
+}
+
+.tag_list span {
+    background-color: #484848;
+    border-radius: 17px;
+    padding: 5px 10px;
+    font-size: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: white;
+    flex: 0 0 calc(33.33% - 10px);
+    box-sizing: border-box;
+
+}
+
+.more_detail_div h3 {
+    position: relative;
+    margin: 5px 0;
+    font-size: 32px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: black;
+    left: 10px;
+}
+
+#filter {
+    position: relative;
+    left: 1390px;
+    bottom: 271px;
+}
+
+#sort {
+    position: relative;
+    left: 1130px;
+    bottom: 246px;
+}
+
+#sort span, #filter span {
+    color: white;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+}
+
+.sort_btn, .filter_btn {
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 18px;
+}
+
+.sort_btn.active {
+    color: var(--primary-color);
+!important;
+}
+
+#all_kind_list, #all_tag_list {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    bottom: 500px;
+    left: 1210px;
+    background-color: #ff7327;
+    border-radius: 10px;
+    padding: 10px;
+    width: 360px;
+    height: 130px;
+    z-index: 1;
+    align-content: space-around
+}
+
+.kind_btn {
+    width: 31%;
+    padding: 8px 0;
+    border-radius: 15px;
+    border: none;
+    background-color: #c8c9cc;
+}
+
+.tag_btn {
+    width: 31%;
+    padding: 8px 0;
+    border-radius: 15px;
+    border: none;
+    background-color: #c8c9cc;
+}
+
+.kind_btn.active {
+    background-color: white;
+}
+
+.tag_btn.active {
+    background-color: white;
+}
+
+#all_tag_list {
+    height: 250px;
+    top: 215px;
+}
+
+.filter_btn.active {
+    color: var(--primary-color);
+}
+
+.wish_heart {
+    position: absolute;
+    right: 50px;
+    top: 150px
+}
