@@ -16,7 +16,7 @@ async function loadStoreInfo(matzipId) {
     const data = await response.json();
 
     const storeContainer = document.querySelector('.store-container');
-    const imgUrl = data.kakaoImgUrl || "/IMG/defaultStoreImg.png";
+    const imgUrl = data.kakaoImgUrl !== '#none' ? data.kakaoImgUrl : "/IMG/defaultStoreImg.png";
 
     storeContainer.innerHTML = `
         <div class="left-info">
