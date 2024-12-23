@@ -3,73 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/79c730033c.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/CSS/header.css}">
+    <link rel="stylesheet" th:href="@{/CSS/matzip/wish-list.css}">
     <title>위시리스트</title>
 </head>
 <html>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f9f9f9;
-        margin: 0;
-        padding: 20px;
-    }
-    h1 {
-        text-align: center;
-    }
-    .container {
-        max-width: 800px;
-        margin: auto;
-        background: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        max-height: 400px; /* 최대 높이 설정 */
-        overflow-y: auto; /* 세로 스크롤 활성화 */
-    }
-    ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0; /* 기본 여백 제거 */
-    }
-    li {
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    img {
-        width: 80px;
-        height: 80px;
-        border-radius: 5px;
-        margin-right: 15px;
-    }
-    button {
-        padding: 5px 10px;
-        border: none;
-        border-radius: 5px;
-        background-color: #007bff;
-        color: white;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #0056b3;
-    }
-</style>
+
 </head>
 <body>
 
 <div class="container">
-    <h1>내 위시리스트</h1>
-    <ul>
-        <li th:each="item : ${wishList}">
-            <img th:src="${item.imgUrl}" alt="맛집 이미지">
-            <span th:text="${item.name}">맛집 이름</span>
-            <button th:onclick="'deleteWishlist(' + ${item.id} + ', ' + ${memberId} + ');'">
+    <th:block th:insert="~{common/header::header}"></th:block>
+    <div class="main-container">
+    <section class="profile-section">
+        <img src="/IMG/reviewManagement.png" alt="리뷰 관리">
+    </section>
+    <section id="wish-list-section">
+    <div class="wish-card">
+    <ul  >
+        <li  class="wish-container" th:each="item : ${wishList}">
+            <div id="wish-con">
+
+                <section class="left-info">
+            <img   th:src="${item.imgUrl}" alt="맛집 이미지">
+                </section>
+                <section class="right-info">
+            <div  >
+            <h3  id="store-title" th:text="${item.name}">맛집 이름</h3>
+            <button th:onclick="'deleteWishlist(' + ${item.id} + ', ' + ${memberId} + ');'" class="delete-btn">
+                <i class="fas fa-trash" aria-hidden="true"></i>
                 <span>삭제</span>
             </button>
+
+            </div>
+                </section>
+    </div>
         </li>
     </ul>
+    </div>
+
+    </section>
+    </div>
 </div>
 
 <script>

@@ -1,12 +1,23 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
 }
 
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: #f5f5f5;
+.modal-content {
+    background-color: #fefefe;
+    margin: 8% auto;
+    padding: 30px;
+    border: none;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 .modal {
     position: fixed;
@@ -55,6 +66,7 @@ body {
     text-underline-offset: 2px;
 }
 
+
 .search-container {
     display: flex;
     gap: 10px;
@@ -77,6 +89,15 @@ body {
     max-width: 1920px;
     margin: 0 auto;
     padding: 20px;
+
+.close {
+    color: #666;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
 }
 .friend-header {
     position: relative;
@@ -226,47 +247,101 @@ body {
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
+
+.close:hover {
+    color: #000;
+}
+
+/* 검색 컨테이너 스타일 */
+.search-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+#searchInput {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #FF7327;
+}
+
+
+/* 모달 내 검색 결과와 요청 목록을 위한 그리드 레이아웃 */
+#searchResults, #pendingRequests {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px 0;
+}
+
+/* 모달 내 카드 스타일 */
+#searchResults .friend-card,
+#pendingRequests .friend-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 0;
+
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 
-.friend-info {
-    flex-grow: 1;
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+    #searchResults, #pendingRequests {
+        grid-template-columns: 1fr;
+    }
 }
+
+
+
 
 .friend-nickname {
     font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 5px;
+
+.btn-request, .btn-accept, .btn-reject {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
 }
 
-.friend-id {
-    color: #666;
-    font-size: 0.9em;
+
+.btn-accept {
+    background-color: #40c057;
+    color: white;
+    margin-right: 8px;
 }
 
-.intimacy-scores {
-    display: flex;
-    gap: 20px;
+.btn-accept:hover {
+    background-color: #37a64a;
 }
 
-.score-item {
-    text-align: center;
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-
-.score-item.public {
-    background: #FF7327;
+.btn-reject {
+    background-color: #ff6b6b;
     color: white;
 }
 
-.score-item.hidden {
-    background: #82c91e;
-    color: white;
+.btn-reject:hover {
+    background-color: #f03e3e;
 }
+
 
 
 .sort-buttons {
@@ -472,4 +547,57 @@ body {
     z-index: 3;
     cursor: pointer;
     transform: translateX(60%) translateY(-200%);
+
+.btn-disabled {
+    background-color: #dee2e6;
+    color: #666;
+    cursor: not-allowed;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+}
+
+.no-results {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+}
+
+.error {
+    text-align: center;
+    padding: 20px;
+    color: #e03131;
+    background-color: #fff5f5;
+    border-radius: 8px;
+}
+
+/* 모달 제목 스타일링 */
+.modal-content h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    font-weight: 600;
+    border-bottom: 2px solid #FF7327;
+    padding-bottom: 10px;
+}
+
+/* 반응형 디자인 - 모달용 */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 15% auto;
+        padding: 20px;
+        width: 95%;
+    }
+
+    #searchResults .friend-card, #pendingRequests .friend-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    #searchResults .friend-card img, #pendingRequests .friend-card img {
+        margin-bottom: 10px;
+    }
+
 }
