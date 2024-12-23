@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,6 +69,14 @@ public class MatzipServiceImpl implements MatzipService {
 
     @Override
     public String getImgUrlFromKakao(String kakaoPageUrl) {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("window-size=1400,1500");
+        options.setBinary("/usr/bin/google-chrome");
+        options.addArguments("—disable-gpu");
+        options.addArguments("—no-sandbox");
+        options.addArguments("—disable-dev-shm-usage");
+        options.addArguments("—remote-debugging-port=9222");
         WebDriver driver = new ChromeDriver();
         driver.get(kakaoPageUrl);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
