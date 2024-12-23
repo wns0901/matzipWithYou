@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
         loadFriendsList(memberId);
     }
 
-    // 정렬 버튼에 이벤트 리스너 추가
     document.querySelectorAll('.btn-sort').forEach(button => {
         button.addEventListener('click', function () {
             const sortType = this.dataset.sort;
@@ -24,18 +23,15 @@ let friendsList = [];
 function sortFriends(sortType) {
     switch (sortType) {
         case 'registration':
-            // 등록순 (원본 배열 순서)
             updateFriendList(friendsList);
             break;
         case 'alphabet':
-            // 가나다순
             const sortedByAlphabet = [...friendsList].sort((a, b) =>
                 a.nickname.localeCompare(b.nickname, 'ko')
             );
             updateFriendList(sortedByAlphabet);
             break;
         case 'intimacy':
-            // 친밀도순
             const sortedByIntimacy = [...friendsList].sort((a, b) =>
                 b.intimacy - a.intimacy
             );
@@ -82,77 +78,152 @@ function updateFriendList(friends) {
         return;
     }
 
-    // TOP 3 섹션은 항상 친밀도 순으로 정렬
     const top3Friends = [...friends].sort((a, b) => b.intimacy - a.intimacy).slice(0, 3);
 
-    // 상위 3명을 위한 섹션 추가
     const top3Container = document.createElement('div');
     top3Container.classList.add('top-3-friends');
-    top3Container.innerHTML = '<h3>친밀도 TOP 3</h3>';
+    // top3Container.innerHTML = '<h3>친밀도 TOP 3</h3>';
 
-    // 상위 3명 표시
-    top3Friends.forEach((friend, index) => {
+    top3Friends.forEach(async (friend, index) => {
         const topFriendItem = document.createElement('div');
-        topFriendItem.classList.add('top-friend-item');
+        topFriendItem.classList.add('top-friend-item', `rank-${index + 1}`);
 
-        topFriendItem.innerHTML = `
-            <div class="rank">${index + 1}위</div>
-            <div class="friend-content">
-                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
-                     alt="${friend.nickname}님의 프로필"
-                     class="friend-profile-small"
-                     onerror="this.src='/IMG/defaultProfileImg.png'">
-                <span class="friend-nickname">${friend.nickname}</span>
-            </div>
-        `;
+        // topFriendItem.innerHTML = `
+        //     <div class="rank">${index + 1}위</div>
+        //     <div class="friend-content">
+        //         <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
+        //              alt="${friend.nickname}님의 프로필"
+        //              class="friend-profile-small"
+        //              onerror="this.src='/IMG/defaultProfileImg.png'">
+        //         <span class="friend-nickname">${friend.nickname}</span>
+        //     </div>
+        // `;
 
-        // TOP 3 친구 항목 클릭 이벤트
+
         topFriendItem.style.cursor = 'pointer';
-        topFriendItem.addEventListener('click', function () {
-            window.location.href = `/members/${friend.friendId}/matzips/mine`;
-            // mymatzip 주소로 바꾸기 요망
+        topFriendItem.addEventListener('click', async function () {
+            const friendId = friend.friendId;
+            try {
+                const response = await fetch(`/members/friends/relation/${friendId}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const text = await response.text();
+                if (!text) {
+                    console.error('Empty response received');
+                    return;
+                }
+
+                const friendRelation = JSON.parse(text);
+                if (!friendRelation) {
+                    console.error('No friend relation found');
+                    return;
+                }
+
+                const currentMemberId = getMemberIdFromUrl();
+
+                if (friendRelation.senderId == null || friendRelation.receiverId == null) {
+                    console.error('Invalid friend relation data');
+                    return;
+                }
+
+                const targetId = friendRelation.senderId == currentMemberId ?
+                    friendRelation.receiverId : friendRelation.senderId;
+
+                if (targetId) {
+                    window.location.href = `/matzips/mine/${targetId}`;
+                } else {
+                    console.error('Could not determine target ID');
+                }
+            } catch (error) {
+                console.error('Error details:', {
+                    message: error.message,
+                    stack: error.stack
+                });
+            }
         });
 
         top3Container.appendChild(topFriendItem);
     });
-
-    // 전체 친구 목록 섹션
     const fullListContainer = document.createElement('div');
     fullListContainer.classList.add('full-friend-list');
-    fullListContainer.innerHTML = '<h3>전체 친구 목록</h3>';
+    // fullListContainer.innerHTML = '<h3>전체 친구 목록</h3>';
 
-
-    // 전체 친구 목록 표시
     friends.forEach(friend => {
         const friendItem = document.createElement('div');
         friendItem.classList.add('friend-item');
 
         friendItem.innerHTML = `
+<div class="friend-box">
+    <img class="friend-background" src="/IMG/friend-box-t.png" alt="friend-box">
             <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
                  alt="Profile"
-                 class="friend-profile"
+                 class="full-friend-profile"
                  onerror="this.src='/IMG/defaultProfileImg.png'">
-            <p>닉네임: <span class="friend-nickname-hover">${friend.nickname}</span></p>
-            <p>공개 맛집 수: ${friend.publicCount}</p>
-            <p>비공개 맛집 수: ${friend.hiddenCount}</p>
-            <p>친밀도: ${friend.intimacy}</p>
-            <button class="btn btn-delete" data-friend-id="${friend.friendId}">삭제</button>
+
+            <div class="full-friend-nickname">${friend.nickname}</div>
+            <div class="full-friend-username">ID : ${friend.username}</div>
+            <div class="open-matzip">${friend.publicCount}
+<!--            <img class="open-matzip" src="/IMG/open_matzip.png" alt="openMZ Background">-->
+            </div>
+            <div class="hidden-matzip">${friend.hiddenCount}
+<!--             <img class="hidden-matzip" src="/IMG/hidden_matzip.png" alt="hiddenMZ Background">-->
+            </div>
+            <img class="btn btn-delete" 
+                src="/IMG/delete_friend.png"
+                alt="delete-friend"
+                data-friend-id="${friend.friendId}"></img>
+</div>
             
+
         `;
 
-        friendItem.querySelector('.btn-delete').addEventListener('click', async function () {
+        friendItem.querySelector('.btn-delete').addEventListener('click', async function (event) {
+            event.stopPropagation(); // 이벤트 버블링 방지
             const friendId = this.dataset.friendId;
             await deleteFriend(friendId);
         });
 
-        // friend-item 전체 클릭 이벤트
         friendItem.style.cursor = 'pointer';
-        friendItem.addEventListener('click', function () {
-            window.location.href = `/members/${friend.friendId}/matzips/mine`;
-            // mymatzip 주소로 바꾸기 요망
-        });
+        friendItem.addEventListener('click', async function () {
+            const friendId = friend.friendId;
+            try {
+                const response = await fetch(`/members/friends/relation/${friendId}`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-        fullListContainer.appendChild(friendItem);
+                const text = await response.text();
+                if (!text) {
+                    console.error('Empty response received');
+                    return;
+                }
+
+                const friendRelation = JSON.parse(text);
+                if (!friendRelation) {
+                    console.error('No friend relation found');
+                    return;
+                }
+
+                const currentMemberId = getMemberIdFromUrl();
+
+                if (friendRelation.senderId == null || friendRelation.receiverId == null) {
+                    console.error('Invalid friend relation data');
+                    return;
+                }
+
+                const targetId = friendRelation.senderId == currentMemberId ?
+                    friendRelation.receiverId : friendRelation.senderId;
+
+                if (targetId) {
+                    window.location.href = `/matzips/mine/${targetId}`;
+                } else {
+                    console.error('Could not determine target ID');
+                }
+            } catch (error) {
+                console.error('Error details:', {
+                    message: error.message,
+                    stack: error.stack
+                });
+            }
+        });
 
         fullListContainer.appendChild(friendItem);
     });
@@ -161,12 +232,9 @@ function updateFriendList(friends) {
     container.appendChild(fullListContainer);
 }
 
-
-// 모달 관련 함수들
 const requestModal = document.getElementById('friendRequestModal');
 const addModal = document.getElementById('addFriendModal');
 
-// 친구 요청 모달 열기
 document.querySelector('.btn-request').addEventListener('click', async () => {
     const memberId = getMemberIdFromUrl();
     try {
@@ -200,25 +268,20 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
             });
         }
 
-        // 모달 표시 (requests가 비어있어도 항상 실행)
         requestModal.style.display = 'block';
-
     } catch (error) {
         console.error('친구 요청 목록 로딩 실패:', error);
     }
 });
 
-// 친구 추가 모달 열기
 document.querySelector('.btn-add').addEventListener('click', () => {
     addModal.style.display = 'block';
 });
 
-// 기존 검색 함수를 아래와 같이 수정
 const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
 const searchResults = document.getElementById('searchResults');
 
-// 검색 함수
 const performSearch = async (searchTerm) => {
     if (!searchTerm.trim()) {
         searchResults.innerHTML = '';
@@ -265,12 +328,10 @@ const performSearch = async (searchTerm) => {
     }
 };
 
-// 검색 버튼 클릭 이벤트
 searchButton.addEventListener('click', () => {
     performSearch(searchInput.value);
 });
 
-// 입력창 이벤트는 검색 버튼을 눌렀을 때만 작동하도록 제거
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         performSearch(searchInput.value);
@@ -279,7 +340,6 @@ searchInput.addEventListener('keypress', (e) => {
 
 async function respondToRequest(senderId, isAccept) {
     const memberId = getMemberIdFromUrl();
-
     try {
         const requestData = {
             senderId: senderId,
@@ -301,15 +361,13 @@ async function respondToRequest(senderId, isAccept) {
             if (modal) {
                 modal.style.display = 'none';
             }
-
             await loadFriendsList(memberId);
-        } else {
         }
     } catch (error) {
+        console.error('친구 요청 처리 실패:', error);
     }
 }
 
-// 친구 요청 보내기
 async function sendFriendRequest(receiverId) {
     const memberId = getMemberIdFromUrl();
     try {
@@ -338,7 +396,6 @@ async function sendFriendRequest(receiverId) {
     }
 }
 
-// 친구 삭제
 async function deleteFriend(friendId) {
     const memberId = getMemberIdFromUrl();
 
@@ -369,7 +426,6 @@ async function deleteFriend(friendId) {
     }
 }
 
-// 모달 닫기 기능
 document.querySelectorAll('.close').forEach(closeBtn => {
     closeBtn.addEventListener('click', function () {
         this.closest('.modal').style.display = 'none';
@@ -381,3 +437,4 @@ window.onclick = function (event) {
         event.target.style.display = 'none';
     }
 };
+

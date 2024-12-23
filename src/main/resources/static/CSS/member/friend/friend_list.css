@@ -1,52 +1,208 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
 }
 
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: #f5f5f5;
+.modal-content {
+    background-color: #fefefe;
+    margin: 8% auto;
+    padding: 30px;
+    border: none;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.modal {
+    position: fixed;
+    z-index: 6;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
+.modal-content {
+    z-index: 7;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.friend-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.friend-nickname-hover {
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.friend-nickname-hover:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: black;
+    text-underline-offset: 2px;
+}
+
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+#searchButton {
+    padding: 5px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#searchButton:hover {
+    background-color: #45a049;
+}
 .friend-container {
-    max-width: 1200px;
+    /*display: block;*/
+    max-width: 1920px;
     margin: 0 auto;
     padding: 20px;
+
+.close {
+    color: #666;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+}
+.friend-header {
+    position: relative;
+    display: flex;
+    align-items: center; /* 세로 정렬을 중앙으로 */
+    justify-content: space-between;
+    /*margin: 40px auto; !* 상하 여백 및 중앙 정렬 *!*/
+    max-width: 1900px; /* 컨테이너 크기 */
+    width: 95%; /* 컨테이너의 너비 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    transform: translateX(1%);
 }
 
 /* 상단 친밀도 순위 영역 */
 .intimacy-ranking {
-    height: 890px;
-    /*border-radius: 20px;*/
     position: relative;
-    overflow: hidden;
+    width: 100%;
+    height: 500px; /* 800px를 viewport height 기준으로 변환 */
+    /*text-align: center;*/
+    background: linear-gradient(to bottom, #f5f5f5, rgba(245, 245, 245, 0));
+    padding: 20px 0;
+    transform: translateY(5px);
 }
-/* 배경 이미지 스타일링 */
+
+/* 배경 이미지 설정 */
 .intimacy-ranking .banner {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 이미지 비율을 유지하면서 영역을 채움 */
-    z-index: 1; /* 가장 아래 레이어 */
+    object-fit: cover;
+    z-index: 1;
 }
 
-.intimacy-ranking::after {
-    content: '';
+
+.ranking-sections, .top-friend-item{
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)); /* 어두운 오버레이 */
+    bottom: -20px; /* 하단에 붙임 */
+    right: 10%; /* 우측에서 10% 여백 */
+    /*position: relative;*/
     z-index: 2;
+    display: flex;
+    justify-content: flex-end; /* 우측 정렬 */
+    gap: 60px;
+    padding: 0 20px;
+}
+
+.first, .rank-1{
+    bottom: -10px;
+}
+
+.second, .rank-2 {
+    bottom: -50px; /* 하단에 붙임 */
+
+}
+.third, .rank-3 {
+    bottom: -100px; /* 하단에 붙임 */
+}
+
+
+/* 각 섹션 크기 */
+.ranking-section {
+    position: relative;
+    width: 130px;
+    text-align: center;
+
+}
+
+.ranking-bg {
+    width: 130%;
+    /*border-radius: 20px;*/
+}
+
+
+.ranking-profile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 3;
+}
+/* 랭커 프사 */
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+.friend-nickname{
+    font-family: RecipeKoreaOTF;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .ranking-title {
-    position: relative;
-    z-index: 3; /* 배경 이미지보다 위에 표시 */
+    position: absolute;
+    left: 15%; /* 좌측 여백 */
+    top: 50%;
+    transform: translateY(-50%); /* 수직 중앙 정렬 */
+    z-index: 2; /* 배경 이미지보다 위에 표시 */
     padding: 40px;
     color: white;
     font-family: RecipeKoreaOTF;
@@ -57,49 +213,21 @@ body {
 
 .ranking-title span {
     display: block;
+    z-index: 3; /* 배경 이미지보다 위에 표시 */
+    line-height: 1.2;
+
 }
 
 .ranking-list {
+    float: right;
+    max-width: 30%;
     position: relative;
     z-index: 3; /* 배경 이미지보다 위에 표시 */
     display: flex;
-    justify-content: center;
+    justify-content: end;
     gap: 30px;
     margin-top: 100px;
 }
-
-
-
-/*.ranking-item {*/
-/*    background: rgba(255, 255, 255, 0.9); !* 약간 투명한 배경 *!*/
-/*    border-radius: 15px;*/
-/*    width: 200px;*/
-/*    height: 400px;*/
-/*    text-align: center;*/
-/*    position: relative;*/
-/*    backdrop-filter: blur(5px); !* 배경 블러 효과 (선택사항) *!*/
-/*}*/
-
-/* 주황색 + 프사 부분*/
-/*.ranking-item .rank-header {*/
-/*    background: #FF7327;*/
-/*    padding: 20px;*/
-/*    color: white;*/
-/*    font-family: RecipeKoreaOTF;*/
-/*    font-weight: normal;*/
-/*    font-size: 2em;*/
-/*    color: #FFFFFF;*/
-/*}*/
-
-/* 흰색 부분 */
-/*.ranking-item .rank-avatar {*/
-/*    width: 100px;*/
-/*    height: 100px;*/
-/*    margin: -50px auto 0;*/
-/*    background: #fff;*/
-/*    border-radius: 50%;*/
-/*    padding: 5px;*/
-/*}*/
 
 .ranking-item .rank-number {
     font-family: RecipeKoreaOTF;
@@ -119,77 +247,357 @@ body {
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
+
+.close:hover {
+    color: #000;
+}
+
+/* 검색 컨테이너 스타일 */
+.search-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+#searchInput {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #FF7327;
+}
+
+
+/* 모달 내 검색 결과와 요청 목록을 위한 그리드 레이아웃 */
+#searchResults, #pendingRequests {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px 0;
+}
+
+/* 모달 내 카드 스타일 */
+#searchResults .friend-card,
+#pendingRequests .friend-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 0;
+
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.friend-avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-right: 20px;
+
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+    #searchResults, #pendingRequests {
+        grid-template-columns: 1fr;
+    }
 }
 
-.friend-info {
-    flex-grow: 1;
-}
 
-.friend-name {
+
+
+.friend-nickname {
     font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 5px;
-}
 
-.friend-id {
-    color: #666;
-    font-size: 0.9em;
-}
-
-.intimacy-scores {
-    display: flex;
-    gap: 20px;
-}
-
-.score-item {
-    text-align: center;
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-
-.score-item.public {
-    background: #FF7327;
-    color: white;
-}
-
-.score-item.hidden {
-    background: #82c91e;
-    color: white;
-}
-
-.friend-actions button {
-    padding: 8px 15px;
+.btn-request, .btn-accept, .btn-reject {
+    padding: 8px 16px;
+    border-radius: 6px;
     border: none;
-    border-radius: 5px;
-    background: #f1f3f5;
-    color: #495057;
+    font-weight: 600;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+
 }
 
-/* 정렬 버튼 */
+
+.btn-accept {
+    background-color: #40c057;
+    color: white;
+    margin-right: 8px;
+}
+
+.btn-accept:hover {
+    background-color: #37a64a;
+}
+
+.btn-reject {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.btn-reject:hover {
+    background-color: #f03e3e;
+}
+
+
+
 .sort-buttons {
-    margin: 20px 0;
+    margin-left: 10px;
+    margin-right: auto; /* 왼쪽으로 정렬 */
+    display: flex; /* 버튼들을 가로로 나열 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 10px; /* 버튼 간의 간격 */
+}
+
+.friend-actions {
+    margin-left: auto; /* 오른쪽으로 정렬 */
+    display: flex; /* 버튼들을 가로로 나열 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 10px; /* 버튼 간의 간격 */
+}
+
+.subtitle{
+    margin-left: 10px;
+    font-size: 4vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bolder;
+}
+
+.btn{
+ cursor: pointer;
+}
+
+.icon {
+    size : 3vh;
+    transform: translateY(3px);
+}
+.friend-icon{
+    /*margin-left: 50px;*/
+}
+.btn-add, .btn-request{
+    font-size: 4vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+}
+
+.btn-title{
+    font-size: 2vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
 }
 
 .btn-sort {
-    padding: 10px 20px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 5px;
-    background: #e9ecef;
-    cursor: pointer;
+    font-size: 2vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+}
+.btn-sort:hover {
+    color: #ff7327;;
 }
 
-.btn-sort:hover {
-    background: #dee2e6;
+
+/* friend-profile-small 위치 조정 */
+/*.ranking-section .friend-profile-small, .friend-profile {*/
+/*    position: absolute;*/
+/*    top: 18%; !* 하얀 원의 중앙에 맞게 조정 *!*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%); !* 정확히 중앙 정렬 *!*/
+/*    width: 80px; !* 프로필 이미지 크기 *!*/
+/*    height: 80px;*/
+/*    border-radius: 50%;*/
+/*    object-fit: cover;*/
+/*    border: 2px solid white; !* 하얀 테두리 *!*/
+/*    z-index: 2; !* 배경 이미지보다 위에 표시 *!*/
+/*}*/
+
+/*.friend-profile-small {*/
+/*    width: 80px;*/
+/*    height: 80px;*/
+/*    border-radius: 50%;*/
+/*    margin-right: 20px;*/
+/*}*/
+/* friend-profile-small 위치 및 스타일 */
+.friend-profile-small {
+    width: 85px; /* 프로필 이미지 크기 */
+    height: 85px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #ccc; /* 기본 배경색 */
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -110%);
+    z-index: 5; /* 배경 이미지보다 위에 표시 */
+}
+
+/* 닉네임 스타일 */
+.friend-nickname {
+    font-family: RecipeKoreaOTF, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-top: 100px; /* 닉네임 위치 조정 */
+    position: relative;
+    z-index: 5; /* 배경 이미지보다 위에 표시 */
+    text-align: center;
+}
+
+.friend-box {
+    z-index: 0;
+    position: relative; /* 자식 요소의 기준점을 설정 */
+    max-width: 1236px; /* 컨테이너 크기 */
+    width: 100%;
+    height: 250px; /* 컨테이너 크기 */
+    margin: 10px auto;
+}
+
+.friend-background {
+    z-index: 0;
+    position: absolute; /* 내부 요소의 위치를 기준으로 조정 가능 */
+    display: flex;
+    max-width: 1236px; /* 컨테이너 크기 */
+    width: 100%;
+
+}
+
+
+
+.full-friend-profile {
+    z-index: 1;
+    position: absolute; /* 부모 요소 기준으로 위치 설정 */
+    width: 200px; /* 부모 컨테이너의 2/7 */
+    aspect-ratio: 1 / 1; /* 정사각형 비율 */
+    border-radius: 50%; /* 원형 */
+    object-fit: cover;
+    margin: 1rem;
+    transform: translateX(30%) translateY(5%);
+    align-self: center;
+}
+
+.full-friend-nickname {
+    z-index: 3;
+    position: absolute;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700; /* 미디엄 */
+    font-size: 2.5rem; /* 32px */
+    transform: translateY(80px);
+    margin-left: 300px;
+    margin-right: 1rem; /* 오른쪽 간격 */
+    align-self: center;
+}
+.full-friend-username {
+    z-index: 3;
+    position: absolute;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500; /* 미디엄 */
+    font-size: 1.3rem; /* 32px */
+    color: #6a6a6a;
+    transform: translateY(130px);
+    margin-left: 300px;
+    margin-right: 1rem; /* 오른쪽 간격 */
+    align-self: center;
+}
+
+.hidden-matzip {
+    display: flex;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 900; /* 블랙 */
+    font-size: 3.125rem; /* 50px */
+    margin-right: 1rem; /* 오른쪽 간격 */
+    align-items: center; /* 텍스트와 이미지 수직 중앙 정렬 */
+    justify-content: center;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    top: -20px;
+    position: absolute;
+    bottom: 10%;
+    left: 75.5%;
+    /*transform: translateX(-50%);*/
+    z-index: 3;
+}
+
+.open-matzip{
+    display: flex;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 900; /* 블랙 */
+    font-size: 3.125rem; /* 50px */
+    margin-right: 1rem; /* 오른쪽 간격 */
+    align-items: center; /* 텍스트와 이미지 수직 중앙 정렬 */
+    justify-content: center;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    top: -20px;
+    position: absolute;
+    bottom: 10%;
+    left: 61.5%;
+    /*transform: translateX(-50%);*/
+    z-index: 3;
+
+}
+
+
+.btn-delete {
+    position: absolute;
+    bottom: 5%;
+    right: 10%;
+    z-index: 3;
+    cursor: pointer;
+    transform: translateX(60%) translateY(-200%);
+
+.btn-disabled {
+    background-color: #dee2e6;
+    color: #666;
+    cursor: not-allowed;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+}
+
+.no-results {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+}
+
+.error {
+    text-align: center;
+    padding: 20px;
+    color: #e03131;
+    background-color: #fff5f5;
+    border-radius: 8px;
+}
+
+/* 모달 제목 스타일링 */
+.modal-content h2 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    font-weight: 600;
+    border-bottom: 2px solid #FF7327;
+    padding-bottom: 10px;
+}
+
+/* 반응형 디자인 - 모달용 */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 15% auto;
+        padding: 20px;
+        width: 95%;
+    }
+
+    #searchResults .friend-card, #pendingRequests .friend-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    #searchResults .friend-card img, #pendingRequests .friend-card img {
+        margin-bottom: 10px;
+    }
+
 }

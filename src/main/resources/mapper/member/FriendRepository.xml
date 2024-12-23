@@ -152,4 +152,13 @@
             )
     </update>
 
+    <!-- friendId로 sender_id와 receiver_id 조회 -->
+    <select id="findFriendRelationById" parameterType="Long" resultType="com.lec.spring.member.domain.Friend">
+        SELECT sender_id as senderId, receiver_id as receiverId
+        FROM friend
+        WHERE (sender_id = #{friendId} OR receiver_id = #{friendId})
+          AND is_accept = true
+            LIMIT 1
+    </select>
+
 </mapper>
