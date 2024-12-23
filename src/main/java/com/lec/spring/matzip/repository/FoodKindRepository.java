@@ -5,7 +5,7 @@ import com.lec.spring.matzip.domain.FoodKind;
 import java.util.List;
 
 public interface FoodKindRepository {
-    int save();
+    int save(FoodKind foodKind);
 
     FoodKind findByKindName(String kindName);
 
