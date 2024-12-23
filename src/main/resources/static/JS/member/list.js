@@ -88,30 +88,30 @@ function updateFriendList(friends) {
     // 상위 3명을 위한 섹션 추가
     const top3Container = document.createElement('div');
     top3Container.classList.add('top-3-friends');
-    top3Container.innerHTML = '<h3>친밀도 TOP 3</h3>';
+    // top3Container.innerHTML = '<h3>친밀도 TOP 3</h3>';
 
     // 상위 3명 표시
     top3Friends.forEach((friend, index) => {
         const topFriendItem = document.createElement('div');
         topFriendItem.classList.add('top-friend-item', `rank-${index + 1}`);
 
-        topFriendItem.innerHTML = `
-            <div class="rank">${index + 1}위</div>
-            <div class="friend-content">
-                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
-                     alt="${friend.nickname}님의 프로필"
-                     class="friend-profile-small"
-                     onerror="this.src='/IMG/defaultProfileImg.png'">
-                <span class="friend-nickname">${friend.nickname}</span>
-            </div>
-        `;
+        // topFriendItem.innerHTML = `
+        //     <div class="rank">${index + 1}위</div>
+        //     <div class="friend-content">
+        //         <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
+        //              alt="${friend.nickname}님의 프로필"
+        //              class="friend-profile-small"
+        //              onerror="this.src='/IMG/defaultProfileImg.png'">
+        //         <span class="friend-nickname">${friend.nickname}</span>
+        //     </div>
+        // `;
         top3Container.appendChild(topFriendItem);
     });
 
     // 전체 친구 목록 섹션
     const fullListContainer = document.createElement('div');
     fullListContainer.classList.add('full-friend-list');
-    fullListContainer.innerHTML = '<h3>전체 친구 목록</h3>';
+    // fullListContainer.innerHTML = '<h3>전체 친구 목록</h3>';
 
 
     // 전체 친구 목록 표시
@@ -120,15 +120,25 @@ function updateFriendList(friends) {
         friendItem.classList.add('friend-item');
 
         friendItem.innerHTML = `
+<div class="friend-box">
+    <img class="friend-background" src="/IMG/friend-box-t.png" alt="friend-box">
             <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
                  alt="Profile"
                  class="full-friend-profile"
                  onerror="this.src='/IMG/defaultProfileImg.png'">
-            <div class="full-friend-nickname">닉네임: ${friend.nickname}</div>
-            <div class="open-matzip">공개 맛집 수: ${friend.publicCount}</div>
-            <div class="hidden-matzip">비공개 맛집 수: ${friend.hiddenCount}</div>
-<!--            <p>친밀도: ${friend.intimacy}</p>-->
-            <button class="btn btn-delete" data-friend-id="${friend.friendId}">삭제</button>
+            <div class="full-friend-nickname">${friend.nickname}</div>
+            <div class="full-friend-username">ID : ${friend.username}</div>
+            <div class="open-matzip">${friend.publicCount}
+<!--            <img class="open-matzip" src="/IMG/open_matzip.png" alt="openMZ Background">-->
+            </div>
+            <div class="hidden-matzip">${friend.hiddenCount}
+<!--             <img class="hidden-matzip" src="/IMG/hidden_matzip.png" alt="hiddenMZ Background">-->
+            </div>
+            <img class="btn btn-delete" 
+                src="/IMG/delete_friend.png"
+                alt="delete-friend"
+                data-friend-id="${friend.friendId}"></img>
+</div>
             
         `;
 
