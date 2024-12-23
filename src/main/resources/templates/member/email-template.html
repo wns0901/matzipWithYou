@@ -14,21 +14,37 @@
         .button {
             display: inline-block;
             padding: 12px 24px;
-            background-color: #ff7327;
+            background-color: #FF7327FF;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             margin: 20px 0;
         }
+
+
+        a {
+            text-decoration: none; /* 밑줄 제거 */
+            color: white; /* 부모 요소의 글자 색상 상속 */
+        }
+
+        a:link, a:visited, a:hover, a:active {
+            text-decoration: none;
+            color: white;
+        }
+
+        #title{
+            color : #FF7327FF;
+        }
+
     </style>
 </head>
 <body>
 <div class="email-container">
-    <h2>비밀번호 재설정 안내</h2>
+    <h2 id="title">비밀번호 재설정 안내</h2>
     <br>
     <p>안녕하세요, MatzipWithYou입니다.</p>
     <p>비밀번호 재설정을 위해 아래 버튼을 클릭해주세요.</p>
-    <a th:href="${resetLink}" class="button">비밀번호 재설정하기</a>
+    <a th:href="${resetLink}" class="button" style="color: white"> 비밀번호 재설정하기</a>
     <p>본 메일은 발신전용입니다. 궁금하신 점이 있으시다면 고객센터로 문의해주세요.</p>
 </div>
 </body>

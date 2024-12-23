@@ -29,9 +29,27 @@
                     <img src="/IMG/settings-icon.svg" alt="설정 아이콘" class="settings-icon">
                 </button>
                 <div class="dropdown-menu">
-                    <button class="dropdown-item">비밀번호 변경</button>
-                    <button class="dropdown-item">회원 탈퇴</button>
+                    <button class="dropdown-item" th:onclick="|location.href='@{/member/request-reset}'|">비밀번호 변경</button>
+                    <button class="dropdown-item" id="deleteAccountBtn">회원 탈퇴</button>
                 </div>
+
+                <!-- 회원 탈퇴 팝업 -->
+                <div class="delete-account-popup" id="deleteAccountPopup" style="display: none;">
+                    <div class="message align-message">
+                        <img src="/IMG/notice.png" alt="경고" class="point-notice">
+                        <div class="message-text">
+                            회원 탈퇴 시, 저장된 맛집을 볼 수 없습니다.<br>
+                            계정을 삭제하시겠습니까?
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button class="confirm-button" id="confirmDeleteBtn">예</button>
+                        <button class="cancel-button" id="cancelDeleteBtn">아니오</button>
+                    </div>
+                </div>
+
+                <!-- 기존 overlay div 사용 -->
+                <div class="overlaybackground" id="overlay"></div>
             </div>
             <!-- 프로필 이미지 영역 -->
             <div class="profile-image-wrapper">
@@ -96,13 +114,18 @@
     <div class="content-section">
         <!-- 위시 리스트 -->
         <div class="section">
-            <span class="section-header">
-            <img class="icon" src="/IMG/heart-filled.svg" alt="heart-icon">
-                <h2 class="h2"> 위시 리스트(</h2>
-                    <h2 class="h2" th:text="${myPage.wishInfo.count}"></h2>
-                <h2 class="h2">곳)</h2>
-                <button class="view-all-button">전체보기 ></button>
-            </span>
+       <span class="section-header">
+    <img class="icon" src="/IMG/heart-filled.svg" alt="heart-icon">
+    <h2 class="h2"> 위시 리스트(</h2>
+    <h2 class="h2" th:text="${myPage.wishInfo.count}"></h2>
+    <h2 class="h2">곳)</h2>
+   <button class="view-all-button"
+           th:onclick="|location.href='@{/matzips/wish-list/}${memberId}'|">
+    전체보기 >
+</button>
+
+</span>
+<!--end modal-->
             <div class="card-container" id="wish-list-cards">
                 <div th:each="wish : ${myPage.wishInfo.preview}" class="card">
                     <img th:src="${wish.matzipImage != '#none' ? wish.matzipImage : '/IMG/defaultStoreImgSMALL.png'}"
@@ -119,8 +142,9 @@
                 <h2 class="h2"> 나의 맛집(</h2>
                     <h2 class="h2" th:text="${myPage.matzipInfo.count}"></h2>
                 <h2 class="h2">곳)</h2>
-                <button class="view-all-button"
-                        onclick="location.href='/matzips/mine/${memberId}'">전체보기 ></button>
+                <button class="view-all-button" th:onclick="|location.href='@{/matzips/mine/}${memberId}'|">
+                    전체보기 >
+                </button>
             </span>
             <div class="card-container" id="my-matzip-cards">
                 <div th:each="matzip : ${myPage.matzipInfo.preview}" class="card">
@@ -139,8 +163,9 @@
                 <h2 class="h2"> 나의 리뷰(</h2>
                     <h2 class="h2" th:text="${myPage.reviewInfo.count}"></h2>
                 <h2 class="h2">개)</h2>
-                <button class="view-all-button"
-                        onclick="location.href='/matzip/review/list/${memberId}'">전체보기 ></button>
+                <button class="view-all-button" th:onclick="|location.href='@{/matzip/reviewList/}${memberId}'|">
+                    전체보기 >
+                </button>
             </span>
             <div class="review-container" id="review-container">
                 <div th:each="review : ${myPage.reviewInfo.preview}" class="review-card">

@@ -7,8 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{/CSS/matzip/gu-detail-map.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/header.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/matzip/gu-detail-map.css}">
     <script th:inline="javascript">
         const data = /*[[${data}]]*/ {},
             hiddenImgUrl = /*[[@{/IMG/matzip/hidden_matzip.png}]]*/ 'hiddenImg',
@@ -25,7 +25,7 @@
 <div id="all_overlay" class="hidden"></div>
 <div id="purchasing_hint_info" class="hidden">
     <img th:src="@{/IMG/matzip/hint_info.png}">
-    <span></span>
+    <span id="point"></span>
     <button id="purchase"><span>뽑기</span></button>
     <button id="cancel"><span>취소</span></button>
 </div>
@@ -75,6 +75,7 @@
 
         <button id="close_detail_btn" class="close_btn"></button>
         <button id="write_review_btn"></button>
+        <img id="loading_img" th:src="@{/IMG/matzip/loading_img.png}" class="hidden">
     </div>
 
 </div>

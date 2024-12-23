@@ -2,6 +2,7 @@ package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.DTO.DetailMatzipDTO;
 import com.lec.spring.matzip.domain.DTO.MatzipDTO;
+import com.lec.spring.matzip.domain.FoodKind;
 import com.lec.spring.matzip.domain.Matzip;
 import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MatzipRepository;
@@ -45,10 +46,7 @@ public class MatzipServiceImpl implements MatzipService {
 
         String kakaoImgUrl = getImgUrlFromKakao(matzip.getKakaoMapUrl());
 
-//        FoodKind foodKind = foodKindRepository.findByKindName(kind);
-
         matzip.setImgUrl(kakaoImgUrl);
-//        matzip.setKindId(foodKind.getId());
 
         String gu = matzip.getAddress().split(" ")[1];
         matzip.setGu(gu);
@@ -73,7 +71,12 @@ public class MatzipServiceImpl implements MatzipService {
         WebDriver driver = new ChromeDriver();
         driver.get(kakaoPageUrl);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        WebElement doc = driver.findElement(By.cssSelector(".bg_present"));
+        WebElement doc;
+        try {
+            doc = driver.findElement(By.cssSelector(".bg_present"));
+        } catch (Exception e) {
+            return "/IMG/defaultStoreImg.png";
+        }
         String str = doc.getAttribute("style");
         driver.quit();
         String url = str.substring(str.indexOf("url(\"") + 5, str.indexOf("\")"));
@@ -82,7 +85,7 @@ public class MatzipServiceImpl implements MatzipService {
     }
 
     @Override
-    public Matzip getMatzipById(Long id, Model model) {
+    public Matzip getMatzipById(Long id) {
         return matzipRepository.findById(id);
     }
 
@@ -111,6 +114,31 @@ public class MatzipServiceImpl implements MatzipService {
     @Override
     public int deleteById(Long id) {
         return matzipRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateMatzipFoodKind(Long matzipId, Long foodKindId) {
+        Matzip matzip = matzipRepository.findById(matzipId);
+        if (matzip == null) {
+            throw new IllegalArgumentException("맛집을 찾을 수 없습니다.");
+        }
+
+        // 이미 foodKind가 설정되어 있는지 확인
+        if (matzip.getKindId() != null) {
+            throw new IllegalStateException("이미 음식 종류가 설정되어 있는 맛집입니다.");
+        }
+
+        // foodKind 존재 여부 확인
+        FoodKind foodKind = foodKindRepository.findByKindId(foodKindId);
+        if (foodKind == null) {
+            throw new IllegalArgumentException("존재하지 않는 음식 종류입니다.");
+        }
+
+        int updated = matzipRepository.updateFoodKind(matzipId, foodKindId);
+        if (updated != 1) {
+            throw new RuntimeException("음식 종류 업데이트에 실패했습니다.");
+        }
     }
 }
 

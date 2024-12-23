@@ -7,6 +7,7 @@ import com.lec.spring.member.domain.MemberValidator;
 import com.lec.spring.member.service.EmailAuthService;
 import com.lec.spring.member.service.MemberService;
 import com.lec.spring.member.service.ValidationEmailService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -288,18 +290,46 @@ public class MemberController {
     @GetMapping("/reset-password")
     public String showResetForm(@RequestParam("uuid") String uuid, Model model) {
         Long memberId = (Long) redisTemplate.opsForValue().get(uuid);
+
+        // 확인을 위해 로그 출력
+        if (memberId != null) {
+            System.out.println("UUID: " + uuid + "에 대한 memberId: " + memberId);
+        } else {
+            System.out.println("UUID: " + uuid + "에 대한 memberId가 존재하지 않습니다.");
+        }
+
+
         if (memberId == null) {
-            return "redirect:member/reset-fail";
+            System.out.println("###########fail");
+            return "member/reset-fail";
         }
         Model member = model.addAttribute("id", memberId);
+        System.out.println("###########member " + member);
         return "member/reset-password";
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<?> deleteMember(@PathVariable Long id, HttpServletRequest request) {
+        try {
+            memberService.deleteById(id);
+
+            // 로그아웃 처리
+            request.getSession().invalidate();
+            SecurityContextHolder.clearContext();
+
+            return ResponseEntity.ok().body(Map.of("success", true));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "회원 탈퇴 처리 중 오류가 발생했습니다."));
+        }
     }
 
 
     @PostMapping("/update-password")
     public String updatePassword(@RequestParam Long id, String newPassword) {
         boolean isUpdated = memberService.updatePassword(id, newPassword);
-        return isUpdated ? "redirect:/member/reset-fail" : "redirect:/member/reset-success";
+        return isUpdated ? "member/reset-fail" : "member/reset-success";
     }
 
     @GetMapping("/reset-success")

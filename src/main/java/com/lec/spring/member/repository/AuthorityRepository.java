@@ -6,6 +6,7 @@ import com.lec.spring.member.domain.Member;
 import java.util.List;
 
 public interface AuthorityRepository {
+
     // 특정 이름(name)의 권한 정보 읽어오기
     Authority findByName(String name);
 

@@ -34,37 +34,66 @@ function initializeStarRating() {
 
 async function loadFoodKinds() {
     try {
-        const response = await fetch('/matzip/reviews/food-kinds');
-        if(!response.ok) {
-            throw new Error('Failed to fetch food kinds');
-        }
-        const foodKinds = await response.json();
+        const matzipId = document.querySelector('input[name="matzipId"]')?.value;
+        const response = await fetch(`/matzips?matzipId=${matzipId}`);
+        const existingMatzip = await response.json();
+
+        const foodKindsResponse = await fetch('/matzips/food-kinds');
+        const foodKinds = await foodKindsResponse.json();
 
         const foodKindContainer = document.querySelector('.select-foodKind');
         foodKindContainer.innerHTML = '';
+        const fragment = document.createDocumentFragment();
 
-        foodKinds.forEach(kindName => {
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.textContent = kindName;
-            button.classList.add('food-kind-btn');
-            button.dataset.kindName = kindName;
-
-            button.addEventListener('click', () => {
-
-                foodKindContainer.querySelectorAll('.food-kind-btn').forEach(btn => {
-                    btn.classList.remove('selected');
-                });
-
-                button.classList.add('selected');
-                document.querySelector('input[name="foodKind"]').value = kindName;
+        // 맛집의 기존 foodKind가 있는 경우
+        if (existingMatzip && existingMatzip.kindId) {
+            const foodKind = foodKinds.find(foodKind => foodKind.id === existingMatzip.kindId);
+            if (foodKind) {
+                fragment.appendChild(createFoodKindButton(foodKind, true));
+            }
+        } else {
+            // 첫 리뷰인 경우 모든 foodKind 옵션을 보여줌
+            foodKinds.forEach(foodKind => {
+                fragment.appendChild(createFoodKindButton(foodKind));
             });
+        }
 
-            foodKindContainer.appendChild(button);
-        });
+        foodKindContainer.appendChild(fragment);
     } catch (error) {
         console.error('Failed to load Food Kind:', error);
     }
+}
+
+function createFoodKindButton(foodKind, isExist = false) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = foodKind.kindName;
+    button.classList.add('food-kind-btn');
+    button.dataset.foodKindId = foodKind.id;
+
+    const hiddenInput = document.querySelector('input[name="foodKind"]');
+
+    if (isExist) {
+        // 기존 리뷰가 있는 경우 - 선택된 상태로 설정하고 수정 불가능하게 만듦
+        hiddenInput.value = foodKind.kindName;
+        hiddenInput.dataset.foodKindId = foodKind.id;
+        button.classList.add('selected');
+        button.disabled = true;
+    } else {
+        // 첫 리뷰인 경우 - 선택 가능하게 설정
+        button.addEventListener('click', () => {
+            const foodKindContainer = document.querySelector('.select-foodKind');
+            foodKindContainer.querySelectorAll('.food-kind-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+
+            button.classList.add('selected');
+            hiddenInput.value = foodKind.kindName;
+            hiddenInput.dataset.foodKindId = foodKind.id;
+        });
+    }
+
+    return button;
 }
 
 async function loadTags() {
@@ -111,6 +140,20 @@ async function loadTags() {
     }
 }
 
+async function saveMyMatzip(url, formObject) {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(formObject),
+    }
+    console.log(formObject);
+    const result = await fetch(url, options).then(res => res.json());
+    showCompletionModal(result);
+}
+
 async function setupFormSubmission() {
     const form = document.querySelector('.review-write-form');
     form.addEventListener('submit', async (e) => {
@@ -120,9 +163,11 @@ async function setupFormSubmission() {
         const memberId = document.querySelector('input[name="memberId"]')?.value;
         const matzipId = document.querySelector('input[name="matzipId"]')?.value;
         const foodKind = document.querySelector('input[name="foodKind"]')?.value;
+        const foodKindId = document.querySelector('input[name="foodKind"]')?.dataset.foodKindId; // foodKindId 가져오기
         const content = document.querySelector('textarea[name="content"]')?.value;
         const selectedTags = Array.from(document.querySelectorAll('.tag-btn.selected'));
         const tagIds = document.querySelector('input[name="tagIds"]')?.value.split(',').filter(Boolean);
+        const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
 
         if (!memberId) {
             alert('로그인이 필요합니다.');
@@ -130,7 +175,7 @@ async function setupFormSubmission() {
             return;
         }
 
-        if(!foodKind) {
+        if(!foodKind || !foodKindId) {  // foodKindId 체크 추가
             alert('음식 종류를 선택해주세요.');
             return;
         }
@@ -156,44 +201,52 @@ async function setupFormSubmission() {
             matzipId: Number(matzipId),
             memberId: Number(memberId),
             kindName: foodKind,
+            foodKindId: Number(foodKindId),  // foodKindId 추가
             tagIds: tagIds
         };
 
-        console.log(formObject);
-
-        const isRegistered = document.querySelector('.register-btn input[data-name="registerOk"].active');
-
         const url = isRegistered
-            ? `/matzip/mine/${memberId}/${matzipId}`
+            ? `/matzips/mine/${memberId}/${matzipId}`
             : `/matzip/reviews/${memberId}/${matzipId}`;
 
-        try {
-            const saveResponse = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(formObject),
-            });
-        } catch (error) {
-            console.error('Error:', error);
-            alert('리뷰 저장 중 오류가 발생했습니다.');
+        if(isRegistered) {
+            formObject.kindId = foodKindId;
+            formObject.visibility = document.querySelector('.visibility-btn .active.selected').dataset.name;
+            saveMyMatzip(url, formObject)
+        } else {
+            await saveReview(memberId, matzipId, formObject, url);
         }
 
-            const modalResponse = await fetch(`/matzip/api/reviews/${memberId}/${matzipId}/modal`);
-
-            const modalData = await modalResponse.json();
-            showCompletionModal(modalData);
-
-            document.getElementById('modalCloseBtn').onclick = () => {
-                const modal = document.getElementById('completionModal');
-                modal.classList.add('hidden');
-                window.location.href = isRegistered
-                    ? `/matzip/myMatzipList/${memberId}`
-                    : `/matzip/reviewList/${memberId}`;
-            };
+        document.getElementById('modalCloseBtn').onclick = () => {
+            const modal = document.getElementById('completionModal');
+            modal.classList.add('hidden');
+            window.location.href = isRegistered
+                ? `/matzip/myMatzipList/${memberId}`
+                : `/matzip/reviewList/${memberId}`;
+        };
     });
+}
+
+async function saveReview(memberId, matzipId, formObject, url) {
+    try {
+        const saveResponse = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formObject),
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        alert('리뷰 저장 중 오류가 발생했습니다.');
+    }
+
+    const modalResponse = await fetch(`/matzip/api/reviews/${memberId}/${matzipId}/modal`);
+
+    const modalData = await modalResponse.json();
+    showCompletionModal(modalData);
+
 }
 
 function showCompletionModal(data) {
@@ -326,3 +379,4 @@ function setupFoodKindTextHeight() {
         });
     }
 }
+

@@ -7,6 +7,24 @@
     <link rel="stylesheet" th:href="@{/CSS/member/friend/friend_list.css}" type="text/css"/>
 </head>
 <style>
+    .modal {
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+    }
 
     .close {
         color: #aaa;
@@ -31,6 +49,24 @@
         border-radius: 50%;
     }
 
+    .friend-nickname-hover {
+        position: relative;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .friend-nickname-hover:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-decoration-color: black;
+        text-underline-offset: 2px;
+    }
+
+    .search-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
 
 
 </style>

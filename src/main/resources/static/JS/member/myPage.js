@@ -1,11 +1,11 @@
 // 설정버튼 드롭다운
-document.querySelector('.settings-button').addEventListener('click', function() {
+document.querySelector('.settings-button').addEventListener('click', function () {
     const dropdown = this.nextElementSibling;
     dropdown.classList.toggle('show');
 });
 
 // 드롭다운 외부 클릭시 닫기
-window.addEventListener('click', function(event) {
+window.addEventListener('click', function (event) {
     if (!event.target.closest('.settings-container')) {
         const dropdowns = document.querySelectorAll('.dropdown-menu');
         dropdowns.forEach(dropdown => {
@@ -15,8 +15,7 @@ window.addEventListener('click', function(event) {
 });
 
 
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname.match(/^\/members\/\d+$/)) {
         const friendButton = document.querySelector('.info-button .info-label.friends');
         if (!friendButton) {
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        friendButton.addEventListener('click', function() {
+        friendButton.addEventListener('click', function () {
             console.log(1)
             const memberId = this.getAttribute('data-member-id');
             if (!memberId) {
@@ -49,7 +48,62 @@ document.addEventListener('DOMContentLoaded', function () {
     const errorMessage = document.getElementById('errorMessage');
     const newNicknameInput = document.getElementById('newNickname');
 
-    // 수정 버튼 클릭 시 팝업 열기
+    // 회원 탈퇴 관련 코드 추가
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+    const deleteAccountPopup = document.getElementById('deleteAccountPopup');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
+    if(deleteAccountBtn && deleteAccountPopup && confirmDeleteBtn && cancelDeleteBtn) {
+        // 회원 탈퇴 버튼 클릭시
+        deleteAccountBtn.addEventListener('click', function() {
+            deleteAccountPopup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // 취소 버튼 클릭시
+        cancelDeleteBtn.addEventListener('click', function() {
+            deleteAccountPopup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // 확인 버튼 클릭시
+        confirmDeleteBtn.addEventListener('click', function() {
+            const memberId = parseInt(window.location.pathname.split('/').pop());
+
+            if(isNaN(memberId)) {
+                console.error('유효하지 않은 회원 ID입니다.');
+                return;
+            }
+
+            fetch(`/member/${memberId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if(response.ok) {
+                        alert('회원 탈퇴가 완료되었습니다.');
+                        window.location.href = '/';
+                    } else {
+                        throw new Error('회원 탈퇴 처리 중 오류가 발생했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(error.message);
+                    deleteAccountPopup.style.display = 'none';
+                    overlay.style.display = 'none';
+                });
+        });
+    }
+
+    // 이미 있는 renderStarRating() 함수 호출
+    renderStarRating();
+
+
+// 수정 버튼 클릭 시 팝업 열기
     editButton.addEventListener('click', function () {
         nicknamePopup.style.display = 'block';
         errorMessage.textContent = ''; // 에러 메시지 초기화
@@ -76,12 +130,12 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const memberId= parseInt(window.location.pathname.split('/').pop());
+        const memberId = parseInt(window.location.pathname.split('/').pop());
         // 서버에 변경된 닉 전송
         fetch(`/members/${memberId}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ newNickname })
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({newNickname})
         })
             .then(response => response.json())
             .then(data => {
@@ -100,9 +154,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error:', error);
             });
     });
-});
-
-
 
 
 // 페이지 로드 후 호출

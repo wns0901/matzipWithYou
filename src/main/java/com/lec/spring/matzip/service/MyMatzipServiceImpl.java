@@ -5,7 +5,10 @@ import com.lec.spring.matzip.domain.GuCenterLatLng;
 import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.domain.WishList;
 import com.lec.spring.matzip.repository.MyMatzipRepository;
+import com.lec.spring.matzip.repository.TagRepository;
 import com.lec.spring.matzip.repository.WishListRepository;
+import com.lec.spring.member.domain.FriendDetailsDTO;
+import com.lec.spring.member.repository.MemberRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,10 +21,14 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
     private final MyMatzipRepository myMatzipRepository;
     private final WishListRepository wishListRepository;
+    private final MemberRepository memberRepository;
+    private final TagRepository tagRepository;
 
     public MyMatzipServiceImpl(SqlSession sqlSession) {
         this.myMatzipRepository = sqlSession.getMapper(MyMatzipRepository.class);
         this.wishListRepository = sqlSession.getMapper(WishListRepository.class);
+        this.memberRepository = sqlSession.getMapper(MemberRepository.class);
+        this.tagRepository = sqlSession.getMapper(TagRepository.class);
     }
 
 
@@ -153,7 +160,38 @@ public class MyMatzipServiceImpl implements MyMatzipService {
     }
 
     @Override
-    public boolean saveMyMatzip(MyMatzip myMatzip) {
-        return myMatzipRepository.save(myMatzip);
+    public ResponseEntity<ReviewSubmitModalDTO> saveMyMatzip(SaveMyMatzipDTO saveMyMatzipDTO) {
+        boolean saveResult = myMatzipRepository.save(saveMyMatzipDTO);
+        if (!saveResult) return ResponseEntity.badRequest().build();
+
+        boolean tagResult = tagRepository.saveMatzipTags(saveMyMatzipDTO.getTagIds(), saveMyMatzipDTO.getId());
+        if (!tagResult) return ResponseEntity.badRequest().build();
+
+        List<FriendDetailsDTO> hiddenFirendProfiles = myMatzipRepository.findHiddenFriendDetails(saveMyMatzipDTO.getMemberId(),saveMyMatzipDTO.getMatzipId());
+
+        boolean isOpenHiddenMatzip = !hiddenFirendProfiles.isEmpty();
+
+        int point = isOpenHiddenMatzip ? 100 : 10;
+
+        memberRepository.updatePoint(saveMyMatzipDTO.getMemberId(), point);
+
+        int intimacy = 0;
+        if(isOpenHiddenMatzip) {
+            intimacy = 100;
+            List<Long> friendIds = hiddenFirendProfiles.stream().map(FriendDetailsDTO::getFriendId).toList();
+            myMatzipRepository.updateIntimacyByFriendsIds(friendIds, intimacy, saveMyMatzipDTO.getMatzipId());
+        }
+
+        FriendDetailsDTO topFriend = hiddenFirendProfiles.get(0);
+
+        int friendCnt = hiddenFirendProfiles.size();
+
+        return ResponseEntity.ok(ReviewSubmitModalDTO.builder()
+                        .friendCount(friendCnt)
+                        .hiddenFriends(hiddenFirendProfiles)
+                        .intimacyIncrease(intimacy)
+                        .rewardPoints(point)
+                        .topFriendName(topFriend.getNickname())
+                .build());
     }
 }

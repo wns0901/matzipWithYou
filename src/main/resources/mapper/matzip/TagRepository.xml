@@ -9,6 +9,12 @@
         VALUES (#{tagName})
     </insert>
 
+    <insert id="saveMatzipTags" flushCache="true">
+        INSERT INTO matzip_tag (tag_id, my_matzip_id, regdate) VALUES <foreach collection="tagIds" separator="," item="id">
+        (#{id}, #{myMatzipId}, #{regDate})
+    </foreach>
+    </insert>
+
     <select id="findAll" resultType="com.lec.spring.matzip.domain.Tag">
         SELECT id, tagname, regdate FROM tag
     </select>

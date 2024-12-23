@@ -105,6 +105,24 @@ function updateFriendList(friends) {
         //         <span class="friend-nickname">${friend.nickname}</span>
         //     </div>
         // `;
+        topFriendItem.innerHTML = `
+            <div class="rank">${index + 1}위</div>
+            <div class="friend-content">
+                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
+                     alt="${friend.nickname}님의 프로필"
+                     class="friend-profile-small"
+                     onerror="this.src='/IMG/defaultProfileImg.png'">
+                <span class="friend-nickname">${friend.nickname}</span>
+            </div>
+        `;
+
+        // TOP 3 친구 항목 클릭 이벤트
+        topFriendItem.style.cursor = 'pointer';
+        topFriendItem.addEventListener('click', function () {
+            window.location.href = `/members/${friend.friendId}/matzips/mine`;
+            // mymatzip 주소로 바꾸기 요망
+        });
+
         top3Container.appendChild(topFriendItem);
     });
 
@@ -147,6 +165,15 @@ function updateFriendList(friends) {
             await deleteFriend(friendId);
         });
 
+        // friend-item 전체 클릭 이벤트
+        friendItem.style.cursor = 'pointer';
+        friendItem.addEventListener('click', function () {
+            window.location.href = `/members/${friend.friendId}/matzips/mine`;
+            // mymatzip 주소로 바꾸기 요망
+        });
+
+        fullListContainer.appendChild(friendItem);
+
         fullListContainer.appendChild(friendItem);
     });
 
@@ -155,7 +182,6 @@ function updateFriendList(friends) {
 }
 
 
-// 추가 구현
 // 모달 관련 함수들
 const requestModal = document.getElementById('friendRequestModal');
 const addModal = document.getElementById('addFriendModal');
@@ -170,8 +196,6 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
         const container = document.getElementById('pendingRequests');
         container.innerHTML = '';
 
-        // 여기가 문제였던 부분입니다.
-        // return을 제거하고, 모달은 항상 표시되도록 수정
         if (requests.length === 0) {
             container.innerHTML = '<p>친구 요청을 한 사람이 없습니다.</p>';
         } else {
