@@ -49,7 +49,62 @@ document.addEventListener('DOMContentLoaded', function () {
     const errorMessage = document.getElementById('errorMessage');
     const newNicknameInput = document.getElementById('newNickname');
 
-    // 수정 버튼 클릭 시 팝업 열기
+    // 회원 탈퇴 관련 코드 추가
+    const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+    const deleteAccountPopup = document.getElementById('deleteAccountPopup');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
+    if(deleteAccountBtn && deleteAccountPopup && confirmDeleteBtn && cancelDeleteBtn) {
+        // 회원 탈퇴 버튼 클릭시
+        deleteAccountBtn.addEventListener('click', function() {
+            deleteAccountPopup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // 취소 버튼 클릭시
+        cancelDeleteBtn.addEventListener('click', function() {
+            deleteAccountPopup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        // 확인 버튼 클릭시
+        confirmDeleteBtn.addEventListener('click', function() {
+            const memberId = parseInt(window.location.pathname.split('/').pop());
+
+            if(isNaN(memberId)) {
+                console.error('유효하지 않은 회원 ID입니다.');
+                return;
+            }
+
+            fetch(`/member/${memberId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if(response.ok) {
+                        alert('회원 탈퇴가 완료되었습니다.');
+                        window.location.href = '/';
+                    } else {
+                        throw new Error('회원 탈퇴 처리 중 오류가 발생했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert(error.message);
+                    deleteAccountPopup.style.display = 'none';
+                    overlay.style.display = 'none';
+                });
+        });
+    }
+
+    // 이미 있는 renderStarRating() 함수 호출
+    renderStarRating();
+
+
+// 수정 버튼 클릭 시 팝업 열기
     editButton.addEventListener('click', function () {
         nicknamePopup.style.display = 'block';
         errorMessage.textContent = ''; // 에러 메시지 초기화
@@ -100,10 +155,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error:', error);
             });
     });
+
+
 });
-
-
-
 
 // 페이지 로드 후 호출
 document.addEventListener("DOMContentLoaded", function () {
