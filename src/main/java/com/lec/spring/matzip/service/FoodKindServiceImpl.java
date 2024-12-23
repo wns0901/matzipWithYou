@@ -18,6 +18,12 @@ public class FoodKindServiceImpl implements FoodKindService {
     }
 
     @Override
+    public FoodKind save(FoodKind foodKind) {
+        foodKindRepository.save(foodKind);
+        return foodKind;
+    }
+
+    @Override
     public List<FoodKind> getAllFoodKinds() {
         return foodKindRepository.findAll();
     }

@@ -733,3 +733,125 @@ body {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+/* 회원 탈퇴 팝업 스타일 */
+.delete-account-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2001;
+    width: 400px;
+    text-align: center;
+    padding: 20px;
+    display: none;
+}
+
+.delete-account-popup .message {
+    margin: 20px 0;
+}
+
+/* 메시지 정렬을 위한 컨테이너 */
+.delete-account-popup .align-message {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+/* 경고 아이콘 스타일 */
+.delete-account-popup .point-notice {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    right: 20px;
+}
+
+/* 메시지 텍스트 스타일 */
+.delete-account-popup .message-text {
+    line-height: 1.4;
+    font-size: 0.8rem;
+    font-family: Inter, sans-serif;
+}
+
+/* 버튼 그룹 스타일 */
+.delete-account-popup .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* 버튼 공통 스타일 */
+.delete-account-popup button {
+    padding: 8px 15px;
+    width: 100px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Inter;
+    font-size: 0.8rem;
+}
+
+/* 확인 버튼 스타일 */
+.delete-account-popup .confirm-button {
+    background-color: #FF7A29;
+    color: white;
+}
+
+/* 취소 버튼 스타일 */
+.delete-account-popup .cancel-button {
+    background-color: #6a6a6a;
+    color: white;
+}
+
+/* 버튼 호버 효과 */
+.delete-account-popup button:hover {
+    opacity: 0.8;
+}
+
+/* 2560px 이상의 화면에서의 반응형 스타일 */
+@media screen and (min-width: 2560px) {
+    .delete-account-popup {
+        width: 532px;
+        padding: 27px;
+    }
+
+    .delete-account-popup .point-notice {
+        width: 40px;
+        height: 40px;
+    }
+
+    .delete-account-popup .message-text {
+        font-size: 1.1rem;
+    }
+
+    .delete-account-popup button {
+        padding: 11px 20px;
+        width: 133px;
+        font-size: 1.1rem;
+    }
+}
+
+/* 모바일 화면에서의 반응형 스타일 */
+@media (max-width: 768px) {
+    .delete-account-popup {
+        width: 90%;
+        max-width: 400px;
+        padding: 15px;
+    }
+
+    .delete-account-popup .message-text {
+        font-size: 0.75rem;
+    }
+
+    .delete-account-popup button {
+        padding: 6px 12px;
+        width: 80px;
+        font-size: 0.75rem;
+    }
+}
