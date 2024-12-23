@@ -8,6 +8,7 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
     background: #f5f5f5;
 }
+
 .modal {
     position: fixed;
     z-index: 6;
@@ -27,6 +28,35 @@ body {
     width: 80%;
     max-width: 500px;
 }
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.friend-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.friend-nickname-hover {
+    position: relative;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.friend-nickname-hover:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: black;
+    text-underline-offset: 2px;
+}
+
+
 .search-container {
     display: flex;
     gap: 10px;
@@ -61,6 +91,7 @@ body {
     transition: color 0.3s ease;
 
 }
+
 .friend-header {
     position: relative;
     display: flex;
@@ -74,6 +105,7 @@ body {
 }
 
 /* 상단 친밀도 순위 영역 */
+
 .intimacy-ranking {
     position: relative;
     width: 100%;
@@ -85,6 +117,7 @@ body {
 }
 
 /* 배경 이미지 설정 */
+
 .intimacy-ranking .banner {
     position: absolute;
     top: 0;
@@ -96,7 +129,7 @@ body {
 }
 
 
-.ranking-sections, .top-friend-item{
+.ranking-sections, .top-friend-item {
     position: absolute;
     bottom: -20px; /* 하단에 붙임 */
     right: 10%; /* 우측에서 10% 여백 */
@@ -108,7 +141,20 @@ body {
     padding: 0 20px;
 }
 
-.first, .rank-1{
+
+.first .friend-profile-small {
+    transform: translate(-50%, -40%);
+}
+
+.second .friend-profile-small {
+    transform: translate(-50%, -40%);
+}
+
+.third .friend-profile-small {
+    transform: translate(-50%, -40%);
+}
+
+.first, .rank-1 {
     bottom: -10px;
 }
 
@@ -116,6 +162,7 @@ body {
     bottom: -50px; /* 하단에 붙임 */
 
 }
+
 .third, .rank-3 {
     bottom: -100px; /* 하단에 붙임 */
 }
@@ -126,23 +173,35 @@ body {
     position: relative;
     width: 130px;
     text-align: center;
-
 }
 
 .ranking-bg {
     width: 130%;
-    /*border-radius: 20px;*/
+    z-index: 1;
 }
 
 
 .ranking-profile {
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.profile-container {
+    position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 3;
+    transform: translate(-40%, -60%); /* 오른쪽(+)과 위(-)로 이동 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
+
+
 /* 랭커 프사 */
 .profile-img {
     width: 60px;
@@ -151,7 +210,8 @@ body {
     object-fit: cover;
     margin-bottom: 10px;
 }
-.friend-nickname{
+
+.friend-nickname {
     font-family: RecipeKoreaOTF;
     font-size: 14px;
     font-weight: bold;
@@ -209,14 +269,67 @@ body {
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
+}
+
+.close:hover {
+    color: #000;
+}
+
+/* 검색 컨테이너 스타일 */
+
+.search-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+#searchInput {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #FF7327;
+}
+
+
+/* 모달 내 검색 결과와 요청 목록을 위한 그리드 레이아웃 */
+
+#searchResults, #pendingRequests {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px 0;
+}
+
+/* 모달 내 카드 스타일 */
+
+#searchResults .friend-card,
+#pendingRequests .friend-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 0;
+
     display: flex;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+    #searchResults, #pendingRequests {
+        grid-template-columns: 1fr;
+    }
 .friend-info {
     flex-grow: 1;
+}
 }
 
 .friend-nickname {
@@ -241,27 +354,25 @@ body {
     border-radius: 10px;
 }
 
-.score-item.public {
-    background: #FF7327;
+.btn-accept {
+    background-color: #40c057;
+    color: white;
+    margin-right: 8px;
+}
+
+.btn-accept:hover {
+    background-color: #37a64a;
+}
+
+.btn-reject {
+    background-color: #ff6b6b;
     color: white;
 }
 
-.score-item.hidden {
-    background: #82c91e;
-    color: white;
+.btn-reject:hover {
+    background-color: #f03e3e;
 }
 
-.friend-header {
-    position:relative;
-    display: flex; /* 자식 요소들을 가로로 정렬 */
-    align-items: center; /* 세로 정렬을 중앙으로 */
-    justify-content: center; /* 기본적으로 중앙 정렬 */
-    margin: 40px auto; /* 상하 여백 및 중앙 정렬 */
-    width: 80%; /* 컨테이너의 너비 */
-    /*max-width: 1600px; !* 최대 너비 제한 *!*/
-    text-align: center; /* 텍스트 가운데 정렬 */
-    transform: translateX(10%);
-}
 
 .sort-buttons {
     margin-left: 10px;
@@ -278,15 +389,15 @@ body {
     gap: 10px; /* 버튼 간의 간격 */
 }
 
-.subtitle{
+.subtitle {
     margin-left: 10px;
     font-size: 4vh;
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bolder;
 }
 
-.btn{
- cursor: pointer;
+.btn {
+    cursor: pointer;
 }
 
 .icon {
@@ -294,17 +405,22 @@ body {
     transform: translateY(3px);
 }
 
-.friend-icon{
-    /*margin-left: 50px;*/
+.friend-info {
+    margin-top: 20px;
+    text-align: center;
+    z-index: 3;
 }
 
-.btn-add, .btn-request{
+
+
+
+.btn-add, .btn-request {
     font-size: 4vh;
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bold;
 }
 
-.btn-title{
+.btn-title {
     font-size: 2vh;
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bold;
@@ -320,40 +436,15 @@ body {
     color: #ff7327;;
 }
 
-
-/* friend-profile-small 위치 조정 */
-/*.ranking-section .friend-profile-small, .friend-profile {*/
-/*    position: absolute;*/
-/*    top: 18%; !* 하얀 원의 중앙에 맞게 조정 *!*/
-/*    left: 50%;*/
-/*    transform: translate(-50%, -50%); !* 정확히 중앙 정렬 *!*/
-/*    width: 80px; !* 프로필 이미지 크기 *!*/
-/*    height: 80px;*/
-/*    border-radius: 50%;*/
-/*    object-fit: cover;*/
-/*    border: 2px solid white; !* 하얀 테두리 *!*/
-/*    z-index: 2; !* 배경 이미지보다 위에 표시 *!*/
-/*}*/
-
-/*.friend-profile-small {*/
-/*    width: 80px;*/
-/*    height: 80px;*/
-/*    border-radius: 50%;*/
-/*    margin-right: 20px;*/
-/*}*/
-/* friend-profile-small 위치 및 스타일 */
 .friend-profile-small {
-    width: 85px; /* 프로필 이미지 크기 */
-    height: 85px;
+    width: 105px;
+    height: 105px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #ccc; /* 기본 배경색 */
-    background-size: cover;
-    background-position: center;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -110%);
-    z-index: 5; /* 배경 이미지보다 위에 표시 */
+    border: 3px solid white;
+    z-index: 3;
+    margin-bottom: 15px;
+    transform: translate(10%, -20%); /* 오른쪽과 위로 이동 */
 }
 
 /* 닉네임 스타일 */
@@ -361,13 +452,16 @@ body {
     font-family: RecipeKoreaOTF, sans-serif;
     font-size: 1.2em;
     font-weight: bold;
-    margin-bottom: 5px;
     color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    margin-top: 100px; /* 닉네임 위치 조정 */
-    position: relative;
-    z-index: 5; /* 배경 이미지보다 위에 표시 */
-    text-align: center;
+    margin-bottom: 5px;
+}
+
+.friend-intimacy {
+    font-family: RecipeKoreaOTF, sans-serif;
+    font-size: 1em;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .friend-box {
@@ -387,7 +481,6 @@ body {
     width: 100%;
 
 }
-
 
 
 .full-friend-profile {
@@ -444,7 +537,7 @@ body {
     z-index: 3;
 }
 
-.open-matzip{
+.open-matzip {
     display: flex;
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 900; /* 블랙 */
@@ -497,6 +590,7 @@ body {
 }
 
 /* 모달 제목 스타일링 */
+
 .modal-content h2 {
     color: #333;
     margin-bottom: 25px;
@@ -524,4 +618,29 @@ body {
         margin-bottom: 10px;
     }
 
+}
+
+/* 각 순위별로 미세 조정이 필요한 경우 */
+.first .profile-container {
+    transform: translate(-36%, -105%); /* 1등은 조금 더 위로 */
+}
+
+.second .profile-container {
+    transform: translate(-36%, -100%); /* 2등은 중간 정도로 */
+}
+
+.third .profile-container {
+    transform: translate(-35%, -100%); /* 3등은 기본값 유지 */
+}
+
+.first .friend-profile-small {
+    transform: translate(2%, 6%);
+}
+
+.second .friend-profile-small {
+    transform: translate(1%, 2%);
+}
+
+.third .friend-profile-small {
+    transform: translate(-1%, 1%);
 }

@@ -27,10 +27,6 @@ public class UserMatzipTagStatusController {
 
     }
 
-    @GetMapping("/new")
-    public String showTagForm() {
-        return "matzip/tagForm"; // tagForm.html로 이동
-    }
 
     @PostMapping("/save")
     @ResponseBody
@@ -76,10 +72,7 @@ public class UserMatzipTagStatusController {
         return "matzip/hintForm";
     }
 
-    @GetMapping("/saveTag")
-    public String saveTagForm() {
-        return "matzip/tagForm";
-    }
+
 
     @PostMapping("/saveTag")
     @ResponseBody

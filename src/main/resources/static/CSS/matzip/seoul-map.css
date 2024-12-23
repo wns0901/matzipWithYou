@@ -118,7 +118,7 @@ body {
     position: relative;
     width: 800px;
     height: 800px;
-    justify-content: center
+    flex-shrink: 0; /* 맵 컨테이너 크기 고정 */
 }
 
 #seoul-map {

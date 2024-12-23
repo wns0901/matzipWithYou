@@ -90,7 +90,7 @@ public class FriendController {
     @ResponseBody
     public ResponseEntity<List<FriendDetailsDTO>> getFriendsList(
             @PathVariable Long memberId,
-            @RequestBody Map<String, Long> request  // JSON 요청 바디를 받기 위해 추가
+            @RequestBody Map<String, Long> request
     ) {
         try {
             List<FriendDetailsDTO> friends = friendService.getFriendsWithDetailsDTO(memberId);

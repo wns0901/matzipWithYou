@@ -17,7 +17,7 @@ public class ValidationEmailServiceImpl implements ValidationEmailService {
     @Override
     public boolean validateAuthCode(String email, String authCode) {
         String storedAuthCode = emailAuthService.getAuthCode(email);
-        System.out.println("#########3storedAuthCode = " + storedAuthCode);
+        System.out.println("#########storedAuthCode = " + storedAuthCode);
         return storedAuthCode != null && storedAuthCode.equals(authCode);
     }
 

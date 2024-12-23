@@ -16,34 +16,35 @@
 <div class="container">
     <th:block th:insert="~{common/header::header}"></th:block>
     <div class="main-container">
-    <section class="profile-section">
-        <img src="/IMG/reviewManagement.png" alt="리뷰 관리">
-    </section>
-    <section id="wish-list-section">
-    <div class="wish-card">
-    <ul  >
-        <li  class="wish-container" th:each="item : ${wishList}">
-            <div id="wish-con">
+        <section class="profile-section">
+            <img src="/IMG/matzip/whisList.png" alt="리뷰 관리">
+        </section>
+        <section id="wish-list-section">
+            <div class="wish-card">
+                <ul>
+                    <li class="wish-container" th:each="item : ${wishList}">
+                        <div id="wish-con">
 
-                <section class="left-info">
-            <img   th:src="${item.imgUrl}" alt="맛집 이미지">
-                </section>
-                <section class="right-info">
-            <div  >
-            <h3  id="store-title" th:text="${item.name}">맛집 이름</h3>
-            <button th:onclick="'deleteWishlist(' + ${item.id} + ', ' + ${memberId} + ');'" class="delete-btn">
-                <i class="fas fa-trash" aria-hidden="true"></i>
-                <span>삭제</span>
-            </button>
+                            <section class="left-info">
+                                <img th:src="${item.imgUrl}" alt="맛집 이미지">
+                            </section>
+                            <section class="right-info">
+                                <div>
+                                    <h3 id="store-title" th:text="${item.name}">맛집 이름</h3>
+                                    <button th:onclick="'deleteWishlist(' + ${item.id} + ', ' + ${memberId} + ');'"
+                                            class="delete-btn">
+                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                        <span>삭제</span>
+                                    </button>
 
+                                </div>
+                            </section>
+                        </div>
+                    </li>
+                </ul>
             </div>
-                </section>
-    </div>
-        </li>
-    </ul>
-    </div>
 
-    </section>
+        </section>
     </div>
 </div>
 

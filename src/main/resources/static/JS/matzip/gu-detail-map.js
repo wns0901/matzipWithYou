@@ -572,8 +572,8 @@ function updateWishListEvent(e, isSearch = false) {
 
     const item = e.currentTarget,
         isFilled = item.dataset.status === 'fill',
-        isEmpty = !isFilled
-    matzipId = Number(item.dataset.matzipId),
+        isEmpty = !isFilled,
+        matzipId = Number(item.dataset.matzipId),
         memberId = data.memberId,
         searchImgUrl = '/IMG/matzip/gray_heart.png',
         imgUrl = isEmpty ? fillHeartImgUrl : isSearch ? searchImgUrl : emptyHeartImgUrl,
