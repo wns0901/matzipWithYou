@@ -106,5 +106,9 @@ public class FriendServiceImpl implements FriendService {
         return results;
     }
 
+    public Friend getFriendRelation(Long friendId) {
+        return friendRepository.findFriendRelationById(friendId);
+    }
+
 
 }
