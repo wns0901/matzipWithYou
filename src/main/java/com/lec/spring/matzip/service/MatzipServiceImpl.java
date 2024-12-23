@@ -15,7 +15,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import java.time.Duration;
 import java.util.List;
@@ -77,7 +76,7 @@ public class MatzipServiceImpl implements MatzipService {
         options.addArguments("—no-sandbox");
         options.addArguments("—disable-dev-shm-usage");
         options.addArguments("—remote-debugging-port=9222");
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new ChromeDriver(options);
         driver.get(kakaoPageUrl);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         WebElement doc;
