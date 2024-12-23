@@ -53,10 +53,17 @@
             </div>
             <!-- 프로필 이미지 영역 -->
             <div class="profile-image-wrapper">
-                <img src="/IMG/profile-image.svg" alt="프로필 이미지" class="profile-image">
-                <div class="overlay">
-                    <img src="/IMG/camera.png" alt="카메라 아이콘" class="camera-icon">
-                </div>
+                <form id="profileImageForm" action="/members/{memberId}/profile-img" method="post"
+                      enctype="multipart/form-data">
+                    <img src="/IMG/profile-image.svg" alt="프로필 이미지" class="profile-image" id="profileImagePreview">
+                    <div class="overlay">
+                        <input type="file" id="profileImageInput" name="file" accept="image/*" style="display: none;"/>
+                        <label for="profileImageInput">
+                            <img src="/IMG/camera.png" alt="카메라 아이콘" class="camera-icon">
+                        </label>
+                    </div>
+                </form>
+                <button id="deleteImageButton">삭제</button>
             </div>
 
             <div class="nickname-container">
@@ -107,16 +114,18 @@
     <div class="content-section">
         <!-- 위시 리스트 -->
         <div class="section">
-            <span class="section-header">
-            <img class="icon" src="/IMG/heart-filled.svg" alt="heart-icon">
-                <h2 class="h2"> 위시 리스트(</h2>
-                    <h2 class="h2" th:text="${myPage.wishInfo.count}"></h2>
-                <h2 class="h2">곳)</h2>
-                <button class="view-all-button"
-                        th:onclick="|location.href='@{/matzips/wish-list/}${memberId}'|">
-                    전체보기 >
-                </button>
-            </span>
+       <span class="section-header">
+    <img class="icon" src="/IMG/heart-filled.svg" alt="heart-icon">
+    <h2 class="h2"> 위시 리스트(</h2>
+    <h2 class="h2" th:text="${myPage.wishInfo.count}"></h2>
+    <h2 class="h2">곳)</h2>
+   <button class="view-all-button"
+           th:onclick="|location.href='@{/matzips/wish-list/}${memberId}'|">
+    전체보기 >
+</button>
+
+</span>
+<!--end modal-->
             <div class="card-container" id="wish-list-cards">
                 <div th:each="wish : ${myPage.wishInfo.preview}" class="card">
                     <img th:src="${wish.matzipImage != '#none' ? wish.matzipImage : '/IMG/defaultStoreImgSMALL.png'}"

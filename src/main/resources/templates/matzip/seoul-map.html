@@ -30,7 +30,8 @@
                 <div class="friend-nickname" th:text="${friend.nickname}">친구 이름</div>
             </div>
         </div>
-        <button class="add-friend-button" th:data-member-id="${memberId}" th:onclick="'location.href=\'' + @{/members/} + ${memberId} + '\''">
+        <button class="add-friend-button" th:data-member-id="${memberId}"
+                th:onclick="'location.href=\'' + @{/members/} + ${memberId} + '\''">
             + 마이페이지 친구 등록하기
         </button>
     </div>
@@ -125,7 +126,7 @@
     const serverData = /*[[${data}]]*/ {};
     /*]]>*/
 </script>
-<script type="text/javascript" th:src="@{/js/matzip/seoul-map.js}"></script>
+<script type="text/javascript" th:src="@{/JS/matzip/seoul-map.js}"></script>
 </body>
 </html>
 
