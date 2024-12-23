@@ -52,7 +52,6 @@ function updateTable(type, data) {
                     <td>${item.name}</td>
                     <td>${item.address}</td>
                     <td>${item.kindId}</td>
-                    <td>${formatDate(item.regdate)}</td>
                     <td><button class="delete-btn" data-id="${item.id}" data-type="matzips">삭제</button></td>
                 </tr>
             `).join('');

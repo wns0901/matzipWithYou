@@ -13,13 +13,13 @@
     <sql id="SELECT_BASE">
         SELECT id,
                kind_id       AS 'kindId',
-               address,
+                address,
                lat,
                lng,
                img_url       AS 'imgUrl',
-               gu,
+                gu,
                kakao_map_url AS 'kakaoMapUrl',
-               name
+                name
         -- regdate (regdate)있으면 detail에서 오류나길래 주석처리했음다(지윤)
         FROM matzip
         WHERE 1 = 1
@@ -60,7 +60,7 @@
         FROM food_kind f
                  JOIN matzip m ON m.kind_id = f.id
         WHERE m.kind_id = #{kindId}
-        LIMIT 1
+            LIMIT 1
     </select>
 
     <resultMap id="DetailMatzipDTO" type="com.lec.spring.matzip.domain.DTO.DetailMatzipDTO">
@@ -76,13 +76,13 @@
 
     <select id="findDetailMatzipByMatzipIdWithFriendId" resultMap="DetailMatzipDTO">
         SELECT mz.id                    AS 'id',
-               mz.address               AS 'address',
-               mz.img_url               AS 'imgUrl',
-               mz.kakao_map_url         AS 'kakaoMapUrl',
-               mz.name                  AS 'name',
-               k.kindname               AS 'kindName',
-               mmz.star_rating          AS 'starRating',
-               JSON_ARRAYAGG(t.tagname) AS 'tagList'
+                mz.address               AS 'address',
+                mz.img_url               AS 'imgUrl',
+                mz.kakao_map_url         AS 'kakaoMapUrl',
+                mz.name                  AS 'name',
+                k.kindname               AS 'kindName',
+                mmz.star_rating          AS 'starRating',
+                JSON_ARRAYAGG(t.tagname) AS 'tagList'
         FROM matzip mz
                  JOIN my_matzip mmz ON mz.id = mmz.matzip_id
                  JOIN food_kind k ON mz.kind_id = k.id
@@ -93,4 +93,11 @@
         GROUP BY mz.id, mz.address, mz.img_url, mz.kakao_map_url, mz.name, k.kindname, mmz.star_rating
         ;
     </select>
+
+    <update id="updateFoodKind">
+        UPDATE matzip
+        SET kind_id = #{foodKindId}
+        WHERE id = #{matzipId} AND kind_id IS NULL
+    </update>
+
 </mapper>

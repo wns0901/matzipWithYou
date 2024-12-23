@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>친구 목록</title>
+    <link rel="stylesheet" th:href="@{/CSS/member/friend/friend_list.css}" type="text/css"/>
 </head>
 <style>
     .modal {
@@ -13,7 +14,7 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0, 0, 0, 0.4);
     }
 
     .modal-content {
@@ -47,9 +48,114 @@
         height: 50px;
         border-radius: 50%;
     }
+
+    .friend-nickname-hover {
+        position: relative;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .friend-nickname-hover:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-decoration-color: black;
+        text-underline-offset: 2px;
+    }
+
+    .search-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    #searchButton {
+        padding: 5px 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #searchButton:hover {
+        background-color: #45a049;
+    }
+
 </style>
 <body>
 <div class="friend-container">
+    <!-- 상단 친밀도 순위 영역 -->
+    <div class="intimacy-ranking" >
+    <img src="/IMG/banner.png" class="banner" >
+        <div class="ranking-title">
+            <span>나의 친구</span>
+            <span style="font-size: 2em">친밀도</span>
+            <span style="font-size: 2em">순위</span>
+        </div>
+        <div class="ranking-list">
+            <!-- 1위 -->
+            <div class="ranking-item">
+                <img src="/IMG/rank1.png">
+
+
+                <div class="rank-nickname" >
+<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
+
+                    <span>닉네임</span>
+                    <div></div>
+                </div>
+                <div class="rank-avatar">
+<!--                    <img src="/images/avatar1.png" alt="1등 프로필">-->
+
+<!--                    <img th:src="${friend.profileImg}">-->
+
+                </div>
+                <div class="rank-number">1</div>
+            </div>
+            <!-- 2위 -->
+            <div class="ranking-item">
+                <img src="/IMG/rank2.png">
+
+
+<!--                <div class="rank-nickname" th:text="${}">-->
+<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
+
+                    <span>닉네임</span>
+                    <div></div>
+                </div>
+                <div class="rank-avatar">
+<!--                    <img src="/images/avatar2.png" alt="2등 프로필">-->
+
+<!--                    <img th:src="${friend.profileImg}">-->
+
+                </div>
+                <div class="rank-number">2</div>
+            </div>
+            <!-- 3위 -->
+            <div class="ranking-item">
+                <img src="/IMG/rank3.png">
+
+
+                <div class="rank-nickname"  >
+<!--                <div class="rank-nickname" th:text="${friend.nickname}">-->
+
+                    <span>닉네임</span>
+                    <div></div>
+                </div>
+                <div class="rank-avatar">
+<!--                    <img src="/images/avatar3.png" alt="3등 프로필">-->
+
+<!--                    <img th:src="${friend.profileImg}">-->
+
+                </div>
+                <div class="rank-number">3</div>
+            </div>
+        </div>
+
+    </div>
+
+
+
     <div class="friend-header">
         <h1>친구 목록</h1>
         <div class="friend-actions">
@@ -79,7 +185,10 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>친구 추가</h2>
-        <input type="text" id="searchInput" placeholder="닉네임 또는 아이디를 입력하세요">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="닉네임 또는 아이디를 입력하세요">
+            <button id="searchButton">검색</button>
+        </div>
         <div id="searchResults"></div>
     </div>
 </div>

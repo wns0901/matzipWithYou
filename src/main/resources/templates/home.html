@@ -2,117 +2,15 @@
 <html lang="ko" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>One Page Scroll</title>
+    <title>maatzipwithyou</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/header.css}">
-    <style>
-        html, body {
-            background-color: #FFB17D;
-            font-family: 'Noto Sans KR', sans-serif;
-            font-weight: 900; /* Noto Sans KR Black */
-            height: 100%;
-            margin: 0;
-            overflow: hidden; /* 스크롤바 숨김 */
-        }
-        .section {
-            height:calc(100vh - 65px); /* 각 섹션의 높이를 뷰포트 높이로 설정 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2em;
-            transition: transform 0.5s ease; /* 부드러운 전환 효과 */
-        }
-        .section:nth-child(1) { background-color: #FFB17D; }
-        .section:nth-child(2) { background-color: #FFB17D; }
-        .section:nth-child(3) { background-color: #FFB17D; }
-        .section:nth-child(4) { background-color: #FFB17D; }
-
-        .section:nth-child(1) { background-color: #FFB17D; }
-        .section:nth-child(2) { background-color: #FFB17D; }
-        .section:nth-child(3) { background-color: #FFB17D; }
-        .section:nth-child(4) { background-color: #FFB17D; }
-        .radio-buttons {
-            position: fixed;
-            bottom: 20px;
-            right: 20px; /* 오른쪽 가장자리에 배치 */
-            display: flex;
-            flex-direction: column; /* 세로 정렬 */
-            gap: 10px; /* 버튼 간의 간격 */
-        }
-
-        .radio-buttons input {
-            display: none; /* 기본 라디오 버튼 숨김 */
-        }
-        .radio-buttons label {
-            background-color: #ffffff;
-            color: #f88f48;
-            padding: 10px 15px;
-            border-radius: 50px;
-            cursor: pointer;
-        }
-        .radio-buttons input:checked + label {
-            background-color: #ff8c3c; /* 선택된 버튼 색상 */
-            color: whitesmoke;
-        }
-
-        .btn{
-            background-color: whitesmoke;
-            width: 180px;
-            padding: 10px;
-            border-radius: 50px;
-            position: fixed;
-            bottom: 15%;
-            display: flex;
-            align-content: center;
-            justify-content: center;
-            text-decoration: none; /* 밑줄 제거 */
-            color: #f88f48;
-        }
-        .btn:hover{
-            background-color: rgb(211, 209, 209);
-            width: 180px;
-            padding: 10px;
-            border-radius: 50px;
-            display: flex;
-            align-content: center;
-
-        }
-    table{
-        color: white;
-        font-size: 130px;
-        position: fixed;
-        bottom: 10%;
-        left: 50px; /* 오른쪽 가장자리에 배치 */
-        display: flex;
-
-    }
-        .title {
-            text-shadow: 2px 2px 4px rgb(239, 138, 71); /* 그림자 효과 */
-        }
-
-        #title-logo{
-            color: white;
-            width: 50%;
-            position: fixed;
-            bottom: 0px;
-            right: 60px; /* 오른쪽 가장자리에 배치 */
-            display: flex;
-
-        }
-
-        #seoul-map{
-            width: 20%;
-        }
-
-
-
-    </style>
-
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
 </head>
 <body>
-
 <th:block th:insert="~{common/header::header}"></th:block>
-<div class="section" id="page1">
+<!--page1-->
+<div class="section" id="page1" >
     <table>
         <tr>
             <td class="title title1">Matzip</td>
@@ -135,9 +33,55 @@
     <a class="btn"
        sec:authorize="!isAuthenticated()"
        th:href="@{/member/login}">Start</a></div>
-<div class="section" id="page2"><img id="seoul-map" src="/IMG/seoul-img.png"></div>
-<div class="section" id="page3">Page 3</div>
-<div class="section" id="page4">Page 4</div>
+<!--page2-->
+<div class="section" id="page2"><img id="seoul-map" src="/IMG/seoul-img.png">
+    <img id="hint-alert" src="/IMG/hint-alert.png">
+<div id="page2-title"> 친구의 숨은 맛집을 찾아보세요.</div></div>
+<!--page3-->
+<div class="section" id="page3"><img id="hint-img" src="/IMG/hint.png">  <img id="hints" src="/IMG/popp.png"> <div id="page3-title">힌트를 구매해 숨은 맛집을 알아내보세요</div></div>
+<!--page4-->
+<div class="section" id="page4"><img id="intimicy" src="/IMG/intimicy.png">
+<div id="page4-title">숨은 맛집을 찾아 친구와의 친밀도를 </div>
+    <div id="page4-title2">높여보세요</div>
+</div>
+<!--page5-->
+<div class="section" id="page5">
+        <div class="page5-title-box">
+        <div class="page5-title1">PullGuys</div>
+        <div class="page5-title2">너와 나만의 비밀맛집</div>
+        </div>
+
+
+
+    <table id="social-table">
+
+        <td  class="social-icons  socilaTd"><img class="social-icons" src="/IMG/Instagram%20(1).png"></td>
+        <td class="social-icons socilaTd"><img class="social-icons" src="/IMG/Youtube%20(3).png"></td>
+        <td class="social-icons socilaTd"><img  class="social-icons" src="/IMG/Facebook%20(1).png"></td>
+        <td class="social-icons socilaTd"><img class="social-icons" src="/IMG/Twitter%20(1).png"></td>
+    </table>
+
+    <div class="dev-info">
+        <ul>
+            <li class="dev-info dev1 dev">
+                (주)MatzipWithYou<br />
+                서울시 강남구 테헤란로 14
+            </li>
+            <li class="dev-info dev2 dev">
+                사업자 번호 :  1111-2222-333 <a href="#">사업자 정보 확인</a><br />
+                통신판매업 :  서울 구남구-0105
+            </li>
+            <li class="dev-info dev3 dev">
+                전자금융분장처리 TEL : 1111-119
+                FAX : 64-010-122<br />
+                MAIL : <a href="mailto:matzipwithyou@gmail.com">matzipwithyou@gmail.com</a>
+            </li>
+        </ul>
+    </div>
+
+
+
+</div>
 
 <div class="radio-buttons">
     <input type="radio" id="page1-radio" name="page" checked onclick="scrollToPage(0)">
@@ -148,31 +92,10 @@
     <label for="page3-radio">3</label>
     <input type="radio" id="page4-radio" name="page" onclick="scrollToPage(3)">
     <label for="page4-radio">4</label>
+    <input type="radio" id="page5-radio" name="page" onclick="scrollToPage(4)">
+    <label for="page5-radio">5</label>
 </div>
 
-<script>
-    let currentPage = 0; // 현재 페이지 인덱스
-
-    function scrollToPage(pageIndex) {
-        const sections = document.querySelectorAll('.section');
-        const totalPages = sections.length;
-
-        // 페이지 인덱스가 범위를 벗어나지 않도록 조정
-        if (pageIndex < 0 || pageIndex >= totalPages) return;
-
-        currentPage = pageIndex; // 현재 페이지 업데이트
-        const offset = -currentPage * 100; // 스크롤할 위치 계산
-
-        // 각 섹션을 이동
-        sections.forEach((section, index) => {
-            section.style.transform = `translateY(${offset}vh)`;
-        });
-    }
-</script>
-
-
-
-
-
+<script th:src="@{/JS/home.js}"></script>
 </body>
 </html>

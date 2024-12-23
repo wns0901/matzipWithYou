@@ -17,13 +17,21 @@
           AND receiver_id = #{receiverId}
     </update>
 
-    <!-- 친구 요청 거절 / 삭제 -->
+    <!-- 친구 요청 거절 -->
     <delete id="rejectFriendRequest" parameterType="com.lec.spring.member.domain.Friend" flushCache="true">
         DELETE
         FROM friend
         WHERE receiver_id = #{receiverId}
           and sender_id = #{senderId}
     </delete>
+
+    <!-- 친구 삭제 -->
+    <update id="deleteFriend" parameterType="Long">
+        UPDATE friend
+        SET is_accept = false
+        WHERE (sender_id = #{friendId} OR receiver_id = #{friendId})
+          AND is_accept = true
+    </update>
 
     <!-- 친구 신청 보낼 때 이미 보낸/받은 신청은 아닌지 확인 -->
     <select id="isAlreadyFriend" parameterType="com.lec.spring.member.domain.Friend" resultType="boolean">
@@ -84,10 +92,10 @@
                COUNT(CASE WHEN mm.visibility = 'PUBLIC' THEN 1 END) as public_count,
                COUNT(CASE WHEN mm.visibility = 'HIDDEN' THEN 1 END) as hidden_count
         FROM friend f
-                 JOIN member m ON f.sender_id = m.id  -- 요청을 보낸 사람의 정보를 가져옴
+                 JOIN member m ON f.sender_id = m.id
                  LEFT JOIN profile_img p ON m.id = p.member_id
                  LEFT JOIN my_matzip mm ON m.id = mm.member_id
-        WHERE f.receiver_id = #{id}  -- 내가 받은 요청만
+        WHERE f.receiver_id = #{id}
           AND f.is_accept = false
         GROUP BY f.sender_id,
                  f.receiver_id,
@@ -98,6 +106,38 @@
                  m.username,
                  m.id,
                  p.filename
+    </select>
+
+    <!-- 친구 검색 -->
+    <select id="searchPotentialFriends" resultType="com.lec.spring.member.domain.FriendSearchResponseDTO">
+        SELECT DISTINCT
+            m.id AS id,
+            m.username AS username,
+            m.nickname AS nickname,
+            pi.filename AS profileImg,
+            COUNT(CASE WHEN mm.visibility = 'PUBLIC' THEN 1 END) AS publicCount,
+            COUNT(CASE WHEN mm.visibility = 'HIDDEN' THEN 1 END) AS hiddenCount,
+            CASE
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM friend f
+                    WHERE (f.sender_id = #{currentMemberId} AND f.receiver_id = m.id)
+                       OR (f.receiver_id = #{currentMemberId} AND f.sender_id = m.id)
+                ) THEN true
+                ELSE false
+                END AS isAlreadyFriend
+        FROM member m
+                 LEFT JOIN profile_img pi ON m.id = pi.member_id
+                 LEFT JOIN my_matzip mm ON m.id = mm.member_id
+        WHERE
+            m.id != #{currentMemberId}
+          AND (
+            LOWER(m.nickname) LIKE CONCAT('%', LOWER(#{searchTerm}), '%')
+           OR LOWER(m.username) LIKE CONCAT('%', LOWER(#{searchTerm}), '%')
+            )
+          AND #{searchTerm} != ''
+        GROUP BY
+            m.id, m.username, m.nickname, pi.filename;
     </select>
 
 

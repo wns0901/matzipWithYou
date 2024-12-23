@@ -1,8 +1,6 @@
 package com.lec.spring.member.service;
 
-import com.lec.spring.member.domain.Friend;
-import com.lec.spring.member.domain.FriendDetailsDTO;
-import com.lec.spring.member.domain.FriendRequestDTO;
+import com.lec.spring.member.domain.*;
 import com.lec.spring.member.repository.FriendRepository;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
@@ -13,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+
 public class FriendServiceImpl implements FriendService {
     private final FriendRepository friendRepository;
 
@@ -22,7 +21,7 @@ public class FriendServiceImpl implements FriendService {
 
     // 친구 요청 보내기
     @Override
-    public int sendFriendRequest(Friend friend) {
+    public int sendFriendRequest(Friend friend){
 
         // 중복 요청 확인
         if (friendRepository.isAlreadyFriend(friend)) { // ?
@@ -43,19 +42,28 @@ public class FriendServiceImpl implements FriendService {
         }
     }
 
-
     // 친구 삭제
     @Override
-    public int deleteFriend(Friend friend) {
-        return friendRepository.rejectFriendRequest(friend);
+    public int deleteFriend(Long friendId, Long memberId) {
+        return friendRepository.deleteFriend(friendId, memberId);
     }
-
 
     // 친구 목록(상세정보) 가져오기
     @Override
     public List<FriendDetailsDTO> getFriendsWithDetailsDTO(Long memberId) {
         return friendRepository.findFriendsWithDetailsDTO(memberId);
+        // 친밀도 순으로 정렬 후 상위 3명 추출
+//        List<FriendDetailsDTO> top3Friends = friends.stream()
+//                .sorted(Comparator.comparing(FriendDetailsDTO::getIntimacy).reversed()) // 친밀도 내림차순
+//                .limit(3)
+//                .collect(Collectors.toList());
+//
+//        return top3Friends;
     }
+
+
+
+
 
     @Override
     public List<FriendRequestDTO> getPendingRequests(Long memberId) {
@@ -83,6 +91,19 @@ public class FriendServiceImpl implements FriendService {
                     return dto;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FriendSearchResponseDTO> searchPotentialFriends(String searchTerm, Long currentMemberId) {
+        List<FriendSearchResponseDTO> results = friendRepository.searchPotentialFriends(searchTerm, currentMemberId);
+
+        results.forEach(dto -> {
+            dto.setProfileImg(dto.getProfileImg() != null ?
+                    "/upload/" + dto.getProfileImg() :
+                    "/images/default-profile.png");
+        });
+
+        return results;
     }
 
 

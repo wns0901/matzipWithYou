@@ -288,10 +288,21 @@ public class MemberController {
     @GetMapping("/reset-password")
     public String showResetForm(@RequestParam("uuid") String uuid, Model model) {
         Long memberId = (Long) redisTemplate.opsForValue().get(uuid);
+
+        // 확인을 위해 로그 출력
+        if (memberId != null) {
+            System.out.println("UUID: " + uuid + "에 대한 memberId: " + memberId);
+        } else {
+            System.out.println("UUID: " + uuid + "에 대한 memberId가 존재하지 않습니다.");
+        }
+
+
         if (memberId == null) {
-            return "redirect:member/reset-fail";
+            System.out.println("###########fail");
+            return "member/reset-fail";
         }
         Model member = model.addAttribute("id", memberId);
+        System.out.println("###########member " + member);
         return "member/reset-password";
     }
 
@@ -299,7 +310,7 @@ public class MemberController {
     @PostMapping("/update-password")
     public String updatePassword(@RequestParam Long id, String newPassword) {
         boolean isUpdated = memberService.updatePassword(id, newPassword);
-        return isUpdated ? "redirect:/member/reset-fail" : "redirect:/member/reset-success";
+        return isUpdated ? "member/reset-fail" : "member/reset-success";
     }
 
     @GetMapping("/reset-success")

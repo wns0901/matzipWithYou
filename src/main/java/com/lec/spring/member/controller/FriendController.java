@@ -1,11 +1,14 @@
 package com.lec.spring.member.controller;
 
+import com.lec.spring.config.PrincipalDetails;
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.domain.FriendRequestDTO;
+import com.lec.spring.member.domain.FriendSearchResponseDTO;
 import com.lec.spring.member.service.FriendService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +31,13 @@ public class FriendController {
     @ResponseBody
     @PostMapping("")
     public ResponseEntity<String> sendFriendRequest(
-
             @RequestBody Friend friend) {
         int result = friendService.sendFriendRequest(friend);
         if (result > 0) {
             return ResponseEntity.ok("친구 신청에 성공했습니다.");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("친구 신청에 실패했습니다. 이미 친구거나 수락 대기중입니다.");
+                    .body("이미 친구거나 수락 대기중입니다.");
         }
     }
 
@@ -66,18 +68,21 @@ public class FriendController {
     @ResponseBody
     @DeleteMapping("")
     public ResponseEntity<Integer> deleteFriend(
-            @RequestBody Friend friend,
+            @RequestBody Map<String, Long> request,
             @PathVariable Long memberId
     ) {
-        friend.setReceiverId(memberId);
-        int affectedRows = friendService.deleteFriend(friend);
+        Long friendId = request.get("friendId");
+        int affectedRows = friendService.deleteFriend(friendId, memberId);
         return ResponseEntity.ok(affectedRows);
     }
 
-
+    // 친구 목록
     @GetMapping("")
     public String showFriendList(@PathVariable Long memberId, Model model) {
-        model.addAttribute("memberId", memberId);
+        List<FriendDetailsDTO> allFriends = friendService.getFriendsWithDetailsDTO(memberId);
+
+        // 전체 친구 목록 전달
+        model.addAttribute("allFriends", allFriends);
         return "member/friend/friend_list";
     }
 

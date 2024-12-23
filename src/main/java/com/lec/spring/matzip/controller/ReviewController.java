@@ -6,6 +6,7 @@ import com.lec.spring.matzip.domain.Review;
 import com.lec.spring.matzip.domain.ReviewTag;
 import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.service.ReviewService;
+import com.lec.spring.matzip.service.MatzipService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,15 +29,38 @@ import java.util.Map;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final MatzipService matzipService;
 
-    public ReviewController(ReviewService reviewService) {
+    public ReviewController(ReviewService reviewService, MatzipService matzipService) {
         this.reviewService = reviewService;
+        this.matzipService = matzipService;
     }
 
     @GetMapping("/reviewList/{memberId}")
     public String reviewListPage(@PathVariable Long memberId, Model model) {
         model.addAttribute("memberId", memberId);
         return "matzip/reviewList";
+    }
+
+    @GetMapping("/api/store/{memberId}/{matzipId}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getStoreInfo(
+            @PathVariable Long memberId,
+            @PathVariable Long matzipId) {
+        try {
+            String matzipName = reviewService.getMatzipName(matzipId);
+            String matzipAddress = reviewService.getMatzipAddress(matzipId);
+            String kakaoImgUrl = reviewService.getKakaoImgURl(matzipId);
+
+            Map<String, Object> storeInfo = new HashMap<>();
+            storeInfo.put("matzipName", matzipName);
+            storeInfo.put("matzipAddress", matzipAddress);
+            storeInfo.put("kakaoImgUrl", kakaoImgUrl);
+
+            return ResponseEntity.ok(storeInfo);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/api/reviews/{memberId}")
@@ -127,6 +151,7 @@ public class ReviewController {
     public String save(@PathVariable Long matzipId
             , @PathVariable Long memberId
             , Model model) {
+
         model.addAttribute("memberId", memberId);
         model.addAttribute("matzipId", matzipId);
         model.addAttribute("foodKinds", reviewService.getFoodKinds());
@@ -182,18 +207,29 @@ public class ReviewController {
             @PathVariable Long matzipId,
             Model model
     ) {
-        reviewDTO.setMemberId(memberId);
-        reviewDTO.setMatzipId(matzipId);
+        try {
+            reviewDTO.setMemberId(memberId);
+            reviewDTO.setMatzipId(matzipId);
 
-        int saved = reviewService.addReview(reviewDTO);
-        if (saved > 0) {
-            addSuccessAttributes(model, new RedirectAttributesModelMap());
-            return ResponseEntity.ok(Map.of(
-                    "success", true,
-                    "message", "리뷰가 저장되었습니다."
-            ));
-        } else {
-            return ResponseEntity.badRequest().body(Map.of("error", "리뷰작성에 실패했습니다."));
+            if (reviewDTO.getFoodKindId() != null) {
+                matzipService.updateMatzipFoodKind(matzipId, reviewDTO.getFoodKindId());
+            }
+
+            int saved = reviewService.addReview(reviewDTO);
+            if (saved > 0) {
+                addSuccessAttributes(model, new RedirectAttributesModelMap());
+                return ResponseEntity.ok(Map.of(
+                        "success", true,
+                        "message", "리뷰가 저장되었습니다."
+                ));
+            } else {
+                return ResponseEntity.badRequest().body(Map.of("error", "리뷰작성에 실패했습니다."));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            String errorMessage = (e.getMessage() != null) ? e.getMessage() : "알 수 없는 오류가 발생했습니다.";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", errorMessage));
         }
     }
 

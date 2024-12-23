@@ -1,20 +1,74 @@
-// const wrap = document.getElementsByClassName('wrap')[0]; // 보일 영역
-// const container = document.getElementsByClassName('container');
-// let page = 0; // 영역 포지션 초기값
-// const lastPage = container.length - 1; // 마지막 페이지
-//
-// window.addEventListener('wheel',(e)=>{
-//     e.preventDefault();
-//     if(e.deltaY > 0){
-//         page++;
-//     }else if(e.deltaY < 0){
-//         page--;
-//     }
-//     if(page < 0){
-//         page=0;
-//     }else if(page > lastPage){
-//         page = lastPage;
-//     }
-//     console.log(e.deltaY)
-//     wrap.style.top = page * -100 + 'vh';
-// },{passive:false}); // 디폴트 기능 제거 - 스크롤
+
+let currentPage = 0; // 현재 페이지 인덱스
+let isScrolling = false; // 스크롤 중인지 확인하는 플래그
+
+function scrollToPage(pageIndex) {
+    const sections = document.querySelectorAll(".section");
+    const totalPages = sections.length;
+
+    if (pageIndex < 0 || pageIndex >= totalPages) return;
+
+    currentPage = pageIndex;
+    const offset = -currentPage * 100;
+
+    sections.forEach((section) => {
+        section.style.transform = `translateY(${offset}vh)`;
+    });
+
+    const radioButton = document.querySelector(`input[name="page"][id="page${pageIndex + 1}-radio"]`);
+    if (radioButton) {
+        radioButton.checked = true;
+    }
+
+    setTimeout(() => {
+        isScrolling = false;
+    }, 1000); // 애니메이션 시간 조정
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll(".section");
+    sections.forEach((section, index) => {
+        if (index === 0) {
+            section.style.transform = "translateY(0)";
+        } else {
+            section.style.transform = "translateY(100vh)";
+        }
+    });
+
+    let debounceTimeout;
+    window.addEventListener("wheel", (event) => {
+        if (isScrolling) return;
+        if (debounceTimeout) return;
+
+        debounceTimeout = setTimeout(() => {
+            debounceTimeout = null;
+
+            isScrolling = true;
+
+            if (event.deltaY > 0) {
+                scrollToPage(currentPage + 1);
+            } else {
+                scrollToPage(currentPage - 1);
+            }
+        }, 300); // 디바운싱 시간
+    });
+
+    const radioButtons = document.querySelectorAll('input[name="page"]');
+    radioButtons.forEach((radio, index) => {
+        radio.addEventListener("click", () => {
+            scrollToPage(index);
+        });
+    });
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section, index) => {
+            if (index === 0) {
+                section.style.transform = "translateY(0)";
+            } else {
+                section.style.transform = "translateY(100vh)";
+            }
+        });
+    });

@@ -1,28 +1,322 @@
 
+html, body {
+    font-family: 'Noto Sans KR', sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
 
-/*html {*/
-/*    height:100%;*/
-/*    background-color: #FFB17D;*/
-/*}*/
-/*body {*/
-/*    height:100%;*/
-/*    margin:0;*/
-/*    border:0;*/
-/*    padding:0;*/
-/*    overflow: hidden;*/
-/*}*/
-/*.wrap {*/
-/*    position:relative;*/
-/*    top:0;*/
-/*    width:100%;*/
-/*    height:100%;*/
-/*    transition: 3s;*/
-/*}*/
-/*.container {*/
-/*    width:100%;*/
-/*    height:100%;*/
-/*}*/
-/*.container:nth-child(1){background-color:   #FFB17D;}*/
-/*.container:nth-child(2){background-color: whitesmoke;}*/
-/*.container:nth-child(3){background-color: whitesmoke;}*/
-/*.container:nth-child(4){background-color: whitesmoke;}*/
+.navbar .container {
+    background-color: transparent;
+}
+.section {
+    transform: translateY(100vh); /* 기본적으로 화면 밖으로 밀어냄 */
+}
+.section:first-child {
+    transform: translateY(0); /* 첫 번째 페이지는 보이도록 설정 */
+}
+
+a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit;        /* 부모 요소의 글자색을 상속 */
+    background: none;      /* 배경색 제거 */
+    outline: none;         /* 포커스 테두리 제거 (필요에 따라 사용) */
+    border: none;          /* 테두리 제거 */
+}
+
+.section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    transition: transform 0.5s ease;
+}
+.section5{
+    height: 100vh;
+    font-size: 2em;
+    transition: transform 0.5s ease;
+
+}
+#page1 { background-color: #FFB17D; }
+#page2  {background-color: #FFB17D; }
+#page3 { background-color: #FFB17D; }
+#page4  { background-color: #FFB17D; }
+#page5  { background-color: #f5f5f5; }
+.radio-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; }
+
+.radio-buttons input {
+    display: none;
+}
+.radio-buttons label {
+    background-color: #ffffff;
+    color: #f88f48;
+    padding: 10px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+.radio-buttons input:checked + label {
+    background-color: #ff8c3c;
+    color: whitesmoke;
+}
+
+.btn{
+    background-color: whitesmoke;
+    width: 180px;
+    padding: 10px;
+    border-radius: 50px;
+    position: fixed;
+    bottom: 15%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #f88f48;
+}
+.btn:hover{
+    background-color: rgb(211, 209, 209);
+    width: 180px;
+    padding: 10px;
+    border-radius: 50px;
+    display: flex;
+    align-content: center;
+
+}
+table{
+    color: white;
+    font-size: 130px;
+    position: fixed;
+    bottom: 10%;
+    left: 50px; /* 오른쪽 가장자리에 배치 */
+    display: flex;
+
+}
+.title {
+    text-shadow: 2px 2px 4px rgb(239, 138, 71); /* 그림자 효과 */
+}
+
+#title-logo{
+    color: white;
+    position: fixed;
+    width: 50%;
+    bottom: 0px;
+    right: 5%; /* 오른쪽 가장자리에 배치 */
+    display: flex;
+
+}
+
+/*page2*/
+#seoul-map {
+    width: 40%;
+    position: fixed;
+    top: 55%; /* 수직 중앙 정렬 */
+    left: 50px; /* 좌측에 배치 */
+    transform: translateY(-50%); /* 수직 중앙 정렬을 위한 변환 */
+    z-index: 1;
+}
+
+#hint-alert{
+    width: 30%;
+    position: fixed;
+    top: 60%;
+    z-index: 2;
+}
+
+#page2-title{
+    color: #FFFFFF;
+    width: 600px;
+    hight: 50px;
+    font-size: 60px;
+    font-weight: bold;
+    width: 720px;
+    position: fixed;
+    left: 45%;
+    bottom: 47%;
+    font-size: 80px;
+}
+
+
+#hints{
+    z-index: 1;
+    position: fixed;
+    left: 6%;
+    width: 30%;
+
+}
+
+#hint-img{
+    width: 28%;
+    position: fixed;
+    bottom: 7%;
+    left: 30%;
+    z-index: 2;
+}
+#page3-title{
+    color: #FFFFFF;
+    font-weight: bold;
+    width: 480px;
+    font-size: 80px;
+    text-align: right;
+    position: fixed;
+    right: 10%;
+}
+
+#intimicy{
+    width: 50%;
+    position: fixed;
+    bottom: 0px;
+    left: 60px; /* 오른쪽 가장자리에 배치 */
+    display: flex;
+}
+
+#page4-title{
+    color: #FFFFFF;
+    font-weight: bold;
+    width: 480px;
+    font-size: 80px;
+    text-align: right;
+    position: fixed;
+    right: 10%;
+}
+
+
+#page4-title2{
+    color: #FFFFFF;
+    font-weight: bold;
+    width: 480px;
+    font-size: 80px;
+    text-align: right;
+    position: fixed;
+    right: 10%;
+    bottom: 12%;
+
+}
+
+.page5-title-box {
+
+    font-family: none;
+    font-size: 25px;
+    padding: 2px;
+    color: #424141;
+    font-weight: lighter;
+
+}
+
+.page5-title1 {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    left: 10px;
+    top: 18%;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 100px;
+    line-height: 120%;
+    display: flex
+;
+    /* align-items: center; */
+    color: #FFB17D;
+}
+
+.page5-title2 {
+    position: absolute;
+    width: 600px;
+    height: 665px;
+    right: 5px;
+    top: 18%;
+    text-align: right;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 100px;
+    line-height: 120%;
+    /* or 144px */
+    display: flex;
+
+
+    color: #FFB17D;
+}
+.social-icons{
+    width: 55px;
+}
+
+#page5{
+    display: block;
+}
+ul {
+    list-style: none; /* 목록 스타일 제거 */
+    margin: 0;        /* 기본 여백 제거 */
+    padding: 0;       /* 기본 패딩 제거 */
+}
+
+li {
+    margin-bottom: 5px;
+    left: 2%;/* 기본 여백 제거 */
+    padding: 0;       /* 기본 패딩 제거 */
+}
+
+.dev-info{
+    position: relative;
+    top: 65%;
+
+    display: flex
+;
+
+    flex-direction: column;
+    font-family: none;
+    font-size: 20px;
+    color: #232323;
+    font-weight: lighter;
+
+}
+
+
+.dev-info .dev {
+
+}
+
+.social-icons{
+padding-left: 20px;
+}
+.dev{
+
+}
+
+
+#social-table{
+position: fixed;
+top: 28%;
+left: 0;
+}
+
+.navbar .container {
+    box-shadow: none;
+    padding: 0px;
+}
+
+.navbar{
+    position: absolute;
+}
+
+.nav-buttons{
+    left: 0;
+    position: fixed;
+    left: 82%;
+}
+
+.nav-user{
+    left: 0;
+    position: fixed;
+    left: 82%;
+}
+
+.nav-buttons > a:first-child {
+    background-color: white; /* 배경색을 흰색으로 설정 */
+}

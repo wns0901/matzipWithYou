@@ -1,6 +1,7 @@
 package com.lec.spring.member.service;
 
 import com.lec.spring.member.domain.Authority;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.lec.spring.member.domain.EmailMessage;
 import com.lec.spring.member.domain.Friend;
 import com.lec.spring.member.domain.Member;
@@ -17,6 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
@@ -201,37 +203,48 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
-    //이메일이 화원db에 있는지 확인
+
+
     @Override
     public String sendEmail(EmailMessage emailMessage) {
+        // 이메일로 회원 정보 조회
         Member member = memberRepository.findByEmail(emailMessage.getTo());
         if (member == null) {
             return "이메일이 등록되지 않았습니다;";
         }
+
+        // UUID 생성 및 Redis에 저장 (3분 TTL)
         String uuid = UUID.randomUUID().toString();
+        redisTemplate.opsForValue().set(uuid, member.getId(), 3, TimeUnit.MINUTES);
 
-        redisTemplate.opsForValue().set(TimeUnit.MINUTES, uuid, 3);
-        String resetLink = "http://localhost:8080/member/reset-password?id=" + member.getId() + "&uuid=" + uuid;
+        // 동적 URL 생성
+        String resetLink = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/member/reset-password")
+                .queryParam("id", member.getId())
+                .queryParam("uuid", uuid)
+                .toUriString();
 
+        // 이메일 내용 생성
         Context context = new Context();
         context.setVariable("resetLink", resetLink);
-        String emailContet = templateEngine.process("member/email-template", context);
+        String emailContent = templateEngine.process("member/email-template", context);
 
-
+        // 이메일 전송
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
             mimeMessageHelper.setTo(emailMessage.getTo());
             mimeMessageHelper.setSubject(emailMessage.getSubject());
-            mimeMessageHelper.setText(emailContet, true);
+            mimeMessageHelper.setText(emailContent, true); // HTML 형식으로 이메일 전송
             mailSender.send(mimeMessage);
 
             return "success";
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            // 예외 처리
+            throw new RuntimeException("이메일 전송 중 오류가 발생했습니다.", e);
         }
-
     }
+
 
     @Override
     public boolean updatePassword(Long id, String newPassword) {

@@ -8,6 +8,8 @@ import java.util.List;
 public interface TagRepository {
     int save(Tag tag);
 
+    boolean saveMatzipTags(List<Long> tagIds, Long myMatzipId);
+
     Tag findById(Long id);
 
     List<Tag> findByIds(List<Long> ids);

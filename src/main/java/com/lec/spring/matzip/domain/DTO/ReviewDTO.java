@@ -13,6 +13,7 @@ import java.util.List;
 @SuperBuilder
 public class ReviewDTO extends Review {
     private String kindName;
+    private Long foodKindId;
     private List<Long> memberIds;
     private List<Long> tagIds;
     private Long memberId;

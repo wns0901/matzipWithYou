@@ -19,7 +19,7 @@ function getMemberIdFromUrl() {
     return memberIndex !== -1 ? pathParts[memberIndex + 1] : null;
 }
 
-let friendsList = []; // 전역 변수로 친구 목록 저장
+let friendsList = [];
 
 function sortFriends(sortType) {
     switch (sortType) {
@@ -105,6 +105,14 @@ function updateFriendList(friends) {
                 <span class="friend-nickname">${friend.nickname}</span>
             </div>
         `;
+
+        // TOP 3 친구 항목 클릭 이벤트
+        topFriendItem.style.cursor = 'pointer';
+        topFriendItem.addEventListener('click', function () {
+            window.location.href = `/members/${friend.friendId}/matzips/mine`;
+            // mymatzip 주소로 바꾸기 요망
+        });
+
         top3Container.appendChild(topFriendItem);
     });
 
@@ -112,6 +120,7 @@ function updateFriendList(friends) {
     const fullListContainer = document.createElement('div');
     fullListContainer.classList.add('full-friend-list');
     fullListContainer.innerHTML = '<h3>전체 친구 목록</h3>';
+
 
     // 전체 친구 목록 표시
     friends.forEach(friend => {
@@ -123,23 +132,35 @@ function updateFriendList(friends) {
                  alt="Profile"
                  class="friend-profile"
                  onerror="this.src='/IMG/defaultProfileImg.png'">
-            <p>닉네임: ${friend.nickname}</p>
+            <p>닉네임: <span class="friend-nickname-hover">${friend.nickname}</span></p>
             <p>공개 맛집 수: ${friend.publicCount}</p>
             <p>비공개 맛집 수: ${friend.hiddenCount}</p>
             <p>친밀도: ${friend.intimacy}</p>
             <button class="btn btn-delete" data-friend-id="${friend.friendId}">삭제</button>
+            
         `;
+
+        friendItem.querySelector('.btn-delete').addEventListener('click', async function () {
+            const friendId = this.dataset.friendId;
+            await deleteFriend(friendId);
+        });
+
+        // friend-item 전체 클릭 이벤트
+        friendItem.style.cursor = 'pointer';
+        friendItem.addEventListener('click', function () {
+            window.location.href = `/members/${friend.friendId}/matzips/mine`;
+            // mymatzip 주소로 바꾸기 요망
+        });
+
+        fullListContainer.appendChild(friendItem);
 
         fullListContainer.appendChild(friendItem);
     });
 
-    // 컨테이너에 추가
     container.appendChild(top3Container);
     container.appendChild(fullListContainer);
 }
 
-
-// 추가 구현
 
 // 모달 관련 함수들
 const requestModal = document.getElementById('friendRequestModal');
@@ -155,8 +176,6 @@ document.querySelector('.btn-request').addEventListener('click', async () => {
         const container = document.getElementById('pendingRequests');
         container.innerHTML = '';
 
-        // 여기가 문제였던 부분입니다.
-        // return을 제거하고, 모달은 항상 표시되도록 수정
         if (requests.length === 0) {
             container.innerHTML = '<p>친구 요청을 한 사람이 없습니다.</p>';
         } else {
@@ -194,41 +213,68 @@ document.querySelector('.btn-add').addEventListener('click', () => {
     addModal.style.display = 'block';
 });
 
-// 친구 검색 기능
-let searchTimeout;
-document.getElementById('searchInput').addEventListener('input', (e) => {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(async () => {
-        const searchTerm = e.target.value;
-        if (!searchTerm) return;
+// 기존 검색 함수를 아래와 같이 수정
+const searchInput = document.getElementById('searchInput');
+const searchButton = document.getElementById('searchButton');
+const searchResults = document.getElementById('searchResults');
 
-        try {
-            const response = await fetch(`/api/members/search?term=${searchTerm}`);
-            const results = await response.json();
+// 검색 함수
+const performSearch = async (searchTerm) => {
+    if (!searchTerm.trim()) {
+        searchResults.innerHTML = '';
+        return;
+    }
 
-            const container = document.getElementById('searchResults');
-            container.innerHTML = '';
+    try {
+        const response = await fetch(`/api/friends/search?term=${encodeURIComponent(searchTerm)}`);
+        const results = await response.json();
 
-            results.forEach(user => {
-                const card = document.createElement('div');
-                card.className = 'friend-card';
-                card.innerHTML = `
-                    <div>
-                        <img src="${user.profileImg || '/IMG/defaultProfileImg.png'}"
-                             onerror="this.src='/IMG/defaultProfileImg.png'">
-                        <span>${user.nickname}</span>
-                        <span>@${user.username}</span>
-                        <span>공개: ${user.publicCount}</span>
-                        <span>비공개: ${user.hiddenCount}</span>
-                    </div>
-                    <button onclick="sendFriendRequest(${user.id})">친구 요청</button>
-                `;
-                container.appendChild(card);
-            });
-        } catch (error) {
-            console.error('사용자 검색 실패:', error);
+        searchResults.innerHTML = '';
+
+        if (results.length === 0) {
+            searchResults.innerHTML = `
+                <div class="no-results">
+                    <p>결과가 없습니다.</p>
+                    <p>철자가 정확한지 확인하거나 다시 입력해보세요.</p>
+                </div>`;
+            return;
         }
-    }, 300);
+
+        results.forEach(member => {
+            const card = document.createElement('div');
+            card.className = 'friend-card';
+            card.innerHTML = `
+                <div>
+                    <img src="${member.profileImg || '/IMG/defaultProfileImg.png'}"
+                         onerror="this.src='/IMG/defaultProfileImg.png'">
+                    <span>${member.nickname}</span>
+                    <span>@${member.username}</span>
+                    <span>공개: ${member.publicCount}</span>
+                    <span>비공개: ${member.hiddenCount}</span>
+                </div>
+                <button onclick="sendFriendRequest(${member.id})" ${member.isAlreadyFriend ? 'disabled' : ''}
+                class="${member.isAlreadyFriend ? 'btn-disabled' : 'btn-request'}">
+                    ${member.isAlreadyFriend ? '이미 친구입니다' : '친구 요청'}
+                </button>
+            `;
+            searchResults.appendChild(card);
+        });
+    } catch (error) {
+        console.error('사용자 검색 실패:', error);
+        searchResults.innerHTML = '<div class="error">검색 중 오류가 발생했습니다.</div>';
+    }
+};
+
+// 검색 버튼 클릭 이벤트
+searchButton.addEventListener('click', () => {
+    performSearch(searchInput.value);
+});
+
+// 입력창 이벤트는 검색 버튼을 눌렀을 때만 작동하도록 제거
+searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        performSearch(searchInput.value);
+    }
 });
 
 async function respondToRequest(senderId, isAccept) {
@@ -249,8 +295,6 @@ async function respondToRequest(senderId, isAccept) {
         });
 
         const affectedRows = await response.json();
-        console.log('영향받은 행 수:', affectedRows);
-        console.log('3. 새로고침 전 현재 친구 목록:', friendsList);
 
         if (affectedRows > 0) {
             const modal = document.getElementById('friendRequestModal');
@@ -275,7 +319,10 @@ async function sendFriendRequest(receiverId) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                receiverId: receiverId
+                senderId: memberId,
+                receiverId: receiverId,
+                intimacy: 0,
+                isAccept: false
             })
         });
 
@@ -288,6 +335,37 @@ async function sendFriendRequest(receiverId) {
         }
     } catch (error) {
         console.error('친구 요청 실패:', error);
+    }
+}
+
+// 친구 삭제
+async function deleteFriend(friendId) {
+    const memberId = getMemberIdFromUrl();
+
+    if (!confirm('정말 삭제하시겠습니까?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/members/${memberId}/friends`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                friendId: friendId
+            })
+        });
+
+        if (!response.ok) throw new Error('삭제 실패');
+
+        const affectedRows = await response.json();
+        if (affectedRows > 0) {
+            await loadFriendsList(memberId);
+        }
+    } catch (error) {
+        console.error('친구 삭제 실패:', error);
+        alert('친구 삭제에 실패했습니다.');
     }
 }
 
