@@ -3,27 +3,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const memberId = mainElement ? mainElement.dataset.memberId : null;
 
     await loadReviewList(memberId);
-    await loadProfileImg(memberId);
+    displayProfile()
 });
-
-async function loadProfileImg(memberId) {
-    const profileResponse = await fetch(`/members/${memberId}/profile-img`);
-
-    const html = await profileResponse.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-
-    const profileImgElement = doc.querySelector('#profileImg');
-    const profileImgSrc = profileImgElement ? profileImgElement.getAttribute('src') : null;
-
-    displayProfile({
-        profileImg: profileImgSrc
-    });
-}
 
 function displayProfile(data) {
     const friendProfile = document.querySelector('.friend-profile');
-    const imgUrl = data?.profileImg || '/IMG/member/default-profile-img.png';
+    const imgUrl = profile ? '/upload/' + profile.filename : '/IMG/member/default-profile-img.png';
 
     friendProfile.innerHTML = `
        <img src="${imgUrl}" alt="프로필 이미지">

@@ -7,6 +7,8 @@ import com.lec.spring.matzip.domain.ReviewTag;
 import com.lec.spring.matzip.domain.Tag;
 import com.lec.spring.matzip.service.ReviewService;
 import com.lec.spring.matzip.service.MatzipService;
+import com.lec.spring.member.domain.ProfileImg;
+import com.lec.spring.member.service.ProfileImgService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +32,19 @@ public class ReviewController {
 
     private final ReviewService reviewService;
     private final MatzipService matzipService;
+    private final ProfileImgService profileImgService;
 
-    public ReviewController(ReviewService reviewService, MatzipService matzipService) {
+    public ReviewController(ReviewService reviewService, MatzipService matzipService, ProfileImgService profileImgService) {
         this.reviewService = reviewService;
         this.matzipService = matzipService;
+        this.profileImgService = profileImgService;
     }
 
     @GetMapping("/reviewList/{memberId}")
     public String reviewListPage(@PathVariable Long memberId, Model model) {
         model.addAttribute("memberId", memberId);
+        ProfileImg profileImg = profileImgService.getProfileImg(memberId);
+        model.addAttribute("profileImg", profileImg);
         return "matzip/reviewList";
     }
 
