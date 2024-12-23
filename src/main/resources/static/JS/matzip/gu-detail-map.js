@@ -627,8 +627,12 @@ function displayFriendProfile() {
         friendCard.onclick = friendClickEvent;
 
         profileImg.className = 'profile_img';
-        // profileImg.src = profileImgUrl + fData.profileImg;
-        profileImg.src = profileImgUrl + 'defaultProfileImg.png';
+
+        if (fData.profileImg) {
+            profileImg.src = '/upload/' + fData.profileImg;
+        } else {
+            profileImg.src = '/IMG/defaultProfileImg.png';
+        }
 
         overlay.className = 'overlay' + (fData.isSelected ? '' : ' hidden');
 

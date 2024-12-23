@@ -96,6 +96,7 @@
     background-color: #EDEDED;
     border-radius: 15px;
     margin: 0 auto 10px;
+    cursor: pointer;
 }
 
 .wish_heart {
@@ -175,6 +176,7 @@
     font-family: "Noto Sans KR", serif;
     font-size: 17px;
     color: white;
+    cursor: pointer;
 }
 
 .infowindow {
@@ -390,6 +392,7 @@
     height: 3.5vh;
     top: 9%;
     right: 11%;
+    cursor: pointer;
 }
 
 #search_select_btn {
@@ -406,6 +409,7 @@
     position: absolute;
     bottom: 5%;
     left: 12.5%;
+    cursor: pointer;
 }
 
 #result_list {
