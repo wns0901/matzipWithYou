@@ -35,6 +35,11 @@ public class WishListController {
         return "matzip/wish-list"; // Thymeleaf 템플릿 이름
     }
 
+    @GetMapping("/api")
+    public ResponseEntity<Map<String, Object>> getWishListApi(@PathVariable Long memberId, Model model) {
+        return wishListService.findWishListByMemberId(memberId);
+    }
+
 
 
 
