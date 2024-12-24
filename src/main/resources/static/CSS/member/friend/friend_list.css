@@ -38,8 +38,8 @@ body {
 
 
 .friend-card img {
-    width: 50px;
-    height: 50px;
+    width: 8vh;
+    height: 8vh;
     border-radius: 50%;
 }
 
@@ -265,11 +265,41 @@ body {
 }
 
 .friend-card {
+    display: flex;
+    width: 50vh;
     background: white;
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
 }
+.add-text{
+    /*display: block;*/
+}
+
+.add-pimg{
+    width: 12vh;
+    height: 12vh;
+}
+
+.add-nick{
+    font-size: 4vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bolder;
+}
+
+.add-id{
+    font-size: 2vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    color: #6a6a6a;
+}
+
+.add-open, .add-hidden{
+    font-size: 2vh;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+}
+
 
 .close:hover {
     color: #000;
@@ -301,7 +331,8 @@ body {
 /* 모달 내 검색 결과와 요청 목록을 위한 그리드 레이아웃 */
 
 #searchResults, #pendingRequests {
-    display: grid;
+    display: flex;
+    justify-content: center;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     padding: 15px 0;
@@ -313,10 +344,10 @@ body {
 #pendingRequests .friend-card {
     background: #f8f9fa;
     border-radius: 8px;
-    padding: 15px;
+    padding: 4vh;
     margin: 0;
 
-    display: flex;
+    display: block;
     align-items: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
@@ -644,4 +675,175 @@ body {
 
 .third .friend-profile-small {
     transform: translate(-1%, 1%);
+}
+
+/* 친구 요청 섹션 */
+.btn-request-add {
+    width: 14vh;
+    height: 5vh;
+    position: absolute;
+    /*transform: translateX(210%) translateY(-200%);*/
+    border-radius: 10vh;
+    border: none;
+    margin-left: 10vh;
+    background-color: #ff7327;
+    color: #FFFFFF;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    font-size: 2vh;
+}
+
+
+/* 내비바 */
+
+:root {
+    --primary-color: #ff7327;
+    --button-font-color: #ffffff;
+    --secondary-button-border-color: #c8c9cc;
+    --secondary-button-text-color: #303236;
+    --link-color: #ff7327;
+    --title-font-color: #ff7327;
+    --font-default-color: #63656d;
+    --widget-background-color: #ffffff;
+    --box-border-color: #ffffff;
+    --input-text-color: #121214;
+    --input-border-color: #c8c9cc;
+    --input-background-color: #ffffff;
+    --error-color: #e81d01;
+}
+
+.navbar {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar div {
+    z-index: 3;
+
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.navbar-brand img {
+    margin-top: 0.5rem;
+    margin-left: 3rem;
+    height: 40px;
+    width: auto;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav-buttons a {
+    text-decoration: none;
+    color: var(--secondary-button-text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-buttons a:first-child {
+    border: 1px solid #FFFFFF;
+}
+
+.nav-buttons a:last-child {
+    background-color: var(--primary-color);
+    color: var(--button-font-color);
+}
+
+.nav-buttons a:hover {
+    transform: translateY(-1px);
+}
+
+.nav-user {
+    position: relative;
+    background-color: black;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    color: var(--button-font-color);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1;
+    margin-top: 0.5rem;
+}
+
+.dropdown-content a,
+.dropdown-content button {
+    color: var(--font-default-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+/ transition: background-color 0.2 s;
+/
+}
+
+.dropdown-content a:hover,
+.dropdown-content button:hover {
+    background-color: rgba(255, 115, 39, 0.1);
+    color: var(--primary-color);
+}
+
+.show {
+    display: block;
+}
+
+#userDropdown {
+    overflow: hidden;
+}
+
+
+@media (max-width: 768px) {
+    .navbar .container {
+        padding: 0 1rem;
+    }
+
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+
+    .nav-buttons a {
+        padding: 0.5rem 0.75rem;
+        font-size: 14px;
+    }
+
+    .dropbtn {
+        font-size: 14px;
+    }
 }
