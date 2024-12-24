@@ -138,7 +138,7 @@
               WHERE (receiver_id = #{id} OR sender_id = #{id})
                 AND is_accept = 1) f
                  JOIN member m ON m.id = f.memberid
-                 JOIN profile_img p ON m.id = p.id
+                 LEFT JOIN profile_img p ON m.id = p.id
                  JOIN my_matzip mmz ON m.id = mmz.member_id AND mmz.visibility IN ('PUBLIC', 'HIDDEN')
                  JOIN matzip mz ON mmz.matzip_id = mz.id AND mz.gu = #{gu}
         GROUP BY m.id, m.nickname, mmz.regdate
