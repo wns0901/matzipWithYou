@@ -107,7 +107,7 @@ function updateRankingProfiles(friends) {
         // ranking-bg 내부에 프로필과 정보를 배치
         rankingProfile.innerHTML = `
             <div class="profile-container">
-                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
+                <img src="${friend.profileImg ? '/upload/' + friend.profileImg : '/IMG/defaultProfileImg.png'}"
                      alt="${friend.nickname}님의 프로필"
                      class="friend-profile-small"
                      onerror="this.src='/IMG/defaultProfileImg.png'">
@@ -160,7 +160,7 @@ function createFullFriendList(friends, container) {
         friendItem.innerHTML = `
             <div class="friend-box">
                 <img class="friend-background" src="/IMG/friend-box-t.png" alt="friend-box">
-                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
+                <img src="${friend.profileImg ? '/upload/' + friend.profileImg : '/IMG/defaultProfileImg.png'}"
                      alt="Profile"
                      class="full-friend-profile"
                      onerror="this.src='/IMG/defaultProfileImg.png'">

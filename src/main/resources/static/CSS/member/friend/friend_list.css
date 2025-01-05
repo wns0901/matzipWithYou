@@ -38,8 +38,8 @@ body {
 
 
 .friend-card img {
-    width: 8vh;
-    height: 8vh;
+    width: 9vh;
+    height: 9vh;
     border-radius: 50%;
 }
 
@@ -469,8 +469,8 @@ body {
 }
 
 .friend-profile-small {
-    width: 105px;
-    height: 105px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid white;
@@ -666,11 +666,11 @@ body {
 }
 
 .first .friend-profile-small {
-    transform: translate(2%, 6%);
+    transform: translate(2%, 4%);
 }
 
 .second .friend-profile-small {
-    transform: translate(1%, 2%);
+    transform: translate(1%, -5%);
 }
 
 .third .friend-profile-small {

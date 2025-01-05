@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Page</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
-        <link
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin/>
+    <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
             rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/header.css}">
@@ -56,9 +56,11 @@
             </div>
             <!-- 프로필 이미지 영역 -->
             <div class="profile-image-wrapper">
-                <form id="profileImageForm" th:action="@{'/members/'+ ${memberId} + '/profile-img'}" method="post"
-                      enctype="multipart/form-data">
-                    <img src="/IMG/profile-image.svg" alt="프로필 이미지" class="profile-image" id="profileImagePreview">
+                <form id="profileImageForm" enctype="multipart/form-data">
+                    <img th:src="${myPage.profileImage != null ? '/upload/' + myPage.profileImage : '/IMG/profile-image.svg'}"
+                         alt="프로필 이미지"
+                         class="profile-image"
+                         id="profileImagePreview">
                     <div class="overlay">
                         <input type="file" id="profileImageInput" name="file" accept="image/*" style="display: none;"/>
                         <label for="profileImageInput">
@@ -194,6 +196,7 @@
 <script th:src="@{/JS/member/myPage.js}" type="text/javascript"></script>
 </body>
 </html>
+
 
 
 
