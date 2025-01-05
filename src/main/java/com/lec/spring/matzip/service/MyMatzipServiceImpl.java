@@ -4,10 +4,7 @@ import com.lec.spring.matzip.domain.DTO.*;
 import com.lec.spring.matzip.domain.GuCenterLatLng;
 import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.domain.WishList;
-import com.lec.spring.matzip.repository.FoodKindRepository;
-import com.lec.spring.matzip.repository.MyMatzipRepository;
-import com.lec.spring.matzip.repository.TagRepository;
-import com.lec.spring.matzip.repository.WishListRepository;
+import com.lec.spring.matzip.repository.*;
 import com.lec.spring.member.domain.FriendDetailsDTO;
 import com.lec.spring.member.repository.MemberRepository;
 import com.lec.spring.member.repository.ProfileImgRepository;
@@ -27,6 +24,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
     private final TagRepository tagRepository;
     private final FoodKindRepository foodKindRepository;
     private final ProfileImgRepository profileImgRepository;
+    private final MatzipRepository matzipRepository;
 
     public MyMatzipServiceImpl(SqlSession sqlSession) {
         this.myMatzipRepository = sqlSession.getMapper(MyMatzipRepository.class);
@@ -35,6 +33,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
         this.tagRepository = sqlSession.getMapper(TagRepository.class);
         this.foodKindRepository = sqlSession.getMapper(FoodKindRepository.class);
         this.profileImgRepository = sqlSession.getMapper(ProfileImgRepository.class);
+        this.matzipRepository = sqlSession.getMapper(MatzipRepository.class);
     }
 
 
@@ -174,6 +173,8 @@ public class MyMatzipServiceImpl implements MyMatzipService {
 
     @Override
     public ResponseEntity<ReviewSubmitModalDTO> saveMyMatzip(SaveMyMatzipDTO saveMyMatzipDTO) {
+        boolean isKindExist = matzipRepository.isKindExist(saveMyMatzipDTO.getMatzipId());
+        if (!isKindExist) matzipRepository.updateFoodKind(saveMyMatzipDTO.getMatzipId(), saveMyMatzipDTO.getKindId());
         boolean saveResult = myMatzipRepository.save(saveMyMatzipDTO);
         if (!saveResult) return ResponseEntity.badRequest().build();
 
@@ -195,7 +196,9 @@ public class MyMatzipServiceImpl implements MyMatzipService {
             myMatzipRepository.updateIntimacyByFriendsIds(friendIds, intimacy, saveMyMatzipDTO.getMatzipId());
         }
 
-        FriendDetailsDTO topFriend = hiddenFirendProfiles.get(0);
+        FriendDetailsDTO topFriend = hiddenFirendProfiles.isEmpty() ? null : hiddenFirendProfiles.get(0);
+
+        String topFriendName = topFriend == null ? null : topFriend.getNickname();
 
         int friendCnt = hiddenFirendProfiles.size();
 
@@ -204,7 +207,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
                         .hiddenFriends(hiddenFirendProfiles)
                         .intimacyIncrease(intimacy)
                         .rewardPoints(point)
-                        .topFriendName(topFriend.getNickname())
+                        .topFriendName(topFriendName)
                 .build());
     }
 }

@@ -178,8 +178,14 @@ async function saveMyMatzip(url, formObject) {
         body: JSON.stringify(formObject),
     }
     console.log(formObject);
+    const memberId = formObject.memberId;
     const result = await fetch(url, options).then(res => res.json());
     showCompletionModal(result);
+    document.getElementById('point-btn').onclick = () => {
+        const modal = document.getElementById('completionModal');
+        modal.classList.add('hidden');
+        window.location.href = `/matzips/mine/${memberId}`;
+    };
 }
 
 async function setupFormSubmission() {

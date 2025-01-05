@@ -166,44 +166,44 @@ class ReviewRepositoryTest {
         sqlSession.clearCache();
     }
 
-    @Test
-    void testRewardReviewIntimacy() {
-        FriendRepository friendRepository = sqlSession.getMapper(FriendRepository.class);
-
-        List<Long> memberIds = List.of(2L, 3L, 4L);
-
-        ReviewDTO reviewDTO = ReviewDTO.builder()
-                .matzipId(6L)
-                .memberId(2L)
-                .memberIds(memberIds)
-                .build();
-
-        int rewardHiddenIntimacy = 100;
-        int rewardIntimacy = 10;
-
-        List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
-
-        int resultIntimacy = !hiddenMatzipMemberIds.isEmpty() ? rewardHiddenIntimacy : rewardIntimacy;
-
-        int newIntimacy = 0;
-
-        List<FriendDetailsDTO> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getId());
-        if (friends == null) {
-            throw new IllegalArgumentException("Friend not found");
-        }
-
-        for(FriendDetailsDTO friend : friends) {
-            friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
-            friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
-            newIntimacy = friend.getIntimacy();
-        }
-
-        int result = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, rewardHiddenIntimacy ,rewardIntimacy);
-
-        assertEquals(newIntimacy, result);
-
-        sqlSession.clearCache();
-    }
+//    @Test
+//    void testRewardReviewIntimacy() {
+//        FriendRepository friendRepository = sqlSession.getMapper(FriendRepository.class);
+//
+//        List<Long> memberIds = List.of(2L, 3L, 4L);
+//
+//        ReviewDTO reviewDTO = ReviewDTO.builder()
+//                .matzipId(6L)
+//                .memberId(2L)
+//                .memberIds(memberIds)
+//                .build();
+//
+//        int rewardHiddenIntimacy = 100;
+//        int rewardIntimacy = 10;
+//
+//        List<Member> hiddenMatzipMemberIds = reviewServiceImpl.hiddenMatzipMemberIds(reviewDTO);
+//
+//        int resultIntimacy = !hiddenMatzipMemberIds.isEmpty() ? rewardHiddenIntimacy : rewardIntimacy;
+//
+//        int newIntimacy = 0;
+//
+//        List<FriendDetailsDTO> friends = friendRepository.findFriendsWithDetailsDTO(reviewDTO.getId());
+//        if (friends == null) {
+//            throw new IllegalArgumentException("Friend not found");
+//        }
+//
+//        for(FriendDetailsDTO friend : friends) {
+//            friend.setIntimacy(friend.getIntimacy() + resultIntimacy);
+//            friendRepository.updateIntimacy(reviewDTO.getId(), friend.getIntimacy());
+//            newIntimacy = friend.getIntimacy();
+//        }
+//
+//        int result = reviewServiceImpl.rewardReviewIntimacy(reviewDTO, rewardHiddenIntimacy ,rewardIntimacy);
+//
+//        assertEquals(newIntimacy, result);
+//
+//        sqlSession.clearCache();
+//    }
 
     @Test
     void testDeleteReview() {

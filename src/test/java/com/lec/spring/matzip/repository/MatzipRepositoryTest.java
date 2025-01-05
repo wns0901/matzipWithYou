@@ -48,4 +48,11 @@ class MatzipRepositoryTest {
         MatzipRepository matzipRepository = sqlSession.getMapper(MatzipRepository.class);
         System.out.println(matzipRepository.findDetailMatzipByMatzipIdWithFriendId(4L, 3L));
     }
+
+    @Test
+    void test3() {
+        MatzipRepository matzipRepository = sqlSession.getMapper(MatzipRepository.class);
+        System.out.println(matzipRepository.isKindExist(1L));
+        System.out.println(matzipRepository.isKindExist(51L));
+    }
 }

@@ -75,7 +75,7 @@ public class MatzipServiceImpl implements MatzipService {
         options.addArguments("disable-infobars"); // 정보 표시 비활성화
         options.addArguments("--disable-gpu");
         options.addArguments("window-size=1920,1080"); // 창 크기 설정
-        options.setBinary("/usr/bin/google-chrome");
+//        options.setBinary("/usr/bin/google-chrome");
         WebDriver driver = new ChromeDriver(options);
         driver.get(kakaoPageUrl);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));

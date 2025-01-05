@@ -100,4 +100,9 @@
         WHERE id = #{matzipId} AND kind_id IS NULL
     </update>
 
+    <select id="isKindExist" resultType="boolean">
+        SELECT count(*)
+        FROM matzip
+        WHERE id = #{matzipId} AND kind_id IS NOT NULL
+    </select>
 </mapper>

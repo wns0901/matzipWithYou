@@ -23,4 +23,6 @@ public interface MatzipRepository {
     int updateFoodKind(Long matzipId, Long foodKindId);
 
     DetailMatzipDTO findDetailMatzipByMatzipIdWithFriendId(Long matzipId, Long friendId);
+
+    boolean isKindExist(Long matzipId);
 }
