@@ -57,7 +57,7 @@
             <!-- 프로필 이미지 영역 -->
             <div class="profile-image-wrapper">
                 <form id="profileImageForm" enctype="multipart/form-data">
-                    <img th:src="${myPage.profileImage != null ? '/upload/' + myPage.profileImage : '/IMG/profile-image.svg'}"
+                    <img th:src="${myPage.profileImage != null ? '/upload/' + myPage.profileImage : '/IMG/defaultProfileImg.png'}"
                          alt="프로필 이미지"
                          class="profile-image"
                          id="profileImagePreview">
