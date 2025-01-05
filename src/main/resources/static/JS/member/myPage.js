@@ -157,6 +157,9 @@ document.addEventListener('DOMContentLoaded', function () {
             ratingText.textContent = `${rating}점`;
         });
     }
+    // 초기 렌더링
+    renderStarRating();
+});
 
 // 프사 변경 기능
 
@@ -192,7 +195,4 @@ deleteImageButton.addEventListener("click", () => {
                 }
             });
     }
-});
-    // 초기 렌더링
-    renderStarRating();
 });
