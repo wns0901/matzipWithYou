@@ -69,6 +69,7 @@ public class ProfileImgController {
                 profileImg.setSourcename(sourcename);
                 profileImg.setFilename(newFilename);
                 profileImgService.updateProfileImg(profileImg);
+
             } else {
                 // defaultProfileImg이거나 ID가 없는 경우는 새로 생성
                 ProfileImg newProfileImg = ProfileImg.builder()
@@ -78,7 +79,6 @@ public class ProfileImgController {
                         .build();
                 profileImgService.addProfileImg(newProfileImg);
             }
-
 
             // 새 파일 저장
             File destFile = new File(uploadDir, newFilename);
