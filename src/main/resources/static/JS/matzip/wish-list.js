@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const mainElement = document.querySelector('main');
+    const mainElement = document.querySelector('.main-container');
     const memberId = mainElement ? mainElement.dataset.memberId : null;
 
     displayProfile()
@@ -13,3 +13,5 @@ function displayProfile(data) {
        <img src="${imgUrl}" alt="프로필 이미지">
    `;
 }
+
+

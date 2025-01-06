@@ -28,7 +28,7 @@ public class WishListController {
     @GetMapping("")
     public String getWishList(@PathVariable Long memberId, Model model) {
         Map<String, Object> response = wishListService.findWishListByMemberId(memberId).getBody();
-        ProfileImg profileImg = profileImgService.getProfileImg(memberId);
+        ProfileImg profileImg = profileImgService.getMemberProfileImg(memberId);
         model.addAttribute("profileImg", profileImg);
         model.addAttribute("wishList", response.get("data")); // "data"를 모델에 추가
         model.addAttribute("memberId", memberId); // memberId를 모델에 추가

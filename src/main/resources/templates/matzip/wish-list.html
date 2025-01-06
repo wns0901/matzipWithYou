@@ -8,7 +8,14 @@
     <link rel="stylesheet" th:href="@{/CSS/matzip/wish-list.css}">
     <script th:inline="javascript">
         const profile = /*[[${profileImg}]]*/ {};
+
     </script>
+<!--    <script th:inline="javascript">-->
+<!--        const memberId = /*[[${memberId}]]*/;-->
+<!--        console.log("Member ID: " + memberId);-->
+<!--    </script>-->
+
+
     <script th:src="@{/JS/matzip/wish-list.js}"></script>
     <title>위시리스트</title>
 
@@ -61,10 +68,16 @@
         </section>
     </div>
 </div>
+<!--<script th:inline="javascript">-->
+<!--    const profile = /*[[${profileImg}]]*/ {};-->
+<!--    console.log("profile : " + profile )-->
+<!--</script>-->
 <script th:inline="javascript">
-    const profile = /*[[${profileImg}]]*/ {};
-    console.log("profile : " + profile )
+    const memberId = /*[[${memberId}]]*/;
+    console.log("Member ID: " + memberId);
 </script>
+
+
 
 <script>
     async function deleteWishlist(matzipId, memberId) {
