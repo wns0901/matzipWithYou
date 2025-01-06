@@ -33,8 +33,8 @@
                mz.name                                                      AS name,
                mz.img_url                                                   AS imgurl,
                k.kindname                                                   AS kindname,
-               mz.address AS address,
-               JSON_ARRAYAGG(JSON_OBJECT('id', t.id, 'tagName', t.tagname)) AS tagList
+               mz.address                                                   AS address,
+               JSON_ARRAYAGG(JSON_OBJECT('id', t.id, 'tagName', t.tagname)) AS taglist
         FROM my_matzip mymz
                  JOIN matzip mz ON mymz.matzip_id = mz.id
                  JOIN food_kind k ON mz.kind_id = k.id
@@ -152,31 +152,34 @@
     </insert>
 
     <select id="findHiddenFriendDetails" resultType="com.lec.spring.member.domain.FriendDetailsDTO">
-        SELECT
-            f.memberid AS 'friendId',
-                m.nickname AS 'nickname',
-                m.username AS 'username',
-                f.intimacy AS 'intimacy',
-                p.filename AS 'profileImg'
+        SELECT f.memberid AS 'friendId',
+               m.nickname AS 'nickname',
+               m.username AS 'username',
+               f.intimacy AS 'intimacy',
+               p.filename AS 'profileImg'
         FROM (SELECT IF(receiver_id = #{memberId}, sender_id, receiver_id) AS memberid,
                      intimacy
               FROM friend f
               WHERE (receiver_id = #{memberId} OR sender_id = #{memberId})
                 AND is_accept = 1) f
                  JOIN member m ON m.id = f.memberid
-                 JOIN my_matzip mz ON f.memberid = mz.member_id AND mz.matzip_id = #{matzipId} AND mz.visibility = 'HIDDEN'
+                 JOIN my_matzip mz
+                      ON f.memberid = mz.member_id AND mz.matzip_id = #{matzipId} AND mz.visibility = 'HIDDEN'
                  LEFT JOIN profile_img p ON m.id = p.id;
     </select>
-    
-    <update id="updateIntimacyByFriendsIds" parameterType="com.lec.spring.matzip.domain.DTO.RewardDTO" flushCache="true">
+
+    <update id="updateIntimacyByFriendsIds" parameterType="com.lec.spring.matzip.domain.DTO.RewardDTO"
+            flushCache="true">
         UPDATE friend
         SET intimacy = intimacy + #{intimacy}
-        WHERE receiver_id = #{memberId} AND sender_id IN <foreach collection="friendIds" item="id" separator="," open="(" close=")">
-        #{id}
-    </foreach>
+        WHERE receiver_id = #{memberId} AND sender_id IN
+        <foreach collection="friendIds" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
         OR
-            sender_id = #{memberId} AND receiver_id IN <foreach collection="friendIds" item="id" separator="," open="(" close=")">
-        #{id}
-    </foreach>
+        sender_id = #{memberId} AND receiver_id IN
+        <foreach collection="friendIds" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
     </update>
 </mapper>

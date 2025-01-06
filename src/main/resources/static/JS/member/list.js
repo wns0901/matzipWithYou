@@ -107,7 +107,7 @@ function updateRankingProfiles(friends) {
         // ranking-bg 내부에 프로필과 정보를 배치
         rankingProfile.innerHTML = `
             <div class="profile-container">
-                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
+                <img src="${friend.profileImg ? '/upload/' + friend.profileImg : '/IMG/defaultProfileImg.png'}"
                      alt="${friend.nickname}님의 프로필"
                      class="friend-profile-small"
                      onerror="this.src='/IMG/defaultProfileImg.png'">
@@ -160,7 +160,7 @@ function createFullFriendList(friends, container) {
         friendItem.innerHTML = `
             <div class="friend-box">
                 <img class="friend-background" src="/IMG/friend-box-t.png" alt="friend-box">
-                <img src="${friend.profileImg || '/IMG/defaultProfileImg.png'}"
+                <img src="${friend.profileImg ? '/upload/' + friend.profileImg : '/IMG/defaultProfileImg.png'}"
                      alt="Profile"
                      class="full-friend-profile"
                      onerror="this.src='/IMG/defaultProfileImg.png'">
@@ -287,15 +287,19 @@ const performSearch = async (searchTerm) => {
                 <div class="friend-card">
                     <div>
                         <img src="${member.profileImg || '/IMG/defaultProfileImg.png'}"
-                             onerror="this.src='/IMG/defaultProfileImg.png'">
-                        <span>${member.nickname}</span>
-                        <span>@${member.username}</span>
-                        <span>공개: ${member.publicCount}</span>
-                        <span>비공개: ${member.hiddenCount}</span>
+                             onerror="this.src='/IMG/defaultProfileImg.png'"
+                             class="add-pimg">
+                        <div class="add-text">
+                            <div class="add-nick">${member.nickname}</div>
+                            <div class="add-id">ID : ${member.username}</div>
+                            <span class="add-open">공개 맛집 : ${member.publicCount}</span>
+                            <span class="add-hidden"> | </span>
+                            <span class="add-hidden">숨긴 맛집 : ${member.hiddenCount}</span>
+                        </div>
                     </div>
                     <button onclick="sendFriendRequest(${member.id})" 
                             ${member.isAlreadyFriend ? 'disabled' : ''}
-                            class="${member.isAlreadyFriend ? 'btn-disabled' : 'btn-request'}">
+                            class="${member.isAlreadyFriend ? 'btn-disabled' : 'btn-request-add'}">
                         ${member.isAlreadyFriend ? '이미 친구입니다' : '친구 요청'}
                     </button>
                 </div>

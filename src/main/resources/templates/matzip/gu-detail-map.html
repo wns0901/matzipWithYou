@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>상세지도</title>
     <script type="text/javascript" th:src="${@environment.getProperty('app.kakaoMap.url')}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,9 +13,9 @@
         const data = /*[[${data}]]*/ {},
             hiddenImgUrl = /*[[@{/IMG/matzip/hidden_matzip.png}]]*/ 'hiddenImg',
             emptyHeartImgUrl = /*[[@{/IMG/matzip/empty_heart.png}]]*/ 'emptyHeart',
-            fillHeartImgUrl = /*[[@{/IMG/matzip/fill_heart.png}]]*/ 'fillHeart',
-            profileImgUrl = /*[[@{/IMG/}]]*/ 'url'
+            fillHeartImgUrl = /*[[@{/IMG/matzip/fill_heart.png}]]*/ 'fillHeart'
         ;
+        console.log(data);
     </script>
 
 </head>

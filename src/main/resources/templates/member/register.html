@@ -9,7 +9,9 @@
 <body>
 <div class="main-container">
     <div class="widget-container">
-        <img class="logo" src="/IMG/logo.png" alt="logo">
+        <a href="/home">
+            <img class="logo" src="/IMG/logo.png" alt="logo">
+        </a>
 
         <h1>회원가입</h1>
 
@@ -47,21 +49,21 @@
             <div class="form-group">
                 <label for="email">이메일</label>
                 <div class="email-input-container">
-                    <input type="email" class="form-control with-button" id="email" name="email" placeholder="email@example.com" th:value="${email}" required>
+                    <input type="email" class="form-control with-button" id="email" name="email"
+                           placeholder="email@example.com" th:value="${email}" required>
                     <button type="button" class="email-verify-button" id="verifyButton">인증하기</button>
                 </div>
             </div>
 
             <div class="form-group" id="verificationCodeGroup" style="display: none;">
-                <label for="verificationCode" >인증 코드</label>
+                <label for="verificationCode">인증 코드</label>
                 <div class="verificationDiv">
-                <input type="text" id="verificationCode" name="verificationCode"   required>
-                <button type="button" class="email-verify-button" id="authButton">인증</button>
+                    <input type="text" id="verificationCode" name="verificationCode" required>
+                    <button type="button" class="email-verify-button" id="authButton">인증</button>
 
-                <div id="timer" style="color: red;"></div>  </div>
+                    <div id="timer" style="color: red;"></div>
+                </div>
             </div>
-
-
 
 
             <div class="form-group">

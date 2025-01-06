@@ -70,12 +70,12 @@ public class MatzipServiceImpl implements MatzipService {
     public String getImgUrlFromKakao(String kakaoPageUrl) {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
-        options.addArguments("window-size=1400,1500");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("disable-infobars"); // 정보 표시 비활성화
+        options.addArguments("--disable-gpu");
+        options.addArguments("window-size=1920,1080"); // 창 크기 설정
         options.setBinary("/usr/bin/google-chrome");
-        options.addArguments("—disable-gpu");
-        options.addArguments("—no-sandbox");
-        options.addArguments("—disable-dev-shm-usage");
-        options.addArguments("—remote-debugging-port=9222");
         WebDriver driver = new ChromeDriver(options);
         driver.get(kakaoPageUrl);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));

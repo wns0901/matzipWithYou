@@ -367,7 +367,7 @@ function kindFilterEvent() {
 }
 
 async function getWishList() {
-    const url = '/matzips/wish-list/' + who;
+    const url = '/matzips/wish-list/' + who + '/api';
     wishList = await fetch(url).then(res => res.json()).then(res => res.data.map(wish => wish.id));
     console.log(wishList);
 }

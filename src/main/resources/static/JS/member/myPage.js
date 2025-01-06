@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const deleteAccountPopup = document.getElementById('deleteAccountPopup');
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
     const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+
     // 회원 탈퇴 기능
     if (deleteAccountBtn && deleteAccountPopup && confirmDeleteBtn && cancelDeleteBtn) {
         deleteAccountBtn.addEventListener('click', function () {
@@ -136,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
+
     // 별점 렌더링 함수
     function renderStarRating() {
         const reviewCards = document.querySelectorAll(".review-card .starRating");
@@ -149,50 +151,120 @@ document.addEventListener('DOMContentLoaded', function () {
                 const starImg = document.createElement("img");
                 starImg.src = i <= rating ? "/IMG/Star-Yellow.png" : "/IMG/Star-Gray.png";
                 starImg.alt = "star";
-                starImg.style.width = "16px";
-                starImg.style.height = "16px";
-                starImg.style.marginRight = "4px";
+                starImg.style.width = "2.3vh";
+                starImg.style.height = "2.3vh";
+                starImg.style.marginRight = "0.5vh";
                 starRatingElement.appendChild(starImg);
             }
             ratingText.textContent = `${rating}점`;
         });
     }
 
-// 프사 변경 기능
-
-const profileImageInput = document.getElementById("profileImageInput");
-const profileImagePreview = document.getElementById("profileImagePreview");
-const deleteImageButton = document.getElementById("deleteImageButton");
-const memberId = "{memberId}"; // 서버에서 제공한 memberId 바인딩
-
-// 이미지 변경 시 미리보기 업데이트
-profileImageInput.addEventListener("change", (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            profileImagePreview.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-
-        // 자동으로 폼 제출
-        document.getElementById("profileImageForm").submit();
-    }
-});
-
-// 이미지 삭제 버튼 클릭 시
-deleteImageButton.addEventListener("click", () => {
-    if (confirm("정말로 이미지를 삭제하시겠습니까?")) {
-        fetch(`/members/${memberId}/profile-img`, { method: "DELETE" })
-            .then((response) => {
-                if (response.ok) {
-                    location.reload(); // 페이지 새로고침
-                } else {
-                    alert("이미지 삭제에 실패했습니다.");
-                }
-            });
-    }
-});
     // 초기 렌더링
     renderStarRating();
+
+    // 프로필 이미지 관련 기능
+    const profileImagePreview = document.getElementById("profileImagePreview");
+    const profileImageModal = document.getElementById("profileImageModal");
+    const profileImageInput = document.getElementById("profileImageInput");
+    const cameraIconLabel = document.getElementById("cameraIconLabel");
+    const memberId = parseInt(window.location.pathname.split('/').pop());
+
+// 프로필 이미지나 카메라 아이콘 클릭 시 모달 표시
+    function showModal(e) {
+        e.preventDefault(); // 기본 동작 방지
+        profileImageModal.style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    profileImagePreview.addEventListener("click", showModal);
+    cameraIconLabel.addEventListener("click", showModal);
+
+// 모달 옵션 이벤트 리스너
+    document.getElementById("editProfileImage").addEventListener("click", () => {
+        profileImageInput.click();
+        profileImageModal.style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    });
+
+    document.getElementById("deleteProfileImage").addEventListener("click", async () => {
+        if (confirm("프로필 이미지를 삭제하시겠습니까?")) {
+            try {
+                const response = await fetch(`/members/${memberId}/profile-img`, {
+                    method: "DELETE"
+                });
+
+                if (!response.ok) {
+                    throw new Error('이미지 삭제에 실패했습니다.');
+                }
+
+                // 프로필 이미지를 기본 이미지로 변경
+                const profileImages = document.querySelectorAll('.profile-image');
+                profileImages.forEach(img => {
+                    img.src = '/IMG/defaultProfileImg.png';
+                });
+
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+        profileImageModal.style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    });
+
+// 취소 버튼 클릭 시 모달 닫기
+    document.querySelector(".modal-option.cancel").addEventListener("click", () => {
+        profileImageModal.style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    });
+
+// overlay 클릭 시 모달 닫기
+    document.getElementById("overlay").addEventListener("click", () => {
+        profileImageModal.style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    });
+
+// 이미지 변경 이벤트
+    profileImageInput.addEventListener("change", async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+                const response = await fetch(`/members/${memberId}/profile-img`, {
+                    method: "PATCH",
+                    body: formData
+                });
+
+                const responseData = await response.text();
+
+                if (!response.ok) {
+                    throw new Error(responseData || '이미지 업로드에 실패했습니다.');
+                }
+
+                // 프로필 이미지 업데이트
+                const profileImages = document.querySelectorAll('.profile-image');
+                profileImages.forEach(img => {
+                    img.src = `/upload/${responseData}`;
+                });
+
+            } catch (error) {
+                console.error("Error:", error);
+                // 실패 시 이전 이미지로 복구
+                const profileImages = document.querySelectorAll('.profile-image');
+                profileImages.forEach(img => {
+                    img.src = img.getAttribute('data-original-src') || '/IMG/defaultProfileImg.png';
+                });
+            }
+        }
+    });
+
+// 페이지 로드 시 원본 이미지 URL 저장
+    const profileImages = document.querySelectorAll('.profile-image');
+    profileImages.forEach(img => {
+        img.setAttribute('data-original-src', img.src);
+    });
+
 });
+
