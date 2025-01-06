@@ -62,13 +62,22 @@
                          class="profile-image"
                          id="profileImagePreview">
                     <div class="overlay">
+                        <!-- label의 for 속성을 제거하고 id를 추가 -->
                         <input type="file" id="profileImageInput" name="file" accept="image/*" style="display: none;"/>
-                        <label for="profileImageInput">
+                        <label id="cameraIconLabel">
                             <img src="/IMG/camera.png" alt="카메라 아이콘" class="camera-icon">
                         </label>
                     </div>
                 </form>
-                <button id="deleteImageButton">삭제</button>
+            </div>
+
+            <!-- 프로필 이미지 수정/삭제 모달 -->
+            <div class="profile-image-modal" id="profileImageModal" style="display: none;">
+                <div class="modal-content">
+                    <button class="modal-option" id="editProfileImage">프로필 수정</button>
+                    <button class="modal-option" id="deleteProfileImage">프로필 삭제</button>
+                    <button class="modal-option cancel">취소</button>
+                </div>
             </div>
 
             <div class="nickname-container">
