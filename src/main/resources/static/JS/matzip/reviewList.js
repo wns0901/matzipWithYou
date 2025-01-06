@@ -9,11 +9,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function displayProfile(data) {
     const friendProfile = document.querySelector('.friend-profile');
-    const imgUrl = profile ? '/upload/' + profile.filename : '/IMG/member/default-profile-img.png';
+    const imgElement = friendProfile.querySelector('img');
 
-    friendProfile.innerHTML = `
-       <img src="${imgUrl}" alt="프로필 이미지">
-   `;
+    const imgUrl = data.profile
+        ? '/upload/' + data.profile.filename
+        : '/IMG/member/default-profile-img.png';
+
+    if (!imgElement) {
+        friendProfile.innerHTML = `
+            <img src="${imgUrl}" alt="프로필 이미지">
+        `;
+    } else if (imgElement.src !== imgUrl) {
+        imgElement.src = imgUrl;
+    }
 }
 
 let originalReviewData = [];
