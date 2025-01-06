@@ -57,29 +57,28 @@ public class ProfileImgController {
             String newFilename = UUID.randomUUID() + fileExtension;
 
 
-            // 기존 이미지가 있는 경우
-            if (profileImg != null) {
-                // 기존 파일 삭제 (default 이미지가 아닌 경우에만)
-                if (!profileImg.getFilename().equals("defaultProfileImg.png")) {
-                    File oldFile = new File(uploadDir, profileImg.getFilename());
-                    if (oldFile.exists()) {
-                        oldFile.delete();
-                    }
+            // ID 유무와 상관없이 파일이 defaultProfileImg인 경우는 새로 생성
+            if (profileImg != null && profileImg.getId() != null && !profileImg.getFilename().equals("defaultProfileImg.png")) {
+                // 기존 파일 삭제 (실제 파일이 있는 경우에만)
+                File oldFile = new File(uploadDir, profileImg.getFilename());
+                if (oldFile.exists()) {
+                    oldFile.delete();
                 }
 
-                // 기존 레코드 업데이트 (memberId는 유지)
+                // 기존 레코드 업데이트
                 profileImg.setSourcename(sourcename);
                 profileImg.setFilename(newFilename);
                 profileImgService.updateProfileImg(profileImg);
             } else {
-                // 새 프로필 이미지 레코드 생성
-                profileImg = ProfileImg.builder()
+                // defaultProfileImg이거나 ID가 없는 경우는 새로 생성
+                ProfileImg newProfileImg = ProfileImg.builder()
                         .memberId(memberId)
                         .sourcename(sourcename)
                         .filename(newFilename)
                         .build();
-                profileImgService.addProfileImg(profileImg);
+                profileImgService.addProfileImg(newProfileImg);
             }
+
 
             // 새 파일 저장
             File destFile = new File(uploadDir, newFilename);
