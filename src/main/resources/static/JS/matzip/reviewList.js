@@ -3,28 +3,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     const memberId = mainElement ? mainElement.dataset.memberId : null;
 
     await loadReviewList(memberId);
-    setupSortOptions();
-    displayProfile();
+    displayProfile()
 });
 
 function displayProfile(data) {
     const friendProfile = document.querySelector('.friend-profile');
-    const imgElement = friendProfile.querySelector('img');
+    const imgUrl = profile ? '/upload/' + profile.filename : '/IMG/member/default-profile-img.png';
 
-    const imgUrl = data.profile
-        ? '/upload/' + data.profile.filename
-        : '/IMG/member/default-profile-img.png';
-
-    if (!imgElement) {
-        friendProfile.innerHTML = `
-            <img src="${imgUrl}" alt="프로필 이미지">
-        `;
-    } else if (imgElement.src !== imgUrl) {
-        imgElement.src = imgUrl;
-    }
+    friendProfile.innerHTML = `
+       <img src="${imgUrl}" alt="프로필 이미지">
+   `;
 }
-
-let originalReviewData = [];
 
 async function loadReviewList(memberId) {
     try {
@@ -35,24 +24,38 @@ async function loadReviewList(memberId) {
 
         const data = await response.json();
 
-        originalReviewData = [...data];
         displayReviews(data);
 
     } catch (error) {
         console.error('데이터 로드 중 오류 발생:', error);
+        console.error('오류 세부 정보:', error.message);
         alert('리뷰 데이터를 불러오는데 실패했습니다.');
     }
 }
 
 function displayReviews(reviewsData) {
+    console.log("Received data structure:", reviewsData);
+
+    reviewsData.sort((a, b) => {
+        return new Date(b.regdate) - new Date(a.regdate);
+    });
+
     const reviewsContainer = document.querySelector('.reviews-container');
-    reviewsContainer.innerHTML = ''; // 기존 내용을 제거하여 중복 로딩 방지
+    reviewsContainer.innerHTML = '';
 
     reviewsData.forEach(data => {
         const reviewCard = document.createElement('div');
         reviewCard.classList.add('review-item');
 
-        reviewCard.dataset.reviewId = data.id;
+        reviewCard.dataset.reviewData = JSON.stringify({
+            regdate: data.regdate,
+            matzipName: data.matzipName,
+            starRating: data.starRating
+        });
+
+
+        const reviewId = data.id;
+        reviewCard.dataset.reviewId = reviewId;
         const imgUrl = data.kakaoImgUrl !== '#none' ? data.kakaoImgUrl : "/IMG/defaultStoreImg.png";
 
         reviewCard.innerHTML = `
@@ -69,7 +72,7 @@ function displayReviews(reviewsData) {
                                 <h3>${data.matzipName}</h3>
                                 <p>${data.matzipAddress}</p>
                             </div>
-                            <button class="detail-btn" data-review-id="${data.id}">
+                            <button class="detail-btn" data-review-id="${reviewId}">
                                 <i class="fa-solid fa-plus"></i>
                                 상세보기
                             </button>
@@ -85,80 +88,86 @@ function displayReviews(reviewsData) {
         `;
 
         const detailBtn = reviewCard.querySelector('.detail-btn');
-        detailBtn.addEventListener('click', () => toggleDetail(reviewCard, data.id, detailBtn));
+        detailBtn.addEventListener('click', () => {
+            const reviewId = detailBtn.getAttribute('data-review-id')
+            console.log('Clicked review ID:', reviewId);
+
+            if (!reviewId) {
+                console.error("Review ID is missing");
+                return;
+            }
+
+            const detailSection = reviewCard.querySelector('.review-detail');
+            if (!detailSection) {
+                loadReviewDetail(reviewCard, reviewId);
+            } else {
+                detailSection.classList.toggle('show');
+                detailBtn.innerHTML = detailSection.classList.contains('show') ?
+                    '<i class="fa-solid fa-minus"></i>상세접기' :
+                    '<i class="fa-solid fa-plus"></i>상세보기';
+            }
+        });
 
         const deleteBtn = reviewCard.querySelector('.delete-btn');
-        deleteBtn.addEventListener('click', async () => deleteReview(reviewCard, data.id));
+        deleteBtn.addEventListener('click', async () => {
+            if (confirm('이 리뷰를 삭제하시겠습니까?')) {
+                try {
+                    const response = await fetch(`/matzip/reviews/delete/${reviewId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || '삭제 실패');
+                    }
+
+                    reviewCard.remove();
+                    alert('리뷰가 삭제되었습니다.');
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(error.message || '리뷰 삭제에 실패했습니다.');
+                }
+            }
+        });
 
         reviewsContainer.appendChild(reviewCard);
     });
-}
 
-function setupSortOptions() {
     document.querySelectorAll('.sort-option').forEach(option => {
         option.addEventListener('click', () => {
+
             document.querySelectorAll('.sort-option').forEach(opt =>
-                opt.classList.remove('active')); // 기존 active 클래스 제거
-            option.classList.add('active'); // 클릭한 버튼에 active 추가
+                opt.classList.remove('active'));
+            option.classList.add('active');
 
             const sortType = option.dataset.sort;
-            let sortedReviews = [];
+            const reviewSection = option.closest('.review-list-section');
+            const reviewsContainer = reviewSection.querySelector('.reviews-container');
+            const reviews = Array.from(reviewsContainer.children);
 
-            if (sortType === 'date') {
-                sortedReviews = [...originalReviewData].sort((a, b) =>
-                    new Date(b.regdate) - new Date(a.regdate)
-                );
-            } else if (sortType === 'name') {
-                sortedReviews = [...originalReviewData].sort((a, b) =>
-                    a.matzipName.localeCompare(b.matzipName)
-                );
-            } else if (sortType === 'rating') {
-                sortedReviews = [...originalReviewData].sort((a, b) =>
-                    b.starRating - a.starRating
-                );
-            } else if (sortType === 'default') { // 등록순
-                sortedReviews = [...originalReviewData]; // 원본 데이터
-            }
+            reviews.sort((a, b) => {
+                const dataA = JSON.parse(a.dataset.reviewData);
+                const dataB = JSON.parse(b.dataset.reviewData);
 
-            displayReviews(sortedReviews); // 정렬된 데이터 표시
-        });
-    });
-}
-
-function toggleDetail(reviewCard, reviewId, detailBtn) {
-    const detailSection = reviewCard.querySelector('.review-detail');
-    if (!detailSection) {
-        loadReviewDetail(reviewCard, reviewId);
-    } else {
-        detailSection.classList.toggle('show');
-        detailBtn.innerHTML = detailSection.classList.contains('show') ?
-            '<i class="fa-solid fa-minus"></i>상세접기' :
-            '<i class="fa-solid fa-plus"></i>상세보기';
-    }
-}
-
-async function deleteReview(reviewCard, reviewId) {
-    if (confirm('이 리뷰를 삭제하시겠습니까?')) {
-        try {
-            const response = await fetch(`/matzip/reviews/delete/${reviewId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
+                switch (sortType) {
+                    case 'date':
+                        return new Date(dataB.regdate) - new Date(dataA.regdate);
+                    case 'name':
+                        return dataA.matzipName.localeCompare(dataB.matzipName);
+                    case 'rating':
+                        return dataB.starRating - dataA.starRating;
+                    default:
+                        return 0;
                 }
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || '삭제 실패');
-            }
-
-            reviewCard.remove();
-            alert('리뷰가 삭제되었습니다.');
-        } catch (error) {
-            console.error('Error:', error);
-            alert(error.message || '리뷰 삭제에 실패했습니다.');
-        }
-    }
+            reviewsContainer.innerHTML = '';
+            reviews.forEach(review => reviewsContainer.appendChild(review));
+        });
+    });
 }
 
 async function loadReviewDetail(reviewCard, reviewId) {

@@ -43,7 +43,7 @@ public class ReviewController {
     @GetMapping("/reviewList/{memberId}")
     public String reviewListPage(@PathVariable Long memberId, Model model) {
         model.addAttribute("memberId", memberId);
-        ProfileImg profileImg = profileImgService.getProfileImg(memberId);
+        ProfileImg profileImg = profileImgService.getMemberProfileImg(memberId);
         model.addAttribute("profileImg", profileImg);
         return "matzip/reviewList";
     }
