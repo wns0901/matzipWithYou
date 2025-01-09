@@ -8,16 +8,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function displayProfile(profileImg) {
-    console.log(profileImg);
     const friendProfile = document.querySelector('.friend-profile');
-    const match = profileImg.match(/filename=([^,\)]+)/);
-    if (match && match[1]) {
-        filename = match[1];
-    }
+    console.log(profileImg);
+    const profileData = {};
+    profileImg.split(', ').forEach(item => {
+        const [key, value] = item.replace('ProfileImg(', '').replace(')', '').split('=');
+        profileData[key] = value;
+    });
+    filename = profileData.filename;
     console.log(filename);
-    const imgUrl = filename
-        ? `/upload/${filename}?t=${new Date().getTime()}`
-        : `/IMG/defaultProfileImg.png?t=${new Date().getTime()}`;
+    const imgUrl = filename === 'defaultProfileImg.png'
+        ? `/img/defaultProfileImg.png?t=${new Date().getTime()}`
+        : `/upload/${filename}?t=${new Date().getTime()}`;
 
     friendProfile.innerHTML = `
        <img src="${imgUrl}" alt="프로필 이미지">
