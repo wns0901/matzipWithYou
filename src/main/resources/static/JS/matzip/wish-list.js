@@ -23,9 +23,10 @@ function displayProfile(data) {
     const friendProfile = document.querySelector('.friend-profile');
     let imgUrl;
 
-    if (data && data.filename) {
-        // 프로필 데이터가 있고, 파일명이 존재하는 경우
-        imgUrl = '/upload/' + data.filename;
+    if (profile && profile.filename) {
+
+
+        imgUrl = '/upload/' + profile.filename;
     } else {
         // 기본 프로필 이미지를 사용하는 경우
         imgUrl = '/IMG/defaultProfileImg.png';
