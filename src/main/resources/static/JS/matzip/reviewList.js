@@ -10,7 +10,7 @@ function displayProfile(data) {
     const friendProfile = document.querySelector('.friend-profile');
     const imgUrl = data.profile
         ? `/upload/${data.profile.filename}?t=${new Date().getTime()}`
-        : '/IMG/default-profile-img.png';
+        : `/upload/defaultProfileImg.png?t=${new Date().getTime()}`;
 
     friendProfile.innerHTML = `
        <img src="${imgUrl}" alt="프로필 이미지">

@@ -5,18 +5,15 @@ import com.lec.spring.matzip.domain.DTO.ReviewSubmitModalDTO;
 import com.lec.spring.matzip.domain.Review;
 import com.lec.spring.matzip.domain.ReviewTag;
 import com.lec.spring.matzip.domain.Tag;
-import com.lec.spring.matzip.service.ReviewService;
 import com.lec.spring.matzip.service.MatzipService;
+import com.lec.spring.matzip.service.ReviewService;
 import com.lec.spring.member.domain.ProfileImg;
 import com.lec.spring.member.service.ProfileImgService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
@@ -43,7 +40,7 @@ public class ReviewController {
     @GetMapping("/reviewList/{memberId}")
     public String reviewListPage(@PathVariable Long memberId, Model model) {
         model.addAttribute("memberId", memberId);
-        ProfileImg profileImg = profileImgService.getProfileImg(memberId);
+        ProfileImg profileImg = profileImgService.getMemberProfileImg(memberId);
         model.addAttribute("profileImg", profileImg);
         return "matzip/reviewList";
     }
