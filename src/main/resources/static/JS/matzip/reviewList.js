@@ -1,18 +1,22 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const mainElement = document.querySelector('main');
     const memberId = mainElement ? mainElement.dataset.memberId : null;
+    const profileImg = mainElement ? mainElement.dataset.profileImg : null;
 
     await loadReviewList(memberId);
-    await  displayProfile(memberId)
+    displayProfile(profileImg)
 });
 
-async function displayProfile(memberId) {
+function displayProfile(profileImg) {
+    console.log(profileImg);
     const friendProfile = document.querySelector('.friend-profile');
-    const response = await fetch(`/members/${memberId}/profile-img`);
-    const data = await response.json();
-
-    const imgUrl = data?.profile
-        ? `/upload/${data.profile.filename}?t=${new Date().getTime()}`
+    const match = profileImg.match(/filename=([^,\)]+)/);
+    if (match && match[1]) {
+        filename = match[1];
+    }
+    console.log(filename);
+    const imgUrl = filename
+        ? `/upload/${filename}?t=${new Date().getTime()}`
         : `/IMG/defaultProfileImg.png?t=${new Date().getTime()}`;
 
     friendProfile.innerHTML = `
@@ -39,8 +43,6 @@ async function loadReviewList(memberId) {
 }
 
 function displayReviews(reviewsData) {
-    console.log("Received data structure:", reviewsData);
-
     reviewsData.sort((a, b) => {
         return new Date(b.regdate) - new Date(a.regdate);
     });
