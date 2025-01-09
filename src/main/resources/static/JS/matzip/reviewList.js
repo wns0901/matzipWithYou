@@ -3,14 +3,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     const memberId = mainElement ? mainElement.dataset.memberId : null;
 
     await loadReviewList(memberId);
-    displayProfile()
+    await  displayProfile(memberId)
 });
 
-function displayProfile(data) {
+async function displayProfile(memberId) {
     const friendProfile = document.querySelector('.friend-profile');
-    const imgUrl = data.profile
+    const response = await fetch(`/members/${memberId}/profile-img`);
+    const data = await response.json();
+
+    const imgUrl = data?.profile
         ? `/upload/${data.profile.filename}?t=${new Date().getTime()}`
-        : `/upload/defaultProfileImg.png?t=${new Date().getTime()}`;
+        : `/IMG/defaultProfileImg.png?t=${new Date().getTime()}`;
 
     friendProfile.innerHTML = `
        <img src="${imgUrl}" alt="프로필 이미지">
