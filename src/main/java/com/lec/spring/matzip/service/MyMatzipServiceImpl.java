@@ -2,13 +2,13 @@ package com.lec.spring.matzip.service;
 
 import com.lec.spring.matzip.domain.DTO.*;
 import com.lec.spring.matzip.domain.GuCenterLatLng;
-import com.lec.spring.matzip.domain.MyMatzip;
 import com.lec.spring.matzip.domain.WishList;
 import com.lec.spring.matzip.repository.FoodKindRepository;
 import com.lec.spring.matzip.repository.MyMatzipRepository;
 import com.lec.spring.matzip.repository.TagRepository;
 import com.lec.spring.matzip.repository.WishListRepository;
 import com.lec.spring.member.domain.FriendDetailsDTO;
+import com.lec.spring.member.domain.ProfileImg;
 import com.lec.spring.member.repository.MemberRepository;
 import com.lec.spring.member.repository.ProfileImgRepository;
 import org.apache.ibatis.session.SqlSession;
@@ -41,15 +41,16 @@ public class MyMatzipServiceImpl implements MyMatzipService {
     @Override
     public FindingResultMyMatzipDTO findByMemberId(Long id) {
         List<MyMatzipDTO> result = myMatzipRepository.findAll(id);
-        Long memberId = result.get(0).getMemberId();
+        ProfileImg profile = profileImgRepository.findByMemberId(id);
+        String profileFileName = profile == null ? null : profile.getFilename();
         return FindingResultMyMatzipDTO.builder()
                 .cnt(myMatzipRepository.listCntByMemberId(id))
                 .list(result)
-                .memberId(memberId)
-                .profileImg(profileImgRepository.findByMemberId(memberId).getFilename())
+                .memberId(id)
+                .profileImg(profileFileName)
                 .allKindList(foodKindRepository.findAll())
                 .allTagList(tagRepository.findAll())
-                .nickname(memberRepository.findById(memberId).getNickname())
+                .nickname(memberRepository.findById(id).getNickname())
                 .build();
     }
 
@@ -180,7 +181,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
         boolean tagResult = tagRepository.saveMatzipTags(saveMyMatzipDTO.getTagIds(), saveMyMatzipDTO.getId());
         if (!tagResult) return ResponseEntity.badRequest().build();
 
-        List<FriendDetailsDTO> hiddenFirendProfiles = myMatzipRepository.findHiddenFriendDetails(saveMyMatzipDTO.getMemberId(),saveMyMatzipDTO.getMatzipId());
+        List<FriendDetailsDTO> hiddenFirendProfiles = myMatzipRepository.findHiddenFriendDetails(saveMyMatzipDTO.getMemberId(), saveMyMatzipDTO.getMatzipId());
 
         boolean isOpenHiddenMatzip = !hiddenFirendProfiles.isEmpty();
 
@@ -189,7 +190,7 @@ public class MyMatzipServiceImpl implements MyMatzipService {
         memberRepository.updatePoint(saveMyMatzipDTO.getMemberId(), point);
 
         int intimacy = 0;
-        if(isOpenHiddenMatzip) {
+        if (isOpenHiddenMatzip) {
             intimacy = 100;
             List<Long> friendIds = hiddenFirendProfiles.stream().map(FriendDetailsDTO::getFriendId).toList();
             myMatzipRepository.updateIntimacyByFriendsIds(friendIds, intimacy, saveMyMatzipDTO.getMatzipId());
@@ -200,11 +201,11 @@ public class MyMatzipServiceImpl implements MyMatzipService {
         int friendCnt = hiddenFirendProfiles.size();
 
         return ResponseEntity.ok(ReviewSubmitModalDTO.builder()
-                        .friendCount(friendCnt)
-                        .hiddenFriends(hiddenFirendProfiles)
-                        .intimacyIncrease(intimacy)
-                        .rewardPoints(point)
-                        .topFriendName(topFriend.getNickname())
+                .friendCount(friendCnt)
+                .hiddenFriends(hiddenFirendProfiles)
+                .intimacyIncrease(intimacy)
+                .rewardPoints(point)
+                .topFriendName(topFriend.getNickname())
                 .build());
     }
 }
