@@ -292,9 +292,7 @@ const performSearch = async (searchTerm) => {
                         <div class="add-text">
                             <div class="add-nick">${member.nickname}</div>
                             <div class="add-id">ID : ${member.username}</div>
-                            <span class="add-open">공개 맛집 : ${member.publicCount}</span>
-                            <span class="add-hidden"> | </span>
-                            <span class="add-hidden">숨긴 맛집 : ${member.hiddenCount}</span>
+                            <span class="add-open">공개 맛집 : ${member.publicCount} | 숨긴 맛집 : ${member.hiddenCount}</span>
                         </div>
                     </div>
                     <button onclick="sendFriendRequest(${member.id})" 

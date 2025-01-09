@@ -26,7 +26,7 @@ body {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 500px;
+    max-width: 90vh;
 }
 .close {
     color: #aaa;
@@ -38,8 +38,10 @@ body {
 
 
 .friend-card img {
-    width: 9vh;
-    height: 9vh;
+    width: 10vh;
+    height: 10vh;
+    margin-left: -2vh;
+    margin-top: -7vh;
     border-radius: 50%;
 }
 
@@ -266,14 +268,17 @@ body {
 
 .friend-card {
     display: flex;
-    width: 50vh;
+    width: 40vh;
+    height: 24vh;
     background: white;
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
 }
 .add-text{
-    /*display: block;*/
+    display: grid;
+    margin-left: 10vh;
+    margin-top: -10vh;
 }
 
 .add-pimg{
@@ -282,7 +287,7 @@ body {
 }
 
 .add-nick{
-    font-size: 4vh;
+    font-size: 3.5vh;
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bolder;
 }
@@ -295,7 +300,7 @@ body {
 }
 
 .add-open, .add-hidden{
-    font-size: 2vh;
+    font-size: 1.4vh;
     font-family: "Noto Sans KR", sans-serif;
     font-weight: bold;
 }
@@ -331,8 +336,8 @@ body {
 /* 모달 내 검색 결과와 요청 목록을 위한 그리드 레이아웃 */
 
 #searchResults, #pendingRequests {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    /*justify-content: center;*/
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     padding: 15px 0;
@@ -347,9 +352,9 @@ body {
     padding: 4vh;
     margin: 0;
 
-    display: block;
+    /*display: block;*/
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
 
@@ -685,7 +690,8 @@ body {
     /*transform: translateX(210%) translateY(-200%);*/
     border-radius: 10vh;
     border: none;
-    margin-left: 10vh;
+    margin-left: 9vh;
+    margin-top: 15vh;
     background-color: #ff7327;
     color: #FFFFFF;
     font-family: "Noto Sans KR", sans-serif;
