@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function displayProfile(data) {
     const friendProfile = document.querySelector('.friend-profile');
-    const imgUrl = profile ? '/upload/' + profile.filename : '/IMG/member/default-profile-img.png';
+    const imgUrl = data.profile
+        ? `/upload/${data.profile.filename}?t=${new Date().getTime()}`
+        : '/IMG/member/default-profile-img.png';
 
     friendProfile.innerHTML = `
        <img src="${imgUrl}" alt="프로필 이미지">
