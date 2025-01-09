@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function displayProfile(data) {
     const friendProfile = document.querySelector('.friend-profile');
-    const imgUrl = profile ? '/upload/' + profile.filename : '/IMG/defaultProfileImg.png';
+    const imgUrl = data.profile
+        ? `/upload/${data.profile.filename}?t=${new Date().getTime()}`
+        : '/IMG/default-profile-img.png';
 
     friendProfile.innerHTML = `
        <img src="${imgUrl}" alt="프로필 이미지">
@@ -246,4 +248,3 @@ async function loadReviewDetail(reviewCard, reviewId) {
         alert('상세 정보를 불러오는데 실패했습니다.');
     }
 }
-
