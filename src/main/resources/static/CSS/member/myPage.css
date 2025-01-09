@@ -120,39 +120,6 @@ body {
 }
 
 
-/*.heart-button {*/
-/*    background-image: url('/IMG/heart-empty.png');*/
-/*    background-size: cover;*/
-/*    width: 20px;*/
-/*    height: 20px;*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*.heart-button.active {*/
-/*    background-image: url('/IMG/heart-filled.svg');*/
-/*}*/
-
-/* 하트 아이콘 토글 */
-/*.card .heart-icon {*/
-/*    cursor: pointer;*/
-/*    transition: color 0.3s ease;*/
-/*}*/
-
-/*.card .heart-icon.clicked {*/
-/*    color: #FF9F66; !* 주황색 하트 *!*/
-/*}*/
-
-
-
-
-
-
-
-
-
-
-
 /* 왼쪽 프로필 주황색 배경 */
 .profile-section {
     background-color: #FFA375;
@@ -171,29 +138,28 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center; /* 가운데 정렬 */
-    /*margin-top: 140px; !* 상단에서 140px 여백 추가 *!*/
-    /*gap: 20px; !* 각 컨텐츠 간격 *!*/
-    /*margin: 20px;*/
 }
+
 /* 프로필 이미지 및 오버레이 */
 .profile-image-wrapper {
-
-    display: inline-block;
-    justify-content: center;
     position: relative;
-    margin: 10px 0; /* 위아래 여백 */
-    width: 28.5vh;
+    width: 28.5vh; /* 컨테이너 크기 */
     height: 28.5vh;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: #ddd;
+    border-radius: 50%; /* 원형으로 만듭니다 */
+    overflow: hidden; /* 이미지를 틀 밖으로 넘기지 않음 */
+    background-color: #ffffff; /* 기본 배경색 */
 }
 
 .profile-image {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%; /* 기본적으로 너비를 컨테이너에 맞춤 */
+    height: auto; /* 높이는 비율에 맞게 조정 */
+    transform: translate(-50%, -50%); /* 중심 기준으로 정렬 */
+    object-fit: cover; /* 이미지를 틀에 가득 채움 */
+    min-width: 100%; /* 세로로 긴 이미지를 커버 */
+    min-height: 100%; /* 가로로 긴 이미지를 커버 */
 }
 
 .overlay {
@@ -222,7 +188,7 @@ body {
 .settings-button {
     margin: 10px 0;
     position: absolute;
-    top: 10px;
+    /*top: 10px;*/
     right: 0px;
     background-color: #FF7A29;
     border: none;
@@ -233,8 +199,8 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    z-index: 100;
-    margin-bottom: -20px;
+    z-index: 10;
+    /*margin-bottom: -20px;*/
     transform: translateX(25%) translateY(-25%)
 }
 
