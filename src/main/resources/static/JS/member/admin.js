@@ -115,7 +115,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.tagName}</td>
-                        <td>${formatDate(item.regdate)}</td>
                         <td><button class="delete-btn" data-id="${item.id}" data-type="tags">삭제</button></td>
                     </tr>
                 `).join('');
@@ -125,7 +124,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.kindName}</td>
-                        <td>${formatDate(item.regdate)}</td>
                         <td><button class="delete-btn" data-id="${item.id}" data-type="foodkinds">삭제</button></td>
                     </tr>
                 `).join('');

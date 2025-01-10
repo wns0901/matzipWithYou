@@ -60,12 +60,14 @@ ALTER TABLE tag
     AUTO_INCREMENT = 1;
 
 DELETE
-    FROM friend;
+FROM friend;
 ALTER TABLE friend
     AUTO_INCREMENT = 1;
 
-DELETE FROM my_matzip;
-ALTER TABLE my_matzip AUTO_INCREMENT = 1;
+DELETE
+FROM my_matzip;
+ALTER TABLE my_matzip
+    AUTO_INCREMENT = 1;
 
 
 -- authority 테이블 더미 데이터
@@ -101,11 +103,6 @@ VALUES ('member_user1', '$2a$10$690GlSAI0trgN6BsyENwOOoB/zjq7h5cUVVr0KpzzgR5Xb5c
         'test8', '하늘'),
        ('MEMBER_USER12', '$2a$10$KuDVfAdLx0leQBUmzBwr6uvk5mUg.UnScNq9qC8PWxeiayMBKErjG', 'member12@email.com', 300,
         'test9', '이동희')
-
-
-
-
-
 ;
 
 -- member_authorities 테이블 더미 데이터
@@ -138,7 +135,7 @@ VALUES ('기타'),
 
 -- matzip 테이블 샘플 데이터
 INSERT INTO matzip
-(name, kind_id, address, lat, lng, img_url, gu, kakao_map_url)
+    (name, kind_id, address, lat, lng, img_url, gu, kakao_map_url)
 VALUES ('치킨공식', 2, '서울 강남구 역삼로17길 64 역삼동A4스페이스 1층', '37.49882190149589', '127.03662632505247',
         '//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2F0C4DB8929DDF4EAFA24A56B9EB3BAB97',
         '강남구', 'https://place.map.kakao.com/753087736'),
@@ -288,9 +285,9 @@ VALUES ('치킨공식', 2, '서울 강남구 역삼로17길 64 역삼동A4스페
        ('야스미', 4, '서울 종로구 대명길 39-10 1,2층 (우)03078', '37.582664', '126.999964',
         '//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fplace%2F8F9EB895A05F490186C27E1CB8A45EC1',
         '종로구', 'https://place.map.kakao.com/13495138'),
-        ('광화문미진 본점',2, '서울 종로구 종로 19 르메이에르종로타운 1층 116-2,117호 (우)03157','37.570767', '126.979873',
-         '//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F0F10F43E18A04E6B8C04C2F7F7FA8DD3&quot',
-         '종로구','https://place.map.kakao.com/m/21326655')
+       ('광화문미진 본점', 2, '서울 종로구 종로 19 르메이에르종로타운 1층 116-2,117호 (우)03157', '37.570767', '126.979873',
+        '//t1.kakaocdn.net/thumb/T800x0.q50/?fname=http%3A%2F%2Ft1.kakaocdn.net%2Ffiy_reboot%2Fplace%2F0F10F43E18A04E6B8C04C2F7F7FA8DD3&quot',
+        '종로구', 'https://place.map.kakao.com/m/21326655')
 ;
 
 
@@ -369,8 +366,26 @@ VALUES (1, 3, 'PRIVATE', '나만 알고 싶은 비공개 맛집', 5),
        (45, 4, 'PUBLIC', '타이푸드 맛집', 5),
        (46, 1, 'PRIVATE', '티라미수가 맛있어요', 4),
        (47, 2, 'PUBLIC', '인도 커리 맛집', 5),
-       (48, 3, 'HIDDEN', '일식 스시 맛집', 5)
-;
+       (48, 3, 'HIDDEN', '일식 스시 맛집', 5),
+       (15, 1, 'PUBLIC', '중국요리 전문점 중 최고의 맛집! 특히 짜장면이 일품입니다.', 5),
+       (16, 2, 'PRIVATE', '분위기 좋은 하이볼바, 안주도 맛있어요', 4),
+       (17, 3, 'PUBLIC', '디저트가 정말 맛있는 곳, 특히 마카롱이 일품', 5),
+       (18, 4, 'HIDDEN', '파스타가 정말 맛있는 숨은 맛집', 4),
+       (19, 1, 'PUBLIC', '멕시칸 음식이 그리울 때 방문하는 최고의 맛집', 5),
+       (20, 2, 'PRIVATE', '신선한 회와 초밥이 일품인 곳', 5),
+       (21, 3, 'PUBLIC', '중식당 중에서 가장 맛있는 탕수육', 4),
+       (22, 4, 'HIDDEN', '라멘의 깊은 맛을 느낄 수 있는 곳', 5),
+       (23, 1, 'PUBLIC', '고기 질이 정말 좋은 맛집', 5),
+       (24, 2, 'PRIVATE', '분위기 있는 비스트로, 와인이 맛있어요', 4),
+       (25, 3, 'PUBLIC', '중식당 중 가성비 최고의 맛집', 5),
+       (26, 4, 'HIDDEN', '만두가 정말 맛있는 숨은 맛집', 4),
+       (27, 1, 'PUBLIC', '커피와 디저트가 모두 맛있는 카페', 5),
+       (28, 2, 'PRIVATE', '은은한 분위기의 술집, 안주가 맛있어요', 4),
+       (29, 3, 'PUBLIC', '쿠키가 정말 맛있는 디저트 카페', 5),
+       (30, 4, 'HIDDEN', '젤라또의 신세계를 보여주는 곳', 5),
+       (31, 1, 'PUBLIC', '맥주가 맛있는 분위기 좋은 펍', 4),
+       (32, 2, 'PRIVATE', '파스타와 피자가 모두 맛있는 곳', 5),
+       (33, 3, 'PUBLIC', '일본 가정식을 즐길 수 있는 맛집', 4);
 
 -- friend 테이블 샘플 데이터
 INSERT INTO friend(sender_id, receiver_id, intimacy, is_accept)
@@ -389,20 +404,20 @@ VALUES (1, 2, 200, TRUE),
 
 -- tag 데이터 생성
 INSERT INTO tag (tagname)
-VALUES ('혼밥'),         -- 1
-       ('느낌 좋은'),      -- 2
-       ('JMT'),        -- 3
-       ('맛있다'),        -- 4
-       ('깔끔하다'),       -- 5
-       ('친절하다'),       -- 6
-       ('양많다'),        -- 7
-       ('분위기좋다'),      -- 8
-       ('가성비굿'),       -- 9
-       ('빨리 제공'), -- 10
-       ('카공'),         -- 11
-       ('친구와 함께'),     -- 12
-       ('연인과 함께'),     -- 13
-       ('매장이 청결'),   -- 14
+VALUES ('혼밥'),     -- 1
+       ('느낌 좋은'),  -- 2
+       ('JMT'),    -- 3
+       ('맛있다'),    -- 4
+       ('깔끔하다'),   -- 5
+       ('친절하다'),   -- 6
+       ('양많다'),    -- 7
+       ('분위기좋다'),  -- 8
+       ('가성비굿'),   -- 9
+       ('빨리 제공'),  -- 10
+       ('카공'),     -- 11
+       ('친구와 함께'), -- 12
+       ('연인과 함께'), -- 13
+       ('매장이 청결'), -- 14
        ('인테리어 굿!');
 -- 15
 
@@ -612,8 +627,76 @@ values (1, 1),
        (4, 28),
        (6, 28),
        (8, 29),
-       (4, 29)
-;
+       (4, 29),
+       (4, 10),
+       (8, 31),
+       (13, 31),
+       (7, 31),
+       (2, 31),
+       (4, 32),
+       (8, 32),
+       (6, 32),
+       (15, 32),
+       (4, 33),
+       (5, 33),
+       (9, 33),
+       (1, 33),
+       (4, 35),
+       (15, 35),
+       (2, 35),
+       (8, 35),
+       (4, 36),
+       (7, 36),
+       (9, 36),
+       (8, 36),
+       (4, 37),
+       (7, 37),
+       (9, 37),
+       (1, 37),
+       (4, 38),
+       (8, 38),
+       (13, 38),
+       (15, 38),
+       (8, 39),
+       (13, 39),
+       (2, 39),
+       (4, 39),
+       (4, 40),
+       (9, 40),
+       (1, 40),
+       (6, 40),
+       (4, 41),
+       (15, 41),
+       (2, 41),
+       (8, 41),
+       (8, 42),
+       (13, 42),
+       (4, 42),
+       (2, 42),
+       (4, 43),
+       (8, 43),
+       (7, 43),
+       (9, 43),
+       (4, 44),
+       (7, 44),
+       (9, 44),
+       (8, 44),
+       (4, 45),
+       (8, 45),
+       (6, 45),
+       (15, 45),
+       (4, 46),
+       (15, 46),
+       (2, 46),
+       (8, 46),
+       (4, 47),
+       (7, 47),
+       (9, 47),
+       (6, 47),
+       (4, 48),
+       (5, 48),
+       (8, 48),
+       (13, 48);
 
 --  친구관계 && 히든
 insert into user_matzip_tag_status (member_id, my_matzip_id, tag_id)
