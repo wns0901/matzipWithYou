@@ -101,8 +101,49 @@ table{
     display: flex;
 
 }
+
 .title {
     text-shadow: 2px 2px 4px rgb(239, 138, 71); /* 그림자 효과 */
+}
+
+
+#title-logo{
+    color: white;
+    position: fixed;
+    width: 50%;
+    bottom: 0px;
+    right: 5%; /* 오른쪽 가장자리에 배치 */
+    display: flex;
+}
+
+/*page2*/
+#seoul-map {
+    width: 40%;
+    position: fixed;
+    top: 55%; /* 수직 중앙 정렬 */
+    left: 50px; /* 좌측에 배치 */
+    transform: translateY(-50%); /* 수직 중앙 정렬을 위한 변환 */
+    z-index: 1;
+}
+
+#hint-alert{
+    width: 30%;
+    position: fixed;
+    top: 60%;
+    z-index: 2;
+}
+
+#page2-title{
+    color: #FFFFFF;
+    width: 600px;
+    hight: 50px;
+    font-size: 60px;
+    font-weight: bold;
+    width: 720px;
+    position: fixed;
+    left: 45%;
+    bottom: 47%;
+    font-size: 80px;
 }
 
 
