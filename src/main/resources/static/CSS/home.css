@@ -97,6 +97,7 @@ table{
     display: flex;
 
 }
+
 .title {
     text-shadow: 2px 2px 4px rgb(239, 138, 71); /* 그림자 효과 */
 }
@@ -108,7 +109,6 @@ table{
     bottom: 0px;
     right: 5%; /* 오른쪽 가장자리에 배치 */
     display: flex;
-
 }
 
 /*page2*/

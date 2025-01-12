@@ -234,7 +234,7 @@ async function loadFriendRequests() {
 
         const container = document.getElementById('pendingRequests');
         container.innerHTML = requests.length === 0 ?
-            '<p>친구 요청을 한 사람이 없습니다.</p>' :
+            '<p>대기중인 친구 요청이 없습니다.</p>' :
             requests.map(request => createRequestCard(request)).join('');
 
         requestModal.style.display = 'block';
@@ -248,15 +248,19 @@ function createRequestCard(request) {
         <div class="friend-card">
             <div>
                 <img src="${request.profileImg || '/IMG/defaultProfileImg.png'}" 
-                     onerror="this.src='/IMG/defaultProfileImg.png'">
-                <span>${request.nickname}</span>
-                <span>${request.username}</span>
-                <span>공개: ${request.publicCount}</span>
-                <span>비공개: ${request.hiddenCount}</span>
+                     onerror="this.src='/IMG/defaultProfileImg.png'"
+                     class="add-pimg">
+                <div class="add-text">
+                    <div class="add-nick">${request.nickname}</div>
+                    <div class="add-id">${request.username}</div>
+                    <span>공개: ${request.publicCount} | 비공개: ${request.hiddenCount}</span>
+                </div>
             </div>
             <div>
-                <button onclick="respondToRequest(${request.senderId}, true)">수락</button>
-                <button onclick="respondToRequest(${request.senderId}, false)">거절</button>
+                <button onclick="respondToRequest(${request.senderId}, true)"
+                class="btn-accept">수락</button>
+                <button onclick="respondToRequest(${request.senderId}, false)"
+                class="btn-reject">거절</button>
             </div>
         </div>
     `;

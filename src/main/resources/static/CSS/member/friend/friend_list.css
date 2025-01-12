@@ -40,7 +40,7 @@ body {
 .friend-card img {
     width: 10vh;
     height: 10vh;
-    margin-left: -2vh;
+    margin-left: -1vh;
     margin-top: -7vh;
     border-radius: 50%;
 }
@@ -277,7 +277,7 @@ body {
 }
 .add-text{
     display: grid;
-    margin-left: 10vh;
+    margin-left: 11vh;
     margin-top: -10vh;
 }
 
@@ -392,9 +392,22 @@ body {
 }
 
 .btn-accept {
-    background-color: #40c057;
-    color: white;
-    margin-right: 8px;
+    /*background-color: #40c057;*/
+    /*color: white;*/
+    /*margin-right: 8px;*/
+    width: 8vh;
+    height: 5vh;
+    position: absolute;
+    /*transform: translateX(210%) translateY(-200%);*/
+    border-radius: 10vh;
+    border: none;
+    margin-left: -20vh;
+    margin-top: 5vh;
+    background-color: #ff7327;
+    color: #FFFFFF;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    font-size: 2vh;
 }
 
 .btn-accept:hover {
@@ -402,8 +415,21 @@ body {
 }
 
 .btn-reject {
-    background-color: #ff6b6b;
-    color: white;
+    /*background-color: #ff6b6b;*/
+    /*color: white;*/
+    width: 8vh;
+    height: 5vh;
+    position: absolute;
+    /*transform: translateX(210%) translateY(-200%);*/
+    border-radius: 10vh;
+    border: none;
+    margin-left: -10vh;
+    margin-top: 5vh;
+    background-color: #ff7327;
+    color: #FFFFFF;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: bold;
+    font-size: 2vh;
 }
 
 .btn-reject:hover {
