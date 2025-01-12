@@ -280,4 +280,7 @@ JOIN my_matzip mz ON f.memberid = mz.member_id AND mz.matzip_id = 6 AND mz.visib
 LEFT JOIN profile_img p ON m.id = p.id;
 
 
-
+SELECT * FROM matzip_tag
+WHERE (tag_id = 7 AND my_matzip_id = 5)
+   OR (tag_id = 1 AND my_matzip_id = 4)
+   OR (tag_id = 15 AND my_matzip_id = 2);

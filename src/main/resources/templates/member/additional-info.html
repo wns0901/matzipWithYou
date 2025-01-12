@@ -7,6 +7,13 @@
     <link rel="stylesheet" th:href="@{/CSS/member/additional-info.css}">
 </head>
 <body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var isKakao = [[${member?.provider} == 'kakao' ? 'true' : 'false']];
+    console.log("카카오 OAuth2인가요? : " + isKakao);
+    /*]]>*/
+</script>
+
 <div class="container">
     <img class="logo" src="/IMG/logo.png" alt="LOGO">
 
@@ -36,11 +43,22 @@
 
         <div class="form-group">
             <label for="email">이메일</label>
-            <input type="email" id="email" name="email"
-                   class="form-control"
-                   th:value="${member?.provider == 'kakao' ? '' : member?.email}"
-                   placeholder="email@example.com"
-                   required>
+            <div class="email-input-container">
+                <input type="email" class="form-control with-button" id="email" name="email"
+                       placeholder="email@example.com" th:value="${member?.provider == 'kakao' ? '' : member?.email}" />
+                <button type="button" class="email-verify-button" id="verifyButton"
+                        th:if="${member?.provider == 'kakao'}">인증하기</button>
+            </div>
+        </div>
+
+        <div class="form-group" id="verificationCodeGroup" style="display: none;">
+            <label for="verificationCode">인증 코드</label>
+            <div class="verificationDiv">
+                <input type="text" id="verificationCode" name="verificationCode">
+                <button type="button" class="email-verify-button" id="authButton">인증</button>
+
+                <div id="timer" style="color: red;"></div>
+            </div>
         </div>
 
         <div class="form-group">
@@ -53,5 +71,7 @@
         <button type="submit" class="btn-primary">저장</button>
     </form>
 </div>
+
+<script th:src="@{/JS/member/kakaoEmailAuth.js}"></script>
 </body>
 </html>

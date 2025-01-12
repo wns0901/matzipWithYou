@@ -11,38 +11,24 @@
 <th:block th:insert="~{common/header::header}"></th:block>
 <!--page1-->
 <div class="section" id="page1" >
-    <table>
-        <tr>
-            <td class="title title1">Matzip</td>
-        </tr>
-        <tr>
-            <td class="title">With</td>
-        </tr>
-        <tr>
-            <td class="title">you</td>
-        </tr>
-    </table>
-    <img  id="title-logo" src="/IMG/title-logo.png">
 
+    <img   class="page-img"  src="/IMG/startpage.png">
 
     <a class="btn"
        sec:authorize="isAuthenticated()"
-
        th:href="@{/matzips/{memberId}(memberId=${#authentication.principal.member.id})}">Start</a>
-
     <a class="btn"
        sec:authorize="!isAuthenticated()"
        th:href="@{/member/login}">Start</a></div>
 <!--page2-->
-<div class="section" id="page2"><img id="seoul-map" src="/IMG/seoul-img.png">
-    <img id="hint-alert" src="/IMG/hint-alert.png">
-<div id="page2-title"> 친구의 숨은 맛집을 찾아보세요.</div></div>
+<div class="section" id="page2">
+    <img class="page-img" src="/IMG/page1.png">
+ </div>
 <!--page3-->
-<div class="section" id="page3"><img id="hint-img" src="/IMG/hint.png">  <img id="hints" src="/IMG/popp.png"> <div id="page3-title">힌트를 구매해 숨은 맛집을 알아내보세요</div></div>
+<div class="section" id="page3"><img class="page-img" src="/IMG/page2.png"> </div>
 <!--page4-->
-<div class="section" id="page4"><img id="intimicy" src="/IMG/intimicy.png">
-<div id="page4-title">숨은 맛집을 찾아 친구와의 친밀도를 </div>
-    <div id="page4-title2">높여보세요</div>
+<div class="section" id="page4">
+    <img class="page-img" src="/IMG/page3.png">
 </div>
 <!--page5-->
 <div class="section" id="page5">
