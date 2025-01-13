@@ -26,12 +26,11 @@
     </delete>
 
     <!-- 친구 삭제 -->
-    <update id="deleteFriend" parameterType="Long">
-        UPDATE friend
-        SET is_accept = false
-        WHERE (sender_id = #{friendId} OR receiver_id = #{friendId})
-          AND is_accept = true
-    </update>
+    <delete id="deleteFriend">
+        DELETE FROM friend
+        WHERE (sender_id = #{friendId} AND receiver_id = #{memberId})
+           OR (sender_id = #{memberId} AND receiver_id = #{friendId})
+    </delete>
 
     <!-- 친구 신청 보낼 때 이미 보낸/받은 신청은 아닌지 확인 -->
     <select id="isAlreadyFriend" parameterType="com.lec.spring.member.domain.Friend" resultType="boolean">

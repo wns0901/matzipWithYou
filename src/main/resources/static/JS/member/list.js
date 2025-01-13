@@ -55,6 +55,17 @@ function loadFriendsList(memberId) {
         .then(friends => {
             friendsList = friends;
             updateFriendList(friends);
+            // Ranking 섹션도 초기화
+            const rankingSections = document.querySelectorAll('.ranking-section');
+            rankingSections.forEach(section => {
+                const existingProfile = section.querySelector('.ranking-profile');
+                if (existingProfile) {
+                    existingProfile.remove();
+                }
+            });
+            // TOP 3 친구들의 프로필을 다시 추가
+            const top3Friends = [...friends].sort((a, b) => b.intimacy - a.intimacy).slice(0, 3);
+            updateRankingProfiles(top3Friends);
         })
         .catch(error => {
             console.error('친구 목록 로딩 오류:', error);
@@ -78,12 +89,8 @@ function updateFriendList(friends) {
         return;
     }
 
-    // TOP 3 친구들의 프로필을 랭킹 섹션에 추가
-    const top3Friends = [...friends].sort((a, b) => b.intimacy - a.intimacy).slice(0, 3);
-    updateRankingProfiles(top3Friends);
-
     // TOP 3 리스트와 전체 친구 목록 생성
-    createTop3List(top3Friends, container);
+    createTop3List([...friends].sort((a, b) => b.intimacy - a.intimacy).slice(0, 3), container);
     createFullFriendList(friends, container);
 }
 
@@ -400,13 +407,31 @@ async function deleteFriend(friendId) {
 
         const affectedRows = await response.json();
         if (affectedRows > 0) {
-            await loadFriendsList(memberId);
+            // 친구 목록에서 해당 친구 제거
+            friendsList = friendsList.filter(friend => friend.friendId !== friendId);
+
+            // 전체 UI 업데이트
+            updateFriendList(friendsList);
+
+            // Ranking 섹션 초기화 및 재생성
+            const rankingSections = document.querySelectorAll('.ranking-section');
+            rankingSections.forEach(section => {
+                const existingProfile = section.querySelector('.ranking-profile');
+                if (existingProfile) {
+                    existingProfile.remove();
+                }
+            });
+
+            const top3Friends = [...friendsList].sort((a, b) => b.intimacy - a.intimacy).slice(0, 3);
+            updateRankingProfiles(top3Friends);
         }
-    } catch (error) {
+    } catch
+        (error) {
         console.error('친구 삭제 실패:', error);
         alert('친구 삭제에 실패했습니다.');
     }
 }
+
 
 // 모달 닫기 이벤트
 document.querySelectorAll('.close').forEach(closeBtn => {

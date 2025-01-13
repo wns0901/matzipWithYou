@@ -64,15 +64,14 @@ public class FriendController {
         return ResponseEntity.ok(affectedRows);
     }
 
+
     // 친구 삭제
-    @ResponseBody
     @DeleteMapping("")
     public ResponseEntity<Integer> deleteFriend(
             @RequestBody Map<String, Long> request,
             @PathVariable Long memberId
     ) {
-        Long friendId = request.get("friendId");
-        int affectedRows = friendService.deleteFriend(friendId, memberId);
+        int affectedRows = friendService.deleteFriend(request.get("friendId"), memberId);
         return ResponseEntity.ok(affectedRows);
     }
 
