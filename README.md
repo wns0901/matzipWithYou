@@ -1,20 +1,42 @@
+
+
+
 # 맛집이쥬 - 너와 나의 비밀맛집
-![banner](https://github.com/wns0901/matzipWithYou/src/main/resources/static/IMG/banner.jpg)
+![banner](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/banner_readme.jpg)
+
+## 맛집이쥬 설명 뭐쓰지.. 친구와 나만이 공유하는 비밀 맛집을 만들고 찾아보자~
+<br/><br/><br/>
 
 
+<div align="center">
+    <a href="http://matzipwithyou.kro.kr/">✨맛집이쥬 홈페이지✨</a>
+</div>
+
+<br/><br/><br/>
 
 
+# Team
+### 🤝 PULL GUYS 
+
+![Fallguys](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/Fallguys.jpg)
+ - 게임 FALL GUYS의 제목을 차용하여, 팀원끼리 당기며 서로 이끌어 나가자는 의미입니다.
+
+<br/><br/><br/>
+
+### 📌 Members
+
+| NAME | 이동희 (팀장) | 이유나 (서기) | 장준영 | 현지윤 | 황예은 |
+|---|---|---|---|---|---|
+| |(사진링크)|(사진링크)|(사진링크)|(사진링크)|(사진링크)|
+| Front-end | 자기담당 써주세용 | <div/># 마이페이지 <div/># 친구 목록 | 자기담당 써주세용 | 자기담당 써주세용 | 자기담당 써주세용 |
+| Back-end | 자기담당 써주세용 | 마이페이지 | 자기담당 써주세용 | 자기담당 써주세용 | 자기담당 써주세용 |
+|||||||
+| Concept Designer | 조은교 |||||
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 
-# PULL GUYS
-## member
- - 이동희
- - 이유나
- - 장준영
- - 현지윤
- - 황예은
- - 박동신
-
+# 구버전...
 # 프로젝트 명
 ## MatzipWithYou
 
