@@ -1,3 +1,11 @@
+# 맛집이쥬 - 너와 나의 비밀맛집
+![banner](https://github.com/wns0901/matzipWithYou/src/main/resources/static/IMG/banner.jpg)
+
+
+
+
+
+
 # PULL GUYS
 ## member
  - 이동희
