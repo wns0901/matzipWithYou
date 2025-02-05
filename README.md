@@ -27,36 +27,116 @@
 
 | NAME | 이동희 (팀장) | 이유나 (서기) | 장준영 | 현지윤 | 황예은 |
 |---|---|---|---|---|---|
-| |(사진링크)|(사진링크)|(사진링크)|(사진링크)|(사진링크)|
-| Front-end | 자기담당 써주세용 | <div/># 마이페이지 <div/># 친구 목록 | 자기담당 써주세용 | 자기담당 써주세용 | 자기담당 써주세용 |
-| Back-end | 자기담당 써주세용 | 마이페이지 | 자기담당 써주세용 | 자기담당 써주세용 | 자기담당 써주세용 |
+| |![quokka](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/quokka.svg)|![hamster](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/hamster.svg)|![pumpkin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-pumpkin-1.svg)|![penguin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/penguin.svg)|![desertfox](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/dessert-fox.svg)|
+| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/># 친구 목록 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | 자기담당 <div/># 써주세용 |
+| Back-end | <div/># 프로필 사진 <div/>#  | <div/># 마이페이지 <div/># 친구 기능 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
+| Others || <div/># UX/UI <div/>#  ||||
 |||||||
-| Special Member | 조은교 (컨셉 디자인) |||||
+||![blue](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-blue.svg)|||||
+| Special Member | 조은교 (디자인) |||||
 
 <br/><br/><br/><br/><br/>
 # Pages
 각 페이지 캡쳐해서 올리기
+(우리 배포 버전은 아직 업뎃 안 됐어용! 업뎃 후에 캡쳐 합시다~!!)
+
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-- 💡 페이지 공통사항:
-    - 상단의 메뉴바에서는 항상 고정되어 있습니다.
+- 💡 페이지 공통사항
+    - 상단의 메뉴바는 항상 고정되어 있습니다.
     - 메뉴바 좌측의 로고를 클릭하면 메인 페이지로 이동합니다.
     - 메뉴바 우측에서 로그인 정보를 확인할 수 있습니다.
         - 로그아웃된 상태에서는 '로그인'과 '회원가입' 버튼 표시
         - 로그인된 상태에서는 'ㅇㅇ님 환영합니다!' 및 카테고리별 페이지 표시
+ <br/><br/>
 
+빠진 거 있으면 더 넣어주세영
 
+- 메인 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/>
+ 
+- 회원가입 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/>
 
+ - 로그인 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/>
 
+- 지역구? 친구? 선택 페이지?
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/>
 
+- 선택한 지역구 페이지?
+    - ㅇㅇ
+    - ㅇㅇ
+  <br/><br/>
+    
+ - 리뷰 작성 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
 
+ - 마이페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/>
+
+ - 친구 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/>
+
+ - 위시 리스트 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
+
+ - 나의 맛집 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/> 
+
+ - 나의 리뷰 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
+
+ - 비밀번호 변경 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
+
+ - 관리자 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
+
+<br/><br/><br/><br/><br/>
+
+# Skills
+이거밖에 없나요? 더 있을 거 같은데 으어어어
+| Front-end | Back-end | Others |
+|:---:|:---:|:---:|
+| JavaScript | JAVA | aws |
+| HTML | SpringBoot | GitHub |
+| CSS | Gradle | Figma |
+|  | MySQL | Google Drive|
+|  | Redis | Discord |
+|  | OAuth |  |
+|  |  |  |
 
 
 
 
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-# 구버전...
+# 구버전... 이거 컨벤션들 어딘가 백업 해둬야 할 것 같은디... 으디에 하지..?
 # 프로젝트 명
 ## MatzipWithYou
 
