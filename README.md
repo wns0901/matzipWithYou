@@ -19,7 +19,7 @@
 ### 🤝 PULL GUYS 
 
 ![Fallguys](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/Fallguys.jpg)
- - 게임 FALL GUYS의 제목을 차용하여, 팀원끼리 당기며 서로 이끌어 나가자는 의미입니다.
+ - 게임 FALL GUYS의 제목을 차용했으며, 팀원끼리 당겨주며 서로 이끌어 나가자는 의미입니다.
 
 <br/><br/><br/>
 
@@ -28,17 +28,18 @@
 | NAME | 이동희 (팀장) | 이유나 (서기) | 장준영 | 현지윤 | 황예은 |
 |---|---|---|---|---|---|
 | |![quokka](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/quokka.svg)|![hamster](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/hamster.svg)|![pumpkin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-pumpkin-1.svg)|![penguin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/penguin.svg)|![desertfox](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/dessert-fox.svg)|
-| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/># 친구 목록 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | 자기담당 <div/># 써주세용 |
+| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/># 친구 목록 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
 | Back-end | <div/># 프로필 사진 <div/>#  | <div/># 마이페이지 <div/># 친구 기능 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
 | Others || <div/># UX/UI <div/>#  ||||
 |||||||
-||![blue](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-blue.svg)|||||
 | Special Member | 조은교 (디자인) |||||
+||![blue](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-blue.svg)|||||
+
 
 <br/><br/><br/><br/><br/>
 # Pages
 각 페이지 캡쳐해서 올리기
-(우리 배포 버전은 아직 업뎃 안 됐어용! 업뎃 후에 캡쳐 합시다~!!)
+(우리 배포 버전은 아직 업뎃 안 됐어요! 업뎃 후에 캡쳐 합시다~)
 
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -83,8 +84,13 @@
 <br/><br/> 
 
  - 마이페이지
-    - ㅇㅇ
-    - ㅇㅇ
+    - 좌측의 주황색 영역은 회원 프로필 영역입니다.
+        - 원형 영역은 회원의 프로필 사진 입니다. 클릭하면 이미지를 변경할 수 있습니다.
+        - 프로필 사진의 우측 상단에는 설정 버튼입니다. 비밀번호 변경과 회원 탈퇴 카테고리가 토글 됩니다.
+            - 비밀번호 변경 페이지로 이동합니다.
+            - 회원 탈퇴를 할 수 있습니다. 
+    - 우측의 백색 영역은 회원의 위시리스트, 나의 맛집, 나의 리뷰를 미리 볼 수 있습니다.
+    - '전체보기' 버튼을 통해 각 카테고리의 관리 페이지로 이동할 수 있습니다.
 <br/><br/>
 
  - 친구 페이지
