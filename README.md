@@ -1,12 +1,161 @@
-# PULL GUYS
-## member
- - 이동희
- - 이유나
- - 장준영
- - 현지윤
- - 황예은
- - 박동신
 
+
+
+# 맛집이쥬 - 너와 나의 비밀맛집
+![banner](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/banner_readme.jpg)
+
+## 맛집이쥬 설명 뭐쓰지.. 친구와 나만이 공유하는 비밀 맛집을 만들고 찾아보자~
+<br/><br/><br/>
+
+
+<div align="center">
+    <a href="http://matzipwithyou.kro.kr/">✨맛집이쥬 홈페이지✨</a>
+</div>
+
+<br/><br/><br/>
+
+
+# Team
+### 🤝 PULL GUYS 
+
+![Fallguys](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/Fallguys.jpg)
+ - 게임 FALL GUYS의 제목을 차용했으며, 팀원끼리 당겨주며 서로 이끌어 나가자는 의미입니다.
+
+<br/><br/><br/>
+
+### 📌 Members
+
+| NAME | 이동희 (팀장) | 이유나 (서기) | 장준영 | 현지윤 | 황예은 |
+|---|---|---|---|---|---|
+| |![quokka](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/quokka.svg)|![hamster](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/hamster.svg)|![pumpkin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-pumpkin-1.svg)|![penguin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/penguin.svg)|![desertfox](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/dessert-fox.svg)|
+| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/># 친구 목록 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
+| Back-end | <div/># 프로필 사진 <div/>#  | <div/># 마이페이지 <div/># 친구 기능 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
+| Others || <div/># UX/UI <div/>#  ||||
+|||||||
+| Special Member | 조은교 (디자인) |||||
+||![blue](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-blue.svg)|||||
+
+
+<br/><br/><br/><br/><br/>
+# Pages
+각 페이지 캡쳐해서 올리기
+(우리 배포 버전은 아직 업뎃 안 됐어요! 업뎃 후에 캡쳐 합시다~)
+
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+- 💡 페이지 공통사항
+    - 상단의 메뉴바는 항상 고정되어 있습니다.
+    - 메뉴바 좌측의 로고를 클릭하면 메인 페이지로 이동합니다.
+    - 메뉴바 우측에서 로그인 정보를 확인할 수 있습니다.
+        - 로그아웃된 상태에서는 '로그인'과 '회원가입' 버튼 표시
+        - 로그인된 상태에서는 'ㅇㅇ님 환영합니다!' 및 카테고리별 페이지 표시
+ <br/><br/>
+
+빠진 페이지 있으면 더 넣어주세영
+
+- 메인 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/>
+ 
+- 회원가입 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/>
+
+ - 로그인 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/>
+
+- 지역구? 친구? 선택 페이지?
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/>
+
+- 선택한 지역구 페이지?
+    - ㅇㅇ
+    - ㅇㅇ
+  <br/><br/>
+    
+ - 리뷰 작성 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
+
+ - 마이페이지
+    - 좌측의 주황색 영역은 회원 프로필 영역입니다.
+        - 원형 영역은 회원의 프로필 사진 입니다. 클릭하면 이미지를 변경할 수 있습니다.
+        - 프로필 사진의 우측 상단의 톱니바퀴는 설정 버튼입니다. 비밀번호 변경과 회원 탈퇴 카테고리가 토글됩니다.
+            - '비밀번호 변경' 클릭 시 해당 페이지로 이동합니다.
+            - '회원 탈퇴' 클릭 시 경고 팝업이 뜨며 탈퇴 여부를 결정할 수 있습니다.
+        - 닉네임 옆의 연필 아이콘을 누르면 닉네임을 변경할 수 있습니다.
+            - 변경 시 5,000pt가 소비되며, 소지 포인트가 부족할 경우 안내 메시지가 표시됩니다.
+            - 20자 이하의 숫자, 영어, 한글만 허용됩니다.
+        - 닉네임 아래의 카드에는 나의 친구 수와 소지한 포인트 수치가 표시됩니다.
+            - '친구' 카테고리 클릭 시 친구 페이지로 이동합니다.   
+    - 우측의 백색 영역에서는 해당 회원의 '위시리스트', '나의 맛집', '나의 리뷰'를 최신 등록 순으로 미리 볼 수 있습니다.
+        - '전체보기' 버튼을 통해 각 카테고리의 관리 페이지로 이동할 수 있습니다.
+<br/><br/>
+
+ - 친구 페이지
+    - 상단에는 친밀도가 높은 상위 3명의 친구가 표시됩니다.
+    - 바로 아래에 '정렬방식' 선택 버튼과 '친구 추가/요청' 버튼이 있습니다.
+        - 정렬 기능은 친구관계 등록순, 가나다순, 친밀도순 중 1가지를 선택할 수 있습니다.
+        - '친구 추가' 버튼 클릭 시 검색창이 뜨며, 상대방의 닉네임을 통해 회원을 검색할 수 있습니다.
+        - '친구 요청'은 내가 받은 요청들을 보여줍니다.   
+    - 하단에는 친구 관계인 회원들의 목록이 표시됩니다.
+        - 친구의 프로필 카드 영역을 클릭해 해당 친구의 맛집 목록 페이지로 이동할 수 있습니다.
+        - 프로필 카드 영역에는 친구의 계정 정보와 맛집 개수가 표시됩니다.
+        - 우측의 '친구삭제' 버튼을 클릭 시 경고 팝업이 뜨며 삭제 여부를 결정할 수 있습니다.
+    
+<br/><br/>
+
+ - 위시 리스트 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
+
+ - 나의 맛집 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+ <br/><br/> 
+
+ - 나의 리뷰 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
+
+ - 비밀번호 변경 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
+
+ - 관리자 페이지
+    - ㅇㅇ
+    - ㅇㅇ
+<br/><br/> 
+
+<br/><br/><br/><br/><br/>
+
+# Skills
+이거밖에 없나요? 더 있을 거 같은데 으어어어
+| Front-end | Back-end | Others |
+|:---:|:---:|:---:|
+| JavaScript | JAVA | aws |
+| HTML | SpringBoot | GitHub |
+| CSS | Gradle | Figma |
+|  | MySQL | Google Drive|
+|  | Redis | Discord |
+|  | OAuth |  |
+
+
+
+
+
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+~~구버전... 이거 컨벤션들 어딘가 백업 해둬야 할 것 같은디..~~
 # 프로젝트 명
 ## MatzipWithYou
 
