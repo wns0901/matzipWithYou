@@ -24,6 +24,5 @@ public interface FriendService {
     // 친구 검색
     List<FriendSearchResponseDTO> searchPotentialFriends(String searchTerm, Long currentMemberId);
 
-    Friend getFriendRelation(Long friendId);
-
+    Friend getFriendRelation(Long currentMemberId, Long targetId);
 }

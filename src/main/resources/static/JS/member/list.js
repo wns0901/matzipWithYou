@@ -195,28 +195,15 @@ function createFullFriendList(friends, container) {
     container.appendChild(fullListContainer);
 }
 
-async function handleFriendClick(friendId) {
+
+async function handleFriendClick(targetId) {
     try {
-        const response = await fetch(`/members/friends/relation/${friendId}`);
+        const currentMemberId = getMemberIdFromUrl();
+        const response = await fetch(`/members/${currentMemberId}/friends/relation/${targetId}`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-        const text = await response.text();
-        if (!text) {
-            console.error('Empty response received');
-            return;
-        }
-
-        const friendRelation = JSON.parse(text);
-        if (!friendRelation || !friendRelation.senderId || !friendRelation.receiverId) {
-            console.error('Invalid friend relation data');
-            return;
-        }
-
-        const currentMemberId = getMemberIdFromUrl();
-        const targetId = friendRelation.senderId == currentMemberId ?
-            friendRelation.receiverId : friendRelation.senderId;
-
-        if (targetId) {
+        const friendRelation = await response.json();
+        if (friendRelation) {
             window.location.href = `/matzips/mine/${targetId}`;
         }
     } catch (error) {

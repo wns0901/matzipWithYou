@@ -17,5 +17,4 @@ public class Friend {
     private Boolean isAccept;
     private LocalDateTime regdate;
 
-    private FriendDetailsDTO friendDetails;
 }

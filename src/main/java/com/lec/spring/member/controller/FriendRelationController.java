@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class FriendRelationController {
-
     private final FriendService friendService;
 
-    @GetMapping("/members/friends/relation/{friendId}")
-    @ResponseBody
-    public Friend getFriendRelation(@PathVariable Long friendId) {
-        return friendService.getFriendRelation(friendId);
+    @GetMapping("/members/{currentMemberId}/friends/relation/{targetId}")
+    public Friend getFriendRelation(
+            @PathVariable Long currentMemberId,
+            @PathVariable Long targetId) {
+        return friendService.getFriendRelation(currentMemberId, targetId);
     }
 }

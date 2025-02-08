@@ -78,33 +78,27 @@
         </association>
     </resultMap>
 
-    <select id="findPendingRequests" resultMap="FriendWithDetailsMap">
-        SELECT f.sender_id,
-               f.receiver_id,
-               f.intimacy,
-               f.is_accept,
-               f.regdate,
-               m.nickname,
-               m.username,
-               m.id                                                 as friendId,
-               p.filename                                           as profileImg,
-               COUNT(CASE WHEN mm.visibility = 'PUBLIC' THEN 1 END) as public_count,
-               COUNT(CASE WHEN mm.visibility = 'HIDDEN' THEN 1 END) as hidden_count
+    <select id="findPendingRequests" resultType="com.lec.spring.member.domain.Friend">
+        SELECT
+            f.sender_id as senderId,
+            f.receiver_id as receiverId,
+            f.intimacy,
+            f.is_accept as isAccept,
+            f.regdate,
+            m.nickname,
+            m.username,
+            m.id as friendId,
+            p.filename as profileImg,
+            COUNT(CASE WHEN mm.visibility = 'PUBLIC' THEN 1 END) as publicCount,
+            COUNT(CASE WHEN mm.visibility = 'HIDDEN' THEN 1 END) as hiddenCount
         FROM friend f
                  JOIN member m ON f.sender_id = m.id
                  LEFT JOIN profile_img p ON m.id = p.member_id
                  LEFT JOIN my_matzip mm ON m.id = mm.member_id
-        WHERE f.receiver_id = #{id}
+        WHERE f.receiver_id = #{memberId}
           AND f.is_accept = false
-        GROUP BY f.sender_id,
-                 f.receiver_id,
-                 f.intimacy,
-                 f.is_accept,
-                 f.regdate,
-                 m.nickname,
-                 m.username,
-                 m.id,
-                 p.filename
+        GROUP BY f.sender_id, f.receiver_id, f.intimacy, f.is_accept, f.regdate,
+                 m.nickname, m.username, m.id, p.filename
     </select>
 
     <!-- 친구 검색 -->
@@ -151,13 +145,18 @@
             )
     </update>
 
-    <!-- friendId로 sender_id와 receiver_id 조회 -->
-    <select id="findFriendRelationById" parameterType="Long" resultType="com.lec.spring.member.domain.Friend">
-        SELECT sender_id as senderId, receiver_id as receiverId
+    <select id="findFriendRelationByMemberIds" resultType="com.lec.spring.member.domain.Friend">
+        SELECT
+            sender_id as senderId,
+            receiver_id as receiverId,
+            intimacy,
+            is_accept as isAccept,
+            regdate
         FROM friend
-        WHERE (sender_id = #{friendId} OR receiver_id = #{friendId})
+        WHERE ((sender_id = #{currentMemberId} AND receiver_id = #{targetId})
+            OR
+               (sender_id = #{targetId} AND receiver_id = #{currentMemberId}))
           AND is_accept = true
-            LIMIT 1
     </select>
 
 </mapper>

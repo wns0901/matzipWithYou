@@ -52,18 +52,7 @@ public class FriendServiceImpl implements FriendService {
     @Override
     public List<FriendDetailsDTO> getFriendsWithDetailsDTO(Long memberId) {
         return friendRepository.findFriendsWithDetailsDTO(memberId);
-        // 친밀도 순으로 정렬 후 상위 3명 추출
-//        List<FriendDetailsDTO> top3Friends = friends.stream()
-//                .sorted(Comparator.comparing(FriendDetailsDTO::getIntimacy).reversed()) // 친밀도 내림차순
-//                .limit(3)
-//                .collect(Collectors.toList());
-//
-//        return top3Friends;
     }
-
-
-
-
 
     @Override
     public List<FriendRequestDTO> getPendingRequests(Long memberId) {
@@ -71,27 +60,19 @@ public class FriendServiceImpl implements FriendService {
 
         return pendingFriends.stream()
                 .map(friend -> {
-                    FriendRequestDTO dto = new FriendRequestDTO();
-                    FriendDetailsDTO details = friend.getFriendDetails();
-
-                    dto.setSenderId(friend.getSenderId());
-                    dto.setReceiverId(friend.getReceiverId());
-                    dto.setIsAccept(friend.getIsAccept());
-                    dto.setNickname(details.getNickname());
-                    dto.setUsername(details.getUsername());
-                    dto.setPublicCount(details.getPublicCount());
-                    dto.setHiddenCount(details.getHiddenCount());
-                    dto.setIntimacy(friend.getIntimacy());
-                    dto.setProfileImg(details.getProfileImg() != null ?
-                            "/upload/" + details.getProfileImg() :
-                            "/images/default-profile.png");
-                    dto.setRegdate(friend.getRegdate());
-
-
-                    return dto;
+                    // 이 부분의 쿼리를 수정해서 한번에 필요한 정보를 가져오도록 변경
+                    return FriendRequestDTO.builder()
+                            .senderId(friend.getSenderId())
+                            .receiverId(friend.getReceiverId())
+                            .isAccept(friend.getIsAccept())
+                            .intimacy(friend.getIntimacy())
+                            .regdate(friend.getRegdate())
+                            .build();
                 })
                 .collect(Collectors.toList());
     }
+
+
 
     @Override
     public List<FriendSearchResponseDTO> searchPotentialFriends(String searchTerm, Long currentMemberId) {
@@ -106,8 +87,9 @@ public class FriendServiceImpl implements FriendService {
         return results;
     }
 
-    public Friend getFriendRelation(Long friendId) {
-        return friendRepository.findFriendRelationById(friendId);
+    @Override
+    public Friend getFriendRelation(Long currentMemberId, Long targetId) {
+        return friendRepository.findFriendRelationByMemberIds(currentMemberId, targetId);
     }
 
 

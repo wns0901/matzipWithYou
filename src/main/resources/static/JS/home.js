@@ -1,4 +1,3 @@
-
 let currentPage = 0; // 현재 페이지 인덱스
 let isScrolling = false; // 스크롤 중인지 확인하는 플래그
 
