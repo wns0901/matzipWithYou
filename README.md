@@ -207,7 +207,7 @@
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 # 프로젝트 명
-## MatzipWithYou
+## MatzipWithYou / 맛집이쥬
 
 ## Git Flow
 
