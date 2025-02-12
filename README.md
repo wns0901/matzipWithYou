@@ -28,9 +28,9 @@
 | NAME | 이동희 (팀장) | 이유나 (서기) | 장준영 | 현지윤 | 황예은 |
 |---|---|---|---|---|---|
 | |![quokka](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/quokka.svg)|![hamster](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/hamster.svg)|![pumpkin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-pumpkin-1.svg)|![penguin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/penguin.svg)|![desertfox](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/dessert-fox.svg)|
-| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/># 친구 목록 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
-| Back-end | <div/># 프로필 사진 <div/>#  | <div/># 마이페이지 <div/># 친구 기능 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
-| Others || <div/># UX/UI <div/>#  ||||
+| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 목록 <div/> └ (기여도 60%) | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
+| Back-end | <div/># 프로필 사진 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 기능 <div/> └ (기여도 70%) | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
+| Others | <div/># 특별히 쓰고픈 점 | <div/># UX/UI <div/>#  |<div/># 특별히 쓰고픈 점|<div/># 특별히 쓰고픈 점|<div/># 특별히 쓰고픈 점|
 |||||||
 | Special Member | 조은교 (디자인) |||||
 ||![blue](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-blue.svg)|||||
