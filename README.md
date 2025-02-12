@@ -4,13 +4,30 @@
 # 맛집이쥬 - 너와 나의 비밀맛집
 ![banner](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/banner_readme.jpg)
 
-## 맛집이쥬 설명 뭐쓰지.. 친구와 나만이 공유하는 비밀 맛집을 만들고 찾아보자~
+## 친구와 나만이 공유하는 비밀 맛집을 만들고 찾아보자!
 <br/><br/><br/>
 
 
 <div align="center">
     <a href="http://matzipwithyou.kro.kr/">✨맛집이쥬 홈페이지✨</a>
+    <br/><br/>
+    <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
+  <tr>
+    <th>테스트용 계정</th>
+  </tr>
+  <tr>
+    <td>ID : OO</td>
+  </tr>
+  <tr>
+    <td>PW : OO</td>
+  </tr>
+</table>
 </div>
+
+<br/><br/><br/>
+
+
+저희 테스트용으로 완벽하게 다 갖춘 계정 하나 만들어야 될 것 같아요.
 
 <br/><br/><br/>
 
@@ -144,22 +161,51 @@
 
 # Skills
 이거밖에 없나요? 더 있을 거 같은데 으어어어
-| Front-end | Back-end | Others |
-|:---:|:---:|:---:|
-| JavaScript | JAVA | aws |
-| HTML | SpringBoot | GitHub |
-| CSS | Gradle | Figma |
-|  | MySQL | Google Drive|
-|  | Redis | Discord |
-|  | OAuth |  |
 
-
-
+<div align="center">
+  <table border="1" style="text-align: center; border-collapse: collapse;">
+    <tr>
+      <th>Front-end</th>
+      <th>Back-end</th>
+      <th>Others</th>
+    </tr>
+    <tr>
+      <td style="text-align: center;">JavaScript</td>
+      <td style="text-align: center;">JAVA</td>
+      <td style="text-align: center;">AWS</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">HTML</td>
+      <td style="text-align: center;">Spring Boot</td>
+      <td style="text-align: center;">GitHub</td>
+    </tr>
+    <tr>
+      <td style="text-align: center;">CSS</td>
+      <td style="text-align: center;">Gradle</td>
+      <td style="text-align: center;">Figma</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td style="text-align: center;">MySQL</td>
+      <td style="text-align: center;">Google Drive</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td style="text-align: center;">Redis</td>
+      <td style="text-align: center;">Discord</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td style="text-align: center;">OAuth</td>
+      <td></td>
+    </tr>
+  </table>
+</div>
 
 
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-~~구버전... 이거 컨벤션들 어딘가 백업 해둬야 할 것 같은디..~~
+
 # 프로젝트 명
 ## MatzipWithYou
 
