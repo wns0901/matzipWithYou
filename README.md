@@ -36,7 +36,11 @@
 ||![blue](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-blue.svg)|||||
 
 
-<br/><br/><br/><br/><br/>
+<br/><br/><br/>
+# 프로젝트 수행 기간
+- 2024.11.19 ~ 2024.12.24
+
+<br/><br/><br/>
 # Pages
 각 페이지 캡쳐해서 올리기
 (우리 배포 버전은 아직 업뎃 안 됐어요! 업뎃 후에 캡쳐 합시다~)
