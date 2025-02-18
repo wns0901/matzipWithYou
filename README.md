@@ -157,7 +157,16 @@
     - ㅇㅇ
 <br/><br/> 
 
-<br/><br/><br/><br/><br/>
+# ERD(Entity Relationship Database)
+![erd](https://github.com/Irenda-Lee/matzipWithYou/blob/develop/src/main/resources/static/IMG/ERD.png)
+
+# Flowchart
+![](https://github.com/Irenda-Lee/matzipWithYou/blob/develop/src/main/resources/static/IMG/flowchart.svg)
+
+# 화면구성도
+![](https://github.com/Irenda-Lee/matzipWithYou/blob/develop/src/main/resources/static/IMG/components.svg)
+
+<br/><br/><br/>
 
 # Skills
 이거밖에 없나요? 더 있을 거 같은데 으어어어
