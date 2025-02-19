@@ -45,9 +45,9 @@
 | NAME | 이동희 (팀장) | 이유나 (서기) | 장준영 | 현지윤 | 황예은                                                                                                               |
 |---|---|---|---|---|-------------------------------------------------------------------------------------------------------------------|
 | |![quokka](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/quokka.svg)|![hamster](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/hamster.svg)|![pumpkin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-pumpkin-1.svg)|![penguin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/penguin.svg)| ![desertfox](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/dessert-fox.svg) |
-| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 목록 <div/> └ (기여도 60%) | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 리뷰페이지 <div/># 나의리뷰페이지                                                                                     |
-| Back-end | <div/># 프로필 사진 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 기능 <div/> └ (기여도 70%) | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 리뷰페이지 <div/># 나의리뷰페이지                                                                                     |
-| Others | <div/># 특별히 쓰고픈 점 | <div/># UX/UI <div/>#  |<div/># 특별히 쓰고픈 점|<div/># 특별히 쓰고픈 점| <div/># 특별히 쓰고픈 점                                                                                                 |
+| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 목록 <div/> └ (기여도 60%) | <div/># 지역구 상세 지도 페이지 <div/> └ (기여도 100%) <br/> # 나의 맛집 관리 페이지 <br/> └ (기여도 100%)  | <div/># 자기담당 <div/># 써주세용 | <div/># 리뷰페이지 <div/># 나의리뷰페이지                                                                                     |
+| Back-end | <div/># 프로필 사진 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 기능 <div/> └ (기여도 70%) | <div/># 맛집 ,나의 맛집 관련 CRUD <br/> └ (기여도 100%) <div/> | <div/># 자기담당 <div/># 써주세용 | <div/># 리뷰페이지 <div/># 나의리뷰페이지                                                                                     |
+| Others | <div/># 특별히 쓰고픈 점 | <div/># UX/UI <div/>#  |<div/># Selenium을 이용한 동적 크롤링 구현 <br/> # 카카오맵 api를 이용한 지도 시스템 |<div/># 특별히 쓰고픈 점| <div/># 특별히 쓰고픈 점                                                                                                 |
 ||||||                                                                                                                   |
 | Special Member | 조은교 (디자인) ||||                                                                                                                   |
 ||![blue](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-blue.svg)||||                                                                                                                   |
@@ -94,9 +94,12 @@
     - ㅇㅇ
  <br/><br/>
 
-- 선택한 지역구 페이지?
-    - ㅇㅇ
-    - ㅇㅇ
+- 지역구 상세 페이지
+    - 선택한 지역구에서 친구들이 선택한 맛집에 대한 정보를 카카오맵을 통해서 볼 수 있습니다. 볼 수 있습니다.
+    - 친구들이 지정한 히든 맛집의 대략적인 위치를 알 수 있습니다.
+      - 히든 맛집 클릭시 해당 맛집의 태그를 힌트로서 구매할 수 있습니다.
+    - 친구들이 지정한 맛집들을 위시리스트에 담을 수 있습니다.
+    - 내가 원하는 맛집을 등록할 수 있습니다.
   <br/><br/>
     
  - 리뷰 작성 페이지
@@ -147,8 +150,14 @@
 <br/><br/> 
 
  - 나의 맛집 페이지
-    - ㅇㅇ
-    - ㅇㅇ
+    - 내가 등록한 맛집들을 관리할 수 있는 페이지입니다.
+      - 맛집을 삭제할 수 있습니다.
+      - 맛집의 상태를 히든, 공개, 비공개로 변경할 수 있습니다.
+
+ - 다른 친구의 맛집 페이지
+    - 친구 등록한 맛집 리스트를 볼 수 있습니다.
+      - 친구의 맛집들 중 원하는 맛집을 위시리스트에 추가할 수 있습니다. 
+
  <br/><br/> 
 
  - 나의 리뷰 페이지
@@ -186,7 +195,7 @@
 <br/><br/><br/>
 
 # Skills
-이거밖에 없나요? 더 있을 거 같은데 으어어어
+이거밖에 없나요? 더 있을 거 같은데 으어어어(타임리프랑 마이 바티스 추가 했슴다)
 
 <div align="center">
   <table border="1" style="text-align: center; border-collapse: collapse;">
@@ -211,7 +220,7 @@
       <td style="text-align: center;">Figma</td>
     </tr>
     <tr>
-      <td></td>
+      <td>Thymeleaf</td>
       <td style="text-align: center;">MySQL</td>
       <td style="text-align: center;">Google Drive</td>
     </tr>
@@ -223,6 +232,11 @@
     <tr>
       <td></td>
       <td style="text-align: center;">OAuth</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>MyBatis</td>
       <td></td>
     </tr>
   </table>
