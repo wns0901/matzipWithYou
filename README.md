@@ -42,15 +42,15 @@
 
 ### 📌 Members
 
-| NAME | 이동희 (팀장) | 이유나 (서기) | 장준영 | 현지윤 | 황예은 |
-|---|---|---|---|---|---|
-| |![quokka](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/quokka.svg)|![hamster](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/hamster.svg)|![pumpkin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-pumpkin-1.svg)|![penguin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/penguin.svg)|![desertfox](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/dessert-fox.svg)|
-| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 목록 <div/> └ (기여도 60%) | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
-| Back-end | <div/># 프로필 사진 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 기능 <div/> └ (기여도 70%) | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 |
-| Others | <div/># 특별히 쓰고픈 점 | <div/># UX/UI <div/>#  |<div/># 특별히 쓰고픈 점|<div/># 특별히 쓰고픈 점|<div/># 특별히 쓰고픈 점|
-|||||||
-| Special Member | 조은교 (디자인) |||||
-||![blue](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-blue.svg)|||||
+| NAME | 이동희 (팀장) | 이유나 (서기) | 장준영 | 현지윤 | 황예은                                                                                                               |
+|---|---|---|---|---|-------------------------------------------------------------------------------------------------------------------|
+| |![quokka](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/quokka.svg)|![hamster](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/hamster.svg)|![pumpkin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-pumpkin-1.svg)|![penguin](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/penguin.svg)| ![desertfox](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/dessert-fox.svg) |
+| Front-end | <div/># 관리자 페이지 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 목록 <div/> └ (기여도 60%) | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 리뷰페이지 <div/># 나의리뷰페이지                                                                                     |
+| Back-end | <div/># 프로필 사진 <div/>#  | <div/># 마이페이지 <div/> └ (기여도 100%) <br> <div/># 친구 기능 <div/> └ (기여도 70%) | <div/># 자기담당 <div/># 써주세용 | <div/># 자기담당 <div/># 써주세용 | <div/># 리뷰페이지 <div/># 나의리뷰페이지                                                                                     |
+| Others | <div/># 특별히 쓰고픈 점 | <div/># UX/UI <div/>#  |<div/># 특별히 쓰고픈 점|<div/># 특별히 쓰고픈 점| <div/># 특별히 쓰고픈 점                                                                                                 |
+||||||                                                                                                                   |
+| Special Member | 조은교 (디자인) ||||                                                                                                                   |
+||![blue](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/slime-blue.svg)||||                                                                                                                   |
 
 
 <br/><br/><br/>
@@ -100,8 +100,17 @@
   <br/><br/>
     
  - 리뷰 작성 페이지
-    - ㅇㅇ
-    - ㅇㅇ
+   - 가게 정보와 평점, 식사종류, 가게에 대한 태그, 리뷰를 작성란, 맛집 공개설정, 내 맛집 등록여부를 선택하고 작성해 리뷰를 작성할 수 있습니다.
+   - 완료 버튼 클릭시 다음과 같은 동작이 수행됩니다.
+     - 해당 식당이 내 친구의 히든 맛집이었을 경우:
+       - 친구들의 프로필과 함께 가장 친밀도가 높은 친구의 이름이 포함된 메세지가 표시됨
+         - '00 외 hidden 맛집을 unlock 했습니다!'
+         - '00외 몇명의 친밀도가 +100 되었습니다!'
+       - +500pt가 쓰여진 버튼을 누르면,
+         - 해당 식당이 내 맛집으로 등록했을 경우, 나의 맛집 페이지로 이동
+         - 등록하지 않을 경우, 나의 리뷰 페이지로 이동
+     - 해당 식당이 히든 맛집이 아닐 경우:
+       - '리뷰를 등록했습니다', '100포인트가 지급됩니다.' 메시지가 뜸.
 <br/><br/> 
 
  - 마이페이지
@@ -143,8 +152,16 @@
  <br/><br/> 
 
  - 나의 리뷰 페이지
-    - ㅇㅇ
-    - ㅇㅇ
+    - 좌측의 프로필 클릭 시 내 마이페이지로 이동 가능.
+    - 우측 영역: 기본적인 가게 정보 표시
+      - 가게 목록은 등록순, 가나다순, 평점순 중 정렬 가능
+    - 가게 정보가 적힌 카드에는 '상세보기' 버튼과 '삭제하기' 버튼이 있습니다
+      - '상세보기' 버튼 클릭 시: 
+        - 토글형식으로 해당하는 가게에 내가 쓴 구체적인 리뷰 표시
+        - '상세접기' 버튼으로 변경 
+      - 삭제하기 버튼 클릭 시: 
+        - 삭제버튼이 주황색으로 변경되고 '이 리뷰를 삭제하겠습니까?"라는 alert 메세시 표시
+        - 확인(OK) 누르면 리뷰 삭제
 <br/><br/> 
 
  - 비밀번호 변경 페이지
