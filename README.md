@@ -196,7 +196,7 @@
 
 # Skills
 이거밖에 없나요? 더 있을 거 같은데 으어어어(타임리프랑 마이 바티스 추가 했슴다)
-
+![](https://github.com/wns0901/matzipWithYou/blob/develop/src/main/resources/static/IMG/skills.png)
 <div align="center">
   <table border="1" style="text-align: center; border-collapse: collapse;">
     <tr>
