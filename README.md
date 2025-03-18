@@ -8,25 +8,6 @@
 
 <div align="center">
     <a href="http://matzipwithyou.kro.kr/">✨맛집이쥬 홈페이지✨</a>
-    <br/><br/>
-    <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
-  <tr>
-    <th>테스트용 계정</th>
-  </tr>
-  <tr>
-    <td>ID : OO</td>
-  </tr>
-  <tr>
-    <td>PW : OO</td>
-  </tr>
-</table>
-</div>
-
-<br/><br/><br/>
-
-저희 테스트용으로 완벽하게 다 갖춘 계정 하나 만들어야 될 것 같아요.
-
-<br/><br/><br/>
 
 # Team
 
